@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+@theme inline {
+}
+@layer utilities {
+  .scrollbarHidden {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  .scrollbar-custom {
+    scrollbar-width: thin;
+    scrollbar-color: #0c7fa3 #f3f4f6;
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #f3f4f6;
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #0c7fa3;
+      border-radius: 10px;
+      transition: background 0.2s ease;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: #0a6685;
+    }
+
+    &::-webkit-scrollbar-thumb:active {
+      background: #085573;
+    }
+  }
+
+  .container {
+    @apply mx-auto px-4;
+  }
+}
+
+.noImage::before {
+  @apply text-4xl mr-2; /* Font size and margin-right (spacing between icon and text) */
+  content: "🚫"; /* The icon/content */
+}
+body {
+  font-weight: 400;
+  line-height: normal;
+  font-style: normal;
+  font-size: 16px;
+}
+
+@media screen and (min-width: 1024px) {
+  .container {
+    max-width: 1180px !important;
+  }
+}
+.no-scroll {
+  overflow: hidden;
+}
+@utility scrollbar-hidden {
+  @apply [scrollbar-width:none];
+}
+@utility scrollbar-thin {
+  @apply [scrollbar-width:thin];
+}
+@utility scrollbar-color {
+  @apply [scrollbar-color:#159dd1_#f1f1f1];
+}
+html {
+  scroll-behavior: smooth;
+}
+
+/* ✅ Reduced motion üçün accessibility */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #dee2e6;
+  border-radius: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #159dd1;
+}
