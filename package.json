@@ -1,5 +1,5 @@
 {
-  "name": "globtm",
+  "name": "sts-solution",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,30 +9,35 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@ant-design/icons": "^6.1.0",
     "@aws-sdk/client-s3": "^3.943.0",
     "@aws-sdk/lib-storage": "^3.943.0",
     "@fancyapps/ui": "^6.1.6",
+    "@hookform/error-message": "^2.0.1",
     "@hookform/resolvers": "^5.2.2",
     "@prisma/adapter-pg": "^7.1.0",
-    "@prisma/client": "^7.1.0",
+    "@prisma/client": "^7.2.0",
     "@tanstack/react-query": "^5.90.11",
     "antd": "^6.0.1",
     "bcryptjs": "^3.0.3",
+    "dayjs": "^1.11.19",
     "framer-motion": "^12.23.25",
     "imask": "^7.6.1",
     "jodit-react": "^5.2.38",
     "lodash.debounce": "^4.0.8",
     "lucide-react": "^0.555.0",
-    "next": "16.0.7",
+    "next": "^16.0.10",
     "next-auth": "^5.0.0-beta.30",
     "next-intl": "^4.5.8",
     "nodemailer": "^7.0.11",
     "pg": "^8.16.3",
     "react": "19.2.0",
     "react-dom": "19.2.0",
+    "react-fast-marquee": "^1.6.5",
     "react-hook-form": "^7.68.0",
     "react-image-crop": "^11.0.10",
     "sanitize-html": "^2.17.0",
+    "sharp": "^0.34.5",
     "slugify": "^1.6.6",
     "swiper": "^12.0.3",
     "uuid": "^13.0.0",
@@ -53,9 +58,17 @@
     "dotenv": "^17.2.3",
     "eslint": "^9",
     "eslint-config-next": "16.0.7",
-    "prisma": "^7.1.0",
+    "prisma": "^7.2.0",
     "tailwindcss": "^4",
     "tsx": "^4.21.0",
     "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "overrides": {
+    "@auth/core": {
+      "nodemailer": "^7.0.11"
+    }
   }
 }

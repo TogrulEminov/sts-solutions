@@ -1,0 +1,10 @@
+.container {
+	text-align: start;
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+
+	.error {
+		color: red;
+	}
+}

@@ -1,15 +1,44 @@
 @import "tailwindcss";
 
 @theme inline {
+  --font-jakarta: "Plus Jakarta Sans", sans-serif;
+  --font-manrope: "Manrope", sans-serif;
+  --color-ui-1: #1BAFBF;
+  --color-ui-2: #004A52;
+  --color-ui-3: #01434B;
+  --color-ui-4: #4DC8D6;
+  --color-ui-5: #04606A;
+  --color-ui-6: #B2B2B2;
+  --color-ui-7: #424242;
+  --color-ui-8: #66697F;
+  --color-ui-9: #757575;
+  --color-ui-10: #813030;
+  --color-ui-11: #2C303E;
+  --color-ui-12: #0E0B29;
+  --color-ui-13: #371919;
+  --color-ui-14: #003036;
 }
+
 @layer utilities {
   .scrollbarHidden {
     scrollbar-width: none;
     -ms-overflow-style: none;
+
     &::-webkit-scrollbar {
       display: none;
     }
   }
+
+  .consultingGradient {
+    background: linear-gradient(228.87deg, rgba(0, 74, 82, 0) 6.33%, rgba(0, 74, 82, 0.58) 27.42%, rgba(0, 74, 82, 0.839624) 55.4%, #004A52 79.92%);
+
+  }
+
+  .projectsCardGradinet {
+    background: linear-gradient(192.05deg, rgba(0, 48, 54, 0) 17.24%, #003036 89%);
+
+  }
+
   .scrollbar-custom {
     scrollbar-width: thin;
     scrollbar-color: #0c7fa3 #f3f4f6;
@@ -39,14 +68,17 @@
   }
 
   .container {
-    @apply mx-auto px-4;
+    @apply mx-auto px-4 lg:px-0;
   }
 }
 
 .noImage::before {
-  @apply text-4xl mr-2; /* Font size and margin-right (spacing between icon and text) */
-  content: "🚫"; /* The icon/content */
+  @apply text-4xl mr-2;
+  /* Font size and margin-right (spacing between icon and text) */
+  content: "🚫";
+  /* The icon/content */
 }
+
 body {
   font-weight: 400;
   line-height: normal;
@@ -59,18 +91,23 @@ body {
     max-width: 1180px !important;
   }
 }
+
 .no-scroll {
   overflow: hidden;
 }
+
 @utility scrollbar-hidden {
   @apply [scrollbar-width:none];
 }
+
 @utility scrollbar-thin {
   @apply [scrollbar-width:thin];
 }
+
 @utility scrollbar-color {
   @apply [scrollbar-color:#159dd1_#f1f1f1];
 }
+
 html {
   scroll-behavior: smooth;
 }
@@ -81,6 +118,7 @@ html {
     scroll-behavior: auto;
   }
 }
+
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;
 }

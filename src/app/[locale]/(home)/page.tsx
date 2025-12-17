@@ -1,5 +1,6 @@
 import { generatePageMetadata } from "@/src/utils/metadata";
 import { Metadata } from "next";
+import HomePageContainer from "./_container";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -18,5 +19,5 @@ export async function generateMetadata({
 export default async function HomePage({ params }: PageProps) {
   const { locale } = await params;
 
-  return <></>;
+  return <HomePageContainer/>;
 }
