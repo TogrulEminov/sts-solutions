@@ -6,10 +6,16 @@ import ProjectsSection from "./project";
 import PartnerSection from "./partner";
 import SolutionsSection from "./solutions";
 import ServicesCategorySection from "./services-category";
+import AboutSection from "./about";
+import ServicesSection from "./services";
+import HeroSection from "./hero";
 
 export default function HomePageContainer() {
   return (
     <main>
+      <HeroSection/>
+      <ServicesSection/>
+      <AboutSection />
       <ServicesCategorySection />
       <SolutionsSection />
       <PartnerSection />

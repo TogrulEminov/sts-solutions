@@ -5,7 +5,7 @@ import { SwiperSlide } from "swiper/react";
 import Icons from "@/public/icons";
 import { Autoplay } from "swiper/modules";
 import { Swiper as SwiperCore } from "swiper/types";
-import ServicesCard from "@/src/globalElements/cards/services-category";
+import ServicesMain from "@/src/globalElements/cards/services-main";
 
 export default function SliderArea() {
   const swiperRef = useRef<SwiperCore | null>(null);
@@ -13,8 +13,8 @@ export default function SliderArea() {
   const breakpoints = {
     0: { slidesPerView: 2, spaceBetween: 10 },
     768: { slidesPerView: 3 },
-    1024: { slidesPerView: 5.5 },
-    1600: { slidesPerView: 6.5 },
+    1024: { slidesPerView: 4.5 },
+    1600: { slidesPerView:5.5 },
   };
   const autoplayOptions = {
     delay: 3500,
@@ -43,24 +43,26 @@ export default function SliderArea() {
 
   return (
     <>
-      <div className="flex items-center gap-x-3 justify-center bg-ui-2 rounded-[36px] mb-0! absolute right-0  top-2.5   w-21.5 h-10">
-        <button
-          type="button"
-          aria-label="prev button for services slider"
-          onClick={goPrev}
-          className="cursor-pointer transition-all duration-300 hover:scale-110"
-        >
-          <Icons.ArrowLeft />
-        </button>
+      <div className="w-full flex lg:justify-end">
+        <div className="flex items-center gap-x-3 justify-center bg-ui-1 rounded-[36px] -mt-10    w-21.5 h-10">
+          <button
+            type="button"
+            aria-label="prev button for services slider"
+            onClick={goPrev}
+            className="cursor-pointer transition-all duration-300 hover:scale-110"
+          >
+            <Icons.ArrowLeft />
+          </button>
 
-        <button
-          type="button"
-          onClick={goNext}
-          aria-label="next button for services slider"
-          className="cursor-pointer transition-all duration-300 hover:scale-110"
-        >
-          <Icons.ArrowRight />
-        </button>
+          <button
+            type="button"
+            onClick={goNext}
+            aria-label="next button for services slider"
+            className="cursor-pointer transition-all duration-300 hover:scale-110"
+          >
+            <Icons.ArrowRight />
+          </button>
+        </div>
       </div>
       <MySwiper
         modules={[Autoplay]}
@@ -80,7 +82,7 @@ export default function SliderArea() {
         {Array.from({ length: 20 }).map((_, index) => {
           return (
             <SwiperSlide className="h-full" key={index}>
-              <ServicesCard />
+              <ServicesMain />
             </SwiperSlide>
           );
         })}

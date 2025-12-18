@@ -5,7 +5,7 @@ import { SwiperSlide } from "swiper/react";
 import Icons from "@/public/icons";
 import { Autoplay } from "swiper/modules";
 import { Swiper as SwiperCore } from "swiper/types";
-import ServicesCard from "@/src/globalElements/cards/services";
+import ServicesCard from "@/src/globalElements/cards/services-category";
 
 export default function SliderArea() {
   const swiperRef = useRef<SwiperCore | null>(null);
