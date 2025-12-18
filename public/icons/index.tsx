@@ -456,4 +456,44 @@ export default class Icons {
       </svg>
     );
   }
+  static ArrowLeft({ fill = "white", width = 24, height = 24 }: IconsProps) {
+    return (
+      <svg
+        width={width}
+        height={height}
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M14.8284 19.9201L8.38291 13.4001C7.62171 12.6301 7.62171 11.3701 8.38291 10.6001L14.8284 4.08008"
+          stroke={fill}
+          strokeWidth="2"
+          strokeMiterlimit="10"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    );
+  }
+  static ArrowRight({ fill = "white", width = 24, height = 24 }: IconsProps) {
+    return (
+      <svg
+        width={width}
+        height={height}
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M8.89732 4.07992L15.3428 10.5999C16.104 11.3699 16.104 12.6299 15.3428 13.3999L8.89732 19.9199"
+          stroke={fill}
+          strokeWidth="2"
+          strokeMiterlimit="10"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    );
+  }
 }

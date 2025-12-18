@@ -39,6 +39,14 @@
 
   }
 
+  .servicesFirst {
+    background: linear-gradient(90deg, #1BAFBF 22.09%, rgba(27, 175, 191, 0) 91%);
+  }
+
+  .servicesSecond {
+    background: linear-gradient(90deg, rgba(27, 175, 191, 0) 0%, #1BAFBF 100%);
+  }
+
   .scrollbar-custom {
     scrollbar-width: thin;
     scrollbar-color: #0c7fa3 #f3f4f6;

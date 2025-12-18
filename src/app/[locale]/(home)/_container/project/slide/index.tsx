@@ -18,29 +18,19 @@ export default function SlideArea() {
         className="relative"
       >
         {/* Gradient overlays with #1BAFBF */}
-        <div 
+        <div
           className="absolute left-0 top-0 bottom-0 w-32 z-10 pointer-events-none"
           style={{
-            background: 'linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.8) 40%, transparent 100%)'
+            background:
+              "linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.8) 40%, transparent 100%)",
           }}
         />
-        <div 
+        <div
           className="absolute right-0 top-0 bottom-0 w-32 z-10 pointer-events-none"
           style={{
-            background: 'linear-gradient(to left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.8) 40%, transparent 100%)'
+            background:
+              "linear-gradient(to left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.8) 40%, transparent 100%)",
           }}
-        />
-
-        {/* Accent line at top */}
-        <motion.div
-          className="absolute top-0 left-0 right-0 h-0.5 z-10"
-          style={{
-            background: 'linear-gradient(to right, transparent 0%, #1BAFBF 50%, transparent 100%)'
-          }}
-          initial={{ scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.2, delay: 0.3 }}
         />
 
         <Swiper
@@ -83,7 +73,8 @@ export default function SlideArea() {
         <motion.div
           className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-1 blur-sm"
           style={{
-            background: 'linear-gradient(to right, transparent 0%, rgba(27, 175, 191, 0.3) 50%, transparent 100%)'
+            background:
+              "linear-gradient(to right, transparent 0%, rgba(27, 175, 191, 0.3) 50%, transparent 100%)",
           }}
           initial={{ opacity: 0, scaleX: 0 }}
           whileInView={{ opacity: 1, scaleX: 1 }}
@@ -101,29 +92,19 @@ export default function SlideArea() {
         className="relative"
       >
         {/* Gradient overlays with #1BAFBF tint */}
-        <div 
+        <div
           className="absolute left-0 top-0 bottom-0 w-32 z-10 pointer-events-none"
           style={{
-            background: 'linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.8) 40%, transparent 100%)'
+            background:
+              "linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.8) 40%, transparent 100%)",
           }}
         />
-        <div 
+        <div
           className="absolute right-0 top-0 bottom-0 w-32 z-10 pointer-events-none"
           style={{
-            background: 'linear-gradient(to left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.8) 40%, transparent 100%)'
+            background:
+              "linear-gradient(to left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.8) 40%, transparent 100%)",
           }}
-        />
-
-        {/* Accent line at top */}
-        <motion.div
-          className="absolute top-0 left-0 right-0 h-0.5 z-10"
-          style={{
-            background: 'linear-gradient(to left, transparent 0%, #1BAFBF 50%, transparent 100%)'
-          }}
-          initial={{ scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.2, delay: 0.5 }}
         />
 
         <Swiper
@@ -166,7 +147,8 @@ export default function SlideArea() {
         <motion.div
           className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-1 blur-sm"
           style={{
-            background: 'linear-gradient(to left, transparent 0%, rgba(27, 175, 191, 0.3) 50%, transparent 100%)'
+            background:
+              "linear-gradient(to left, transparent 0%, rgba(27, 175, 191, 0.3) 50%, transparent 100%)",
           }}
           initial={{ opacity: 0, scaleX: 0 }}
           whileInView={{ opacity: 1, scaleX: 1 }}

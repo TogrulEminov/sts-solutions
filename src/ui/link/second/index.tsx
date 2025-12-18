@@ -2,10 +2,13 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Icons from "@/public/icons";
-
-export default function AnimatedProjectButton() {
+interface Props {
+  title: string;
+  link: string;
+}
+export default function AnimatedProjectButton({ title, link }: Props) {
   return (
-    <Link href={"/"}>
+    <Link href={link}>
       <motion.div
         className="relative group flex items-center gap-x-3 py-3 px-6 h-12 font-manrope font-medium text-base text-white rounded-4xl bg-ui-1 justify-center overflow-hidden group cursor-pointer"
         whileHover={{ scale: 1.05, y: -2 }}
@@ -30,7 +33,7 @@ export default function AnimatedProjectButton() {
             whileHover={{ x: -4 }}
             transition={{ duration: 0.3 }}
           >
-            Layihələrimizlə tanış ol
+            {title}
           </motion.span>
 
           {/* Animated Arrow */}

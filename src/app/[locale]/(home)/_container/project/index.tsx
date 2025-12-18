@@ -14,7 +14,7 @@ export default function ProjectsSection() {
             innovativ yanaşmamızı və texniki bacarığımızı əks etdirir.
           </p>
         </article>
-        <AnimatedProjectButton />
+        <AnimatedProjectButton title="Layihələrimizlə tanış ol" link="/" />
       </div>
       <SlideArea />
     </section>
