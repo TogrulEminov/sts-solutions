@@ -19,6 +19,9 @@
   --color-ui-14: #003036;
   --color-ui-15: #07A5B6;
   --color-ui-16: #404040;
+  --color-ui-17: #0E6772; 
+  --color-ui-18: #414141;
+  --color-ui-19: #BEDEE2;
 }
 
 @layer utilities {
@@ -30,12 +33,6 @@
       display: none;
     }
   }
-
-  .consultingGradient {
-    background: linear-gradient(228.87deg, rgba(0, 74, 82, 0) 6.33%, rgba(0, 74, 82, 0.58) 27.42%, rgba(0, 74, 82, 0.839624) 55.4%, #004A52 79.92%);
-
-  }
-
   .projectsCardGradinet {
     background: linear-gradient(192.05deg, rgba(0, 48, 54, 0) 17.24%, #003036 89%);
 
@@ -183,6 +180,26 @@ html {
   animation-delay: 1s;
 }
 
-.heroAnimationFirst {
-  background: #004A5282;
+.heroFirstLinear {
+  position: absolute;
+  width: 808px;
+  height: 1080px;
+  z-index: 2;
+  left:-10%;
+  top: -80px;
+  background: rgba(0, 74, 82, 0.51);
+  transform: rotate(-15.73deg);
+
+}
+
+.heroSecondLinear {
+  position: absolute;
+  width: 34.07px;
+  height: 940.01px;
+  left: 50%;
+  top: 147px;
+  z-index: 2;
+  background: rgba(0, 74, 82, 0.46);
+  transform: rotate(-15.73deg);
+
 }

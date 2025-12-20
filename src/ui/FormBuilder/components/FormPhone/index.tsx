@@ -1,13 +1,19 @@
-import { Input, type InputProps, type InputRef } from "antd";
 import ComponentWrapper from "../ComponentWrapper/ComponentWrapper";
-import { useId, useEffect, useRef } from "react";
+import { useId, useEffect, useRef, useCallback, useState } from "react";
 import { Controller } from "react-hook-form";
 import { useFormWrapper } from "../../hooks/useFormWrapper";
 import type { IFormComponentProps } from "../../type/types";
 import IMask, { type InputMask } from "imask";
 
-interface BaseFormPhoneProps extends Omit<InputProps, "onChange" | "value"> {
+interface BaseFormPhoneProps {
   inputClassName?: string;
+  placeholder?: string;
+  disabled?: boolean;
+  readOnly?: boolean;
+  className?: string;
+  styles?: {
+    input?: React.CSSProperties;
+  };
 }
 
 export type FormPhoneProps = BaseFormPhoneProps & IFormComponentProps;
@@ -39,86 +45,131 @@ const PHONE_MASKS = [
 function PhoneInput({
   value,
   onChange,
-  inputRef,
   id,
   fieldName,
-  label,
+  placeholder,
   inputClassName,
   styles,
-  ...inputProps
+  disabled,
+  readOnly,
 }: any) {
+  const inputRef = useRef<HTMLInputElement>(null);
   const maskRef = useRef<InputMask<any> | null>(null);
+  const isInternalUpdate = useRef(false);
+  const [isFocused, setIsFocused] = useState(false);
 
+  // onChange-i memoize edirik
+  const handleMaskChange = useCallback(
+    (maskedValue: string) => {
+      if (!isInternalUpdate.current) {
+        onChange(maskedValue);
+      }
+    },
+    [onChange]
+  );
+
+  // Mask-ı yalnız bir dəfə yaradırıq (mount zamanı)
   useEffect(() => {
-    if (!inputRef.current?.input) return;
+    const inputElement = inputRef.current;
+    if (!inputElement || maskRef.current) return;
 
-    // Mask-ı yalnız bir dəfə yaradırıq
-    if (!maskRef.current) {
-      maskRef.current = IMask(inputRef.current.input, {
-        mask: PHONE_MASKS,
-        dispatch: (appended: string, dynamicMasked: any) => {
-          const current = (dynamicMasked.value + appended).replace(/\D/g, "");
+    maskRef.current = IMask(inputElement, {
+      mask: PHONE_MASKS,
+      dispatch: (appended: string, dynamicMasked: any) => {
+        const current = (dynamicMasked.value + appended).replace(/\D/g, "");
 
-          // Ölkə koduna görə düzgün mask seçimi
-          if (current.startsWith("994")) return dynamicMasked.compiledMasks[0]; // AZ
-          if (current.startsWith("90")) return dynamicMasked.compiledMasks[1]; // TR
-          if (current.startsWith("1")) return dynamicMasked.compiledMasks[2]; // US/CA
-          if (current.startsWith("44")) return dynamicMasked.compiledMasks[3]; // GB
-          if (current.startsWith("49")) return dynamicMasked.compiledMasks[4]; // DE
-          if (current.startsWith("33")) return dynamicMasked.compiledMasks[5]; // FR
-          if (current.startsWith("7")) return dynamicMasked.compiledMasks[6]; // RU/KZ
-          if (current.startsWith("380")) return dynamicMasked.compiledMasks[7]; // UA
-          if (current.startsWith("995")) return dynamicMasked.compiledMasks[8]; // GE
-          if (current.startsWith("998")) return dynamicMasked.compiledMasks[9]; // UZ
-          if (current.startsWith("86")) return dynamicMasked.compiledMasks[10]; // CN
-          if (current.startsWith("81")) return dynamicMasked.compiledMasks[11]; // JP
-          if (current.startsWith("91")) return dynamicMasked.compiledMasks[12]; // IN
-          if (current.startsWith("55")) return dynamicMasked.compiledMasks[13]; // BR
-          if (current.startsWith("39")) return dynamicMasked.compiledMasks[14]; // IT
-          if (current.startsWith("34")) return dynamicMasked.compiledMasks[15]; // ES
-          if (current.startsWith("61")) return dynamicMasked.compiledMasks[16]; // AU
-          if (current.startsWith("966")) return dynamicMasked.compiledMasks[17]; // SA
-          if (current.startsWith("971")) return dynamicMasked.compiledMasks[18]; // AE
+        // Ölkə koduna görə düzgün mask seçimi
+        if (current.startsWith("994")) return dynamicMasked.compiledMasks[0]; // AZ
+        if (current.startsWith("90")) return dynamicMasked.compiledMasks[1]; // TR
+        if (current.startsWith("1")) return dynamicMasked.compiledMasks[2]; // US/CA
+        if (current.startsWith("44")) return dynamicMasked.compiledMasks[3]; // GB
+        if (current.startsWith("49")) return dynamicMasked.compiledMasks[4]; // DE
+        if (current.startsWith("33")) return dynamicMasked.compiledMasks[5]; // FR
+        if (current.startsWith("7")) return dynamicMasked.compiledMasks[6]; // RU/KZ
+        if (current.startsWith("380")) return dynamicMasked.compiledMasks[7]; // UA
+        if (current.startsWith("995")) return dynamicMasked.compiledMasks[8]; // GE
+        if (current.startsWith("998")) return dynamicMasked.compiledMasks[9]; // UZ
+        if (current.startsWith("86")) return dynamicMasked.compiledMasks[10]; // CN
+        if (current.startsWith("81")) return dynamicMasked.compiledMasks[11]; // JP
+        if (current.startsWith("91")) return dynamicMasked.compiledMasks[12]; // IN
+        if (current.startsWith("55")) return dynamicMasked.compiledMasks[13]; // BR
+        if (current.startsWith("39")) return dynamicMasked.compiledMasks[14]; // IT
+        if (current.startsWith("34")) return dynamicMasked.compiledMasks[15]; // ES
+        if (current.startsWith("61")) return dynamicMasked.compiledMasks[16]; // AU
+        if (current.startsWith("966")) return dynamicMasked.compiledMasks[17]; // SA
+        if (current.startsWith("971")) return dynamicMasked.compiledMasks[18]; // AE
 
-          return dynamicMasked.compiledMasks[0]; // Default: AZ
-        },
-      });
+        return dynamicMasked.compiledMasks[0]; // Default: AZ
+      },
+    });
 
-      // Event handler-i əlavə edirik
-      maskRef.current.on("accept", () => {
-        if (maskRef.current) {
-          onChange(maskRef.current.value);
-        }
-      });
-    }
+    // Event handler
+    const handleAccept = () => {
+      if (maskRef.current) {
+        handleMaskChange(maskRef.current.value);
+      }
+    };
 
-    // Value dəyişəndə mask-ı yeniləyirik
-    if (maskRef.current && maskRef.current.value !== value) {
-      maskRef.current.value = value || "";
-    }
+    maskRef.current.on("accept", handleAccept);
 
-    // Cleanup
+    // Cleanup - yalnız unmount zamanı
     return () => {
       if (maskRef.current) {
         maskRef.current.destroy();
         maskRef.current = null;
       }
     };
-  }, [value, onChange, inputRef]);
+  }, [handleMaskChange]);
+
+  // Value dəyişəndə mask-ı update edirik (ayrı useEffect)
+  useEffect(() => {
+    if (maskRef.current) {
+      const currentValue = value || "";
+      const maskValue = maskRef.current.value;
+
+      // Yalnız fərqli olduqda update edirik
+      if (maskValue !== currentValue) {
+        isInternalUpdate.current = true;
+        maskRef.current.value = currentValue;
+
+        // Növbəti tick-də flag-ı sıfırlayırıq
+        setTimeout(() => {
+          isInternalUpdate.current = false;
+        }, 0);
+      }
+    }
+  }, [value]);
+
+  const baseStyles: React.CSSProperties = {
+    background: "#FAFAFA",
+    border: isFocused ? "2px solid #1BAFBF" : "1px solid #E0E0E0",
+    height: "44px",
+    color: "#212121",
+    padding: "0.75rem",
+    borderRadius: "0.5rem",
+    fontFamily: "'manrope', sans-serif",
+    fontSize: "0.875rem",
+    width: "100%",
+    outline: "none",
+    transition: "all 0.2s ease-in-out",
+    boxShadow: isFocused ? "0 0 0 3px rgba(27, 175, 191, 0.1)" : "none",
+    ...styles?.input,
+  };
 
   return (
-    <Input
-      {...inputProps}
+    <input
       ref={inputRef}
       id={id}
       name={fieldName}
       type="tel"
-      placeholder={label || "+994 (00) 000-00-00"}
+      placeholder={placeholder || "+994 (00) 000-00-00"}
       autoComplete="off"
-      classNames={{
-        input: inputClassName,
-      }}
-      styles={styles}
+      disabled={disabled}
+      readOnly={readOnly}
+      className={inputClassName}
+      style={baseStyles}
+      onFocus={() => setIsFocused(true)}
+      onBlur={() => setIsFocused(false)}
     />
   );
 }
@@ -132,11 +183,13 @@ function FormPhone({
   isVisible,
   calculateValue,
   styles,
+  placeholder,
+  disabled,
+  readOnly,
   ...inputProps
 }: FormPhoneProps) {
   const { control } = useFormWrapper();
   const id = useId();
-  const inputRef = useRef<InputRef>(null);
 
   return (
     <ComponentWrapper
@@ -155,12 +208,13 @@ function FormPhone({
           <PhoneInput
             value={value}
             onChange={onChange}
-            inputRef={inputRef}
             id={id}
             fieldName={fieldName}
-            label={label}
+            placeholder={placeholder}
             inputClassName={inputClassName}
             styles={styles}
+            disabled={disabled}
+            readOnly={readOnly}
             {...inputProps}
           />
         )}

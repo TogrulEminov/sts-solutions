@@ -5,13 +5,14 @@ import {
 } from "@/src/schema/form.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import FormWrapper from "@/src/ui/FormBuilder/FormWrapper/FormWrapper";
 import FormInput from "@/src/ui/FormBuilder/components/FormInput/FormInput";
 import FormPhone from "@/src/ui/FormBuilder/components/FormPhone";
 import FormSelect from "@/src/ui/FormBuilder/components/FormSelect/FormSelect";
 import FormTextArea from "@/src/ui/FormBuilder/components/FormTextArea/FormTextArea";
+import { CheckCircle2 } from "lucide-react";
 
 const containerVariants = {
   hidden: { opacity: 0, y: 50 },
@@ -32,30 +33,6 @@ const headerVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: {
-      duration: 0.5,
-      ease: "easeOut" as const,
-    },
-  },
-};
-
-const textVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-      ease: "easeOut" as const,
-    },
-  },
-};
-
-const progressBarVariants = {
-  hidden: { opacity: 0, scale: 0.8 },
-  visible: {
-    opacity: 1,
-    scale: 1,
     transition: {
       duration: 0.5,
       ease: "easeOut" as const,
@@ -90,16 +67,34 @@ export default function FormContactWrapper() {
 
   const [progress, setProgress] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const watchedFields = methods.watch();
+  
+  // eslint-disable-next-line react-hooks/incompatible-library
+  const title = methods.watch("title");
+  const email = methods.watch("email");
+  const phone = methods.watch("phone");
+  const services = methods.watch("services");
+  const message = methods.watch("message");
 
-  useEffect(() => {
-    const fields = Object.values(watchedFields);
-    const filledFields = fields.filter(
+  // useMemo ilə hesablama
+  const { filledCount, totalFields, progressPercentage } = useMemo(() => {
+    const fields = [title, email, phone, services, message];
+    const filled = fields.filter(
       (field) => field && field.toString().trim() !== ""
     ).length;
-    const totalFields = fields.length;
-    setProgress((filledFields / totalFields) * 100);
-  }, [watchedFields]);
+    const total = fields.length;
+    const percentage = (filled / total) * 100;
+
+    return {
+      filledCount: filled,
+      totalFields: total,
+      progressPercentage: percentage,
+    };
+  }, [title, email, phone, services, message]);
+
+  // Progress update - yalnız dəyər dəyişəndə
+  useEffect(() => {
+    setProgress(progressPercentage);
+  }, [progressPercentage]);
 
   const handleSubmit = async (data: CreateCallActionInput) => {
     setIsSubmitting(true);
@@ -109,6 +104,9 @@ export default function FormContactWrapper() {
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
     setIsSubmitting(false);
+    
+    // Form-u reset et (istəyirsənsə)
+    // methods.reset();
   };
 
   return (
@@ -119,65 +117,73 @@ export default function FormContactWrapper() {
       viewport={{ once: true, margin: "-100px" }}
       variants={containerVariants}
     >
-      {/* Header Section */}
-      <motion.div
-        className="flex flex-col space-y-5 items-center text-center"
-        variants={headerVariants}
-      >
-        <motion.strong
-          className="text-2xl font-extrabold font-manrope text-ui-1"
-          variants={textVariants}
-        >
-          Rəy və təklifləriniz
-        </motion.strong>
-        
-        <motion.p
-          className="text-sm text-ui-11"
-          variants={textVariants}
-        >
-          Bizimlə əlaqə saxlamaq üçün formanı doldurun və biz sizinlə tezliklə
-          əlaqə saxlayacağıq.
-        </motion.p>
+      {/* Header section */}
+      <motion.div className="flex flex-col space-y-6" variants={headerVariants}>
+        {/* Title */}
+        <div className="flex items-center justify-between">
+          <div className="flex flex-col space-y-1">
+            <h3 className="font-manrope font-bold text-2xl text-ui-2">
+              Əlaqə forması
+            </h3>
+            <p className="font-manrope text-sm text-gray-500">
+              Formu doldurun, sizinlə əlaqə saxlayaq
+            </p>
+          </div>
 
-        {/* Progress Bar */}
-        <motion.div
-          className="w-full flex flex-col space-y-1"
-          variants={progressBarVariants}
-        >
-          <div className="flex items-center justify-between text-xs text-ui-2">
-            <span>Tamamlanma</span>
-            <motion.span
-              className="font-semibold text-ui-1"
-              key={progress}
-              initial={{ scale: 1.2, opacity: 0.5 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.3 }}
-            >
-              {Math.round(progress)}%
-            </motion.span>
-          </div>
-          <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+          {/* Compact Progress Badge */}
+          <motion.div
+            className="relative flex items-center gap-2 px-4 py-2 rounded-full bg-linear-to-r from-ui-1/10 to-ui-1/5 border border-ui-1/20"
+            initial={{ scale: 0, rotate: -180 }}
+            animate={{ scale: 1, rotate: 0 }}
+            transition={{ duration: 0.5 }}
+          >
             <motion.div
-              className="h-full bg-gradient-to-r from-ui-1 to-ui-1/80 rounded-full relative overflow-hidden"
-              initial={{ width: 0 }}
-              animate={{ width: `${progress}%` }}
-              transition={{ duration: 0.5, ease: "easeOut" as const }}
+              className="w-10 h-10 rounded-full border-4 border-gray-200 flex items-center justify-center relative"
+              style={{
+                background: `conic-gradient(#1BAFBF ${progress}%, #E0E0E0 ${progress}%)`,
+              }}
             >
-              {/* Shimmer effect */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                animate={{
-                  x: ["-100%", "100%"],
-                }}
-                transition={{
-                  duration: 1.5,
-                  repeat: Infinity,
-                  ease: "linear" as const,
-                }}
-              />
+              <div className="w-7 h-7 rounded-full bg-white flex items-center justify-center">
+                {progress === 100 ? (
+                  <CheckCircle2 className="w-5 h-5 text-ui-1" />
+                ) : (
+                  <span className="font-manrope font-bold text-xs text-ui-1">
+                    {Math.round(progress)}%
+                  </span>
+                )}
+              </div>
             </motion.div>
-          </div>
-        </motion.div>
+            <div className="flex flex-col">
+              <span className="font-manrope text-xs text-gray-500">
+                Tamamlanma
+              </span>
+              <span className="font-manrope font-semibold text-sm text-ui-2">
+                {filledCount}/{totalFields} sahə
+              </span>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Linear Progress Bar */}
+        <div className="relative h-1.5 bg-gray-100 rounded-full overflow-hidden">
+          <motion.div
+            className="absolute inset-y-0 left-0 bg-linear-to-r from-ui-1 to-ui-1/80 rounded-full"
+            initial={{ width: 0 }}
+            animate={{ width: `${progress}%` }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+          >
+            {/* Shimmer */}
+            <motion.div
+              className="absolute inset-0 bg-linear-to-r from-transparent via-white/40 to-transparent"
+              animate={{ x: ["-100%", "200%"] }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+            />
+          </motion.div>
+        </div>
       </motion.div>
 
       {/* Form Wrapper */}
@@ -194,27 +200,22 @@ export default function FormContactWrapper() {
           <label className="font-manrope font-medium text-sm text-ui-12">
             Ad <sup className="text-red-500">*</sup>
           </label>
-          <motion.div
-            whileFocus={{ scale: 1.02 }}
-            transition={{ duration: 0.2 }}
-          >
-            <FormInput
-              type={"text"}
-              fieldName="title"
-              styles={{
-                input: {
-                  background: "#FAFAFA",
-                  border: "1px solid #E0E0E0",
-                  height: "44px",
-                  padding: "0.75rem",
-                  color: "#212121",
-                  borderRadius: "0.5rem",
-                  fontFamily: "'manrope', sans-serif",
-                  fontSize: "0.875rem",
-                },
-              }}
-            />
-          </motion.div>
+          <FormInput
+            type="text"
+            fieldName="title"
+            styles={{
+              input: {
+                background: "#FAFAFA",
+                border: "1px solid #E0E0E0",
+                height: "44px",
+                padding: "0.75rem",
+                color: "#212121",
+                borderRadius: "0.5rem",
+                fontFamily: "'manrope', sans-serif",
+                fontSize: "0.875rem",
+              },
+            }}
+          />
         </motion.div>
 
         {/* Email Field */}
@@ -225,27 +226,22 @@ export default function FormContactWrapper() {
           <label className="font-manrope font-medium text-sm text-ui-12">
             Email <sup className="text-red-500">*</sup>
           </label>
-          <motion.div
-            whileFocus={{ scale: 1.02 }}
-            transition={{ duration: 0.2 }}
-          >
-            <FormInput
-              type={"email"}
-              styles={{
-                input: {
-                  background: "#FAFAFA",
-                  border: "1px solid #E0E0E0",
-                  height: "44px",
-                  color: "#212121",
-                  padding: "0.75rem",
-                  borderRadius: "0.5rem",
-                  fontFamily: "'manrope', sans-serif",
-                  fontSize: "0.875rem",
-                },
-              }}
-              fieldName="email"
-            />
-          </motion.div>
+          <FormInput
+            type="email"
+            styles={{
+              input: {
+                background: "#FAFAFA",
+                border: "1px solid #E0E0E0",
+                height: "44px",
+                color: "#212121",
+                padding: "0.75rem",
+                borderRadius: "0.5rem",
+                fontFamily: "'manrope', sans-serif",
+                fontSize: "0.875rem",
+              },
+            }}
+            fieldName="email"
+          />
         </motion.div>
 
         {/* Phone Field */}
@@ -256,28 +252,24 @@ export default function FormContactWrapper() {
           <label className="font-manrope font-medium text-sm text-ui-12">
             Mobil nömrə <sup className="text-red-500">*</sup>
           </label>
-          <motion.div
-            whileFocus={{ scale: 1.02 }}
-            transition={{ duration: 0.2 }}
-          >
-            <FormPhone
-              fieldName="phone"
-              styles={{
-                input: {
-                  background: "#FAFAFA",
-                  border: "1px solid #E0E0E0",
-                  height: "44px",
-                  color: "#212121",
-                  width: "100%",
-                  outline: "none",
-                  padding: "0.75rem",
-                  borderRadius: "0.5rem",
-                  fontFamily: "'manrope', sans-serif",
-                  fontSize: "0.875rem",
-                },
-              }}
-            />
-          </motion.div>
+          <FormPhone
+            fieldName="phone"
+            placeholder="+994 XX XXX XX XX"
+            styles={{
+              input: {
+                background: "#FAFAFA",
+                border: "1px solid #E0E0E0",
+                height: "44px",
+                color: "#212121",
+                padding: "0.75rem",
+
+                width:"100%",
+                borderRadius: "0.5rem",
+                fontFamily: "'manrope', sans-serif",
+                fontSize: "0.875rem",
+              },
+            }}
+          />
         </motion.div>
 
         {/* Services Field */}
@@ -288,29 +280,24 @@ export default function FormContactWrapper() {
           <label className="font-manrope font-medium text-sm text-ui-12">
             Xidmət seçin <sup className="text-red-500">*</sup>
           </label>
-          <motion.div
-            whileFocus={{ scale: 1.02 }}
-            transition={{ duration: 0.2 }}
-          >
-            <FormSelect
-              fieldName="services"
-              styles={{
-                root: {
-                  background: "#FAFAFA",
-                  border: "1px solid #E0E0E0",
-                  height: "44px",
-                  color: "#212121",
-                  padding: "0.75rem",
-                  borderRadius: "0.5rem",
-                  fontFamily: "'manrope', sans-serif",
-                  fontSize: "0.875rem",
-                },
-                suffix: {
-                  color: "#757575",
-                },
-              }}
-            />
-          </motion.div>
+          <FormSelect
+            fieldName="services"
+            styles={{
+              root: {
+                background: "#FAFAFA",
+                border: "1px solid #E0E0E0",
+                height: "44px",
+                color: "#212121",
+                padding: "0.75rem",
+                borderRadius: "0.5rem",
+                fontFamily: "'manrope', sans-serif",
+                fontSize: "0.875rem",
+              },
+              suffix: {
+                color: "#757575",
+              },
+            }}
+          />
         </motion.div>
 
         {/* Message Field */}
@@ -321,35 +308,27 @@ export default function FormContactWrapper() {
           <label className="font-manrope font-medium text-sm text-ui-12">
             Mesajınız
           </label>
-          <motion.div
-            whileFocus={{ scale: 1.02 }}
-            transition={{ duration: 0.2 }}
-          >
-            <FormTextArea
-              fieldName="message"
-              rows={5}
-              styles={{
-                textarea: {
-                  background: "#FAFAFA",
-                  border: "1px solid #E0E0E0",
-                  height: "116px",
-                  padding: "0.75rem",
-                  color: "#212121",
-                  borderRadius: "0.5rem",
-                  fontFamily: "'manrope', sans-serif",
-                  fontSize: "0.875rem",
-                  resize: "none",
-                },
-              }}
-            />
-          </motion.div>
+          <FormTextArea
+            fieldName="message"
+            rows={5}
+            styles={{
+              textarea: {
+                background: "#FAFAFA",
+                border: "1px solid #E0E0E0",
+                height: "116px",
+                padding: "0.75rem",
+                color: "#212121",
+                borderRadius: "0.5rem",
+                fontFamily: "'manrope', sans-serif",
+                fontSize: "0.875rem",
+                resize: "none",
+              },
+            }}
+          />
         </motion.div>
 
         {/* Submit Button */}
-        <motion.div
-          className="lg:col-span-2 flex"
-          variants={fieldVariants}
-        >
+        <motion.div className="lg:col-span-2 flex" variants={fieldVariants}>
           <motion.button
             type="submit"
             disabled={isSubmitting}
@@ -360,7 +339,7 @@ export default function FormContactWrapper() {
           >
             {/* Background gradient animation */}
             <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-ui-1 via-ui-1/90 to-ui-1"
+              className="absolute inset-0 bg-linear-to-r from-ui-1 via-ui-1/90 to-ui-1"
               initial={{ x: "-100%" }}
               whileHover={{ x: "100%" }}
               transition={{ duration: 0.6, ease: "easeInOut" as const }}

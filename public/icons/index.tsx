@@ -277,11 +277,12 @@ export default class Icons {
   }
 
   // call
-  static Phone({ fill = "white", width = 30, height = 30 }: IconsProps) {
+  static Phone({ fill = "white", width = 30, height = 30 ,className}: IconsProps) {
     return (
       <svg
         width={width}
         height={height}
+        className={className}
         viewBox="0 0 30 30"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -496,7 +497,7 @@ export default class Icons {
       </svg>
     );
   }
-  static Sector({fill = "#004A52", width = 24, height = 24 }: IconsProps) {
+  static Sector({ fill = "#004A52", width = 24, height = 24 }: IconsProps) {
     return (
       <svg
         width={width}
@@ -512,6 +513,35 @@ export default class Icons {
         <path
           d="M4 16.75V18C4 20.21 5.79 22 8 22H17C19.21 22 21 20.21 21 18V16.75C21 16.2 20.55 15.75 20 15.75H5C4.45 15.75 4 16.2 4 16.75ZM17.71 19.46C17.52 19.64 17.26 19.75 17 19.75C16.74 19.75 16.48 19.64 16.29 19.46C16.11 19.27 16 19.01 16 18.75C16 18.49 16.11 18.23 16.29 18.04C16.66 17.67 17.33 17.67 17.71 18.04C17.89 18.23 18 18.49 18 18.75C18 19.01 17.89 19.27 17.71 19.46Z"
           fill={fill}
+        />
+      </svg>
+    );
+  }
+  static AngleLong({ fill = "#1BAFBF", width = 24, height = 24,className}: IconsProps) {
+    return (
+      <svg
+        width={width}
+        height={height}
+        viewBox="0 0 24 24"
+        fill="none"
+        className={className}
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M14.4302 5.92969L20.5002 11.9997L14.4302 18.0697"
+          stroke={fill}
+          strokeWidth="1.5"
+          strokeMiterlimit="10"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M3.5 12H20.33"
+          stroke={fill}
+          strokeWidth="1.5"
+          strokeMiterlimit="10"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </svg>
     );

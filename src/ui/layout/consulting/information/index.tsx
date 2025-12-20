@@ -93,11 +93,11 @@ export default function Information() {
       variants={containerVariants}
     >
       <motion.p
-        className="font-manrope lg:text-[28px] lg:leading-9 text-white font-medium"
+        className="font-manrope lg:text-[28px] lg:leading-9 text-ui-7 font-medium"
         variants={textVariants}
       >
-        Bizim üçün ən yaxşı göstərici sizin fikrinizdir. <br />
-        Rəy və təkliflərinizi göndərin, xidmətimizi birgə daha da yaxşılaşdıraq.
+        Xidmətlərdən yararlanmaq üçün formu doldurun və ya bizimlə əlaqə
+        saxlayın
       </motion.p>
 
       <motion.ul
@@ -115,44 +115,38 @@ export default function Information() {
               whileHover="hover"
               animate="rest"
             >
-              <motion.div className="flex items-center gap-3 p-2.5 rounded-bl-[10px] rounded-tl-[10px] bg-white/26 relative min-h-17.5 overflow-hidden">
-                {/* Hover background effect */}
+              <motion.div className="flex items-center gap-3 p-2.5 rounded-[10px] bg-ui-19 relative min-h-17.5 overflow-hidden">
                 <motion.div
-                  className="absolute inset-0 bg-white/10"
+                  className="absolute inset-0 bg-ui-2 "
                   initial={{ x: "-100%" }}
                   whileHover={{ x: "100%" }}
                   transition={{ duration: 0.6, ease: "easeInOut" as const }}
                 />
 
-                {/* Icon container */}
                 <motion.span
                   variants={iconVariants}
-                  className="relative z-10 w-12.5 h-12.5 bg-white rounded-full flex items-center justify-center text-ui-1 shadow-md group-hover:shadow-lg transition-shadow duration-300"
+                  className="relative z-10 w-12.5 h-12.5 bg-ui-2 rounded-full flex items-center justify-center text-white shadow-md group-hover:shadow-lg transition-shadow duration-300"
                 >
                   <IconComponent width={24} height={24} fill="currentColor" />
                 </motion.span>
 
-                {/* Link */}
                 <motion.div variants={linkVariants} className="relative z-10">
                   <Link
                     href={item.href}
-                    className="font-manrope font-medium text-xl text-white tracking-tight inline-block relative"
+                    className="font-manrope font-medium text-xl text-ui-7 tracking-tight inline-block relative"
                     aria-label={item.ariaLabel}
                   >
                     {item.text}
-                    
                   </Link>
                 </motion.div>
 
-                {/* Right extension */}
                 <motion.div
-                  className="absolute top-0 bottom-0 bg-white/26 -right-10 w-10"
+                  className="absolute top-0 bottom-0 bg-ui-2 -right-10 w-10"
                   initial={{ opacity: 0.26 }}
                   whileHover={{ opacity: 0.4 }}
                   transition={{ duration: 0.3 }}
                 />
 
-                {/* Glow effect */}
                 <span className="absolute inset-0 bg-white/5 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </motion.div>
             </motion.li>
