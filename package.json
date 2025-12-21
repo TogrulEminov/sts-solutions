@@ -2,11 +2,14 @@
   "name": "sts-solution",
   "version": "0.1.0",
   "private": true,
+  "node-version": "24.12.0",
+  "npm-version": "11.6.2",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@ant-design/icons": "^6.1.0",
@@ -64,9 +67,6 @@
     "tailwindcss": "^4",
     "tsx": "^4.21.0",
     "typescript": "^5"
-  },
-  "engines": {
-    "node": ">=22.12.0"
   },
   "overrides": {
     "@auth/core": {
