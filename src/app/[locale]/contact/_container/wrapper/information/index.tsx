@@ -6,7 +6,7 @@ export default function InformationArea() {
   return (
     <div className="col-span-6 flex flex-col  space-y-6">
       <article className="flex flex-col space-y-3">
-        <h1 className="text-3xl lg:text-[40px] lg:leading-12 font-bold text-ui-21 font-manrope text-ui-2">
+        <h1 className="text-3xl lg:text-[40px] lg:leading-12 font-bold text-ui-21 font-manrope ">
           Əməkdaşlıq etmək üçün
           <span className="text-ui-1 block">əlaqə saxlayın</span>
         </h1>
