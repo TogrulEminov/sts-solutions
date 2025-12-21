@@ -1,0 +1,259 @@
+.galleryCard {
+  opacity: 0;
+  animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  position: relative;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Enhanced Gradient Overlays */
+.gradientOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+      rgba(0, 74, 82, 0) 0%,
+      rgba(0, 74, 82, 0.1) 30%,
+      rgba(0, 74, 82, 0.5) 60%,
+      rgba(0, 74, 82, 0.85) 85%,
+      rgba(0, 74, 82, 0.98) 100%);
+  opacity: 0;
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+}
+
+.radialGlow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center,
+      rgba(27, 175, 191, 0.4) 0%,
+      rgba(27, 175, 191, 0.2) 30%,
+      rgba(27, 175, 191, 0.1) 50%,
+      transparent 75%);
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  mix-blend-mode: screen;
+  z-index: 2;
+}
+
+.galleryCard:hover .gradientOverlay {
+  opacity: 1;
+}
+
+.galleryCard:hover .radialGlow {
+  opacity: 1;
+  transform: scale(1);
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+/* Premium Shine Effect */
+.shineEffect {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg,
+      transparent 20%,
+      rgba(255, 255, 255, 0.15) 35%,
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0.15) 65%,
+      transparent 80%);
+  transform: translateX(-150%) skewX(-20deg) scale(1.5);
+  transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 3;
+}
+
+.galleryCard:hover .shineEffect {
+  transform: translateX(150%) skewX(-20deg) scale(1.5);
+}
+
+/* Animated View Icon */
+.iconWrapper {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: scale(0.3) rotate(-90deg);
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  z-index: 4;
+}
+
+.galleryCard:hover .iconWrapper {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+.iconCircle {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg,
+      rgba(27, 175, 191, 1) 0%,
+      rgba(27, 175, 191, 0.9) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 8px 32px rgba(27, 175, 191, 0.5),
+    0 0 0 0 rgba(27, 175, 191, 0.7),
+    inset 0 2px 8px rgba(255, 255, 255, 0.3);
+  animation: iconPulse 2s ease-in-out infinite;
+  backdrop-filter: blur(12px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.iconCircle::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.3) 50%,
+      transparent 70%);
+  animation: iconShine 3s linear infinite;
+}
+
+/* Elegant Corner Accents */
+.cornerTopLeft,
+.cornerBottomRight {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 5;
+}
+
+.cornerTopLeft {
+  top: 0;
+  left: 0;
+  border-top: 4px solid var(--color-ui-1);
+  border-left: 4px solid var(--color-ui-1);
+  border-top-left-radius: 12px;
+  transform: translate(-15px, -15px) scale(0.5);
+  box-shadow: 0 0 15px rgba(27, 175, 191, 0.5);
+}
+
+.cornerBottomRight {
+  bottom: 0;
+  right: 0;
+  border-bottom: 4px solid var(--color-ui-1);
+  border-right: 4px solid var(--color-ui-1);
+  border-bottom-right-radius: 12px;
+  transform: translate(15px, 15px) scale(0.5);
+  box-shadow: 0 0 15px rgba(27, 175, 191, 0.5);
+}
+
+.galleryCard:hover .cornerTopLeft {
+  opacity: 1;
+  transform: translate(8px, 8px) scale(1);
+}
+
+.galleryCard:hover .cornerBottomRight {
+  opacity: 1;
+  transform: translate(-8px, -8px) scale(1);
+}
+
+/* Premium Bottom Border */
+.bottomBorder {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  width: 0;
+  background: linear-gradient(90deg,
+      transparent 0%,
+      var(--color-ui-1) 20%,
+      var(--color-ui-4) 50%,
+      var(--color-ui-1) 80%,
+      transparent 100%);
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow:
+    0 0 20px var(--color-ui-1),
+    0 -2px 10px var(--color-ui-1);
+  z-index: 6;
+}
+
+.galleryCard:hover .bottomBorder {
+  width: 100%;
+  animation: borderGlow 2s ease-in-out infinite;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes glowPulse {
+
+  0%,
+  100% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes iconPulse {
+
+  0%,
+  100% {
+    box-shadow:
+      0 8px 32px rgba(27, 175, 191, 0.5),
+      0 0 0 0 rgba(27, 175, 191, 0.7),
+      inset 0 2px 8px rgba(255, 255, 255, 0.3);
+    transform: scale(1);
+  }
+
+  50% {
+    box-shadow:
+      0 8px 40px rgba(27, 175, 191, 0.7),
+      0 0 0 20px rgba(27, 175, 191, 0),
+      inset 0 2px 8px rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+  }
+}
+
+@keyframes iconShine {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+  }
+
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+  }
+}
+
+@keyframes borderGlow {
+
+  0%,
+  100% {
+    box-shadow:
+      0 0 20px var(--color-ui-1),
+      0 -2px 10px var(--color-ui-1);
+  }
+
+  50% {
+    box-shadow:
+      0 0 30px var(--color-ui-1),
+      0 -2px 15px var(--color-ui-1),
+      0 0 40px rgba(27, 175, 191, 0.3);
+  }
+}

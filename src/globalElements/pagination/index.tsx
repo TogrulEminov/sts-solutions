@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { Suspense } from "react";
 import { Pagination } from "antd";
 import { useRouter, usePathname } from "@/src/i18n/navigation";
 import { useSearchParams } from "next/navigation";
@@ -25,12 +25,16 @@ const GlobalPagination: React.FC<GlobalPaginationProps> = ({ total }) => {
   };
 
   return (
-    <Pagination
-      current={currentPage}
-      pageSize={pageSize}
-      total={total}
-      onChange={onChange}
-    />
+    <Suspense>
+      <div className="w-full flex items-center justify-center">
+        <Pagination
+          current={currentPage}
+          pageSize={pageSize}
+          total={total}
+          onChange={onChange}
+        />
+      </div>
+    </Suspense>
   );
 };
 

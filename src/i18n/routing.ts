@@ -6,11 +6,10 @@ export type Pathnames = {
   "/contact": { az: string; en: string; ru: string };
 };
 export const routing = defineRouting({
-  // locales: ["az", "en", "ru"],
   locales: ["az"],
   defaultLocale: "az",
-  localePrefix: "as-needed", // 🔴 as-needed-ə qayıtdıq
-  localeDetection: false, // 🔴 Loop qarşısını alır
+  localePrefix: "as-needed",
+  localeDetection: false,
   pathnames: {
     "/": {
       az: "/",
@@ -28,6 +27,16 @@ export const routing = defineRouting({
       az: "/elaqe",
       en: "/contact",
       ru: "/kontakti",
+    },
+    "/projects": {
+      az: "/layiheler",
+      en: "/projects",
+      ru: "/projecti",
+    },
+    "/projects/[slug]": {
+      az: "/layiheler/[slug]",
+      en: "/projects/[slug]",
+      ru: "/projecti/[slug]",
     },
   },
 });

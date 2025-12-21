@@ -2,13 +2,13 @@
 import MySwiper from "@/src/lib/swiper";
 import { SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, EffectFade } from "swiper/modules";
-import CustomImage from "@/src/globalElements/ImageTag";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
 import { Swiper as SwiperCore } from "swiper/types";
 import { Link } from "@/src/i18n/navigation";
 import Icons from "@/public/icons";
 import { useRef } from "react";
+import HeroImageAnimation from "./image";
 
 export default function SliderArea() {
   const swiperRef = useRef<SwiperCore | null>(null);
@@ -82,13 +82,7 @@ export default function SliderArea() {
               <div className="relative h-full py-20 flex items-center z-6">
                 <div className="heroFirstLinear"></div>
                 <div className="heroSecondLinear"></div>
-                <CustomImage
-                  className="w-full h-full absolute inset-0 object-cover"
-                  width={1920}
-                  title="hero"
-                  height={1080}
-                  src={item}
-                />
+                <HeroImageAnimation src={item} />
                 <div className="container relative z-4">
                   <div className="flex flex-col h-full space-y-10">
                     <Link
@@ -137,7 +131,6 @@ export default function SliderArea() {
         })}
       </MySwiper>
 
-      {/* Custom Navigation & Pagination */}
       <div className="absolute left-[5%] top-1/2 -translate-y-1/2 z-10 hidden lg:flex flex-col items-center gap-5">
         <button
           type="button"

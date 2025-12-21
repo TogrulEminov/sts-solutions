@@ -1,0 +1,197 @@
+.imageWrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    animation: cinematicZoom 35s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+
+.overlayEffect {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        ellipse at 30% 40%,
+        rgba(100, 200, 255, 0.15) 0%,
+        rgba(0, 0, 0, 0.4) 100%
+    );
+    animation: breathe 10s ease-in-out infinite;
+    mix-blend-mode: overlay;
+}
+
+.lightWeep {
+    position: absolute;
+    top: -100%;
+    left: -100%;
+    width: 300%;
+    height: 300%;
+    background: 
+        radial-gradient(
+            circle at 50% 50%,
+            transparent 30%,
+            rgba(255, 255, 255, 0.08) 40%,
+            transparent 50%
+        ),
+        conic-gradient(
+            from 45deg,
+            transparent 0deg,
+            rgba(255, 255, 255, 0.2) 20deg,
+            transparent 40deg,
+            transparent 180deg,
+            rgba(255, 255, 255, 0.15) 200deg,
+            transparent 220deg
+        );
+    animation: orbitSpin 25s linear infinite;
+    mix-blend-mode: screen;
+}
+
+.particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.particles span {
+    position: absolute;
+    background: radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0.9) 0%,
+        rgba(255, 255, 255, 0.3) 50%,
+        transparent 100%
+    );
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    animation: drift 6s ease-in-out infinite;
+}
+
+.particles span:nth-child(1) {
+    width: 6px;
+    height: 6px;
+    top: 15%;
+    left: 10%;
+    animation: drift 12s ease-in-out infinite;
+    animation-delay: 0s;
+}
+
+.particles span:nth-child(2) {
+    width: 8px;
+    height: 8px;
+    top: 70%;
+    left: 85%;
+    animation: drift 15s ease-in-out infinite reverse;
+    animation-delay: 3s;
+}
+
+.particles span:nth-child(3) {
+    width: 5px;
+    height: 5px;
+    top: 35%;
+    left: 60%;
+    animation: drift 10s ease-in-out infinite;
+    animation-delay: 6s;
+}
+
+.particles span:nth-child(4) {
+    width: 7px;
+    height: 7px;
+    top: 85%;
+    left: 25%;
+    animation: drift 18s ease-in-out infinite reverse;
+    animation-delay: 2s;
+}
+
+.particles span:nth-child(5) {
+    width: 6px;
+    height: 6px;
+    top: 25%;
+    left: 75%;
+    animation: drift 14s ease-in-out infinite;
+    animation-delay: 8s;
+}
+
+.particles span:nth-child(6) {
+    width: 4px;
+    height: 4px;
+    top: 50%;
+    left: 40%;
+    animation: drift 11s ease-in-out infinite reverse;
+    animation-delay: 5s;
+}
+
+.particles span:nth-child(7) {
+    width: 9px;
+    height: 9px;
+    top: 10%;
+    left: 90%;
+    animation: drift 20s ease-in-out infinite;
+    animation-delay: 1s;
+}
+
+@keyframes cinematicZoom {
+    0% {
+        transform: scale(1) translate(0, 0) rotate(0deg);
+    }
+    20% {
+        transform: scale(1.06) translate(-3%, 1%) rotate(0.5deg);
+    }
+    40% {
+        transform: scale(1.10) translate(2%, -2%) rotate(-0.3deg);
+    }
+    60% {
+        transform: scale(1.08) translate(-1%, 3%) rotate(0.4deg);
+    }
+    80% {
+        transform: scale(1.12) translate(2%, -1%) rotate(-0.2deg);
+    }
+    100% {
+        transform: scale(1) translate(0, 0) rotate(0deg);
+    }
+}
+
+@keyframes breathe {
+    0%, 100% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.05);
+    }
+}
+
+@keyframes orbitSpin {
+    0% {
+        transform: rotate(0deg);
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: rotate(360deg);
+        opacity: 0.6;
+    }
+}
+
+@keyframes drift {
+    0%, 100% {
+        transform: translate(0, 0) scale(0.8);
+        opacity: 0;
+    }
+    5% {
+        opacity: 1;
+    }
+    25% {
+        transform: translate(30px, -80px) scale(1.2);
+        opacity: 0.8;
+    }
+    50% {
+        transform: translate(-20px, -150px) scale(1.5);
+        opacity: 0.5;
+    }
+    75% {
+        transform: translate(40px, -200px) scale(1.1);
+        opacity: 0.7;
+    }
+    95% {
+        opacity: 1;
+    }
+}

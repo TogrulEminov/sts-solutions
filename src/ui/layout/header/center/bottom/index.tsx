@@ -6,12 +6,12 @@ interface Props {
 }
 
 const navLinks = [
-  { href: "/", label: "Haqqımızda" },
-  { href: "/", label: "Xidmətlərimiz" },
-  { href: "/", label: "Layihələrimiz" },
+  { href: "/about", label: "Haqqımızda" },
+  { href: "/services", label: "Xidmətlərimiz" },
+  { href: "/projects", label: "Layihələrimiz" },
   { href: "/", label: "Həllərimiz" },
   { href: "/", label: "Xəbərlər" },
-  { href: "/", label: "Əlaqə" },
+  { href: "/contact", label: "Əlaqə" },
 ];
 
 export default function HeaderBottom({ isSticky }: Props) {
