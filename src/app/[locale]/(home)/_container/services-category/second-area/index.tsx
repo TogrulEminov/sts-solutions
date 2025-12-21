@@ -8,7 +8,7 @@ export default function SecondArea() {
           <strong className="font-manrope font-bold lg:text-[30px] lg:leading-[38px] py-2.5 px-6 text-white">
             Təchizat xidmətlərimiz
           </strong>
-          <div className="servicesSecond absolute bottom-0  top-0 w-full h-full -right-2.5 rounded-[10px]"></div>
+          <div className="servicesSecond absolute bottom-0  top-0 w-full h-full -right-5 rounded-[10px]"></div>
         </div>
         <SliderArea />
       </div>
