@@ -1,10 +1,5 @@
 import { defineRouting } from "next-intl/routing";
-export type Pathnames = {
-  "/": { az: string; en: string; ru: string };
-  "[slug]": { az: string; en: string; ru: string };
-  "/about": { az: string; en: string; ru: string };
-  "/contact": { az: string; en: string; ru: string };
-};
+
 export const routing = defineRouting({
   locales: ["az"],
   defaultLocale: "az",
@@ -37,6 +32,21 @@ export const routing = defineRouting({
       az: "/layiheler/[slug]",
       en: "/projects/[slug]",
       ru: "/projecti/[slug]",
+    },
+    "/services": {
+      az: "/xidmetler",
+      en: "/services",
+      ru: "/uslugi",
+    },
+    "/services/[category]": {
+      az: "/xidmetler/[category]",
+      en: "/services/[category]",
+      ru: "/uslugi/[category]",
+    },
+    "/services/[category]/[slug]": {
+      az: "/xidmetler/[category]/[slug]",
+      en: "/services/[category]/[slug]",
+      ru: "/uslugi/[category]/[slug]",
     },
   },
 });
