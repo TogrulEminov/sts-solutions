@@ -8,5 +8,6 @@ export const MotionStrong = motion.strong;
 export const MotionParagraph = motion.p;
 export const MotionSpan = motion.span;
 export const MotionNav = motion.nav;
+export const MotionFigure = motion.figure;
 
 export const MotionHeader = motion.header;

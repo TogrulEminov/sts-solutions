@@ -17,31 +17,6 @@
     mix-blend-mode: overlay;
 }
 
-.lightWeep {
-    position: absolute;
-    top: -100%;
-    left: -100%;
-    width: 300%;
-    height: 300%;
-    background: 
-        radial-gradient(
-            circle at 50% 50%,
-            transparent 30%,
-            rgba(255, 255, 255, 0.08) 40%,
-            transparent 50%
-        ),
-        conic-gradient(
-            from 45deg,
-            transparent 0deg,
-            rgba(255, 255, 255, 0.2) 20deg,
-            transparent 40deg,
-            transparent 180deg,
-            rgba(255, 255, 255, 0.15) 200deg,
-            transparent 220deg
-        );
-    animation: orbitSpin 25s linear infinite;
-    mix-blend-mode: screen;
-}
 
 .particles {
     position: absolute;

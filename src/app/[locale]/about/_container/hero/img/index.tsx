@@ -12,7 +12,6 @@ export default function HeroImage() {
           className="w-full h-full object-cover"
         />
         <div className={s.overlayEffect}></div>
-        <div className={s.lightWeep}></div>
         <div className={s.particles}>
           <span></span>
           <span></span>
