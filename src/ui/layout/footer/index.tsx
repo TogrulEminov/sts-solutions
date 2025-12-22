@@ -3,6 +3,7 @@ import { motion } from "framer-motion"
 import Logo from "../../logo"
 import Social from "./social"
 import { Link } from "@/src/i18n/navigation"
+import CustomLink from "next/link"
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -31,20 +32,20 @@ const linkVariants = {
 
 export default function Footer() {
   return (
-    <footer className="py-20 bg-ui-2">
+    <footer className="bg-ui-2">
       <motion.div
-        className="container flex flex-col space-y-15"
+        className="container flex flex-col space-y-10 lg:space-y-15"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
         variants={containerVariants}
       >
-        <motion.div className="flex items-center justify-between" variants={itemVariants}>
+        <motion.div className="flex items-center pt-10  lg:pt-15 justify-between" variants={itemVariants}>
           <Logo isWhite={true} />
           <Social />
         </motion.div>
 
-        <motion.div className="grid lg:grid grid-cols-4 gap-10" variants={containerVariants}>
+        <motion.div className="grid   lg:grid grid-cols-4 gap-10" variants={containerVariants}>
           <motion.div className="flex flex-col space-y-4" variants={itemVariants}>
             <strong className="font-manrope font-medium text-base text-white">Services</strong>
             <div className="flex flex-col space-y-3">
@@ -166,6 +167,62 @@ export default function Footer() {
               </motion.div>
             </div>
           </motion.div>
+        </motion.div>
+
+        {/* Footer Bottom */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+          className="border-t border-white/10 py-5"
+        >
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            {/* Copyright */}
+            <motion.p
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.7 }}
+              className="font-manrope font-medium text-white/50 text-sm lg:text-base order-2 md:order-1"
+            >
+              © 2015-2025 GlobTm. All rights reserved
+            </motion.p>
+
+            {/* Site by */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.8 }}
+              className="order-1 md:order-2"
+            >
+              <CustomLink
+                href={"https://togruleminov.vercel.app"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-manrope font-medium text-white/40 text-sm hover:text-white/60 transition-colors duration-300 flex items-center gap-1.5 group"
+              >
+                <span className="text-white/30">Site by</span>
+                <span className="font-semibold text-white/60 group-hover:text-white transition-colors flex items-center gap-1">
+                  TogrulEminov
+                  <svg
+                    className="w-3.5 h-3.5 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                    />
+                  </svg>
+                </span>
+              </CustomLink>
+            </motion.div>
+          </div>
         </motion.div>
       </motion.div>
     </footer>
