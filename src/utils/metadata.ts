@@ -13,12 +13,7 @@ type Locales = "az" | "en" | "ru";
 type CustomPath =
   | "home"
   | "services"
-  | "certificates"
   | "contact"
-  | "blog"
-  | "partner"
-  | "media"
-  | "gallery"
   | "about";
 
 interface GeneratePageMetadataParams {
@@ -27,7 +22,7 @@ interface GeneratePageMetadataParams {
   category?: string;
   detail?: boolean;
   customPath: CustomPath;
-  dataType?: "category" | "service" | "blog" | "custom" | "servicesCategory";
+  dataType?: "category" | "service" | "custom" | "servicesCategory";
   customData?: {
     title?: string;
     description?: string;
@@ -41,49 +36,26 @@ interface GeneratePageMetadataParams {
  */
 const DEFAULT_TITLES: Record<CustomPath, Record<Locales, string>> = {
   home: {
-    az: "Ana Səhifə - Profi Transport",
-    en: "Home - Profi Transport",
-    ru: "Главная - Profi Transport",
+    az: "Ana Səhifə - Sts Solutions",
+    en: "Home - Sts Solutions",
+    ru: "Главная - Sts Solutions",
   },
   services: {
-    az: "Xidmətlər - Profi Transport",
-    en: "Services - Profi Transport",
-    ru: "Услуги - Profi Transport",
+    az: "Xidmətlər - Sts Solutions",
+    en: "Services - Sts Solutions",
+    ru: "Услуги - Sts Solutions",
   },
-  certificates: {
-    az: "Sertifikatlar - Profi Transport",
-    en: "Certificates - Profi Transport",
-    ru: "Сертификаты - Profi Transport",
-  },
+
   contact: {
-    az: "Əlaqə - Profi Transport",
-    en: "Contact - Profi Transport",
-    ru: "Контакт - Profi Transport",
+    az: "Əlaqə - Sts Solutions",
+    en: "Contact - Sts Solutions",
+    ru: "Контакт - Sts Solutions",
   },
-  blog: {
-    az: "Bloq - Profi Transport",
-    en: "Blog - Profi Transport",
-    ru: "Блог - Profi Transport",
-  },
-  partner: {
-    az: "Tərəfdaşlar - Profi Transport",
-    en: "Partners - Profi Transport",
-    ru: "Партнеры - Profi Transport",
-  },
-  media: {
-    az: "Media - Profi Transport",
-    en: "Media - Profi Transport",
-    ru: "Медиа - Profi Transport",
-  },
-  gallery: {
-    az: "Foto Qalereya - Profi Transport",
-    en: "Photo Gallery - Profi Transport",
-    ru: "Foto Galeriya - Profi Transport",
-  },
+  
   about: {
-    az: "Haqqımızda - Profi Transport",
-    en: "About Us - Profi Transport",
-    ru: "О нас - Profi Transport",
+    az: "Haqqımızda - Sts Solutions",
+    en: "About Us - Sts Solutions",
+    ru: "О нас - Sts Solutions",
   },
 };
 
@@ -92,49 +64,25 @@ const DEFAULT_TITLES: Record<CustomPath, Record<Locales, string>> = {
  */
 const DEFAULT_DESCRIPTIONS: Record<CustomPath, Record<Locales, string>> = {
   home: {
-    az: "Profi Transport-un rəsmi ana səhifəsi",
-    en: "Official homepage of Profi Transport",
-    ru: "Официальная главная страница Profi Transport",
+    az: "Sts Solutions-un rəsmi ana səhifəsi",
+    en: "Official homepage of Sts Solutions",
+    ru: "Официальная главная страница Sts Solutions",
   },
   services: {
-    az: "Profi Transport-un təqdim etdiyi xidmətlər haqqında məlumat",
-    en: "Information about the services provided by Profi Transport",
-    ru: "Информация о услугах, предоставляемых Profi Transport",
-  },
-  certificates: {
-    az: "Profi Transport-un beynəlxalq sertifikatları və akkreditasiyaları haqqında məlumat",
-    en: "Information about the international certificates and accreditations of Profi Transport",
-    ru: "Информация о международных сертификатах и аккредитациях Profi Transport",
+    az: "Sts Solutions-un təqdim etdiyi xidmətlər haqqında məlumat",
+    en: "Information about the services provided by Sts Solutions",
+    ru: "Информация о услугах, предоставляемых Sts Solutions",
   },
   contact: {
-    az: "Profi Transport ilə əlaqə yaratmaq üçün məlumat",
-    en: "Information on how to contact Profi Transport",
-    ru: "Информация о том, как связаться с Profi Transport",
+    az: "Sts Solutions ilə əlaqə yaratmaq üçün məlumat",
+    en: "Information on how to contact Sts Solutions",
+    ru: "Информация о том, как связаться с Sts Solutions",
   },
-  blog: {
-    az: "Profi Transport ilə əlaqədar məqalələr və bloq yazıları",
-    en: "Articles and blog posts related to Profi Transport",
-    ru: "Статьи и блоги, связанные с Profi Transport",
-  },
-  partner: {
-    az: "Profi Transport-un tərəfdaşları və əməkdaşlıq imkanları",
-    en: "Profi Transport's partners and collaboration opportunities",
-    ru: "Партнеры Profi Transport и возможности для сотрудничества",
-  },
-  media: {
-    az: "Profi Transport haqqında media xəbərləri və şəkilləri",
-    en: "Media news and images about Profi Transport",
-    ru: "Новости и изображения о Profi Transport в СМИ",
-  },
-  gallery: {
-    az: "Profi Transport haqqında media xəbərləri və şəkilləri",
-    en: "Media news and images about Profi Transport",
-    ru: "Новости и изображения о Profi Transport в СМИ",
-  },
+
   about: {
-    az: "Profi Transport-un tarixçəsi və fəaliyyət sahələri",
-    en: "The history and areas of activity of Profi Transport",
-    ru: "История и сферы деятельности Profi Transport",
+    az: "Sts Solutions-un tarixçəsi və fəaliyyət sahələri",
+    en: "The history and areas of activity of Sts Solutions",
+    ru: "История и сферы деятельности Sts Solutions",
   },
 };
 
@@ -146,7 +94,7 @@ interface GeneratePageMetadataParams {
   category?: string; // ✅ Artıq var
   detail?: boolean;
   customPath: CustomPath;
-  dataType?: "category" | "service" | "blog" | "custom" | "servicesCategory";
+  dataType?: "category" | "service" | "custom" | "servicesCategory";
   customData?: {
     title?: string;
     description?: string;
@@ -237,7 +185,7 @@ export async function generatePageMetadata({
       title =
         DEFAULT_TITLES[customPath]?.[locale as Locales] ||
         DEFAULT_TITLES[customPath]?.az ||
-        "Profi Transport";
+        "Sts Solutions";
     }
 
     if (!description) {
@@ -369,7 +317,7 @@ export async function generatePageMetadata({
     };
   } catch {
     const fallbackTitle =
-      DEFAULT_TITLES[customPath]?.[locale as Locales] || "Profi Transport";
+      DEFAULT_TITLES[customPath]?.[locale as Locales] || "Sts Solutions";
 
     return {
       title: fallbackTitle,

@@ -1,6 +1,6 @@
 import React from "react";
 import "@/src/styles/globals.css";
-import { Inter,Plus_Jakarta_Sans ,Manrope} from "next/font/google";
+import { Inter, Plus_Jakarta_Sans, Manrope } from "next/font/google";
 import type { Metadata } from "next";
 import { MessageProvider } from "../globalElements/providers/MessageProvider";
 import Script from "next/script";
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   ),
   title: {
     template: "%s",
-    default: "Ml Group - Master Luxury",
+    default: "Sts Solutions- Smart Technology Solutions",
   },
   icons: {
     icon: "/favicon.ico",
@@ -44,13 +44,13 @@ const inter = Inter({
   variable: "--font-inter",
 });
 const jakarta = Plus_Jakarta_Sans({
-  weight: ["200","300","400","500","600","700","800"],
+  weight: ["200", "300", "400", "500", "600", "700", "800"],
   subsets: ["latin"],
   display: "swap",
   variable: "--font-jakarta",
 });
 const manrope = Manrope({
-  weight: ["200","300","400","500","600","700","800"],
+  weight: ["200", "300", "400", "500", "600", "700", "800"],
   subsets: ["latin"],
   display: "swap",
   variable: "--font-jakarta",
