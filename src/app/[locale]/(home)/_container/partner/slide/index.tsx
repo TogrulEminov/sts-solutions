@@ -53,7 +53,6 @@ export default function SlideArea() {
       viewport={{ once: true }}
       transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
     >
-
       <Swiper
         modules={[Autoplay, FreeMode]}
         spaceBetween={8}
@@ -70,7 +69,7 @@ export default function SlideArea() {
           enabled: true,
           momentum: false,
         }}
-        className="w-full"
+        className="w-full lg:min-w-screen"
       >
         {partners.map((partner, index) => (
           <SwiperSlide key={partner.id} className="w-auto!">

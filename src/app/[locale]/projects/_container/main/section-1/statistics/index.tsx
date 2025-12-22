@@ -15,7 +15,7 @@ export default function Statistics() {
 
   return (
     <div className="relative w-full lg:max-w-sm" ref={ref}>
-      <div className="flex justify-start gap-x-10 h-29 rounded-tl-xl rounded-bl-xl border-[0.5px] p-6 border-white bg-ui-23/10 border-r-transparent items-stretch relative overflow-visible">
+      <div className="flex justify-start  gap-x-10 h-29 rounded-tl-xl rounded-bl-xl border-[0.5px] p-6 border-white bg-ui-23/10 border-r-transparent items-center relative overflow-visible">
         {stats?.map((stat, index) => {
           return (
             <div className="flex flex-col space-y-3 relative z-10" key={index}>
@@ -40,7 +40,7 @@ export default function Statistics() {
             </div>
           );
         })}
-        <div className="hidden lg:block absolute h-29 left-[100.1%] -top-[0.5px] bottom-0 w-screen border-t-[0.5px] border-b-[0.5px] border-t-white border-b-white bg-ui-23/10"></div>
+        <div className="hidden lg:block absolute h-29 left-[100.3%]  w-screen border-t-[0.5px] border-b-[0.5px] border-t-white border-b-white bg-ui-23/10"></div>
       </div>
     </div>
   );

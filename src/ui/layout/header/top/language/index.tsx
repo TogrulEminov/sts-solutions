@@ -3,9 +3,9 @@ import useOutSideClick from "@/src/hooks/useOutSideClick";
 import { ChevronDown, Globe, Check } from "lucide-react";
 import { useRef, useState } from "react";
 const languages = [
-  { code: "az", label: "Az", flag: "🇦🇿" },
-  { code: "en", label: "En", flag: "🇬🇧" },
-  { code: "ru", label: "Ru", flag: "🇷🇺" },
+  { code: "az", label: "Az" },
+  { code: "en", label: "En" },
+  { code: "ru", label: "Ru" },
 ];
 interface Props {
   isSticky?: boolean;
@@ -29,10 +29,10 @@ export default function LanguageBtn({ isSticky }: Props) {
         aria-expanded={open}
       >
         <span className="absolute inset-0 bg-linear-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 pointer-events-none"></span>
-        
+
         <Globe className="w-4 h-4 text-white/70 group-hover:text-white transition-all duration-300 group-hover:rotate-360" />
         <span className="text-white text-sm font-manrope font-medium">
-          {selectedLang.flag} {selectedLang.label}
+          {selectedLang.label}
         </span>
         <ChevronDown
           className={`w-4 h-4 text-white/70 group-hover:text-white transition-all duration-500 ${
@@ -48,7 +48,7 @@ export default function LanguageBtn({ isSticky }: Props) {
         }`}
       >
         <div className="h-1 bg-linear-to-r from-ui-1 via-cyan-400 to-ui-1"></div>
-        
+
         <div className="p-2">
           {languages.map((lang, index) => (
             <button
@@ -63,18 +63,17 @@ export default function LanguageBtn({ isSticky }: Props) {
                   : "hover:bg-gray-100 text-gray-700 hover:scale-102 hover:translate-x-1"
               }`}
               style={{
-                animation: open ? `slideIn 0.3s ease-out ${index * 0.1}s both` : 'none'
+                animation: open
+                  ? `slideIn 0.3s ease-out ${index * 0.1}s both`
+                  : "none",
               }}
             >
               <div className="flex items-center gap-3">
-                <span className="text-xl transition-transform duration-300 group-hover:scale-125">
-                  {lang.flag}
-                </span>
                 <span className="font-manrope text-sm font-medium">
                   {lang.label}
                 </span>
               </div>
-              
+
               {selectedLang.code === lang.code && (
                 <Check className="w-4 h-4 animate-[scaleIn_0.3s_ease-out]" />
               )}

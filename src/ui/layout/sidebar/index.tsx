@@ -9,21 +9,20 @@ import { MotionDiv, MotionNav } from "@/src/lib/motion/motion";
 import { AnimatePresence, motion } from "framer-motion";
 import Icons from "@/public/icons";
 import CustomLink from "next/link";
-import { 
-  Home, 
-  Info, 
-  Briefcase, 
-  FolderKanban, 
-  Mail, 
+import {
+  Home,
+  Info,
+  Briefcase,
+  FolderKanban,
+  Mail,
   X,
   ChevronRight,
   Phone,
   MapPin,
   ChevronDown,
-  Globe,
-  Check
 } from "lucide-react";
 import Logo from "../../logo";
+import LanguageBtn from "../header/top/language";
 
 const mainNavLinks = [
   { href: "/", label: "Ana səhifə", icon: Home },
@@ -65,20 +64,12 @@ const socialLinks = [
   },
 ];
 
-const languages = [
-  { code: "az", label: "Az", flag: "🇦🇿" },
-  { code: "en", label: "En", flag: "🇬🇧" },
-  { code: "ru", label: "Ru", flag: "🇷🇺" },
-];
-
 export default function Sidebar() {
   const { close } = useToggleStore();
   const isSidebarOpen = useToggleState("main-sidebar");
   const id = useId();
   const pathname = usePathname();
   const [servicesOpen, setServicesOpen] = useState(false);
-  const [langOpen, setLangOpen] = useState(false);
-  const [selectedLang, setSelectedLang] = useState(languages[0]);
 
   const handleClose = useCallback(() => {
     document.body.classList.remove("overflow-hidden");
@@ -120,7 +111,7 @@ export default function Sidebar() {
               stiffness: 300,
               damping: 30,
             }}
-            className="fixed select-none top-0 right-0 h-screen overflow-y-auto scrollbar-custom flex flex-col w-full max-w-md bg-gradient-to-br from-ui-2 to-ui-2/95 backdrop-blur-xl z-999 shadow-2xl"
+            className="fixed select-none top-0 right-0 h-screen overflow-y-auto scrollbar-custom flex flex-col w-full max-w-md bg-linear-to-br from-ui-2 to-ui-2/95 backdrop-blur-xl z-999 shadow-2xl"
           >
             {/* Header */}
             <div className="relative flex items-center justify-between p-6 border-b border-white/10">
@@ -133,81 +124,6 @@ export default function Sidebar() {
               </motion.div>
 
               <div className="flex items-center gap-3">
-                {/* Language Selector */}
-                <div className="relative">
-                  <motion.button
-                    onClick={() => setLangOpen(!langOpen)}
-                    className="group relative flex items-center gap-2 px-3 py-2 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/15 hover:border-white/30 transition-all duration-300 cursor-pointer overflow-hidden"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.15 }}
-                    aria-label="Dil seçimi"
-                    aria-expanded={langOpen}
-                  >
-                    <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 pointer-events-none"></span>
-                    
-                    <Globe className="w-4 h-4 text-white/70 group-hover:text-white transition-all duration-300 group-hover:rotate-[360deg]" />
-                    <span className="text-white text-sm font-manrope font-medium">
-                      {selectedLang.flag}
-                    </span>
-                    <ChevronDown
-                      className={`w-4 h-4 text-white/70 group-hover:text-white transition-all duration-500 ${
-                        langOpen ? "rotate-180" : ""
-                      }`}
-                    />
-                  </motion.button>
-
-                  {/* Language Dropdown */}
-                  <AnimatePresence>
-                    {langOpen && (
-                      <motion.div
-                        initial={{ opacity: 0, scale: 0.95, y: -10 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.95, y: -10 }}
-                        transition={{ duration: 0.2 }}
-                        className="absolute left-0 top-full mt-2 w-36 bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl border border-white/20 overflow-hidden z-50"
-                      >
-                        <div className="h-1 bg-gradient-to-r from-ui-1 via-cyan-400 to-ui-1"></div>
-                        
-                        <div className="p-1.5">
-                          {languages.map((lang, index) => (
-                            <motion.button
-                              key={lang.code}
-                              onClick={() => {
-                                setSelectedLang(lang);
-                                setLangOpen(false);
-                              }}
-                              initial={{ opacity: 0, x: -10 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: index * 0.05 }}
-                              className={`group w-full cursor-pointer flex items-center justify-between gap-2 px-3 py-2 rounded-lg text-left transition-all duration-200 ${
-                                selectedLang.code === lang.code
-                                  ? "bg-ui-1 text-white"
-                                  : "hover:bg-gray-100 text-gray-700"
-                              }`}
-                            >
-                              <div className="flex items-center gap-2">
-                                <span className="text-base transition-transform duration-300 group-hover:scale-125">
-                                  {lang.flag}
-                                </span>
-                                <span className="font-manrope text-sm font-medium">
-                                  {lang.label}
-                                </span>
-                              </div>
-                              
-                              {selectedLang.code === lang.code && (
-                                <Check className="w-3.5 h-3.5" />
-                              )}
-                            </motion.button>
-                          ))}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-
                 {/* Close Button */}
                 <motion.button
                   onClick={handleClose}
@@ -248,7 +164,7 @@ export default function Sidebar() {
                             : "bg-white/5 hover:bg-white/10 text-white/80 hover:text-white"
                         }`}
                       >
-                        <span className="absolute inset-0 bg-gradient-to-r from-ui-1/0 via-ui-1/20 to-ui-1/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+                        <span className="absolute inset-0 bg-linear-to-r from-ui-1/0 via-ui-1/20 to-ui-1/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
 
                         <div className="relative z-10 flex items-center gap-3">
                           <motion.div
@@ -303,7 +219,7 @@ export default function Sidebar() {
                     onClick={() => setServicesOpen(!servicesOpen)}
                     className="group relative w-full flex items-center justify-between px-4 py-3.5 rounded-xl transition-all duration-300 overflow-hidden bg-white/5 hover:bg-white/10 text-white/80 hover:text-white"
                   >
-                    <span className="absolute inset-0 bg-gradient-to-r from-ui-1/0 via-ui-1/20 to-ui-1/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+                    <span className="absolute inset-0 bg-linear-to-r from-ui-1/0 via-ui-1/20 to-ui-1/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
 
                     <div className="relative z-10 flex items-center gap-3">
                       <motion.div
@@ -396,7 +312,7 @@ export default function Sidebar() {
                             : "bg-white/5 hover:bg-white/10 text-white/80 hover:text-white"
                         }`}
                       >
-                        <span className="absolute inset-0 bg-gradient-to-r from-ui-1/0 via-ui-1/20 to-ui-1/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+                        <span className="absolute inset-0 bg-linear-to-r from-ui-1/0 via-ui-1/20 to-ui-1/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
 
                         <div className="relative z-10 flex items-center gap-3">
                           <motion.div
@@ -450,6 +366,12 @@ export default function Sidebar() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
             >
+              <div className="flex flex-col space-y-4 mb-6">
+                <h3 className="text-white/60 text-xs font-manrope font-bold uppercase tracking-wider mb-4">
+                  Dil dəyişmə
+                </h3>
+                <LanguageBtn />
+              </div>
               <h3 className="text-white/60 text-xs font-manrope font-bold uppercase tracking-wider mb-4">
                 Əlaqə məlumatları
               </h3>

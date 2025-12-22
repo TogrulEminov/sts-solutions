@@ -1,8 +1,10 @@
 "use client";
-import { useToggleState, useToggleStore } from "@/src/lib/zustand/useMultiToggleStore";
+import {
+  useToggleState,
+  useToggleStore,
+} from "@/src/lib/zustand/useMultiToggleStore";
 import { motion } from "framer-motion";
 import { useState } from "react";
-
 
 export default function HamburgerButton() {
   const [hovered, setHovered] = useState(false);
@@ -19,7 +21,7 @@ export default function HamburgerButton() {
       onClick={handleOpen}
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
-      className="relative w-12 h-12 flex lg:hidden items-center justify-center rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 overflow-hidden group"
+      className="relative w-12 cursor-pointer h-12 flex lg:hidden items-center justify-center rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 overflow-hidden group"
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       aria-label="Menu"

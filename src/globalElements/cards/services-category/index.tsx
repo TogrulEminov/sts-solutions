@@ -6,7 +6,7 @@ import CustomImage from "../../ImageTag";
 export default function ServicesCard() {
   return (
     <motion.div
-      className="rounded-xl overflow-hidden bg-white/17 border-2 border-transparent p-3 flex flex-col space-y-3 group cursor-pointer"
+      className="rounded-xl overflow-hidden bg-white/17 border-2 border-transparent p-2 flex flex-col space-y-3 group cursor-pointer"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
@@ -21,12 +21,7 @@ export default function ServicesCard() {
     >
       {/* Image Container */}
       <motion.figure
-        className="h-60 rounded-xl overflow-hidden relative"
-        variants={{
-          hover: {
-            scale: 1.05,
-          },
-        }}
+        className="h-60 rounded-lg overflow-hidden relative"
         transition={{ duration: 0.4, ease: "easeOut" }}
       >
         <CustomImage

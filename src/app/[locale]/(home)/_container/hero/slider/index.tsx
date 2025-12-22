@@ -79,7 +79,7 @@ export default function SliderArea() {
         ].map((item, index) => {
           return (
             <SwiperSlide className="h-full" key={index}>
-              <div className="relative h-full py-20 flex items-center z-6">
+              <div className="relative h-full flex items-center z-6">
                 <div className="heroFirstLinear"></div>
                 <div className="heroSecondLinear"></div>
                 <HeroImageAnimation src={item} />
@@ -131,23 +131,23 @@ export default function SliderArea() {
         })}
       </MySwiper>
 
-      <div className="absolute left-[5%] top-1/2 -translate-y-1/2 z-10 hidden lg:flex flex-col items-center gap-5">
+      <div className="absolute left-1/2  xl:left-[2%] bottom-12 xl:bottom-[unset]  xl:top-[55%] xl:-translate-y-1/2 z-10 hidden lg:flex xl:flex-col items-center gap-5">
         <button
           type="button"
           aria-label="prev button for services slider"
           onClick={goPrev}
-          className="w-12 h-12 rounded-full border-2 border-white/30 flex items-center justify-center cursor-pointer transition-all duration-300 hover:bg-white/10 hover:border-white hover:scale-110"
+          className="w-12 h-12 rounded-full shrink-0 border-2 border-white/30 flex items-center justify-center cursor-pointer transition-all duration-300 hover:bg-white/10 hover:border-white hover:scale-110"
         >
           <Icons.ArrowLeft />
         </button>
 
-        <div className="custom-pagination flex flex-col gap-3"></div>
+        <div className="custom-pagination flex flex-row xl:flex-col gap-3"></div>
 
         <button
           type="button"
           onClick={goNext}
           aria-label="next button for services slider"
-          className="w-12 h-12 rounded-full border-2 border-white/30 flex items-center justify-center cursor-pointer transition-all duration-300 hover:bg-white/10 hover:border-white hover:scale-110"
+          className="w-12 h-12 rounded-full shrink-0 border-2 border-white/30 flex items-center justify-center cursor-pointer transition-all duration-300 hover:bg-white/10 hover:border-white hover:scale-110"
         >
           <Icons.ArrowRight />
         </button>
@@ -155,8 +155,6 @@ export default function SliderArea() {
 
       <style jsx global>{`
         .hero-slider .custom-pagination {
-          display: flex;
-          flex-direction: column;
           gap: 12px;
           align-items: center;
         }

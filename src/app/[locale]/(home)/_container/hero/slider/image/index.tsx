@@ -17,7 +17,6 @@ export default function HeroImageAnimation({ src }: Props) {
         src={src}
       />
       <div className={styles.overlay}></div>
-      <div className={styles.lightSweep}></div>
       <div className={styles.particles}>
         <span></span>
         <span></span>

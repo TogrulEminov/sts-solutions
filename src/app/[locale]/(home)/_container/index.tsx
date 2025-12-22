@@ -12,9 +12,9 @@ import HeroSection from "./hero";
 
 export default function HomePageContainer() {
   return (
-    <main>
-      <HeroSection/>
-      <ServicesSection/>
+    <>
+      <HeroSection />
+      <ServicesSection />
       <AboutSection />
       <ServicesCategorySection />
       <SolutionsSection />
@@ -24,6 +24,6 @@ export default function HomePageContainer() {
       <NewsSection />
       <FagSection />
       <CallAction />
-    </main>
+    </>
   );
 }

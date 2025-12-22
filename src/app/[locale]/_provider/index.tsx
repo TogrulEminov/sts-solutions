@@ -10,9 +10,9 @@ export default function ProviderComponent({ children }: LocalLayoutProps) {
   return (
     <>
       <Header />
-      <StickySocial/>
-      <Sidebar/>
-      {children}
+      <StickySocial />
+      <Sidebar />
+      <main className="pt-25 lg:pt-[114px] bg-ui-28">{children}</main>
       <Footer />
     </>
   );

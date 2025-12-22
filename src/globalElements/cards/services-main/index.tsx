@@ -10,10 +10,10 @@ export default function Services3DTilt() {
       whileInView={{ opacity: 1, rotateX: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      whileHover={{ 
-        rotateY: 2, 
+      whileHover={{
+        rotateY: 2,
         rotateX: -2,
-        transition: { duration: 0.3 }
+        transition: { duration: 0.3 },
       }}
       style={{ transformStyle: "preserve-3d" }}
     >
@@ -47,7 +47,12 @@ export default function Services3DTilt() {
           className="flex items-center justify-center shrink-0 bg-ui-1 h-full w-20"
           whileHover={{ backgroundColor: "#1e40af" }}
         >
-          <CustomImage width={32} height={32} title="" src="https://res.cloudinary.com/da403zlyf/image/upload/v1766078331/image_qsnjuk.png" />
+          <CustomImage
+            width={32}
+            height={32}
+            title=""
+            src="https://res.cloudinary.com/da403zlyf/image/upload/v1766078331/image_qsnjuk.png"
+          />
         </motion.div>
         <strong className="font-manrope mr-4 p-5 font-semibold text-2xl text-ui-16">
           Mühəndislik xidmətləri

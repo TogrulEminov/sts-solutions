@@ -2,7 +2,7 @@ import SliderArea from "./slider";
 
 export default function ServicesSection() {
   return (
-    <section className="py-10 lg:py-20 -mt-20 relative z-5 bg-ui-2 overflow-hidden rounded-tl-[28px] rounded-br-[28px]">
+    <section className="py-10 lg:py-20 -mt-5 relative z-5 bg-ui-2 overflow-hidden rounded-tl-[28px] rounded-br-[28px]">
       <div className="container flex flex-col space-y-10">
         <div className="flex items-center justify-between">
           <strong className="font-manrope font-extrabold lg:text-[45px] lg:leading-[57px] text-white">
@@ -14,7 +14,7 @@ export default function ServicesSection() {
             hazırlayırıq.
           </p>
         </div>
-        <SliderArea/>
+        <SliderArea />
       </div>
     </section>
   );

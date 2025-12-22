@@ -3,7 +3,7 @@ import ReactFancyBox from "@/src/lib/fancybox";
 
 export default function HeroDetailSection() {
   return (
-    <section className="lg:pt-65 pb-20 bg-ui-21">
+    <section className="py-20 bg-ui-21">
       <div className="container flex flex-col space-y-10">
         <article className="flex flex-col space-y-3">
           <strong className="font-manrope lg:text-xl text-white font-normal">

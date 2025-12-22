@@ -4,7 +4,7 @@ import HeroImage from "./img";
 
 export default function HeroAbout() {
   return (
-    <section className="pt-30 pb-20 h-screen flex items-center relative overflow-hidden">
+    <section className="py-20 h-screen flex items-center relative overflow-hidden">
       <HeroImage />
       <div className="absolute inset-0 w-full h-full z-2 bg-black/45"></div>
       <div className="container relative z-4 py-10">
