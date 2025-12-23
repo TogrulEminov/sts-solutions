@@ -67,7 +67,7 @@ export default function FormContactWrapper() {
 
   const [progress, setProgress] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   // eslint-disable-next-line react-hooks/incompatible-library
   const title = methods.watch("title");
   const email = methods.watch("email");
@@ -104,7 +104,7 @@ export default function FormContactWrapper() {
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
     setIsSubmitting(false);
-    
+
     // Form-u reset et (istəyirsənsə)
     // methods.reset();
   };
@@ -122,10 +122,10 @@ export default function FormContactWrapper() {
         {/* Title */}
         <div className="flex items-center justify-between">
           <div className="flex flex-col space-y-1">
-            <h3 className="font-manrope font-bold text-2xl text-ui-2">
+            <h3 className="font-inter font-bold text-2xl text-ui-2">
               Əlaqə forması
             </h3>
-            <p className="font-manrope text-sm text-gray-500">
+            <p className="font-inter text-sm text-gray-500">
               Formu doldurun, sizinlə əlaqə saxlayaq
             </p>
           </div>
@@ -147,17 +147,17 @@ export default function FormContactWrapper() {
                 {progress === 100 ? (
                   <CheckCircle2 className="w-5 h-5 text-ui-1" />
                 ) : (
-                  <span className="font-manrope font-bold text-xs text-ui-1">
+                  <span className="font-inter font-bold text-xs text-ui-1">
                     {Math.round(progress)}%
                   </span>
                 )}
               </div>
             </motion.div>
             <div className="flex flex-col">
-              <span className="font-manrope text-xs text-gray-500">
+              <span className="font-inter text-xs text-gray-500">
                 Tamamlanma
               </span>
-              <span className="font-manrope font-semibold text-sm text-ui-2">
+              <span className="font-inter font-semibold text-sm text-ui-2">
                 {filledCount}/{totalFields} sahə
               </span>
             </div>
@@ -197,7 +197,7 @@ export default function FormContactWrapper() {
           className="flex flex-col space-y-1"
           variants={fieldVariants}
         >
-          <label className="font-manrope font-medium text-sm text-ui-12">
+          <label className="font-inter font-medium text-sm text-ui-12">
             Ad <sup className="text-red-500">*</sup>
           </label>
           <FormInput
@@ -223,7 +223,7 @@ export default function FormContactWrapper() {
           className="flex flex-col space-y-1"
           variants={fieldVariants}
         >
-          <label className="font-manrope font-medium text-sm text-ui-12">
+          <label className="font-inter font-medium text-sm text-ui-12">
             Email <sup className="text-red-500">*</sup>
           </label>
           <FormInput
@@ -249,7 +249,7 @@ export default function FormContactWrapper() {
           className="flex flex-col space-y-1 col-span-2"
           variants={fieldVariants}
         >
-          <label className="font-manrope font-medium text-sm text-ui-12">
+          <label className="font-inter font-medium text-sm text-ui-12">
             Mobil nömrə <sup className="text-red-500">*</sup>
           </label>
           <FormPhone
@@ -263,7 +263,7 @@ export default function FormContactWrapper() {
                 color: "#212121",
                 padding: "0.75rem",
 
-                width:"100%",
+                width: "100%",
                 borderRadius: "0.5rem",
                 fontFamily: "'manrope', sans-serif",
                 fontSize: "0.875rem",
@@ -277,7 +277,7 @@ export default function FormContactWrapper() {
           className="flex flex-col space-y-1 lg:col-span-2"
           variants={fieldVariants}
         >
-          <label className="font-manrope font-medium text-sm text-ui-12">
+          <label className="font-inter font-medium text-sm text-ui-12">
             Xidmət seçin <sup className="text-red-500">*</sup>
           </label>
           <FormSelect
@@ -305,7 +305,7 @@ export default function FormContactWrapper() {
           className="flex flex-col space-y-1 lg:col-span-2"
           variants={fieldVariants}
         >
-          <label className="font-manrope font-medium text-sm text-ui-12">
+          <label className="font-inter font-medium text-sm text-ui-12">
             Mesajınız
           </label>
           <FormTextArea
@@ -332,7 +332,7 @@ export default function FormContactWrapper() {
           <motion.button
             type="submit"
             disabled={isSubmitting}
-            className="relative bg-ui-1 w-full px-12 cursor-pointer h-10 rounded-lg text-white font-manrope font-semibold text-base shadow-lg overflow-hidden group disabled:opacity-70 disabled:cursor-not-allowed"
+            className="relative bg-ui-1 w-full px-12 cursor-pointer h-10 rounded-lg text-white font-inter font-semibold text-base shadow-lg overflow-hidden group disabled:opacity-70 disabled:cursor-not-allowed"
             whileHover={{ scale: isSubmitting ? 1 : 1.02, y: -2 }}
             whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
             transition={{ duration: 0.2 }}

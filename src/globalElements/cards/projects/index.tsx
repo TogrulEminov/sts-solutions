@@ -48,7 +48,7 @@ export default function ProjectsCards({ className }: Props) {
         <article className="absolute inset-0 p-5 flex flex-col justify-end pb-8">
           <div className="space-y-2 relative z-10 translate-y-0 group-hover:-translate-y-[40%] md:group-hover:-translate-y-[45%] lg:group-hover:-translate-y-[50%] transition-transform duration-500 ease-out">
             <motion.strong
-              className="font-manrope lg:text-xl text-lg text-white font-bold block"
+              className="font-inter lg:text-xl text-lg text-white font-bold block"
               initial={{ opacity: 0, x: -10 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -59,7 +59,7 @@ export default function ProjectsCards({ className }: Props) {
             </motion.strong>
 
             <motion.p
-              className="text-base text-white font-manrope font-normal overflow-hidden transition-all duration-500 max-h-0 opacity-0 group-hover:max-h-40 group-hover:opacity-100 group-hover:mt-3 line-clamp-3 text-ellipsis"
+              className="text-base text-white font-inter font-normal overflow-hidden transition-all duration-500 max-h-0 opacity-0 group-hover:max-h-40 group-hover:opacity-100 group-hover:mt-3 line-clamp-3 text-ellipsis"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}

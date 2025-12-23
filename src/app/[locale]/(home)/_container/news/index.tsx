@@ -8,10 +8,10 @@ export default function NewsSection() {
       <div className="container">
         <div className="flex items-center justify-between gap-10">
           <article className="flex flex-col space-y-2">
-            <strong className="font-manrope font-bold lg:text-4xl text-ui-7">
+            <strong className="font-inter font-bold lg:text-4xl text-ui-7">
               Xəbərlərimiz
             </strong>
-            <p className="font-manrope font-normal text-base text-ui-8">
+            <p className="font-inter font-normal text-base text-ui-8">
               Discover articles and tutorials to help you build better
             </p>
           </article>

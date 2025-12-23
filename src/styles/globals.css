@@ -3,6 +3,7 @@
 @theme inline {
   --font-jakarta: "Plus Jakarta Sans", sans-serif;
   --font-manrope: "Manrope", sans-serif;
+  --font-inter: "Inter", sans-serif;
   --color-ui-1: #1BAFBF;
   --color-ui-2: #004A52;
   --color-ui-3: #01434B;
@@ -31,6 +32,10 @@
   --color-ui-26: #f5f5f5;
   --color-ui-27: #e3e3e3;
   --color-ui-28: #FAFAFA;
+}
+
+body {
+  @apply font-inter font-normal text-base
 }
 
 @layer utilities {

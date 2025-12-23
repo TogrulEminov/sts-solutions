@@ -87,7 +87,7 @@ export default function SliderArea() {
                   <div className="flex flex-col h-full space-y-10">
                     <Link
                       href={"/"}
-                      className="group flex min-w-65 items-center gap-x-3 bg-ui-2 font-manrope font-extrabold lg:text-lg border-2 border-ui-17 rounded-4xl w-fit px-5 h-10.5 text-white relative overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-[0_0_20px_rgba(27,175,191,0.5)] hover:border-ui-1"
+                      className="group flex min-w-65 items-center gap-x-3 bg-ui-2 font-inter font-extrabold lg:text-lg border-2 border-ui-17 rounded-4xl w-fit px-5 h-10.5 text-white relative overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-[0_0_20px_rgba(27,175,191,0.5)] hover:border-ui-1"
                     >
                       <span className="bg-ui-1 w-4 h-4 rounded-full animate-pulse"></span>
                       <Icons.AngleLong
@@ -98,13 +98,13 @@ export default function SliderArea() {
 
                       <span className="absolute inset-0  bg-linear-to-r from-ui-1/0 via-ui-1/20 to-ui-1/0 translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></span>
                     </Link>
-                    <strong className="lg:max-w-101 font-manrope font-extrabold lg:text-[56px] lg:leading-16 text-white">
+                    <strong className="lg:max-w-101 font-inter font-extrabold lg:text-[56px] lg:leading-16 text-white">
                       Mühəndislik xidmətlərimiz
                     </strong>
                     <div className="flex items-center gap-5">
                       <Link
                         href={"/"}
-                        className="group lg:w-[161px] lg:h-12.5 text-white bg-ui-1 rounded-4xl flex items-center gap-2 font-manrope font-normal text-base justify-center transition-all duration-300 hover:gap-4 hover:pr-2 hover:shadow-[0_8px_30px_rgba(27,175,191,0.5)] active:scale-95"
+                        className="group lg:w-[161px] lg:h-12.5 text-white bg-ui-1 rounded-4xl flex items-center gap-2 font-inter font-normal text-base justify-center transition-all duration-300 hover:gap-4 hover:pr-2 hover:shadow-[0_8px_30px_rgba(27,175,191,0.5)] active:scale-95"
                       >
                         <span className="transition-transform duration-300 group-hover:-translate-x-1">
                           Daha ətraflı
@@ -114,7 +114,7 @@ export default function SliderArea() {
 
                       <button
                         type="button"
-                        className="group flex items-center justify-center gap-4 font-manrope font-normal lg:text-base text-white cursor-pointer bg-white/14 backdrop-blur-sm border-2 border-white/60 rounded-[30px] w-[198px] h-12.5 transition-all duration-300 hover:gap-3 hover:bg-white hover:text-ui-1 hover:shadow-[0_8px_30px_rgba(255,255,255,0.3)] active:scale-95"
+                        className="group flex items-center justify-center gap-4 font-inter font-normal lg:text-base text-white cursor-pointer bg-white/14 backdrop-blur-sm border-2 border-white/60 rounded-[30px] w-[198px] h-12.5 transition-all duration-300 hover:gap-3 hover:bg-white hover:text-ui-1 hover:shadow-[0_8px_30px_rgba(255,255,255,0.3)] active:scale-95"
                       >
                         <Icons.Phone
                           fill="currentColor"

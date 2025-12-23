@@ -31,7 +31,7 @@ export default function LanguageBtn({ isSticky }: Props) {
         <span className="absolute inset-0 bg-linear-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 pointer-events-none"></span>
 
         <Globe className="w-4 h-4 text-white/70 group-hover:text-white transition-all duration-300 group-hover:rotate-360" />
-        <span className="text-white text-sm font-manrope font-medium">
+        <span className="text-white text-sm font-inter font-medium">
           {selectedLang.label}
         </span>
         <ChevronDown
@@ -69,7 +69,7 @@ export default function LanguageBtn({ isSticky }: Props) {
               }}
             >
               <div className="flex items-center gap-3">
-                <span className="font-manrope text-sm font-medium">
+                <span className="font-inter text-sm font-medium">
                   {lang.label}
                 </span>
               </div>

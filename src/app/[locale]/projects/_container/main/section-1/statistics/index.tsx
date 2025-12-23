@@ -19,10 +19,10 @@ export default function Statistics() {
         {stats?.map((stat, index) => {
           return (
             <div className="flex flex-col space-y-3 relative z-10" key={index}>
-              <span className="font-manrope font-semibold lg:text-base text-white">
+              <span className="font-inter font-semibold lg:text-base text-white">
                 {stat?.label}
               </span>
-              <div className="font-manrope lg:text-4xl text-white font-extrabold">
+              <div className="font-inter lg:text-4xl text-white font-extrabold">
                 {inView ? (
                   <>
                     <CountUp

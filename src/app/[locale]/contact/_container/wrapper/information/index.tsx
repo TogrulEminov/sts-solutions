@@ -6,11 +6,11 @@ export default function InformationArea() {
   return (
     <div className="col-span-6 flex flex-col  space-y-6">
       <article className="flex flex-col space-y-3">
-        <h1 className="text-3xl lg:text-[40px] lg:leading-12 font-bold text-ui-21 font-manrope ">
+        <h1 className="text-3xl lg:text-[40px] lg:leading-12 font-bold text-ui-21 font-inter ">
           Əməkdaşlıq etmək üçün
           <span className="text-ui-1 block">əlaqə saxlayın</span>
         </h1>
-        <p className="text-lg font-manrope text-ui-7 max-w-2xl">
+        <p className="text-lg font-inter text-ui-7 max-w-2xl">
           Bizimlə əlaqə saxlamaq üçün aşağıdakı məlumatlardan istifadə edə və ya
           əlaqə formasını doldura bilərsiniz. Komandamız sizə ən qısa müddətdə
           cavab verəcək.
@@ -24,7 +24,7 @@ export default function InformationArea() {
               <Icons.Phone fill="currentColor" className="text-ui-7 w-5 h-5" />
             </div>
             <div className="flex-1 min-w-0">
-              <h3 className="text-sm font-semibold font-manrope text-ui-2 mb-1.5">
+              <h3 className="text-sm font-semibold font-inter text-ui-2 mb-1.5">
                 Telefon
               </h3>
               <Link
@@ -44,7 +44,7 @@ export default function InformationArea() {
               <Icons.Email fill="currentColor" className="text-ui-7 w-5 h-5" />
             </div>
             <div className="flex-1 min-w-0">
-              <h3 className="text-sm font-semibold font-manrope text-ui-2 mb-1.5">
+              <h3 className="text-sm font-semibold font-inter text-ui-2 mb-1.5">
                 Email
               </h3>
               <Link
@@ -73,7 +73,7 @@ export default function InformationArea() {
             </div>
             <div className="flex-1 md:min-w-0">
               <div className="flex items-center gap-2 mb-0.5 flex-wrap">
-                <h3 className="text-base font-semibold font-manrope text-1">
+                <h3 className="text-base font-semibold font-inter text-1">
                   WhatsApp
                 </h3>
                 <span className="px-2 py-0.5 bg-[#25D366] text-white text-[10px] font-semibold rounded-full flex items-center gap-1">
@@ -101,7 +101,7 @@ export default function InformationArea() {
             <Icons.Address fill="currentColor" className="text-ui-7 w-5 h-5" />
           </div>
           <div className="flex-1 min-w-0">
-            <h3 className="text-sm font-semibold font-manrope text-ui-2 mb-1.5">
+            <h3 className="text-sm font-semibold font-inter text-ui-2 mb-1.5">
               Ünvanımız
             </h3>
             <Link
@@ -132,7 +132,7 @@ export default function InformationArea() {
             </svg>
           </div>
           <div className="flex-1">
-            <h3 className="text-sm font-semibold font-manrope text-ui-2 mb-1">
+            <h3 className="text-sm font-semibold font-inter text-ui-2 mb-1">
               Sosial şəbəkələrimiz
             </h3>
             <p className="text-xs text-12 mb-3">

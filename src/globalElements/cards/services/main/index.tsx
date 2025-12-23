@@ -10,7 +10,7 @@ export default function ServicesMainCard() {
         pathname: "/services/[category]",
         params: { category: "muhendislik-xidmetleri" },
       }}
-      className="flex flex-col relative p-4 lg:h-94 rounded-2xl overflow-hidden group  border border-ui-27 group-hover:border-ui-27"
+      className="flex flex-col relative p-4 lg:h-80 rounded-2xl overflow-hidden group  border border-ui-27 group-hover:border-ui-27"
     >
       <div className="transition-all duration-300 absolute w-full h-full inset-0 z-1 max-h-full group-hover:max-h-0 bg-ui-2"></div>
       <figure className="w-16 h-16 mb-5 rounded-xl relative z-2 bg-white duration-300 group-hover:bg-ui-1   flex items-center justify-center">
@@ -24,7 +24,7 @@ export default function ServicesMainCard() {
           className="w-8 h-8 brightness-0 invert-0 duration-300 transition-all group-hover:invert-100"
         />
       </figure>
-      <strong className="relative 0 z-2 lg:text-[32px] lg:leading-9 duration-300 transition-all text-white  group-hover:text-ui-1 font-extrabold">
+      <strong className="relative 0 z-2 lg:text-[28px] lg:leading-8 duration-300 transition-all text-white  group-hover:text-ui-1 font-extrabold">
         Mühəndislik xidmətlərimiz
       </strong>
 

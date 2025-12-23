@@ -23,7 +23,7 @@ export default function Statistics() {
             className="flex flex-col nth-[3]:border-b-0 nth-[4]:border-b-0 border-ui-22 even:border-r-0 p-10 space-y-3 border-r border-b"
             key={index}
           >
-            <div className="font-manrope text-[56px] lg:text-[80px] lg:leading-[90px] text-ui-1 font-extrabold">
+            <div className="font-inter text-[56px] lg:text-[80px] lg:leading-[90px] text-ui-1 font-extrabold">
               {inView ? (
                 <>
                   <CountUp
@@ -38,7 +38,7 @@ export default function Statistics() {
               )}
             </div>
 
-            <span className="font-manrope font-semibold text-xl lg:text-2xl lg:leading-7 text-ui-2">
+            <span className="font-inter font-semibold text-xl lg:text-2xl lg:leading-7 text-ui-2">
               {stat?.label}
             </span>
           </div>

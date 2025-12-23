@@ -48,7 +48,7 @@ export default function SolutionsCard() {
       </motion.div>
 
       <motion.div
-        className="bg-white relative z-10 max-w-90 w-fit rounded-tr-2xl p-6 font-manrope font-bold text-2xl text-ui-2 shadow-lg"
+        className="bg-white relative z-10 max-w-90 w-fit rounded-tr-2xl p-6 font-inter font-bold text-2xl text-ui-2 shadow-lg"
         variants={{
           hover: {
             backgroundColor: "#004A52",

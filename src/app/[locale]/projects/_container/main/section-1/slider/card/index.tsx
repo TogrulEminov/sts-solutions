@@ -24,11 +24,11 @@ export default function ProjectsCards() {
         />
       </figure>
       <article className="flex flex-col space-y-3   py-4  pr-3 col-span-8">
-        <strong className="font-manrope lg:text-lg leading-normal text-ui-1 font-bold">
+        <strong className="font-inter lg:text-lg leading-normal text-ui-1 font-bold">
           Nar və Digər Şirələr, Konsentrat İstehsalı Müəssisəsinin Qurulması və
           Avtomatlaşdırılması
         </strong>
-        <p className="font-manrope lg:min-h-20 line-clamp-4 text-ellipsis lg:text-lg text-ui-7 font-normal">
+        <p className="font-inter lg:min-h-20 line-clamp-4 text-ellipsis lg:text-lg text-ui-7 font-normal">
           2024-cü ildə həyata keçirilmişdir. Layihə çərçivəsində texnoloji
           sxemlərin qurulması, mühəndislik həllərinin hazırlanması,
           layihələndirilmə və texniki nəzarət işləri həyata keçirilmişdir. Eyni

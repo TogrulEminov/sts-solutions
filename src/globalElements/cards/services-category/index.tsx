@@ -45,30 +45,9 @@ export default function ServicesCard() {
           initial={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
         />
-
-        {/* Shine Effect */}
-        <motion.div
-          className="absolute inset-0 pointer-events-none"
-          variants={{
-            hover: {
-              x: ["-100%", "100%"],
-            },
-          }}
-          initial={{ x: "-100%" }}
-          transition={{
-            duration: 0.6,
-            ease: "easeInOut",
-          }}
-          style={{
-            background:
-              "linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent)",
-          }}
-        />
       </motion.figure>
-
-      {/* Text */}
       <motion.strong
-        className="min-h-12 font-manrope line-clamp-2 text-ellipsis font-bold text-white"
+        className="min-h-12 font-inter line-clamp-2 text-ellipsis font-bold text-white"
         initial={{ opacity: 0, y: 10 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}

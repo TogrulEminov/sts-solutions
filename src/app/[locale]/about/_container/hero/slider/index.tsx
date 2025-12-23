@@ -25,7 +25,7 @@ export default function SliderArea() {
           <Link
             key={`first-${index}`}
             href={""}
-            className="group relative flex w-fit items-center gap-x-2 py-1 px-3 rounded-full bg-ui-20 border-[0.5px] border-white text-white font-manrope font-bold text-xl transition-all duration-300 hover:scale-95 overflow-hidden shrink-0"
+            className="group relative flex w-fit items-center gap-x-2 py-1 px-3 rounded-full bg-ui-20 border-[0.5px] border-white text-white font-inter font-bold text-xl transition-all duration-300 hover:scale-95 overflow-hidden shrink-0"
           >
             <span className="absolute inset-0 bg-linear-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
             <Icons.Sector
@@ -40,7 +40,7 @@ export default function SliderArea() {
           <Link
             key={`second-${index}`}
             href={""}
-            className="group relative flex w-fit items-center gap-x-2 py-1 px-3 rounded-full bg-ui-20 border-[0.5px] border-white text-white font-manrope font-bold text-xl transition-all duration-300 hover:shadow-lg hover:scale-95 overflow-hidden shrink-0"
+            className="group relative flex w-fit items-center gap-x-2 py-1 px-3 rounded-full bg-ui-20 border-[0.5px] border-white text-white font-inter font-bold text-xl transition-all duration-300 hover:shadow-lg hover:scale-95 overflow-hidden shrink-0"
           >
             <span className="absolute inset-0 bg-linear-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
             <Icons.Sector

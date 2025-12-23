@@ -93,7 +93,7 @@ export default function Information() {
       variants={containerVariants}
     >
       <motion.p
-        className="font-manrope lg:text-[28px] lg:leading-9 text-ui-7 font-medium"
+        className="font-inter lg:text-[28px] lg:leading-9 text-ui-7 font-medium"
         variants={textVariants}
       >
         Xidmətlərdən yararlanmaq üçün formu doldurun və ya bizimlə əlaqə
@@ -133,7 +133,7 @@ export default function Information() {
                 <motion.div variants={linkVariants} className="relative z-10">
                   <Link
                     href={item.href}
-                    className="font-manrope font-medium text-xl text-ui-7 tracking-tight inline-block relative"
+                    className="font-inter font-medium text-xl text-ui-7 tracking-tight inline-block relative"
                     aria-label={item.ariaLabel}
                   >
                     {item.text}

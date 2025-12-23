@@ -10,7 +10,7 @@ export default function AnimatedProjectButton({ title, link }: Props) {
   return (
     <Link href={link} className="w-fit">
       <motion.div
-        className="relative group flex items-center gap-x-3 py-3 px-6 h-12 font-manrope font-medium text-base text-white rounded-4xl bg-ui-1 justify-center overflow-hidden group cursor-pointer"
+        className="relative group flex items-center gap-x-3 py-3 px-6 h-12 font-inter font-medium text-base text-white rounded-4xl bg-ui-1 justify-center overflow-hidden group cursor-pointer"
         whileHover={{ scale: 1.05, y: -2 }}
         whileTap={{ scale: 0.95 }}
         transition={{ duration: 0.2, ease: "easeOut" as const }}

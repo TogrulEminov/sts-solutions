@@ -178,7 +178,7 @@ export default function Sidebar() {
                             <Icon className="w-5 h-5" />
                           </motion.div>
 
-                          <span className="font-manrope font-semibold text-base">
+                          <span className="font-inter font-semibold text-base">
                             {navItem.label}
                           </span>
                         </div>
@@ -229,7 +229,7 @@ export default function Sidebar() {
                         <Briefcase className="w-5 h-5" />
                       </motion.div>
 
-                      <span className="font-manrope font-semibold text-base">
+                      <span className="font-inter font-semibold text-base">
                         Xidmətlər
                       </span>
                     </div>
@@ -272,7 +272,7 @@ export default function Sidebar() {
                                     : "text-white/70 hover:text-white hover:bg-white/5 border-l-2 border-transparent hover:border-white/30"
                                 }`}
                               >
-                                <span className="font-manrope text-sm">
+                                <span className="font-inter text-sm">
                                   {service.label}
                                 </span>
 
@@ -326,7 +326,7 @@ export default function Sidebar() {
                             <Icon className="w-5 h-5" />
                           </motion.div>
 
-                          <span className="font-manrope font-semibold text-base">
+                          <span className="font-inter font-semibold text-base">
                             {navItem.label}
                           </span>
                         </div>
@@ -367,12 +367,12 @@ export default function Sidebar() {
               transition={{ delay: 0.4 }}
             >
               <div className="flex flex-col space-y-4 mb-6">
-                <h3 className="text-white/60 text-xs font-manrope font-bold uppercase tracking-wider mb-4">
+                <h3 className="text-white/60 text-xs font-inter font-bold uppercase tracking-wider mb-4">
                   Dil dəyişmə
                 </h3>
                 <LanguageBtn />
               </div>
-              <h3 className="text-white/60 text-xs font-manrope font-bold uppercase tracking-wider mb-4">
+              <h3 className="text-white/60 text-xs font-inter font-bold uppercase tracking-wider mb-4">
                 Əlaqə məlumatları
               </h3>
 
@@ -391,10 +391,10 @@ export default function Sidebar() {
                       <Phone className="w-5 h-5" />
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-xs text-white/50 font-manrope">
+                      <span className="text-xs text-white/50 font-inter">
                         Telefon
                       </span>
-                      <span className="text-sm font-manrope font-medium">
+                      <span className="text-sm font-inter font-medium">
                         +994 55 262 40 37
                       </span>
                     </div>
@@ -415,10 +415,10 @@ export default function Sidebar() {
                       <Mail className="w-5 h-5" />
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-xs text-white/50 font-manrope">
+                      <span className="text-xs text-white/50 font-inter">
                         Email
                       </span>
-                      <span className="text-sm font-manrope font-medium">
+                      <span className="text-sm font-inter font-medium">
                         example@example.com
                       </span>
                     </div>
@@ -436,10 +436,10 @@ export default function Sidebar() {
                       <MapPin className="w-5 h-5" />
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-xs text-white/50 font-manrope">
+                      <span className="text-xs text-white/50 font-inter">
                         Ünvan
                       </span>
-                      <span className="text-sm font-manrope font-medium">
+                      <span className="text-sm font-inter font-medium">
                         Bakı, Azərbaycan
                       </span>
                     </div>
@@ -449,7 +449,7 @@ export default function Sidebar() {
 
               {/* Social Media */}
               <div className="mt-6 pt-6 border-t border-white/10">
-                <h3 className="text-white/60 text-xs font-manrope font-bold uppercase tracking-wider mb-4">
+                <h3 className="text-white/60 text-xs font-inter font-bold uppercase tracking-wider mb-4">
                   Bizi izləyin
                 </h3>
 

@@ -13,12 +13,15 @@ export default function CountArea({ count }: Props) {
   });
 
   return (
-    <div ref={ref} className="text-ui-1 font-manrope lg:text-[120px] leading-normal font-extrabold">
+    <div
+      ref={ref}
+      className="text-ui-1 font-inter lg:text-[120px] leading-normal font-extrabold"
+    >
       {inView ? (
         <CountUp
           start={0}
           end={count}
-          className="font-manrope"
+          className="font-inter"
           duration={2.5}
           separator=","
         />

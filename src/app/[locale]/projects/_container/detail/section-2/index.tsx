@@ -18,10 +18,10 @@ export default function ProjectsContent() {
     <section className="lg:py-25">
       <div className="container flex flex-col space-y-10">
         <div className="flex flex-col space-y-4">
-          <strong className="font-manrope text-ui-21 lg:text-[40px] lg:leading-12 font-bold">
+          <strong className="font-inter text-ui-21 lg:text-[40px] lg:leading-12 font-bold">
             Layihə haqqında məlumat
           </strong>
-          <article className="font-manrope font-normal lg:text-xl text-ui-7">
+          <article className="font-inter font-normal lg:text-xl text-ui-7">
             2023-cü ildə həyata keçirilmişdir. Layihə çərçivəsində sutkalıq 300
             ton tomat və 12 ton soyulmuş pomidor istehsal gücünə malik müəssisə
             qurulmuş və avtomatlaşdırılmışdır. Avtomatik idarəetmə sistemi

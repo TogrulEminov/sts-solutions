@@ -6,10 +6,10 @@ export default function HeroDetailSection() {
     <section className="py-20 bg-ui-21">
       <div className="container flex flex-col space-y-10">
         <article className="flex flex-col space-y-3">
-          <strong className="font-manrope lg:text-xl text-white font-normal">
+          <strong className="font-inter lg:text-xl text-white font-normal">
             İllərin Təcrübəsi ilə Reallaşdırılmış Layihələr
           </strong>
-          <h1 className="max-w-5xl font-manrope lg:text-[46px] lg:leading-14.5 text-white font-bold">
+          <h1 className="max-w-5xl font-inter lg:text-[46px] lg:leading-14.5 text-white font-bold">
             Tomat və Soyulmuş Pomidor Sahəsinin Kompleks Şəklində Qurulması və
             Avtomatlaşdırılması Layihəsi
           </h1>

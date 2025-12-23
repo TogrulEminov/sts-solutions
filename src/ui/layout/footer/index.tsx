@@ -1,9 +1,9 @@
-"use client"
-import { motion } from "framer-motion"
-import Logo from "../../logo"
-import Social from "./social"
-import { Link } from "@/src/i18n/navigation"
-import CustomLink from "next/link"
+"use client";
+import { motion } from "framer-motion";
+import Logo from "../../logo";
+import Social from "./social";
+import { Link } from "@/src/i18n/navigation";
+import CustomLink from "next/link";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -14,7 +14,7 @@ const containerVariants = {
       delayChildren: 0.2,
     },
   },
-}
+};
 
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -23,12 +23,12 @@ const itemVariants = {
     y: 0,
     transition: { duration: 0.5, ease: "easeOut" as const },
   },
-}
+};
 
 const linkVariants = {
   initial: { x: 0 },
   hover: { x: 4, transition: { duration: 0.2 } },
-}
+};
 
 export default function Footer() {
   return (
@@ -40,19 +40,30 @@ export default function Footer() {
         viewport={{ once: true, margin: "-100px" }}
         variants={containerVariants}
       >
-        <motion.div className="flex items-center pt-10  lg:pt-15 justify-between" variants={itemVariants}>
+        <motion.div
+          className="flex items-center pt-10  lg:pt-15 justify-between"
+          variants={itemVariants}
+        >
           <Logo isWhite={true} />
           <Social />
         </motion.div>
 
-        <motion.div className="grid   lg:grid grid-cols-4 gap-10" variants={containerVariants}>
-          <motion.div className="flex flex-col space-y-4" variants={itemVariants}>
-            <strong className="font-manrope font-medium text-base text-white">Services</strong>
+        <motion.div
+          className="grid   lg:grid grid-cols-4 gap-10"
+          variants={containerVariants}
+        >
+          <motion.div
+            className="flex flex-col space-y-4"
+            variants={itemVariants}
+          >
+            <strong className="font-inter font-medium text-base text-white">
+              Services
+            </strong>
             <div className="flex flex-col space-y-3">
               <motion.div variants={linkVariants} whileHover="hover">
                 <Link
                   href={"/"}
-                  className="font-manrope text-base text-white/40 font-medium transition-colors hover:text-white/60"
+                  className="font-inter text-base text-white/40 font-medium transition-colors hover:text-white/60"
                 >
                   Business Strategy
                 </Link>
@@ -60,7 +71,7 @@ export default function Footer() {
               <motion.div variants={linkVariants} whileHover="hover">
                 <Link
                   href={"/"}
-                  className="font-manrope text-base text-white/40 font-medium transition-colors hover:text-white/60"
+                  className="font-inter text-base text-white/40 font-medium transition-colors hover:text-white/60"
                 >
                   Financial Consulting
                 </Link>
@@ -68,7 +79,7 @@ export default function Footer() {
               <motion.div variants={linkVariants} whileHover="hover">
                 <Link
                   href={"/"}
-                  className="font-manrope text-base text-white/40 font-medium transition-colors hover:text-white/60"
+                  className="font-inter text-base text-white/40 font-medium transition-colors hover:text-white/60"
                 >
                   HR & Talent Management
                 </Link>
@@ -76,7 +87,7 @@ export default function Footer() {
               <motion.div variants={linkVariants} whileHover="hover">
                 <Link
                   href={"/"}
-                  className="font-manrope text-base text-white/40 font-medium transition-colors hover:text-white/60"
+                  className="font-inter text-base text-white/40 font-medium transition-colors hover:text-white/60"
                 >
                   IT Solutions
                 </Link>
@@ -84,7 +95,7 @@ export default function Footer() {
               <motion.div variants={linkVariants} whileHover="hover">
                 <Link
                   href={"/"}
-                  className="font-manrope text-base text-white/40 font-medium transition-colors hover:text-white/60"
+                  className="font-inter text-base text-white/40 font-medium transition-colors hover:text-white/60"
                 >
                   Marketing & Branding
                 </Link>
@@ -92,13 +103,18 @@ export default function Footer() {
             </div>
           </motion.div>
 
-          <motion.div className="flex flex-col space-y-4" variants={itemVariants}>
-            <strong className="font-manrope font-medium text-base text-white">Quick Links</strong>
+          <motion.div
+            className="flex flex-col space-y-4"
+            variants={itemVariants}
+          >
+            <strong className="font-inter font-medium text-base text-white">
+              Quick Links
+            </strong>
             <div className="flex flex-col space-y-3">
               <motion.div variants={linkVariants} whileHover="hover">
                 <Link
                   href={"/"}
-                  className="font-manrope text-base text-white/40 font-medium transition-colors hover:text-white/60"
+                  className="font-inter text-base text-white/40 font-medium transition-colors hover:text-white/60"
                 >
                   Home
                 </Link>
@@ -106,7 +122,7 @@ export default function Footer() {
               <motion.div variants={linkVariants} whileHover="hover">
                 <Link
                   href={"/"}
-                  className="font-manrope text-base text-white/40 font-medium transition-colors hover:text-white/60"
+                  className="font-inter text-base text-white/40 font-medium transition-colors hover:text-white/60"
                 >
                   About Us
                 </Link>
@@ -114,7 +130,7 @@ export default function Footer() {
               <motion.div variants={linkVariants} whileHover="hover">
                 <Link
                   href={"/"}
-                  className="font-manrope text-base text-white/40 font-medium transition-colors hover:text-white/60"
+                  className="font-inter text-base text-white/40 font-medium transition-colors hover:text-white/60"
                 >
                   Services
                 </Link>
@@ -122,7 +138,7 @@ export default function Footer() {
               <motion.div variants={linkVariants} whileHover="hover">
                 <Link
                   href={"/"}
-                  className="font-manrope text-base text-white/40 font-medium transition-colors hover:text-white/60"
+                  className="font-inter text-base text-white/40 font-medium transition-colors hover:text-white/60"
                 >
                   Projects
                 </Link>
@@ -130,7 +146,7 @@ export default function Footer() {
               <motion.div variants={linkVariants} whileHover="hover">
                 <Link
                   href={"/"}
-                  className="font-manrope text-base text-white/40 font-medium transition-colors hover:text-white/60"
+                  className="font-inter text-base text-white/40 font-medium transition-colors hover:text-white/60"
                 >
                   Solutions
                 </Link>
@@ -138,13 +154,18 @@ export default function Footer() {
             </div>
           </motion.div>
 
-          <motion.div className="flex flex-col space-y-4" variants={itemVariants}>
-            <strong className="font-manrope font-medium text-base text-white">Contact Us</strong>
+          <motion.div
+            className="flex flex-col space-y-4"
+            variants={itemVariants}
+          >
+            <strong className="font-inter font-medium text-base text-white">
+              Contact Us
+            </strong>
             <div className="flex flex-col space-y-3">
               <motion.div variants={linkVariants} whileHover="hover">
                 <Link
                   href={"/"}
-                  className="font-manrope text-base text-white/40 font-medium transition-colors hover:text-white/60"
+                  className="font-inter text-base text-white/40 font-medium transition-colors hover:text-white/60"
                 >
                   Phone: (123) 456-7890
                 </Link>
@@ -152,7 +173,7 @@ export default function Footer() {
               <motion.div variants={linkVariants} whileHover="hover">
                 <Link
                   href={"/"}
-                  className="font-manrope text-base text-white/40 font-medium transition-colors hover:text-white/60"
+                  className="font-inter text-base text-white/40 font-medium transition-colors hover:text-white/60"
                 >
                   Email: info@companyname.com
                 </Link>
@@ -160,7 +181,7 @@ export default function Footer() {
               <motion.div variants={linkVariants} whileHover="hover">
                 <Link
                   href={"/"}
-                  className="font-manrope text-base text-white/40 font-medium transition-colors hover:text-white/60"
+                  className="font-inter text-base text-white/40 font-medium transition-colors hover:text-white/60"
                 >
                   Address: City, State, ZIP Code
                 </Link>
@@ -184,7 +205,7 @@ export default function Footer() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.7 }}
-              className="font-manrope font-medium text-white/50 text-sm lg:text-base order-2 md:order-1"
+              className="font-inter font-medium text-white/50 text-sm lg:text-base order-2 md:order-1"
             >
               © 2015-2025 GlobTm. All rights reserved
             </motion.p>
@@ -201,7 +222,7 @@ export default function Footer() {
                 href={"https://togruleminov.vercel.app"}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-manrope font-medium text-white/40 text-sm hover:text-white/60 transition-colors duration-300 flex items-center gap-1.5 group"
+                className="font-inter font-medium text-white/40 text-sm hover:text-white/60 transition-colors duration-300 flex items-center gap-1.5 group"
               >
                 <span className="text-white/30">Site by</span>
                 <span className="font-semibold text-white/60 group-hover:text-white transition-colors flex items-center gap-1">
@@ -226,5 +247,5 @@ export default function Footer() {
         </motion.div>
       </motion.div>
     </footer>
-  )
+  );
 }

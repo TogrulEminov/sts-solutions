@@ -5,10 +5,10 @@ export default function ServicesSection() {
     <section className="py-10 lg:py-20 -mt-5 relative z-5 bg-ui-2 overflow-hidden rounded-tl-[28px] rounded-br-[28px]">
       <div className="container flex flex-col space-y-10">
         <div className="flex items-center justify-between">
-          <strong className="font-manrope font-extrabold lg:text-[45px] lg:leading-[57px] text-white">
+          <strong className="font-inter font-extrabold lg:text-[45px] lg:leading-[57px] text-white">
             <span className="text-ui-1 block">Xidmətlərimizdən</span> yararlanın
           </strong>
-          <p className="font-manrope max-w-lg text-white text-base text-right">
+          <p className="font-inter max-w-lg text-white text-base text-right">
             İstənilən sənaye prosesini daha təhlükəsiz, sürətli və effektiv edən
             ağıllı mühəndislik və avtomatlaşdırma həllərini sizin üçün
             hazırlayırıq.

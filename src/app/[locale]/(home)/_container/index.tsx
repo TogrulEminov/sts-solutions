@@ -10,7 +10,7 @@ import AboutSection from "./about";
 import ServicesSection from "./services";
 import HeroSection from "./hero";
 
-export default function HomePageContainer() {
+export default async function HomePageContainer() {
   return (
     <>
       <HeroSection />

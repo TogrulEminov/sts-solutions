@@ -8,7 +8,7 @@ export default function TeamContent() {
       <div className="container">
         <div className="grid lg:grid-cols-12 gap-5 lg:p-10 bg-ui-23 rounded-4xl">
           <div className="lg:col-span-8 flex flex-col space-y-10">
-            <article className="font-manrope font-normal text-2xl text-ui-7">
+            <article className="font-inter font-normal text-2xl text-ui-7">
               Komandamız hər bir sifarişçi üçün hədəf məqsədin effektiv və çevik
               gerçəkləşməsini təmin etməyə xidmət edən fəaliyyət modeli ilə
               çalışır. Şirkətimiz çoxşaxəli istiqamətlərlə geniş texniki

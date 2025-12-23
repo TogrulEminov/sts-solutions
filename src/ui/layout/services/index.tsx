@@ -29,10 +29,10 @@ export default function ServicesTagSection() {
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
-            <strong className="font-manrope lg:text-[40px] lg:leading-12 text-ui-21 font-bold">
+            <strong className="font-inter lg:text-[40px] lg:leading-12 text-ui-21 font-bold">
               Xidmət təkliflərimiz
             </strong>
-            <p className="font-manrope font-medium text-base text-ui-21">
+            <p className="font-inter font-medium text-base text-ui-21">
               İstənilən sənaye prosesini daha təhlükəsiz, sürətli və effektiv
               edən ağıllı mühəndislik və avtomatlaşdırma həllərini sizin üçün
               hazırlayırıq.
@@ -53,7 +53,7 @@ export default function ServicesTagSection() {
               >
                 <Link
                   href={"/"}
-                  className="relative flex gap-5 items-center justify-start w-full p-4 bg-ui-2 rounded-[20px] min-h-25.5 font-manrope font-bold lg:text-[28px] lg:leading-9 text-white hover:shadow-lg transition-shadow duration-300 overflow-hidden group"
+                  className="relative flex gap-5 items-center justify-start w-full p-4 bg-ui-2 rounded-[20px] min-h-25.5 font-inter font-bold lg:text-[28px] lg:leading-9 text-white hover:shadow-lg transition-shadow duration-300 overflow-hidden group"
                 >
                   <span className="absolute inset-0 w-full h-full">
                     <span className="absolute top-0 left-0 w-full h-full bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out"></span>
