@@ -7,15 +7,15 @@ export default function FagSection() {
       <div className="container">
         <div className="grid grid-cols-12 gap-10">
           <div className="col-span-4 flex flex-col space-y-4">
-            <strong className="font-manrope font-bold lg:text-[32px] lg:leading-[42px] text-ui-4">
+            <strong className="font-inter font-bold lg:text-[32px] lg:leading-[42px] text-ui-4">
               Tez-tez Verilən Suallar
             </strong>
-            <p className="font-manrope font-bold lg:text-[32px] lg:leading-[42px] text-ui-5">
+            <p className="font-inter font-bold lg:text-[32px] lg:leading-[42px] text-ui-5">
               Cavabları Burada Tapın!
             </p>
           </div>
           <div className="col-span-8">
-            <FaqAccordion/>
+            <FaqAccordion />
           </div>
         </div>
       </div>

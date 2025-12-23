@@ -21,12 +21,12 @@ export default function Statistics() {
       {stats?.map((stat, index) => {
         return (
           <div className="flex flex-col space-y-1" key={index}>
-            <div className="font-manrope  text-[32px] lg:text-[40px] lg:leading-[58px] text-ui-1 font-extrabold">
+            <div className="font-inter  text-[32px] lg:text-[40px] lg:leading-[58px] text-ui-1 font-extrabold">
               {inView ? (
                 <CountUp
                   start={0}
                   end={stat.end}
-                  className="font-manrope"
+                  className="font-inter"
                   duration={2.5}
                   suffix={stat.suffix}
                   separator=","
@@ -36,7 +36,7 @@ export default function Statistics() {
               )}
             </div>
 
-            <span className="font-manrope font-medium lg:text-lg lg:leading-[22px] text-ui-5">
+            <span className="font-inter font-medium lg:text-lg lg:leading-[22px] text-ui-5">
               {stat?.label}
             </span>
           </div>

@@ -73,7 +73,7 @@ export default function EmployeeCard({
         transition={{ delay: index * 0.15 + 0.2, duration: 0.6 }}
       >
         <motion.strong
-          className="font-manrope text-2xl font-bold text-white"
+          className="font-inter text-2xl font-bold text-white"
           initial={{ x: -20, opacity: 0 }}
           animate={inView ? { x: 0, opacity: 1 } : { x: -20, opacity: 0 }}
           transition={{ delay: index * 0.15 + 0.3, duration: 0.5 }}
@@ -83,7 +83,7 @@ export default function EmployeeCard({
         </motion.strong>
 
         <motion.span
-          className="font-manrope text-lg text-white font-normal"
+          className="font-inter text-lg text-white font-normal"
           initial={{ x: -20, opacity: 0 }}
           animate={inView ? { x: 0, opacity: 1 } : { x: -20, opacity: 0 }}
           transition={{ delay: index * 0.15 + 0.4, duration: 0.5 }}
@@ -113,7 +113,7 @@ export default function EmployeeCard({
             </motion.span>
             <Link
               href={`tel:${phone}`}
-              className="text-sm text-white font-manrope font-normal hover:underline"
+              className="text-sm text-white font-inter font-normal hover:underline"
             >
               {phone}
             </Link>
@@ -135,7 +135,7 @@ export default function EmployeeCard({
             </motion.span>
             <Link
               href={`mailto:${email}`}
-              className="text-sm text-white font-manrope font-normal hover:underline"
+              className="text-sm text-white font-inter font-normal hover:underline"
             >
               {email}
             </Link>

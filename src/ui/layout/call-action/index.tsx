@@ -35,10 +35,10 @@ export default function CallAction() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="flex flex-col space-y-4 lg:col-span-8"
           >
-            <strong className="font-manrope font-bold lg:text-[32px] lg:leading-[42px] text-white">
+            <strong className="font-inter font-bold lg:text-[32px] lg:leading-[42px] text-white">
               STS Mühəndislik- texniki problemlərin ağıllı həlli
             </strong>
-            <p className="font-manrope text-lg text-white font-normal">
+            <p className="font-inter text-lg text-white font-normal">
               Şirkətimiz, müştərinin iş proseslərini effektiv şəkildə
               təkmilləşdirərək, texnologiyaların avtomatlaşması ilə həllər
               təqdim edir.
@@ -57,7 +57,7 @@ export default function CallAction() {
                 type="button"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center group text-white cursor-pointer gap-x-3 bg-ui-1 gap-2 font-manrope h-12.5 py-3 px-6 rounded-[30px] transition-all duration-300 group"
+                className="flex items-center group text-white cursor-pointer gap-x-3 bg-ui-1 gap-2 font-inter h-12.5 py-3 px-6 rounded-[30px] transition-all duration-300 group"
               >
                 Bizimlə əməkdaşlıq et
                 <motion.div
@@ -76,7 +76,7 @@ export default function CallAction() {
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.5, delay: 0.6 }}
               whileHover={{ scale: 1.05 }}
-              className="flex items-center gap-x-2 font-manrope font-bold lg:text-[21px] lg:leading-[27px] text-white"
+              className="flex items-center gap-x-2 font-inter font-bold lg:text-[21px] lg:leading-[27px] text-white"
             >
               <Icons.Settings />
               Təmir və servis
@@ -88,7 +88,7 @@ export default function CallAction() {
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.5, delay: 0.7 }}
               whileHover={{ scale: 1.05 }}
-              className="flex items-center gap-x-2 font-manrope font-bold lg:text-[21px] lg:leading-[27px] text-white"
+              className="flex items-center gap-x-2 font-inter font-bold lg:text-[21px] lg:leading-[27px] text-white"
             >
               <Icons.CallCenter />
               24/7 xidmətinizdə

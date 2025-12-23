@@ -45,7 +45,7 @@ export default function FormContactWrapper() {
     <div className="bg-ui-23 col-span-6 rounded-2xl p-8 border border-ui-24 shadow-sm">
       {/* Header with Progress */}
       <div className="mb-8 flex flex-col space-y-4 items-center text-center">
-        <h2 className="text-2xl lg:text-3xl font-extrabold font-manrope text-ui-1 mb-2">
+        <h2 className="text-2xl lg:text-3xl font-extrabold font-inter text-ui-1 mb-2">
           Rəy və təklifləriniz
         </h2>
         <p className="text-sm text-ui-7 max-w-md">
@@ -75,7 +75,7 @@ export default function FormContactWrapper() {
       >
         {/* Rest of the form fields remain the same */}
         <div className="flex flex-col space-y-2">
-          <label className="font-manrope font-medium text-sm text-ui-9">
+          <label className="font-inter font-medium text-sm text-ui-9">
             Ad <sup className="text-ui-1">*</sup>
           </label>
           <FormInput
@@ -97,7 +97,7 @@ export default function FormContactWrapper() {
         </div>
 
         <div className="flex flex-col space-y-2">
-          <label className="font-manrope font-medium text-sm text-ui-9">
+          <label className="font-inter font-medium text-sm text-ui-9">
             Soyad <sup className="text-ui-1">*</sup>
           </label>
           <FormInput
@@ -119,7 +119,7 @@ export default function FormContactWrapper() {
         </div>
 
         <div className="flex flex-col space-y-2">
-          <label className="font-manrope font-medium text-sm text-ui-9">
+          <label className="font-inter font-medium text-sm text-ui-9">
             Email <sup className="text-ui-1">*</sup>
           </label>
           <FormInput
@@ -141,7 +141,7 @@ export default function FormContactWrapper() {
         </div>
 
         <div className="flex flex-col space-y-2">
-          <label className="font-manrope font-medium text-sm text-ui-9">
+          <label className="font-inter font-medium text-sm text-ui-9">
             Mobil nömrə <sup className="text-ui-1">*</sup>
           </label>
           <FormPhone
@@ -164,7 +164,7 @@ export default function FormContactWrapper() {
         </div>
 
         <div className="flex flex-col space-y-2">
-          <label className="font-manrope font-medium text-sm text-ui-9">
+          <label className="font-inter font-medium text-sm text-ui-9">
             Şirkət adı
           </label>
           <FormInput
@@ -186,7 +186,7 @@ export default function FormContactWrapper() {
         </div>
 
         <div className="flex flex-col space-y-2">
-          <label className="font-manrope font-medium text-sm text-ui-9">
+          <label className="font-inter font-medium text-sm text-ui-9">
             Xidmət seçin <sup className="text-ui-1">*</sup>
           </label>
           <FormSelect
@@ -210,7 +210,7 @@ export default function FormContactWrapper() {
         </div>
 
         <div className="flex flex-col space-y-2 lg:col-span-2">
-          <label className="font-manrope font-medium text-sm text-ui-9">
+          <label className="font-inter font-medium text-sm text-ui-9">
             Mesajınız
           </label>
           <FormTextArea
@@ -235,7 +235,7 @@ export default function FormContactWrapper() {
         <div className="lg:col-span-2 flex">
           <button
             type="submit"
-            className="bg-ui-1 w-full px-12 cursor-pointer transition-all duration-300 hover:bg-ui-4 h-12 rounded-lg text-white font-manrope font-semibold text-base shadow-sm hover:shadow-md flex items-center justify-center gap-2"
+            className="bg-ui-1 w-full px-12 cursor-pointer transition-all duration-300 hover:bg-ui-4 h-12 rounded-lg text-white font-inter font-semibold text-base shadow-sm hover:shadow-md flex items-center justify-center gap-2"
           >
             Göndər
             <svg

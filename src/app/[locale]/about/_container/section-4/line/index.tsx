@@ -73,7 +73,7 @@ export default function ProcessSteps() {
                     }s`,
                   }}
                 >
-                  <span className="font-manrope font-bold text-lg text-white">
+                  <span className="font-inter font-bold text-lg text-white">
                     {step.number}
                   </span>
                 </div>
@@ -92,7 +92,7 @@ export default function ProcessSteps() {
               )}
 
               <p
-                className="mt-8 text-center font-manrope font-medium text-base lg:text-lg text-ui-7 max-w-[220px]"
+                className="mt-8 text-center font-inter font-medium text-base lg:text-lg text-ui-7 max-w-[220px]"
                 style={{
                   opacity: inView ? 1 : 0,
                   transform: inView ? "translateY(0)" : "translateY(20px)",

@@ -63,7 +63,7 @@ export default function HeaderTop({ className, isSticky }: Props) {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
               </span>
-              <span className="text-white/90 text-sm font-manrope font-semibold transition-all duration-300 group-hover:text-white">
+              <span className="text-white/90 text-sm font-inter font-semibold transition-all duration-300 group-hover:text-white">
                 Yeni xidmətimiz
               </span>
             </span>
@@ -72,7 +72,7 @@ export default function HeaderTop({ className, isSticky }: Props) {
 
             <Link
               href="/"
-              className="flex items-center gap-1 text-white text-sm font-manrope transition-all duration-300 group-hover:gap-2"
+              className="flex items-center gap-1 text-white text-sm font-inter transition-all duration-300 group-hover:gap-2"
             >
               <span className="transition-all duration-300 group-hover:-translate-x-0.5">
                 Ətraflı öyrən
@@ -85,12 +85,12 @@ export default function HeaderTop({ className, isSticky }: Props) {
         </div>
 
         <div className="flex items-center gap-5">
-          <LanguageBtn isSticky={isSticky}/>
+          <LanguageBtn isSticky={isSticky} />
           <div className="h-5 w-px bg-white/20"></div>
           <nav aria-label="Sosial media linklər">
             <div className="flex items-center gap-4">
               <span
-                className="text-white/60 text-xs font-manrope uppercase tracking-wider"
+                className="text-white/60 text-xs font-inter uppercase tracking-wider"
                 style={{
                   animation: isSticky
                     ? "none"

@@ -54,7 +54,7 @@ export default function Services3DTilt() {
             src="https://res.cloudinary.com/da403zlyf/image/upload/v1766078331/image_qsnjuk.png"
           />
         </motion.div>
-        <strong className="font-manrope mr-4 p-5 font-semibold text-2xl text-ui-16">
+        <strong className="font-inter mr-4 p-5 font-semibold text-2xl text-ui-16">
           Mühəndislik xidmətləri
         </strong>
       </motion.article>
