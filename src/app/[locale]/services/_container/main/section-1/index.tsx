@@ -1,4 +1,5 @@
 import GalleryCard from "@/src/globalElements/cards/gallery";
+import ReactFancyBox from "@/src/lib/fancybox";
 import React from "react";
 
 export default function SectionOne() {
@@ -19,10 +20,10 @@ export default function SectionOne() {
             modernizasiya və texniki dəstək təmin edirik.
           </p>
         </div>
-        <div className="grid grid-cols-2 gap-6">
+        <ReactFancyBox className="grid grid-cols-2 gap-6">
           <GalleryCard />
           <GalleryCard />
-        </div>
+        </ReactFancyBox>
       </div>
     </div>
   );

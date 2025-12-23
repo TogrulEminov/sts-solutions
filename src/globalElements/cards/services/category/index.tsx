@@ -23,7 +23,7 @@ export default function ServicesCategoryCard() {
       className="block"
     >
       <MotionDiv
-        className="flex flex-col relative p-4 lg:h-60 rounded-2xl overflow-hidden border border-ui-27 bg-white group"
+        className="flex flex-col relative p-4 lg:h-80 rounded-2xl overflow-hidden border border-ui-27 bg-white group"
         initial="initial"
         whileHover="hover"
         variants={{
@@ -45,9 +45,9 @@ export default function ServicesCategoryCard() {
 
         {/* Icon container */}
         <MotionFigure
-          className="w-16 h-16 mb-5 rounded-xl relative z-2 flex items-center justify-center"
+          className="w-14 h-14 mb-5 rounded-xl relative z-2 flex items-center justify-center"
           variants={{
-            initial: { backgroundColor: "var(--ui-1)" },
+            initial: { backgroundColor: "var(--color-ui-1)" },
             hover: { backgroundColor: "#ffffff" },
           }}
           transition={{ duration: 0.3 }}
@@ -74,7 +74,7 @@ export default function ServicesCategoryCard() {
                 height={32}
                 title=""
                 src="https://res.cloudinary.com/da403zlyf/image/upload/v1766404896/worker_cuqick.png"
-                className="w-8 h-8"
+                className="w-6 h-6"
               />
             </MotionDiv>
           </MotionDiv>
@@ -82,7 +82,7 @@ export default function ServicesCategoryCard() {
 
         {/* Title */}
         <MotionStrong
-          className="relative z-2 lg:text-[32px] lg:leading-9 font-extrabold"
+          className="relative z-2 lg:text-[28px] lg:leading-8 font-extrabold"
           variants={{
             initial: { color: "var(--color-ui-7)" },
             hover: { color: "var(--color-ui-1)" },
@@ -94,7 +94,7 @@ export default function ServicesCategoryCard() {
 
         {/* Arrow button */}
         <MotionSpan
-          className="w-14 h-14 absolute z-2 rounded-2xl bg-ui-1 bottom-4 text-white flex items-center justify-center right-4"
+          className="w-10 h-10 absolute z-2 rounded-lg bg-ui-1 bottom-4 text-white flex items-center justify-center right-4"
           variants={{
             initial: { scale: 1 },
             hover: {

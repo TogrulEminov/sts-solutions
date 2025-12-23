@@ -42,6 +42,16 @@ const partners = [
     name: "Company 7",
     logo: "https://res.cloudinary.com/da403zlyf/image/upload/v1765486544/logo_smhyo8.webp",
   },
+  {
+    id: 8,
+    name: "Company 8",
+    logo: "https://res.cloudinary.com/da403zlyf/image/upload/v1765486544/logo_smhyo8.webp",
+  },
+  {
+    id: 9,
+    name: "Company 9",
+    logo: "https://res.cloudinary.com/da403zlyf/image/upload/v1765486544/logo_smhyo8.webp",
+  },
 ];
 
 export default function SlideArea() {
@@ -58,21 +68,25 @@ export default function SlideArea() {
         spaceBetween={8}
         slidesPerView="auto"
         loop={true}
-        speed={5000}
+        grabCursor={true}
+        allowTouchMove={true}
+        freeMode={{
+          enabled: true,
+          momentum: true,
+          momentumRatio: 0.5,
+          momentumVelocityRatio: 0.5,
+        }}
+        speed={3000}
         autoplay={{
           delay: 0,
           disableOnInteraction: false,
-          reverseDirection: false,
           pauseOnMouseEnter: true,
-        }}
-        freeMode={{
-          enabled: true,
-          momentum: false,
+          waitForTransition: false,
         }}
         className="w-full lg:min-w-screen"
       >
         {partners.map((partner, index) => (
-          <SwiperSlide key={partner.id} className="w-auto!">
+          <SwiperSlide key={partner.id} className="!w-auto">
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}

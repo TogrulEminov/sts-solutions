@@ -67,7 +67,7 @@ export default function EmployeeCard({
       ></motion.div>
 
       <motion.article
-        className="flex flex-col space-y-5 z-3 relative w-full"
+        className="flex flex-col space-y-3 z-3 relative w-full"
         initial={{ y: 30, opacity: 0 }}
         animate={inView ? { y: 0, opacity: 1 } : { y: 30, opacity: 0 }}
         transition={{ delay: index * 0.15 + 0.2, duration: 0.6 }}
