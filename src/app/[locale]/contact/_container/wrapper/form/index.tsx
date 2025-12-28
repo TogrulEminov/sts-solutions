@@ -163,29 +163,8 @@ export default function FormContactWrapper() {
           />
         </div>
 
-        <div className="flex flex-col space-y-2">
-          <label className="font-inter font-medium text-sm text-ui-9">
-            Şirkət adı
-          </label>
-          <FormInput
-            type={"text"}
-            fieldName="company"
-            styles={{
-              input: {
-                background: "#FAFAFA",
-                border: "1px solid #E0E0E0",
-                height: "44px",
-                color: "#212121",
-                padding: "0.75rem",
-                borderRadius: "0.5rem",
-                fontFamily: "'manrope', sans-serif",
-                fontSize: "0.875rem",
-              },
-            }}
-          />
-        </div>
 
-        <div className="flex flex-col space-y-2">
+        <div className="flex flex-col space-y-2 col-span-2">
           <label className="font-inter font-medium text-sm text-ui-9">
             Xidmət seçin <sup className="text-ui-1">*</sup>
           </label>

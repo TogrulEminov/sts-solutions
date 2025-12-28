@@ -128,7 +128,7 @@ export default function Sidebar() {
                 <motion.button
                   onClick={handleClose}
                   type="button"
-                  className="relative w-11 h-11 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center group overflow-hidden"
+                  className="relative cursor-pointer w-11 h-11 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center group overflow-hidden"
                   whileHover={{ scale: 1.05, rotate: 90 }}
                   whileTap={{ scale: 0.95 }}
                   initial={{ opacity: 0, rotate: -90 }}

@@ -2,7 +2,7 @@ import Icons from "@/public/icons";
 import CustomImage from "@/src/globalElements/ImageTag";
 import { Link } from "@/src/i18n/navigation";
 import React from "react";
-
+import logo from "@/public/assets/logo/sts-logo.svg";
 export default function ServicesMainCard() {
   return (
     <Link
@@ -15,13 +15,11 @@ export default function ServicesMainCard() {
       <div className="transition-all duration-300 absolute w-full h-full inset-0 z-1 max-h-full group-hover:max-h-0 bg-ui-2"></div>
       <figure className="w-16 h-16 mb-5 rounded-xl relative z-2 bg-white duration-300 group-hover:bg-ui-1   flex items-center justify-center">
         <CustomImage
-          width={32}
-          height={32}
+          width={64}
+          height={64}
           title=""
-          src={
-            "https://res.cloudinary.com/da403zlyf/image/upload/v1766404896/worker_cuqick.png"
-          }
-          className="w-8 h-8 brightness-0 invert-0 duration-300 transition-all group-hover:invert-100"
+          src={logo}
+          className="w-13 h-10 brightness-0 invert-0 duration-300 transition-all group-hover:invert-100"
         />
       </figure>
       <strong className="relative 0 z-2 lg:text-[28px] lg:leading-8 duration-300 transition-all text-white  group-hover:text-ui-1 font-extrabold">

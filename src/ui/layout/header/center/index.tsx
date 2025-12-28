@@ -19,7 +19,7 @@ export default function HeaderCenter({ isSticky }: Props) {
               : "py-4 min-h-25 lg:pb-8 lg:pt-5"
           }`}
         >
-          <div className="container flex justify-between">
+          <div className="container flex  items-center justify-between">
             <div
               className={`transition-all duration-500 ${
                 isSticky ? "scale-90" : "scale-100"

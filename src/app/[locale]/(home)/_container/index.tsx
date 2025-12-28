@@ -1,4 +1,3 @@
-import CallAction from "@/src/ui/layout/call-action";
 import FagSection from "./fag";
 import NewsSection from "./news";
 import ConsultingSection from "../../../../ui/layout/consulting";
@@ -23,7 +22,6 @@ export default async function HomePageContainer() {
       <ConsultingSection />
       <NewsSection />
       <FagSection />
-      <CallAction />
     </>
   );
 }

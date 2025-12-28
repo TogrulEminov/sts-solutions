@@ -30,6 +30,7 @@ const GlobalPagination: React.FC<GlobalPaginationProps> = ({ total }) => {
         <Pagination
           current={currentPage}
           pageSize={pageSize}
+          showSizeChanger={false}
           total={total}
           onChange={onChange}
         />

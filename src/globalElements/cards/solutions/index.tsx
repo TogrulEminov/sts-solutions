@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import CustomImage from "../../ImageTag";
+import { Link } from "@/src/i18n/navigation";
 
 export default function SolutionsCard() {
   return (
@@ -12,6 +13,12 @@ export default function SolutionsCard() {
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       whileHover="hover"
     >
+      <Link href={{
+        pathname:"/solutions/[slug]",
+        params:{
+          slug:"test"
+        }
+      }} className="absolute inset-0 w-full h-full z-1 opacity-0">   PLC, SCADA sistemlərinin qurulması</Link>
       <motion.div
         className="absolute inset-0 w-full h-full overflow-hidden"
         variants={{
