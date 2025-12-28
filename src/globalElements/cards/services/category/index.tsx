@@ -9,7 +9,7 @@ import {
   MotionSpan,
   MotionStrong,
 } from "@/src/lib/motion/motion";
-
+import logo from "@/public/assets/logo/sts-logo.svg";
 export default function ServicesCategoryCard() {
   return (
     <Link
@@ -52,32 +52,13 @@ export default function ServicesCategoryCard() {
           }}
           transition={{ duration: 0.3 }}
         >
-          <MotionDiv
-            variants={{
-              initial: { scale: 1, rotate: 0 },
-              hover: { scale: 1.1, rotate: [0, -10, 10, 0] },
-            }}
-            transition={{
-              scale: { duration: 0.3 },
-              rotate: { duration: 0.6, ease: "easeInOut" },
-            }}
-          >
-            <MotionDiv
-              variants={{
-                initial: { filter: "brightness(0) invert(1)" },
-                hover: { filter: "brightness(1) invert(0)" },
-              }}
-              transition={{ duration: 0.3 }}
-            >
-              <CustomImage
-                width={32}
-                height={32}
-                title=""
-                src="https://res.cloudinary.com/da403zlyf/image/upload/v1766404896/worker_cuqick.png"
-                className="w-6 h-6"
-              />
-            </MotionDiv>
-          </MotionDiv>
+          <CustomImage
+            width={32}
+            height={32}
+            title=""
+            src={logo}
+            className="w-12 h-6 brightness-0 invert-100 duration-300 transition-all group-hover:invert-0"
+          />
         </MotionFigure>
 
         {/* Title */}

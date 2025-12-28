@@ -1,6 +1,6 @@
 import CustomImage from "@/src/globalElements/ImageTag";
 import React from "react";
-
+import logo from "@/public/assets/logo/sts-logo.svg"
 export default function SectionOne() {
   return (
     <section className="lg:py-30 bg-ui-23">
@@ -10,11 +10,9 @@ export default function SectionOne() {
             <CustomImage
               width={40}
               title=""
-              src={
-                "https://res.cloudinary.com/da403zlyf/image/upload/v1766404896/worker_cuqick.png"
-              }
+              src={logo}
               height={40}
-              className="w-10 h-10 brightness-0 invert-100"
+              className="w-12 h-6 brightness-0 invert-100"
             />
           </figure>
           <h1 className="font-inter  max-w-3xl font-bold lg:text-[46px] lg:leading-14.5 text-ui-1">

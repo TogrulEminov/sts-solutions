@@ -1,7 +1,6 @@
 "use client"
 import Icons from "@/public/icons";
 import Link from "next/link";
-import React from "react";
 import { motion } from "framer-motion";
 
 const socialLinks = [
@@ -104,7 +103,7 @@ export default function Social() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <IconComponent aria-hidden="true" />
+                <IconComponent aria-hidden="true"  fill="currentColor"/>
               </Link>
             </motion.div>
           </motion.div>

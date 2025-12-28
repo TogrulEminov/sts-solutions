@@ -48,5 +48,15 @@ export const routing = defineRouting({
       en: "/services/[category]/[slug]",
       ru: "/uslugi/[category]/[slug]",
     },
+    "/solutions": {
+      az: "/hellerimiz/",
+      en: "/solutions/",
+      ru: "/solutions/",
+    },
+    "/solutions/[slug]": {
+      az: "/hellerimiz/[slug]",
+      en: "/solutions/[slug]",
+      ru: "/solutions/[slug]",
+    },
   },
 });
