@@ -19,14 +19,14 @@ export default function SlideArea() {
       >
         {/* Gradient overlays with #1BAFBF */}
         <div
-          className="absolute left-0 top-0 bottom-0 w-32 z-10 pointer-events-none"
+          className="hidden lg:block absolute left-0 top-0 bottom-0 w-32 z-10 pointer-events-none"
           style={{
             background:
               "linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.8) 40%, transparent 100%)",
           }}
         />
         <div
-          className="absolute right-0 top-0 bottom-0 w-32 z-10 pointer-events-none"
+          className="hidden lg:block absolute right-0 top-0 bottom-0 w-32 z-10 pointer-events-none"
           style={{
             background:
               "linear-gradient(to left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.8) 40%, transparent 100%)",
@@ -71,7 +71,7 @@ export default function SlideArea() {
 
         {/* Bottom glow effect */}
         <motion.div
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-1 blur-sm"
+          className="hidden lg:block absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-1 blur-sm"
           style={{
             background:
               "linear-gradient(to right, transparent 0%, rgba(27, 175, 191, 0.3) 50%, transparent 100%)",
@@ -93,14 +93,14 @@ export default function SlideArea() {
       >
         {/* Gradient overlays with #1BAFBF tint */}
         <div
-          className="absolute left-0 top-0 bottom-0 w-32 z-10 pointer-events-none"
+          className="hidden lg:block absolute left-0 top-0 bottom-0 w-32 z-10 pointer-events-none"
           style={{
             background:
               "linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.8) 40%, transparent 100%)",
           }}
         />
         <div
-          className="absolute right-0 top-0 bottom-0 w-32 z-10 pointer-events-none"
+          className="hidden lg:block absolute right-0 top-0 bottom-0 w-32 z-10 pointer-events-none"
           style={{
             background:
               "linear-gradient(to left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.8) 40%, transparent 100%)",
@@ -145,7 +145,7 @@ export default function SlideArea() {
 
         {/* Bottom glow effect */}
         <motion.div
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-1 blur-sm"
+          className="hidden lg:block absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-1 blur-sm"
           style={{
             background:
               "linear-gradient(to left, transparent 0%, rgba(27, 175, 191, 0.3) 50%, transparent 100%)",

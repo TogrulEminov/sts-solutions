@@ -11,7 +11,8 @@ export default function SliderArea() {
   const swiperRef = useRef<SwiperCore | null>(null);
 
   const breakpoints = {
-    0: { slidesPerView: 2, spaceBetween: 10 },
+    0: { slidesPerView: 1.5, spaceBetween: 10 },
+    480: { slidesPerView: 2, spaceBetween: 10 },
     768: { slidesPerView: 3 },
     1024: { slidesPerView: 5.5 },
     1600: { slidesPerView: 6.5 },
@@ -43,7 +44,7 @@ export default function SliderArea() {
 
   return (
     <>
-      <div className="flex items-center gap-x-3 justify-center bg-ui-2 rounded-[36px] mb-0! absolute right-0  top-2.5   w-21.5 h-10">
+      <div className="hidden lg:flex items-center gap-x-3 justify-center bg-ui-2 rounded-[36px] mb-0! absolute right-0  top-2.5   w-21.5 h-10">
         <button
           type="button"
           aria-label="prev button for services slider"

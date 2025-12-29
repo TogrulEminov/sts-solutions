@@ -41,7 +41,7 @@ export default function Footer() {
         variants={containerVariants}
       >
         <motion.div
-          className="flex items-center pt-10  lg:pt-15 justify-between"
+          className="flex  flex-col space-y-6 md:flex-row md:items-center pt-10  lg:pt-15 md:justify-between"
           variants={itemVariants}
         >
           <Logo isWhite={true} />
@@ -49,7 +49,7 @@ export default function Footer() {
         </motion.div>
 
         <motion.div
-          className="grid   lg:grid grid-cols-4 gap-10"
+          className="grid  grid-cols-1  lg:grid-cols-4 gap-10"
           variants={containerVariants}
         >
           <motion.div

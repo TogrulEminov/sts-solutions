@@ -80,14 +80,14 @@ export default function SliderArea() {
           return (
             <SwiperSlide className="h-full" key={index}>
               <div className="relative h-full flex items-center z-6">
-                <div className="heroFirstLinear"></div>
-                <div className="heroSecondLinear"></div>
+                <div className="absolute w-full h-full lg:w-[50%] lg:h-[1080px] bg-ui-2/51 lg:bottom-[unset] top-0 left-0 bottom-0 right-0 lg:right-[unset] z-2 lg:-left-[8%] lg:-top-20 lg:-rotate-[15.73deg]"></div>
+                <div className="absolute hidden lg:flex w-[34.07px] left-[50%] z-2 top-[147px] bg-ui-2/46 -rotate-[15.73deg] h-[940px]"></div>
                 <HeroImageAnimation src={item} />
                 <div className="container relative z-4">
                   <div className="flex flex-col h-full space-y-10">
                     <Link
                       href={"/"}
-                      className="group flex min-w-65 items-center gap-x-3 bg-ui-2 font-inter font-extrabold lg:text-lg border-2 border-ui-17 rounded-4xl w-fit px-5 h-10.5 text-white relative overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-[0_0_20px_rgba(27,175,191,0.5)] hover:border-ui-1"
+                      className="group flex min-w-65 items-center gap-x-3 bg-ui-2 font-inter font-extrabold text-xs sm:text-lg border-2 border-ui-17 rounded-4xl w-fit px-5 h-10.5 text-white relative overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-[0_0_20px_rgba(27,175,191,0.5)] hover:border-ui-1"
                     >
                       <span className="bg-ui-1 w-4 h-4 rounded-full animate-pulse"></span>
                       <Icons.AngleLong
@@ -98,13 +98,13 @@ export default function SliderArea() {
 
                       <span className="absolute inset-0  bg-linear-to-r from-ui-1/0 via-ui-1/20 to-ui-1/0 translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></span>
                     </Link>
-                    <strong className="lg:max-w-101 font-inter font-extrabold lg:text-[56px] lg:leading-16 text-white">
+                    <strong className="lg:max-w-101 font-inter font-extrabold text-[36px] leading-11 max-w-90 sm:text-[56px] lg:leading-16 text-white">
                       Mühəndislik xidmətlərimiz
                     </strong>
-                    <div className="flex items-center gap-5">
+                    <div className="flex items-start sm:items-center flex-col sm:flex-row gap-5">
                       <Link
                         href={"/"}
-                        className="group lg:w-[161px] lg:h-12.5 text-white bg-ui-1 rounded-4xl flex items-center gap-2 font-inter font-normal text-base justify-center transition-all duration-300 hover:gap-4 hover:pr-2 hover:shadow-[0_8px_30px_rgba(27,175,191,0.5)] active:scale-95"
+                        className="group w-full h-10.5 sm:w-[161px] sm:h-12.5 text-white bg-ui-1 rounded-4xl flex items-center gap-2 font-inter font-normal text-base justify-center transition-all duration-300 hover:gap-4 hover:pr-2 hover:shadow-[0_8px_30px_rgba(27,175,191,0.5)] active:scale-95"
                       >
                         <span className="transition-transform duration-300 group-hover:-translate-x-1">
                           Daha ətraflı
@@ -114,7 +114,7 @@ export default function SliderArea() {
 
                       <button
                         type="button"
-                        className="group flex items-center justify-center gap-4 font-inter font-normal lg:text-base text-white cursor-pointer bg-white/14 backdrop-blur-sm border-2 border-white/60 rounded-[30px] w-[198px] h-12.5 transition-all duration-300 hover:gap-3 hover:bg-white hover:text-ui-1 hover:shadow-[0_8px_30px_rgba(255,255,255,0.3)] active:scale-95"
+                        className="group flex items-center justify-center gap-4 font-inter font-normal lg:text-base text-white cursor-pointer bg-white/14 backdrop-blur-sm border-2 border-white/60  rounded-4xl w-full h-10.5 sm:w-[198px] sm:h-12.5 transition-all duration-300 hover:gap-3 hover:bg-white hover:text-ui-1 hover:shadow-[0_8px_30px_rgba(255,255,255,0.3)] active:scale-95"
                       >
                         <Icons.Phone
                           fill="currentColor"
@@ -130,8 +130,7 @@ export default function SliderArea() {
           );
         })}
       </MySwiper>
-
-      <div className="absolute left-1/2  xl:left-[2%] bottom-12 xl:bottom-[unset]  xl:top-[55%] xl:-translate-y-1/2 z-10 hidden lg:flex xl:flex-col items-center gap-5">
+      <div className="absolute right-10 lg:right-[unset] lg:left-1/2  xl:left-[2%] bottom-8 lg:bottom-12 xl:bottom-[unset]  xl:top-[55%] xl:-translate-y-1/2 z-10  flex xl:flex-col items-center gap-5">
         <button
           type="button"
           aria-label="prev button for services slider"

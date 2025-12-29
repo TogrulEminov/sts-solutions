@@ -6,7 +6,7 @@ import { Link } from "@/src/i18n/navigation";
 export default function SolutionsCard() {
   return (
     <motion.div
-      className="relative overflow-hidden rounded-[20px] lg:h-120 flex items-end justify-start group cursor-pointer"
+      className="relative overflow-hidden rounded-lg lg:rounded-[20px] h-60 lg:h-120 flex items-end justify-start group cursor-pointer"
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
@@ -54,15 +54,13 @@ export default function SolutionsCard() {
         />
       </motion.div>
 
-      <motion.div
-        className="bg-white relative z-10 max-w-90 w-fit rounded-tr-2xl p-6 font-inter font-bold text-2xl text-ui-2 shadow-lg"
+      <motion.strong
+        className="bg-white relative z-10 max-w-full mr-4 lg:max-w-90 w-fit rounded-tr-lg lg:rounded-tr-2xl p-3 lg:p-6 font-inter font-bold text-sm lg:text-2xl text-ui-2 shadow-lg"
         variants={{
           hover: {
             backgroundColor: "#004A52",
             color: "#ffffff",
             scale: 1.05,
-            y: -8,
-            boxShadow: "0 20px 40px rgba(0, 74, 82, 0.3)",
           },
         }}
         initial={{ opacity: 0, x: -20, y: 10 }}
@@ -75,7 +73,7 @@ export default function SolutionsCard() {
         }}
       >
         PLC, SCADA sistemlərinin qurulması
-      </motion.div>
+      </motion.strong>
 
       <motion.div
         className="absolute inset-0 pointer-events-none"

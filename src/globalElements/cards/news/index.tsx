@@ -21,7 +21,7 @@ export default function NewsCard() {
       >
         Lorem ipsum dolor sit.
       </Link>
-      <figure className="relative overflow-hidden h-54 rounded-xl">
+      <figure className="relative overflow-hidden h-40 lg:h-54 rounded-xl">
         <motion.div
           className="relative w-full h-full"
           whileHover={{ scale: 1.05 }}
@@ -41,7 +41,7 @@ export default function NewsCard() {
       </figure>
       <article className="flex flex-col space-y-3">
         <motion.strong
-          className="font-inter font-bold text-xl text-ui-7 group-hover:text-primary transition-colors duration-300"
+          className="font-inter font-bold text-base lg:text-xl text-ui-7 group-hover:text-primary transition-colors duration-300"
           initial={{ opacity: 0, x: -10 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
@@ -50,7 +50,7 @@ export default function NewsCard() {
           Top 20 UI Inspiration Sites (2023)
         </motion.strong>
         <motion.p
-          className="font-inter text-xs text-ui-9 line-clamp-2 min-h-9"
+          className="font-inter text-xs text-ui-9 line-clamp-2 min-h-8"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}

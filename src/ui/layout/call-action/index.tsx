@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 
 export default function CallAction() {
   return (
-    <section className="lg:py-14 relative flex items-center overflow-hidden lg:min-h-56">
+    <section className="py-8 lg:py-14 relative flex items-center overflow-hidden min-h-fit lg:min-h-56">
       <motion.div
         initial={{ scale: 1.1, opacity: 0 }}
         whileInView={{ scale: 1, opacity: 1 }}
@@ -27,7 +27,7 @@ export default function CallAction() {
       <div className="absolute z-2 inset-0 w-full h-full bg-ui-3/75"></div>
 
       <div className="container relative z-3">
-        <div className="grid grid-cols-12 gap-10">
+        <div className="flex flex-col lg:grid lg:grid-cols-12 gap-5 lg:gap-10">
           <motion.article
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -35,10 +35,10 @@ export default function CallAction() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="flex flex-col space-y-4 lg:col-span-8"
           >
-            <strong className="font-inter font-bold lg:text-[32px] lg:leading-[42px] text-white">
+            <strong className="font-inter font-bold text-2xl lg:text-[32px] lg:leading-[42px] text-white">
               STS Mühəndislik- texniki problemlərin ağıllı həlli
             </strong>
-            <p className="font-inter text-lg text-white font-normal">
+            <p className="font-inter text-base lg:text-lg text-white font-normal">
               Şirkətimiz, müştərinin iş proseslərini effektiv şəkildə
               təkmilləşdirərək, texnologiyaların avtomatlaşması ilə həllər
               təqdim edir.
@@ -52,12 +52,12 @@ export default function CallAction() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="lg:col-span-4 grid grid-cols-2 gap-3"
           >
-            <div className="col-span-2 flex justify-end">
+            <div className="col-span-2 lg:flex lg:justify-end">
               <motion.button
                 type="button"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center group text-white cursor-pointer gap-x-3 bg-ui-1 gap-2 font-inter h-12.5 py-3 px-6 rounded-[30px] transition-all duration-300 group"
+                className="flex items-center w-full justify-center lg:w-fit group text-white cursor-pointer gap-x-3 bg-ui-1 gap-2 font-inter h-12.5 py-3 px-6 rounded-[30px] transition-all duration-300 group"
               >
                 Bizimlə əməkdaşlıq et
                 <motion.div

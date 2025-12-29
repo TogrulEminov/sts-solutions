@@ -78,7 +78,7 @@ export default function FaqAccordion({
             className="w-full flex  cursor-pointer items-center justify-between p-5 text-left group"
             aria-expanded={openId === item.id}
           >
-            <span className="text-lg font-semibold text-ui-5 group-hover:text-ui-4 transition-colors duration-200">
+            <span className="text-base lg:text-lg font-semibold text-ui-5 group-hover:text-ui-4 transition-colors duration-200">
               {item.question}
             </span>
             <motion.div
@@ -108,7 +108,7 @@ export default function FaqAccordion({
                     initial={{ y: -10 }}
                     animate={{ y: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="text-slate-600 leading-relaxed"
+                    className="text-slate-600 text-sm lg:text-base leading-relaxed"
                   >
                     {item.answer}
                   </motion.p>

@@ -17,11 +17,11 @@ export default function Statistics() {
   });
 
   return (
-    <div className="flex items-center flex-wrap gap-5" ref={ref}>
+    <div className="grid  grid-cols-2 lg:grid-cols-4 gap-5" ref={ref}>
       {stats?.map((stat, index) => {
         return (
           <div className="flex flex-col space-y-1" key={index}>
-            <div className="font-inter  text-[32px] lg:text-[40px] lg:leading-[58px] text-ui-1 font-extrabold">
+            <div className="font-inter  text-[40px] leading-[58px] text-ui-1 font-extrabold">
               {inView ? (
                 <CountUp
                   start={0}
@@ -36,7 +36,7 @@ export default function Statistics() {
               )}
             </div>
 
-            <span className="font-inter font-medium lg:text-lg lg:leading-[22px] text-ui-5">
+            <span className="font-inter font-medium  text-sm lg:text-lg lg:leading-[22px] text-ui-5">
               {stat?.label}
             </span>
           </div>

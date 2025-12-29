@@ -47,7 +47,7 @@ export default function ServicesCard() {
         />
       </motion.figure>
       <motion.strong
-        className="min-h-12 font-inter line-clamp-2 text-ellipsis font-bold text-white"
+        className="min-h-9 lg:min-h-12 font-inter text-sm lg:text-base line-clamp-2 text-ellipsis font-bold text-white"
         initial={{ opacity: 0, y: 10 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}

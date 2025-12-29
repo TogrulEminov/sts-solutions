@@ -69,6 +69,7 @@ body {
     background: linear-gradient(90deg, rgba(27, 175, 191, 0) 0%, #1BAFBF 100%);
   }
 
+  
   .scrollbar-custom {
     scrollbar-width: thin;
     scrollbar-color: #0c7fa3 #f3f4f6;
@@ -207,28 +208,4 @@ html {
 
 .employeeCardGradient {
   background: linear-gradient(180.12deg, rgba(27, 175, 191, 0) 36.67%, #008795 87.86%);
-}
-
-.heroFirstLinear {
-  position: absolute;
-  width: 50%;
-  height: 1080px;
-  z-index: 2;
-  left: -8%;
-  top: -80px;
-  background: rgba(0, 74, 82, 0.51);
-  transform: rotate(-15.73deg);
-
-}
-
-.heroSecondLinear {
-  position: absolute;
-  width: 34.07px;
-  height: 940.01px;
-  left: 50%;
-  top: 147px;
-  z-index: 2;
-  background: rgba(0, 74, 82, 0.46);
-  transform: rotate(-15.73deg);
-
 }

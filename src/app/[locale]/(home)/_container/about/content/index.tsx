@@ -19,13 +19,13 @@ const sectors = [
 export default function Content() {
   return (
     <article className="flex flex-col space-y-6">
-      <strong className="font-extrabold font-inter lg:text-[60px] lg:leading-[76px] text-ui-7">
+      <strong className="font-extrabold font-inter text-[28px] leading-9 lg:text-[60px] lg:leading-[76px] text-ui-7">
         Biz kimik
       </strong>
-      <span className="font-normal  max-w-lg lg:text-[30px] lg:leading-[38px] text-ui-15">
+      <span className="font-normal  max-w-lg text-2xl lg:text-[30px] lg:leading-[38px] text-ui-15">
         Sənayenin hər sahəsi üçün ağıllı mühəndislik
       </span>
-      <p className="font-inter lg:text-lg font-normal">
+      <p className="font-inter text-base lg:text-lg font-normal">
         STS Mühəndislik – qida sənayesi, logistika, enerji və alternativ enerji,
         su və kənd təsərrüfatı sektorları üçün texniki həllər, avtomatlaşdırma,
         proqramlaşdırma və proses idarəetməsi üzrə ixtisaslaşmış peşəkar
@@ -41,12 +41,12 @@ export default function Content() {
             <Link
               key={index}
               href={""}
-              className="group relative flex items-center gap-x-2 py-2 px-3 rounded-full bg-ui-1/16 border-[0.5px] border-ui-1 text-ui-2 font-inter font-bold text-xl transition-all duration-300 hover:bg-ui-2 hover:text-white hover:border-ui-2 hover:shadow-lg hover:scale-105 overflow-hidden"
+              className="group relative flex items-center gap-x-2 py-2 px-3 rounded-full bg-ui-1/16 border-[0.5px] border-ui-1 text-ui-2 font-inter font-bold text-base lg:text-xl transition-all duration-300 hover:bg-ui-2 hover:text-white hover:border-ui-2 hover:shadow-lg hover:scale-105 overflow-hidden"
             >
               <span className="absolute inset-0 bg-linear-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
               <Icons.Sector
                 fill="currentColor"
-                className="relative z-10 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110"
+                className="relative z-10  w-4 h-4 lg:w-6 lg:h-6 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110"
               />
               <span className="relative z-10">{item}</span>
             </Link>

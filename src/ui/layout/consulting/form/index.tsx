@@ -111,7 +111,7 @@ export default function FormContactWrapper() {
 
   return (
     <motion.div
-      className="bg-white col-span-6 rounded-2xl p-10 border border-gray-50 shadow-sm flex flex-col space-y-5"
+      className="bg-white col-span-6 rounded-2xl p-5 lg:p-10 border border-gray-50 shadow-sm flex flex-col space-y-5"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-100px" }}
@@ -120,9 +120,9 @@ export default function FormContactWrapper() {
       {/* Header section */}
       <motion.div className="flex flex-col space-y-6" variants={headerVariants}>
         {/* Title */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col space-y-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-col space-y-1">
-            <h3 className="font-inter font-bold text-2xl text-ui-2">
+            <h3 className="font-inter font-bold text-lg sm:text-2xl text-ui-2">
               Əlaqə forması
             </h3>
             <p className="font-inter text-sm text-gray-500">
@@ -188,7 +188,7 @@ export default function FormContactWrapper() {
 
       {/* Form Wrapper */}
       <FormWrapper
-        className="grid gap-2 grid-cols-1 lg:grid-cols-2"
+        className="flex flex-col lg:grid gap-2 lg:grid-cols-2"
         form={methods}
         onSubmit={methods.handleSubmit(handleSubmit)}
       >

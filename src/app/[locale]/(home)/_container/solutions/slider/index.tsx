@@ -12,7 +12,8 @@ export default function SliderArea() {
   const swiperRef = useRef<SwiperCore | null>(null);
 
   const breakpoints = {
-    0: { slidesPerView: 2, spaceBetween: 10 },
+    0: { slidesPerView: 1.5, spaceBetween: 10 },
+    480: { slidesPerView: 2, spaceBetween: 10 },
     768: { slidesPerView: 3 },
     1024: { slidesPerView: 3.5 },
     1600: { slidesPerView: 4.5 },
@@ -46,7 +47,7 @@ export default function SliderArea() {
     <div className="flex flex-col space-y-10">
       <div className="flex items-center justify-between">
         <AnimatedProjectButton link="/" title="Ətraflı bax" />
-        <div className="flex items-center gap-x-3 justify-center  w-fit">
+        <div className="hidden lg:flex items-center gap-x-3 justify-center  w-fit">
           <button
             type="button"
             aria-label="prev button for services slider"

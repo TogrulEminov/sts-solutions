@@ -93,7 +93,7 @@ export default function Information() {
       variants={containerVariants}
     >
       <motion.p
-        className="font-inter lg:text-[28px] lg:leading-9 text-ui-7 font-medium"
+        className="font-inter text-xl lg:text-[28px] lg:leading-9 text-ui-7 font-medium"
         variants={textVariants}
       >
         Xidmətlərdən yararlanmaq üçün formu doldurun və ya bizimlə əlaqə
@@ -115,7 +115,7 @@ export default function Information() {
               whileHover="hover"
               animate="rest"
             >
-              <motion.div className="flex items-center gap-3 p-2.5 rounded-[10px] bg-ui-19 relative min-h-17.5 overflow-hidden">
+              <motion.div className="flex items-center gap-3 p-2.5 rounded-[10px] bg-ui-19 relative min-h-11.5 lg:min-h-17.5 overflow-hidden">
                 <motion.div
                   className="absolute inset-0 bg-ui-2 "
                   initial={{ x: "-100%" }}
@@ -125,9 +125,9 @@ export default function Information() {
 
                 <motion.span
                   variants={iconVariants}
-                  className="relative z-10 w-12.5 h-12.5 bg-ui-2 rounded-full flex items-center justify-center text-white shadow-md group-hover:shadow-lg transition-shadow duration-300"
+                  className="relative z-10 w-8 h-8 lg:w-12.5 lg:h-12.5 bg-ui-2 rounded-full flex items-center justify-center text-white shadow-md group-hover:shadow-lg transition-shadow duration-300"
                 >
-                  <IconComponent width={24} height={24} fill="currentColor" />
+                  <IconComponent width={24} height={24} fill="currentColor" className="w-4 h-4 lg:w-6 lg:h-6" />
                 </motion.span>
 
                 <motion.div variants={linkVariants} className="relative z-10">

@@ -8,7 +8,7 @@ export default function NewsSection() {
       <div className="container">
         <div className="flex items-center justify-between gap-10">
           <article className="flex flex-col space-y-2">
-            <strong className="font-inter font-bold lg:text-4xl text-ui-7">
+            <strong className="font-inter font-bold text-2xl lg:text-4xl text-ui-2">
               Bloqlar
             </strong>
             <p className="font-inter font-normal text-base text-ui-8">

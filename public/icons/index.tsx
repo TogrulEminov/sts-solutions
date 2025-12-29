@@ -306,12 +306,13 @@ export default class Icons {
       </svg>
     );
   }
-  static Email({ fill = "white", width = 30, height = 30 }: IconsProps) {
+  static Email({ fill = "white", width = 30, height = 30,className }: IconsProps) {
     return (
       <svg
         width={width}
         height={height}
         viewBox="0 0 30 30"
+        className={className}
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -322,12 +323,13 @@ export default class Icons {
       </svg>
     );
   }
-  static Address({ fill = "white", width = 26, height = 26 }: IconsProps) {
+  static Address({ fill = "white", width = 26, height = 26 ,className}: IconsProps) {
     return (
       <svg
         width={width}
         height={height}
         viewBox="0 0 26 26"
+        className={className}
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >

@@ -1,11 +1,11 @@
 "use client";
 import { motion } from "framer-motion";
 import CustomImage from "../../ImageTag";
-
+import logo from "@/public/assets/logo/sts-logo.svg"
 export default function Services3DTilt() {
   return (
     <motion.div
-      className="relative rounded-xl overflow-hidden h-96 flex items-end justify-start cursor-pointer perspective-1000"
+      className="relative rounded-xl overflow-hidden h-70 lg:h-96 flex items-end justify-start cursor-pointer perspective-1000"
       initial={{ opacity: 0, rotateX: -15 }}
       whileInView={{ opacity: 1, rotateX: 0 }}
       viewport={{ once: true }}
@@ -37,7 +37,7 @@ export default function Services3DTilt() {
       </motion.div>
 
       <motion.article
-        className="flex items-center h-24 bg-white relative z-10 rounded-tr-lg shadow-xl overflow-hidden w-[calc(100%-1rem)] mr-2"
+        className="flex items-center h-14 lg:h-24 bg-white relative z-10 rounded-tr-lg shadow-xl overflow-hidden w-[calc(100%-1rem)] mr-2"
         initial={{ scale: 0.8, opacity: 0 }}
         whileInView={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
@@ -45,16 +45,17 @@ export default function Services3DTilt() {
       >
         <motion.div
           className="flex items-center justify-center shrink-0 bg-ui-1 h-full w-20"
-          whileHover={{ backgroundColor: "#1e40af" }}
+          whileHover={{ backgroundColor: "#1BAFBF" }}
         >
           <CustomImage
             width={32}
             height={32}
             title=""
-            src="https://res.cloudinary.com/da403zlyf/image/upload/v1766078331/image_qsnjuk.png"
+            src={logo}
+            className="w-12 lg:w-16 h-auto"
           />
         </motion.div>
-        <strong className="font-inter mr-4 p-5 font-semibold text-2xl text-ui-16">
+        <strong className="font-inter mr-4 p-5 font-semibold text-sm lg:text-2xl text-ui-16">
           Mühəndislik xidmətləri
         </strong>
       </motion.article>

@@ -98,7 +98,7 @@ export default function Social() {
             >
               <Link
                 href={social.href}
-                className="w-12 h-12 flex items-center justify-center bg-white rounded-full shadow-sm hover:shadow-md transition-shadow"
+                className="w-12 h-12 flex items-center justify-center bg-white/50 hover:bg-white/70 lg:bg-white rounded-full shadow-sm hover:shadow-md transition-shadow"
                 aria-label={social.ariaLabel}
                 target="_blank"
                 rel="noopener noreferrer"
