@@ -33,6 +33,16 @@ export const routing = defineRouting({
       en: "/projects/[slug]",
       ru: "/projecti/[slug]",
     },
+    "/blog": {
+      az: "/bloq",
+      en: "/blog",
+      ru: "/bloqi",
+    },
+    "/blog/[slug]": {
+      az: "/bloq/[slug]",
+      en: "/blog/[slug]",
+      ru: "/bloqi/[slug]",
+    },
     "/services": {
       az: "/xidmetler",
       en: "/services",

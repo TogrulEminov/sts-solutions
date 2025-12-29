@@ -1,16 +1,26 @@
 "use client";
 import { motion } from "framer-motion";
 import CustomImage from "../../ImageTag";
+import { Link } from "@/src/i18n/navigation";
 
 export default function NewsCard() {
   return (
     <motion.div
-      className="flex flex-col space-y-2 group cursor-pointer"
+      className="flex flex-col space-y-2  relative overflow-hidden group cursor-pointer"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
+      <Link
+        href={{
+          pathname: "/blog/[slug]",
+          params: { slug: "test" },
+        }}
+        className="absolute inset-0 w-full h-full opacity-0 z-2"
+      >
+        Lorem ipsum dolor sit.
+      </Link>
       <figure className="relative overflow-hidden h-54 rounded-xl">
         <motion.div
           className="relative w-full h-full"
