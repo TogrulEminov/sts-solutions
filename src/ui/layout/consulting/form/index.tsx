@@ -106,12 +106,12 @@ export default function FormContactWrapper() {
     setIsSubmitting(false);
 
     // Form-u reset et (istəyirsənsə)
-    // methods.reset();
+    methods.reset();
   };
 
   return (
     <motion.div
-      className="bg-white col-span-6 rounded-2xl p-5 lg:p-10 border border-gray-50 shadow-sm flex flex-col space-y-5"
+      className="bg-white lg:col-span-6 rounded-md lg:rounded-2xl p-3 lg:p-10 border border-gray-50 shadow-sm flex flex-col space-y-5"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-100px" }}
@@ -332,7 +332,7 @@ export default function FormContactWrapper() {
           <motion.button
             type="submit"
             disabled={isSubmitting}
-            className="relative bg-ui-1 w-full px-12 cursor-pointer h-10 rounded-lg text-white font-inter font-semibold text-base shadow-lg overflow-hidden group disabled:opacity-70 disabled:cursor-not-allowed"
+            className="relative bg-ui-1 w-full px-7 lg:px-12 cursor-pointer h-8 lg:h-10 rounded-md lg:rounded-lg text-white font-inter font-semibold text-sm lg:text-base shadow-lg overflow-hidden group disabled:opacity-70 disabled:cursor-not-allowed"
             whileHover={{ scale: isSubmitting ? 1 : 1.02, y: -2 }}
             whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
             transition={{ duration: 0.2 }}

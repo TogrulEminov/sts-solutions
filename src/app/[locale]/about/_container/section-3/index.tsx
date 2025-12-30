@@ -1,14 +1,13 @@
-import React from "react";
 import Statistics from "./statistics";
 import CustomImage from "@/src/globalElements/ImageTag";
 
 export default function TeamContent() {
   return (
-    <section className="lg:pb-25">
-      <div className="container">
-        <div className="grid lg:grid-cols-12 gap-5 lg:p-10 bg-ui-23 rounded-4xl">
+    <section className="pb-10 lg:pb-25">
+      <div className="px-0 lg:px-4 container">
+        <div className="flex flex-col lg:grid lg:grid-cols-12 gap-5 p-5 lg:p-10 bg-ui-23 rounded-2xl lg:rounded-4xl">
           <div className="lg:col-span-8 flex flex-col space-y-10">
-            <article className="font-inter font-normal text-2xl text-ui-7">
+            <article className="font-inter font-normal text-base lg:text-2xl text-ui-7">
               Komandamız hər bir sifarişçi üçün hədəf məqsədin effektiv və çevik
               gerçəkləşməsini təmin etməyə xidmət edən fəaliyyət modeli ilə
               çalışır. Şirkətimiz çoxşaxəli istiqamətlərlə geniş texniki

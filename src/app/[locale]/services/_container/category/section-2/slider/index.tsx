@@ -38,7 +38,7 @@ export default function SliderArea() {
       >
         {Array.from({ length: 10 }).map((_, index) => {
           return (
-            <SwiperSlide className="h-full" key={index}>
+            <SwiperSlide className="h-40! lg:h-full!" key={index}>
               <GalleryCard />
             </SwiperSlide>
           );

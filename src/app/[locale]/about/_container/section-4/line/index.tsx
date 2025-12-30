@@ -34,7 +34,7 @@ export default function ProcessSteps() {
     <div className="w-full py-12">
       <div className="container">
         <div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-35 lg:gap-8 relative"
           ref={ref}
         >
           {steps.map((step, index) => (
@@ -80,7 +80,7 @@ export default function ProcessSteps() {
               </div>
 
               {index < steps.length - 1 && (
-                <div className="hidden lg:block absolute top-[50px] left-[85%]   w-[147px] h-1 bg-ui-5 overflow-hidden">
+                <div className="block absolute top-70 rotate-90 lg:rotate-[unset] lg:top-[50px] lg:left-[85%]   w-20 lg:w-[147px] h-1 bg-ui-5 overflow-hidden">
                   <div
                     className="h-full bg-ui-1"
                     style={{

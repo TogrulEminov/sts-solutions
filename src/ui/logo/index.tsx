@@ -12,7 +12,7 @@ export default function Logo({ isWhite }: Props) {
         width={320}
         height={50}
         title="Globtm"
-        className="max-w-60 lg:max-w-80 w-full h-auto"
+        className="max-w-50 lg:max-w-80 w-full h-auto"
         src={isWhite ? whiteLogo : ""}
       />
     </Link>

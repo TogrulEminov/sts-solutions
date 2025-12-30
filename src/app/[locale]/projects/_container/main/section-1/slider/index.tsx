@@ -13,8 +13,8 @@ export default function SliderArea() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const breakpoints = {
-    0: { slidesPerView: 1.5 },
-    768: { slidesPerView: 2.5 },
+    0: { slidesPerView: 1.5, spaceBetween: 10 },
+    768: { slidesPerView: 2.5, spaceBetween: 24 },
   };
   const autoplayOptions = {
     delay: 3500,
@@ -47,13 +47,12 @@ export default function SliderArea() {
   };
 
   return (
-    <div className="relative mt-20 projects-slider">
+    <div className="relative mt-10 lg:mt-25 projects-slider">
       <MySwiper
         modules={[Autoplay]}
         onSwiper={handleSwiper}
         onSlideChange={handleSlideChange}
         breakpoints={breakpoints}
-        spaceBetween={24}
         slideToClickedSlide={false}
         watchSlidesProgress={false}
         centeredSlides={true}
@@ -69,7 +68,7 @@ export default function SliderArea() {
             <SwiperSlide className="h-full" key={index}>
               <div
                 className={`transition-all duration-500 ease-out ${
-                  activeIndex === index ? "mt-0" : "mt-5"
+                  activeIndex === index ? "mt-0" : "mt-2 lg:mt-5"
                 }`}
               >
                 <ProjectsCards />
@@ -84,18 +83,18 @@ export default function SliderArea() {
           type="button"
           aria-label="prev button for projects slider"
           onClick={goPrev}
-          className="w-12 h-12 shrink-0 rounded-full bg-ui-2/50 backdrop-blur-sm flex items-center justify-center cursor-pointer transition-all duration-300 hover:bg-ui-1 hover:scale-110 active:scale-95"
+          className="w-8 h-8 lg:w-12 lg:h-12 shrink-0 rounded-full bg-ui-2/50 backdrop-blur-sm flex items-center justify-center cursor-pointer transition-all duration-300 hover:bg-ui-1 hover:scale-110 active:scale-95"
         >
-          <Icons.ArrowLeft className="text-white" />
+          <Icons.ArrowLeft className="text-white w-3 h-3 lg:w-6 lg:h-6" />
         </button>
 
         <button
           type="button"
           onClick={goNext}
           aria-label="next button for projects slider"
-          className="w-12 h-12 shrink-0 rounded-full bg-ui-2/50 backdrop-blur-sm flex items-center justify-center cursor-pointer transition-all duration-300 hover:bg-ui-1 hover:scale-110 active:scale-95"
+          className="w-8 h-8 lg:w-12 lg:h-12  shrink-0 rounded-full bg-ui-2/50 backdrop-blur-sm flex items-center justify-center cursor-pointer transition-all duration-300 hover:bg-ui-1 hover:scale-110 active:scale-95"
         >
-          <Icons.ArrowRight className="text-white" />
+          <Icons.ArrowRight className="text-white w-3 h-3 lg:w-6 lg:h-6" />
         </button>
       </div>
     </div>

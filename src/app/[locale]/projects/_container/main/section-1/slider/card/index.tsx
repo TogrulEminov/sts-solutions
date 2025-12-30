@@ -10,9 +10,9 @@ export default function ProjectsCards() {
           slug: "test",
         },
       }}
-      className="grid grid-cols-12 gap-3 bg-white overflow-hidden rounded-2xl"
+      className="flex flex-col lg:grid lg:grid-cols-12 gap-2 lg:gap-3 bg-white overflow-hidden rounded-xl lg:rounded-2xl"
     >
-      <figure className="lg:h-full col-span-4 w-full">
+      <figure className="h-30 lg:h-full lg:col-span-4 w-full">
         <CustomImage
           width={280}
           height={260}
@@ -23,12 +23,12 @@ export default function ProjectsCards() {
           }
         />
       </figure>
-      <article className="flex flex-col space-y-3   py-4  pr-3 col-span-8">
-        <strong className="font-inter lg:text-lg leading-normal text-ui-1 font-bold">
+      <article className="flex flex-col space-y-2 lg:space-y-3   p-2 lg:pl-0 lg:py-4 lg:pr-3 col-span-8">
+        <strong className="font-inter text-sm  min-h-fit line-clamp-2 lg:line-clamp-3 lg:text-lg leading-normal text-ui-1 font-bold">
           Nar və Digər Şirələr, Konsentrat İstehsalı Müəssisəsinin Qurulması və
           Avtomatlaşdırılması
         </strong>
-        <p className="font-inter lg:min-h-20 line-clamp-4 text-ellipsis lg:text-lg text-ui-7 font-normal">
+        <p className="font-inter  min-h-fit lg:min-h-20 line-clamp-3 lg:line-clamp-4 text-ellipsis text-xs lg:text-lg text-ui-7 font-normal">
           2024-cü ildə həyata keçirilmişdir. Layihə çərçivəsində texnoloji
           sxemlərin qurulması, mühəndislik həllərinin hazırlanması,
           layihələndirilmə və texniki nəzarət işləri həyata keçirilmişdir. Eyni

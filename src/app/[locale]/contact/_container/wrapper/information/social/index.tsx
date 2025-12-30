@@ -44,7 +44,7 @@ export default function Social() {
           <div key={index} className="relative group">
             <Link
               href={social.href}
-              className="relative w-10 h-10 rounded-lg bg-ui-23 items-center justify-center overflow-hidden transition-all duration-300 hover:shadow-lg flex border border-ui-24"
+              className="relative w-8 h-8 lg:w-10 lg:h-10 rounded-md lg:rounded-lg bg-ui-23 items-center justify-center overflow-hidden transition-all duration-300 hover:shadow-lg flex border border-ui-24"
               aria-label={social.label}
             >
               {/* Animated Background Gradient */}
@@ -58,7 +58,7 @@ export default function Social() {
                   fill="currentColor"
                   width={18}
                   height={18}
-                  className="transition-all duration-300 group-hover:scale-110"
+                  className="transition-all duration-300 group-hover:scale-110 w-4 h-4 lg:w-6 lg:h-6"
                 />
               </div>
             </Link>

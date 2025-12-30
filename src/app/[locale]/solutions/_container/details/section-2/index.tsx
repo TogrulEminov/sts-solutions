@@ -7,7 +7,7 @@ export default function SectionTwo() {
       <div className="container">
         <div className="grid  grid-cols-1 lg:grid-cols-12 gap-6">
           <div className="flex flex-col space-y-5 lg:col-span-7">
-            <strong className="font-inter font-extrabold lg:text-[40px] lg:leading-12 text-ui-2">
+            <strong className="font-inter font-extrabold text-2xl lg:text-[40px] lg:leading-12 text-ui-2">
               Bu həll nə üçündür?
             </strong>
             <article className="lg:text-2xl text-ui-7 font-inter font-normal">

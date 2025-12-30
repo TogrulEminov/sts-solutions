@@ -43,7 +43,7 @@ export default function EmployeeCard({
         delay: index * 0.15,
       }}
       whileHover={{ y: -10, transition: { duration: 0.3 } }}
-      className="relative w-full overflow-hidden rounded-3xl lg:h-95 flex items-end p-4 group cursor-pointer"
+      className="relative w-[220px] lg:w-full shrink-0 overflow-hidden rounded-2xl lg:rounded-3xl h-60 lg:h-95 flex items-end p-3 lg:p-4 group cursor-pointer"
     >
       <motion.div
         whileHover={{ scale: 1.1 }}
@@ -67,13 +67,13 @@ export default function EmployeeCard({
       ></motion.div>
 
       <motion.article
-        className="flex flex-col space-y-3 z-3 relative w-full"
+        className="flex flex-col space-y-1 lg:space-y-3 z-3 relative w-full"
         initial={{ y: 30, opacity: 0 }}
         animate={inView ? { y: 0, opacity: 1 } : { y: 30, opacity: 0 }}
         transition={{ delay: index * 0.15 + 0.2, duration: 0.6 }}
       >
         <motion.strong
-          className="font-inter text-2xl font-bold text-white"
+          className="font-inter text-lg lg:text-2xl font-bold text-white"
           initial={{ x: -20, opacity: 0 }}
           animate={inView ? { x: 0, opacity: 1 } : { x: -20, opacity: 0 }}
           transition={{ delay: index * 0.15 + 0.3, duration: 0.5 }}
@@ -83,7 +83,7 @@ export default function EmployeeCard({
         </motion.strong>
 
         <motion.span
-          className="font-inter text-lg text-white font-normal"
+          className="font-inter text-sm lg:text-lg text-white font-normal"
           initial={{ x: -20, opacity: 0 }}
           animate={inView ? { x: 0, opacity: 1 } : { x: -20, opacity: 0 }}
           transition={{ delay: index * 0.15 + 0.4, duration: 0.5 }}
@@ -92,7 +92,7 @@ export default function EmployeeCard({
         </motion.span>
 
         <motion.ul
-          className="flex flex-col space-y-3"
+          className="flex flex-col space-y-0.5 lg:space-y-3"
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ delay: index * 0.15 + 0.5, duration: 0.5 }}
@@ -113,7 +113,7 @@ export default function EmployeeCard({
             </motion.span>
             <Link
               href={`tel:${phone}`}
-              className="text-sm text-white font-inter font-normal hover:underline"
+              className="text-xs lg:text-sm text-white font-inter font-normal hover:underline"
             >
               {phone}
             </Link>

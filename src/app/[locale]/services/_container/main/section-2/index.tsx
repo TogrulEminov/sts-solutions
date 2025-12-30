@@ -3,10 +3,10 @@ import CardWrapper from "./wrapper";
 
 export default function SectionTwo() {
   return (
-    <section className="lg:py-25">
-      <div className="container flex flex-col space-y-10">
-        <div className="max-w-2xl flex flex-col space-y-6">
-          <h2 className="font-inter lg:text-[40px] font-bold lg:leading-12 text-ui-21">
+    <section className="py-10 lg:py-25">
+      <div className="container flex flex-col space-y-5 lg:space-y-10">
+        <div className="max-w-2xl flex flex-col space-y-3 lg:space-y-5">
+          <h2 className="font-inter text-2xl lg:text-[40px] font-bold lg:leading-12 text-ui-21">
             Xidmət təkliflərimiz
           </h2>
           <p className="font-inter text-base text-ui-21 font-medium">

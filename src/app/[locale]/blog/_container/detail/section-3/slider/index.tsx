@@ -6,7 +6,7 @@ import NewsCard from "@/src/globalElements/cards/news";
 
 export default function SliderArea() {
   const breakpoints = {
-    0: { slidesPerView: 1.5, spaceBetween: 10 },
+    0: { slidesPerView: 1.2, spaceBetween: 10 },
     768: { slidesPerView: 2, spaceBetween: 15 },
     1024: { slidesPerView: 4, spaceBetween: 25 },
   };

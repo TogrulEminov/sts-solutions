@@ -205,7 +205,7 @@ export default function Footer() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.7 }}
-              className="font-inter font-medium text-white/50 text-sm lg:text-base order-2 md:order-1"
+              className="font-inter font-medium text-center lg:text-start text-white/50 text-sm lg:text-base order-2 md:order-1"
             >
               © 2015-2025 GlobTm. All rights reserved
             </motion.p>

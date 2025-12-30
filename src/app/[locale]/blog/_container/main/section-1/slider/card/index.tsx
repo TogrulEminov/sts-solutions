@@ -10,7 +10,7 @@ export default function BlogsCards() {
           slug: "test",
         },
       }}
-      className="flex flex-col lg:grid items-start lg:grid-cols-12 gap-3 bg-white/11 overflow-hidden p-4 rounded-xl lg:rounded-2xl"
+      className="flex flex-col lg:grid items-start lg:grid-cols-12 gap-3 bg-white/11 overflow-hidden p-2 lg:p-4 rounded-xl lg:rounded-2xl"
     >
       <figure className="lg:h-full order-2 lg:order-1 lg:col-span-4 w-full overflow-hidden rounded-xl lg:rounded-2xl">
         <CustomImage
@@ -24,10 +24,10 @@ export default function BlogsCards() {
         />
       </figure>
       <article className="order-1 lg:order-2  flex flex-col space-y-3   py-4  pr-3 col-span-8">
-        <strong className="font-inter text-2xl lg:text-[36px] lg:leading-normal text-white font-bold">
+        <strong className="font-inter text-xl lg:text-[36px] lg:leading-normal text-white font-bold">
           Bloq başlığı
         </strong>
-        <p className="font-inter lg:min-h-20 line-clamp-4 text-ellipsis text-base lg:text-lg text-white font-normal">
+        <p className="font-inter lg:min-h-20 line-clamp-4 text-ellipsis text-sm lg:text-lg text-white font-normal">
           Sənaye proseslərinin avtomatlaşdırılması, real vaxtda monitorinq və
           mərkəzləşdirilmiş idarəetmə həlləri təqdim edirik.PLC və SCADA
           sistemləri istehsal və sənaye proseslərinin avtomatik idarə olunmasını

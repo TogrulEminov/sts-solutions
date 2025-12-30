@@ -6,14 +6,14 @@ export default function SectionOne() {
     <div className="py-10 lg:py-25 bg-ui-24">
       <div className="container grid  grid-cols-1 lg:grid-cols-12 items-center gap-5">
         <div className="flex flex-col space-y-5 lg:col-span-7">
-          <h1 className="font-inter lg:text-[46px] font-semibold lg:leading-14.5 text-ui-1">
+          <h1 className="font-inter text-2xl lg:text-[46px] font-semibold lg:leading-14.5 text-ui-1">
             {highlightActiveWord(
               "  Texnologiya və təcrübənin birləşdiyi, etibarlı və effektiv xidmətlərimiz",
               "etibarlı və effektiv xidmətlərimiz",
               "text-ui-2"
             )}
           </h1>
-          <p className="text-ui-7 font-inter text-2xl">
+          <p className="text-ui-7 font-inter text-sm text-justify lg:text-start lg:text-2xl">
             Şirkətimiz sənaye və texnoloji proseslər üçün geniş spektrdə
             mühəndislik xidmətləri təqdim edir. Avtomatlaşdırma və idarəetmə
             sistemlərindən elektrik təchizatı, mexaniki və elektromexaniki

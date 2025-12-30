@@ -92,13 +92,13 @@ export default function Information() {
       viewport={{ once: true, margin: "-100px" }}
       variants={containerVariants}
     >
-      <motion.p
+      <motion.strong
         className="font-inter text-xl lg:text-[28px] lg:leading-9 text-ui-7 font-medium"
         variants={textVariants}
       >
         Xidmətlərdən yararlanmaq üçün formu doldurun və ya bizimlə əlaqə
         saxlayın
-      </motion.p>
+      </motion.strong>
 
       <motion.ul
         className="flex flex-col space-y-4"
@@ -127,13 +127,18 @@ export default function Information() {
                   variants={iconVariants}
                   className="relative z-10 w-8 h-8 lg:w-12.5 lg:h-12.5 bg-ui-2 rounded-full flex items-center justify-center text-white shadow-md group-hover:shadow-lg transition-shadow duration-300"
                 >
-                  <IconComponent width={24} height={24} fill="currentColor" className="w-4 h-4 lg:w-6 lg:h-6" />
+                  <IconComponent
+                    width={24}
+                    height={24}
+                    fill="currentColor"
+                    className="w-4 h-4 lg:w-6 lg:h-6"
+                  />
                 </motion.span>
 
                 <motion.div variants={linkVariants} className="relative z-10">
                   <Link
                     href={item.href}
-                    className="font-inter font-medium text-xl text-ui-7 tracking-tight inline-block relative"
+                    className="font-inter font-medium lg:text-xl text-ui-7 tracking-tight inline-block relative"
                     aria-label={item.ariaLabel}
                   >
                     {item.text}

@@ -13,7 +13,7 @@ export default function SliderArea() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const breakpoints = {
-    0: { slidesPerView: 1.5 },
+    0: { slidesPerView: 1.2 },
     768: { slidesPerView: 2.5 },
   };
   const autoplayOptions = {
@@ -84,18 +84,18 @@ export default function SliderArea() {
           type="button"
           aria-label="prev button for projects slider"
           onClick={goPrev}
-          className="w-12 h-12 shrink-0 rounded-full bg-white/50 backdrop-blur-sm flex items-center justify-center cursor-pointer transition-all duration-300 hover:bg-ui-1 hover:scale-110 active:scale-95"
+          className="w-8 h-8 lg:w-12 lg:h-12 shrink-0 rounded-full bg-white/50 backdrop-blur-sm flex items-center justify-center cursor-pointer transition-all duration-300 hover:bg-ui-1 hover:scale-110 active:scale-95"
         >
-          <Icons.ArrowLeft className="text-white" />
+          <Icons.ArrowLeft className="text-white w-2 h-2 lg:w-4 lg:h-4" />
         </button>
 
         <button
           type="button"
           onClick={goNext}
           aria-label="next button for projects slider"
-          className="w-12 h-12 shrink-0 rounded-full bg-white/50 backdrop-blur-sm flex items-center justify-center cursor-pointer transition-all duration-300 hover:bg-ui-1 hover:scale-110 active:scale-95"
+          className="w-8 h-8 lg:w-12 lg:h-12 shrink-0 rounded-full bg-white/50 backdrop-blur-sm flex items-center justify-center cursor-pointer transition-all duration-300 hover:bg-ui-1 hover:scale-110 active:scale-95"
         >
-          <Icons.ArrowRight className="text-white" />
+          <Icons.ArrowRight className="text-white w-2 h-2 lg:w-4 lg:h-4" />
         </button>
       </div>
     </div>

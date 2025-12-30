@@ -3,10 +3,10 @@ import SliderArea from "./slider";
 
 export default function HeroProjectsSection() {
   return (
-    <section className="py-20  overflow-hidden lg:pb-20 min-h-60   bg-ui-21">
-      <div className="container items-center flex flex-col lg:flex-row lg:justify-between gap-25">
+    <section className="py-10 lg:py-25  overflow-hidden lg:min-h-60   bg-ui-21">
+      <div className="container items-center flex flex-col lg:flex-row lg:justify-between gap-10 lg:gap-25">
         <article className="flex  max-w-xl flex-col space-y-3 shrink-0">
-          <h1 className="font-inter lg:text-[46px]  font-extrabold lg:leading-14.5 text-white">
+          <h1 className="font-inter text-2xl lg:text-[46px]  font-extrabold lg:leading-14.5 text-white">
             Mühəndislikdə Dəqiqlik, Nəticədə Etibar
           </h1>
           <p className="lg:text-xl font-inter font-normal text-white">

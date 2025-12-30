@@ -37,10 +37,10 @@ const employees = [
 
 export default function TeamArea() {
   return (
-    <section className="lg:py-25">
-      <div className="container flex flex-col space-y-10">
-        <article className="flex items-center justify-between">
-          <strong className="font-inter font-extrabold text-4xl text-ui-1">
+    <section className="py-10 lg:py-25">
+      <div className="container flex flex-col space-y-5 lg:space-y-10">
+        <article className="flex flex-col space-y-5 lg:flex-row lg:items-center lg:justify-between">
+          <strong className="font-inter font-extrabold text-2xl lg:text-4xl text-ui-1">
             Komandamız
           </strong>
           <p className="lg:max-w-3xl lg:text-right text-ui-9  font-inter font-normal lg:text-2xl">
@@ -49,7 +49,7 @@ export default function TeamArea() {
             keçirilən böyük layihələrdə iştirak edərək formalaşıb.
           </p>
         </article>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="flex scrollbar-hidden py-10 lg:py-0 items-center max-w-5xl lg:max-w-full overflow-x-auto lg:overflow-x-hidden pb-2 lg:grid lg:grid-cols-4 gap-3 lg:gap-6">
           {employees?.map((employee, index) => (
             <EmployeeCard
               key={index}

@@ -244,12 +244,18 @@ export default class Icons {
   }
 
   // call
-  static Calendar({ fill = "white", width = 26, height = 26 }: IconsProps) {
+  static Calendar({
+    fill = "white",
+    width = 26,
+    height = 26,
+    className,
+  }: IconsProps) {
     return (
       <svg
         width={width}
         height={height}
         viewBox="0 0 26 26"
+        className={className}
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -264,11 +270,17 @@ export default class Icons {
       </svg>
     );
   }
-  static Clock({ fill = "white", width = 26, height = 26 }: IconsProps) {
+  static Clock({
+    fill = "white",
+    width = 26,
+    height = 26,
+    className,
+  }: IconsProps) {
     return (
       <svg
         width={width}
         height={height}
+        className={className}
         viewBox="0 0 26 26"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -306,7 +318,12 @@ export default class Icons {
       </svg>
     );
   }
-  static Email({ fill = "white", width = 30, height = 30,className }: IconsProps) {
+  static Email({
+    fill = "white",
+    width = 30,
+    height = 30,
+    className,
+  }: IconsProps) {
     return (
       <svg
         width={width}
@@ -323,7 +340,12 @@ export default class Icons {
       </svg>
     );
   }
-  static Address({ fill = "white", width = 26, height = 26 ,className}: IconsProps) {
+  static Address({
+    fill = "white",
+    width = 26,
+    height = 26,
+    className,
+  }: IconsProps) {
     return (
       <svg
         width={width}
@@ -467,12 +489,18 @@ export default class Icons {
       </svg>
     );
   }
-  static ArrowLeft({ fill = "white", width = 24, height = 24 }: IconsProps) {
+  static ArrowLeft({
+    fill = "white",
+    width = 24,
+    height = 24,
+    className,
+  }: IconsProps) {
     return (
       <svg
         width={width}
         height={height}
         viewBox="0 0 24 24"
+        className={className}
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -487,11 +515,17 @@ export default class Icons {
       </svg>
     );
   }
-  static ArrowRight({ fill = "white", width = 24, height = 24 }: IconsProps) {
+  static ArrowRight({
+    fill = "white",
+    width = 24,
+    height = 24,
+    className,
+  }: IconsProps) {
     return (
       <svg
         width={width}
         height={height}
+        className={className}
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -507,12 +541,18 @@ export default class Icons {
       </svg>
     );
   }
-  static Sector({ fill = "#004A52", width = 24, height = 24 }: IconsProps) {
+  static Sector({
+    fill = "#004A52",
+    width = 24,
+    height = 24,
+    className,
+  }: IconsProps) {
     return (
       <svg
         width={width}
         height={height}
         viewBox="0 0 24 24"
+        className={className}
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >

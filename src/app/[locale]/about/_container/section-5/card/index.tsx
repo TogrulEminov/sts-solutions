@@ -50,10 +50,10 @@ export default function PurposeCard({
         y: -5,
         transition: { duration: 0.3 },
       }}
-      className="bg-white rounded-3xl p-10 flex flex-col space-y-10 shadow-sm hover:shadow-xl transition-shadow duration-300"
+      className="bg-white rounded-2xl lg:rounded-3xl p-3 lg:p-10 flex flex-col space-y-5 lg:space-y-10 shadow-sm hover:shadow-xl transition-shadow duration-300"
     >
       <motion.div
-        className="flex items-center gap-10"
+        className="flex items-center gap-5 lg:gap-10"
         initial={{ opacity: 0 }}
         animate={inView ? { opacity: 1 } : {}}
         transition={{ delay: (index % 2) * 0.1 + 0.2, duration: 0.4 }}
@@ -65,7 +65,7 @@ export default function PurposeCard({
           <CustomImage
             width={102}
             height={102}
-            className="max-w-25 max-h-25 w-full h-full object-contain"
+            className="max-w-16 lg:max-w-25 max-h-25 w-full h-full object-contain"
             title=""
             src={icon}
           />
@@ -75,7 +75,7 @@ export default function PurposeCard({
         </strong>
       </motion.div>
       <motion.article
-        className="font-inter text-lg font-medium text-ui-7"
+        className="font-inter text-sm lg:text-lg font-medium text-ui-7"
         initial={{ opacity: 0, y: 20 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ delay: (index % 2) * 0.1 + 0.4, duration: 0.4 }}

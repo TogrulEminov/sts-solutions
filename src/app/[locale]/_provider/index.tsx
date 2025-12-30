@@ -13,7 +13,9 @@ export default function ProviderComponent({ children }: LocalLayoutProps) {
       <Header />
       <StickySocial />
       <Sidebar />
-      <main className="pt-25 lg:pt-[167px] bg-ui-28">{children}</main>
+      <main className="pt-25 lg:pt-[167px] bg-ui-28 overflow-hidden">
+        {children}
+      </main>
       <CallAction />
       <Footer />
     </>

@@ -83,17 +83,17 @@ export default function MapSection({ lat, lng }: MapProps) {
   }, [lat, lng]);
 
   return (
-    <section className="pb-12 lg:pb-20">
+    <section className="pb-10 lg:pb-20">
       <div className="container mx-auto px-4">
-        <div className="relative w-full h-[400px] lg:h-[500px] rounded-2xl overflow-hidden border border-ui-24 shadow-sm">
+        <div className="relative w-full h-[200px] lg:h-[500px] rounded-2xl overflow-hidden border border-ui-24 shadow-sm">
           <div ref={mapRef} className="w-full h-full" />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-          <div className="bg-25 rounded-xl p-6 border border-ui-24">
+          <div className="lg:rounded-xl p-4 rounded-md lg:p-6 border border-ui-24">
             <div className="flex items-start gap-3">
-              <div className="w-10 h-10 bg-24 rounded-lg flex items-center justify-center shrink-0">
+              <div className="lg:w-10 lg:h-10 w-8 h-8 bg-ui-23 rounded-lg flex items-center justify-center shrink-0">
                 <svg
-                  className="w-5 h-5 text-6"
+                  className="lg:w-5 lg:h-5 text-ui-7 w-4 h-4"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -118,11 +118,11 @@ export default function MapSection({ lat, lng }: MapProps) {
               </div>
             </div>
           </div>
-          <div className="bg-25 rounded-xl p-6 border border-ui-24">
+          <div className="lg:rounded-xl p-4 rounded-md lg:p-6 border border-ui-24">
             <div className="flex items-start gap-3">
-              <div className="w-10 h-10 bg-24 rounded-lg flex items-center justify-center shrink-0">
+              <div className="lg:w-10 lg:h-10 w-8 h-8 bg-ui-23 rounded-lg flex items-center justify-center shrink-0">
                 <svg
-                  className="w-5 h-5 text-6"
+                  className="lg:w-5 lg:h-5 text-ui-7 w-4 h-4"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -151,11 +151,11 @@ export default function MapSection({ lat, lng }: MapProps) {
               </div>
             </div>
           </div>
-          <div className="bg-25 rounded-xl p-6 border border-ui-24">
+          <div className="lg:rounded-xl p-4 rounded-md lg:p-6 border border-ui-24">
             <div className="flex items-start gap-3">
-              <div className="w-10 h-10 bg-24 rounded-lg flex items-center justify-center shrink-0">
+              <div className="lg:w-10 lg:h-10 w-8 h-8 bg-ui-23 rounded-lg flex items-center justify-center shrink-0">
                 <svg
-                  className="w-5 h-5 text-6"
+                  className="lg:w-5 lg:h-5 text-ui-7 w-4 h-4"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"

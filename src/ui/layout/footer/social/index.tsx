@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Icons from "@/public/icons";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -8,32 +8,32 @@ const socialLinks = [
     name: "Facebook",
     icon: Icons.Facebook,
     href: "https://facebook.com/yourcompany",
-    ariaLabel: "Visit our Facebook page"
+    ariaLabel: "Visit our Facebook page",
   },
   {
     name: "Instagram",
     icon: Icons.Instagram,
     href: "https://instagram.com/yourcompany",
-    ariaLabel: "Visit our Instagram profile"
+    ariaLabel: "Visit our Instagram profile",
   },
   {
     name: "LinkedIn",
     icon: Icons.Linkedin,
     href: "https://linkedin.com/company/yourcompany",
-    ariaLabel: "Visit our LinkedIn company page"
+    ariaLabel: "Visit our LinkedIn company page",
   },
   {
     name: "Twitter",
     icon: Icons.Twitter,
     href: "https://twitter.com/yourcompany",
-    ariaLabel: "Visit our Twitter profile"
+    ariaLabel: "Visit our Twitter profile",
   },
   {
     name: "WhatsApp",
     icon: Icons.Whatsapp,
     href: "https://wa.me/1234567890",
-    ariaLabel: "Contact us on WhatsApp"
-  }
+    ariaLabel: "Contact us on WhatsApp",
+  },
 ];
 
 const containerVariants = {
@@ -98,12 +98,12 @@ export default function Social() {
             >
               <Link
                 href={social.href}
-                className="w-12 h-12 flex items-center justify-center bg-white/50 hover:bg-white/70 lg:bg-white rounded-full shadow-sm hover:shadow-md transition-shadow"
+                className="w-8 h-8 lg:w-12 lg:h-12 flex items-center justify-center bg-white/50 hover:bg-white/70 lg:bg-white rounded-full shadow-sm hover:shadow-md transition-shadow"
                 aria-label={social.ariaLabel}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <IconComponent aria-hidden="true"  fill="currentColor"/>
+                <IconComponent aria-hidden="true" fill="currentColor" />
               </Link>
             </motion.div>
           </motion.div>

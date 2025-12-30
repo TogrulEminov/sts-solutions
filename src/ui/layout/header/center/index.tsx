@@ -11,7 +11,7 @@ interface Props {
 export default function HeaderCenter({ isSticky }: Props) {
   return (
     <>
-      <div className="reltive">
+      <div className="relative">
         <div
           className={`bg-ui-2 flex items-center transition-all duration-500 ${
             isSticky

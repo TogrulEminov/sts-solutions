@@ -15,7 +15,7 @@ export default function CountArea({ count }: Props) {
   return (
     <div
       ref={ref}
-      className="text-ui-1 font-inter lg:text-[120px] leading-normal font-extrabold"
+      className="text-ui-1 font-inter text-[100px] lg:text-[120px] leading-normal font-extrabold"
     >
       {inView ? (
         <CountUp

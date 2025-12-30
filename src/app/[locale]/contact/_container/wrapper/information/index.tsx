@@ -6,11 +6,13 @@ export default function InformationArea() {
   return (
     <div className="col-span-6 flex flex-col  space-y-6">
       <article className="flex flex-col space-y-3">
-        <h1 className="text-3xl lg:text-[40px] lg:leading-12 font-bold text-ui-21 font-inter ">
+        <h1 className="text-2xl lg:text-[40px] lg:leading-12 font-bold text-ui-21 font-inter ">
           Əməkdaşlıq etmək üçün
-          <span className="text-ui-1 block">əlaqə saxlayın</span>
+          <span className="text-ui-1 ml-2  lg:ml-0 lg:block">
+            əlaqə saxlayın
+          </span>
         </h1>
-        <p className="text-lg font-inter text-ui-7 max-w-2xl">
+        <p className="lg:text-lg font-inter text-ui-7 max-w-2xl">
           Bizimlə əlaqə saxlamaq üçün aşağıdakı məlumatlardan istifadə edə və ya
           əlaqə formasını doldura bilərsiniz. Komandamız sizə ən qısa müddətdə
           cavab verəcək.
@@ -18,10 +20,13 @@ export default function InformationArea() {
       </article>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className=" rounded-xl p-6 border border-ui-24 hover:border-ui-27 transition-all duration-300 group">
+        <div className="rounded-md lg:rounded-xl p-4 lg:p-6 border border-ui-24 hover:border-ui-27 transition-all duration-300 group">
           <div className="flex items-start gap-3">
-            <div className="w-12 h-12 bg-ui-23 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-ui-24 transition-colors">
-              <Icons.Phone fill="currentColor" className="text-ui-7 w-5 h-5" />
+            <div className="w-10 lg:w-12 h-10 lg:h-12 bg-ui-23 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-ui-24 transition-colors">
+              <Icons.Phone
+                fill="currentColor"
+                className="text-ui-7 w-4 h-4 lg:w-5 lg:h-5"
+              />
             </div>
             <div className="flex-1 min-w-0">
               <h3 className="text-sm font-semibold font-inter text-ui-2 mb-1.5">
@@ -29,7 +34,7 @@ export default function InformationArea() {
               </h3>
               <Link
                 href="tel:+994552624037"
-                className="text-1 font-medium hover:text-ui-7 transition-colors text-sm block"
+                className="text-ui-2 font-medium hover:text-ui-7 transition-colors text-sm block"
               >
                 +994 55 262 40 37
               </Link>
@@ -38,10 +43,13 @@ export default function InformationArea() {
         </div>
 
         {/* Email Card */}
-        <div className=" rounded-xl p-6 border border-ui-24 hover:border-ui-27 transition-all duration-300 group">
+        <div className=" rounded-md lg:rounded-xl p-4 lg:p-6 border border-ui-24 hover:border-ui-27 transition-all duration-300 group">
           <div className="flex items-start gap-3">
-            <div className="w-12 h-12 bg-ui-23 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-ui-24 transition-colors">
-              <Icons.Email fill="currentColor" className="text-ui-7 w-5 h-5" />
+            <div className="w-10 lg:w-12 h-10 lg:h-12 bg-ui-23 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-ui-24 transition-colors">
+              <Icons.Email
+                fill="currentColor"
+                className="text-ui-7 w-4 h-4 lg:w-5 lg:h-5"
+              />
             </div>
             <div className="flex-1 min-w-0">
               <h3 className="text-sm font-semibold font-inter text-ui-2 mb-1.5">
@@ -59,12 +67,12 @@ export default function InformationArea() {
       </div>
 
       {/* WhatsApp Card */}
-      <div className="bg-linear-to-r from-[#dcf8c6]/40 to-[#dcf8c6]/20 rounded-xl p-6 border border-[#25D366]/20 hover:border-[#25D366]/40 transition-all duration-300 group">
+      <div className="bg-linear-to-r from-[#dcf8c6]/40 to-[#dcf8c6]/20 rounded-md lg:rounded-xl p-4 lg:p-6 border border-[#25D366]/20 hover:border-[#25D366]/40 transition-all duration-300 group">
         <div className="flex items-center flex-col md:flex-row justify-between gap-4 flex-wrap">
           <div className="flex items-center gap-3 w-full! lg:flex-1 min-w-0">
-            <div className="w-14 h-14 bg-[#25D366] rounded-xl flex items-center justify-center shrink-0 shadow-sm">
+            <div className="w-10 h-10 lg:w-14 lg:h-14 bg-[#25D366] rounded-xl flex items-center justify-center shrink-0 shadow-sm">
               <svg
-                className="w-7 h-7 text-white"
+                className="w-4 lg:w-7 h-4 lg:h-7 text-white"
                 fill="currentColor"
                 viewBox="0 0 24 24"
               >
@@ -76,7 +84,7 @@ export default function InformationArea() {
                 <h3 className="text-base font-semibold font-inter text-1">
                   WhatsApp
                 </h3>
-                <span className="px-2 py-0.5 bg-[#25D366] text-white text-[10px] font-semibold rounded-full flex items-center gap-1">
+                <span className="px-2 py-0.5 bg-[#25D366] text-white text-[6px] lg:text-[10px] font-semibold rounded-full flex items-center gap-1">
                   <span className="w-1.5 h-1.5 bg-white rounded-full"></span>
                   Online
                 </span>
@@ -88,17 +96,20 @@ export default function InformationArea() {
           </div>
           <Link
             href="https://wa.me/994552624037"
-            className="px-6 w-full text-center md:w-fit py-2.5 bg-[#25D366] hover:bg-[#128C7E] text-white text-sm font-semibold rounded-lg transition-colors duration-300 whitespace-nowrap shadow-sm"
+            className="px-4 lg:px-6 w-full text-center md:w-fit py-1.5 lg:py-2.5 bg-[#25D366] hover:bg-[#128C7E] text-white text-sm font-semibold rounded-lg transition-colors duration-300 whitespace-nowrap shadow-sm"
           >
             Mesaj göndər
           </Link>
         </div>
       </div>
 
-      <div className=" rounded-xl p-6 border border-ui-24 hover:border-ui-27 transition-all duration-300 group">
+      <div className="ronuded-md lg:rounded-xl p-4 lg:p-6 border border-ui-24 hover:border-ui-27 transition-all duration-300 group">
         <div className="flex items-start gap-3">
-          <div className="w-12 h-12 bg-ui-23 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-ui-24 transition-colors">
-            <Icons.Address fill="currentColor" className="text-ui-7 w-5 h-5" />
+          <div className="w-10 lg:w-12 h-10 lg:h-12  bg-ui-23 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-ui-24 transition-colors">
+            <Icons.Address
+              fill="currentColor"
+              className="text-ui-7 w-4 h-4 lg:w-5 lg:h-5"
+            />
           </div>
           <div className="flex-1 min-w-0">
             <h3 className="text-sm font-semibold font-inter text-ui-2 mb-1.5">
@@ -114,11 +125,11 @@ export default function InformationArea() {
         </div>
       </div>
 
-      <div className=" rounded-xl p-6 border border-ui-24 hover:border-ui-27 transition-all duration-300">
+      <div className="rounded-md lg:rounded-xl p-4 lg:p-6 border border-ui-24 hover:border-ui-27 transition-all duration-300">
         <div className="flex items-start gap-3">
-          <div className="w-12 h-12 bg-ui-23 rounded-xl flex items-center text-ui-1 justify-center shrink-0">
+          <div className="w-10 lg:w-12 h-10 lg:h-12  bg-ui-23 rounded-xl flex items-center text-ui-1 justify-center shrink-0">
             <svg
-              className="w-5 h-5 text-ui-7"
+              className="w-4 h-4 lg:w-5 lg:h-5 text-ui-7"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"

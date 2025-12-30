@@ -8,7 +8,6 @@ import TeamArea from "./section-6";
 import ProjectsSection from "../../(home)/_container/project";
 import FagSection from "../../(home)/_container/fag";
 import ServicesTagSection from "@/src/ui/layout/services";
-import CallAction from "@/src/ui/layout/call-action";
 import PartnerSection from "../../(home)/_container/partner";
 
 export default function AboutPageContainer() {
@@ -24,7 +23,6 @@ export default function AboutPageContainer() {
       <ProjectsSection />
       <FagSection />
       <ServicesTagSection />
-      <CallAction />
     </>
   );
 }

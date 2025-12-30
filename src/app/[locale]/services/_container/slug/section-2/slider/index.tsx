@@ -40,9 +40,9 @@ export default function SliderArea() {
   };
 
   return (
-    <ReactFancyBox className="flex flex-col space-y-10">
+    <ReactFancyBox className="flex flex-col space-y-5 lg:space-y-10">
       <div className="container flex items-center justify-end">
-        <div className="flex items-center gap-x-3 justify-center bg-ui-1 rounded-[36px] mb-0! w-21.5 h-10">
+        <div className="flex items-center gap-x-3 justify-center bg-ui-1 rounded-2xl lg:rounded-[36px] mb-0! w-18 lg:w-21.5 h-8 lg:h-10">
           <button
             type="button"
             aria-label="prev button for services slider"
@@ -79,7 +79,7 @@ export default function SliderArea() {
       >
         {Array.from({ length: 10 }).map((_, index) => {
           return (
-            <SwiperSlide className="h-full" key={index}>
+            <SwiperSlide className="h-40! lg:h-full!" key={index}>
               <GalleryCard />
             </SwiperSlide>
           );

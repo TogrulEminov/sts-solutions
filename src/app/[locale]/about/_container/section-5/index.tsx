@@ -15,12 +15,12 @@ const data = [
 ];
 export default function PurposeSection() {
   return (
-    <section className="py-15 bg-ui-1/11">
-      <div className="container flex flex-col space-y-10">
-        <strong className="font-inter max-w-lg font-extrabold lg:text-[56px] lg:leading-16 text-ui-7">
+    <section className="py-10 lg:py-25 bg-ui-1/11">
+      <div className="container flex flex-col space-y-5 lg:space-y-10">
+        <strong className="font-inter max-w-lg font-extrabold text-2xl lg:text-[56px] lg:leading-16 text-ui-7">
           Bizim Missiyamız və Vizyonumuz
         </strong>
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid lg:grid-cols-2 gap-6">
           {data?.map((item, index) => {
             return (
               <PurposeCard
