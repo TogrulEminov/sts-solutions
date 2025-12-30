@@ -52,7 +52,10 @@ export default function SlideArea() {
           className="w-full"
         >
           {Array.from({ length: 15 }).map((_, index) => (
-            <SwiperSlide key={`left-${index}`} className="w-auto!">
+            <SwiperSlide
+              key={`left-${index}`}
+              className="w-[280px]! lg:w-auto!"
+            >
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -126,7 +129,10 @@ export default function SlideArea() {
           className="w-full"
         >
           {Array.from({ length: 15 }).map((_, index) => (
-            <SwiperSlide key={`right-${index}`} className="w-auto!">
+            <SwiperSlide
+              key={`right-${index}`}
+              className="w-[280px]! lg:w-auto!"
+            >
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}

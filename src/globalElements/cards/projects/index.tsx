@@ -23,7 +23,7 @@ export default function ProjectsCards({ className }: Props) {
             slug: "test",
           },
         }}
-        className={`${className} group relative h-70 lg:h-90 overflow-hidden rounded-[18px] block w-full min-w-70 xl:min-w-90`}
+        className={`${className} group relative h-70 lg:h-90 overflow-hidden rounded-[18px] block w-full xl:min-w-90`}
       >
         <motion.div
           className="relative w-full h-full"
