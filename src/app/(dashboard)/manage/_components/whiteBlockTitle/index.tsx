@@ -18,7 +18,7 @@ const WhiteBlockTitleArea = ({ link, title, disabled = false }: Props) => {
   };
 
   return (
-    <div className="mb-6 flex items-center gap-4 justify-between p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-100">
+    <div className="mb-6 flex items-center gap-4 justify-between p-4 bg-linear-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-100">
       <div>
         <h3 className="text-2xl font-bold text-gray-900 font-poppins">
           {title}
@@ -32,7 +32,7 @@ const WhiteBlockTitleArea = ({ link, title, disabled = false }: Props) => {
             onClick={handleReload}
             type="button"
             disabled={loading}
-            className="group w-11 h-11 flex items-center justify-center bg-white border-2 border-gray-200 rounded-xl text-gray-600 hover:border-blue-500 hover:text-blue-600 hover:shadow-md transition-all duration-300 cursor-pointer disabled:cursor-not-allowed"
+            className="group w-11 h-11 flex items-center justify-center bg-white border-[2px] border-gray-200 rounded-xl text-gray-600 hover:border-blue-500 hover:text-blue-600 hover:shadow-md transition-all duration-300 cursor-pointer disabled:cursor-not-allowed"
           >
             <RefreshCw
               className={`w-5 h-5 transition-transform ${

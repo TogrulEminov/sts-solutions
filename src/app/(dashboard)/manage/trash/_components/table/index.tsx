@@ -371,7 +371,7 @@ export default function TableArea({
             Ləğv et
           </button>
           <button
-            className="bulkActionButton cursor-pointer bg-blue-50 border-2 rounded-sm border-blue-900 transition-colors hover:bg-blue-900 ease-in-out hover:text-white text-sm flex items-center justify-center p-3 font-medium gap-x-2 text-blue-900 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bulkActionButton cursor-pointer bg-blue-50 border-[2px] rounded-sm border-blue-900 transition-colors hover:bg-blue-900 ease-in-out hover:text-white text-sm flex items-center justify-center p-3 font-medium gap-x-2 text-blue-900 disabled:opacity-50 disabled:cursor-not-allowed"
             type="button"
             onClick={() => handleBulkAction("all-restore")}
             disabled={isAnyPending}
@@ -385,7 +385,7 @@ export default function TableArea({
             )}
           </button>
           <button
-            className="bulkActionButton cursor-pointer bg-red-50 border-2 rounded-sm border-red-900 transition-colors hover:bg-red-900 ease-in-out hover:text-white text-sm flex items-center justify-center p-3 font-medium gap-x-2 text-red-900 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bulkActionButton cursor-pointer bg-red-50 border-[2px] rounded-sm border-red-900 transition-colors hover:bg-red-900 ease-in-out hover:text-white text-sm flex items-center justify-center p-3 font-medium gap-x-2 text-red-900 disabled:opacity-50 disabled:cursor-not-allowed"
             type="button"
             onClick={() => handleBulkAction("all-delete")}
             disabled={isAnyPending}

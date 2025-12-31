@@ -109,9 +109,9 @@ const CustomAdminEditor: FC<CustomEditorProps> = ({
   );
 
   return (
-    <label htmlFor={name} className="flex flex-col gap-4 w-full">
+    <label htmlFor={name} className="flex flex-col gap-2 w-full">
       {title && (
-        <span className="text-sm font-medium text-gray-600">
+        <span className="text-base font-medium text-gray-600">
           {title} {required && <sup className="text-red-600">*</sup>}
         </span>
       )}
@@ -131,4 +131,4 @@ const CustomAdminEditor: FC<CustomEditorProps> = ({
   );
 };
 
-export default React.memo(CustomAdminEditor);
+export default CustomAdminEditor;

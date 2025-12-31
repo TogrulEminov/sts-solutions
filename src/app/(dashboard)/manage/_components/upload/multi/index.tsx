@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useCallback, useRef, useEffect } from "react";
-import { Upload, message } from "antd";
-import { InboxOutlined } from "@ant-design/icons";
+import { Upload, X, Image as ImageIcon, File, AlertCircle } from "lucide-react";
 import { usePostData, useDeleteData } from "@/src/hooks/useApi";
 import { FileType, UploadedFileMeta } from "@/src/services/interface";
 import ReactFancyBox from "@/src/lib/fancybox";
@@ -11,9 +10,8 @@ interface CustomUploadFile {
   type: string;
   uid: string;
   name: string;
-  status: "done" | "uploading" | "error" | "removed";
+  status: "done" | "uploading" | "error";
   url?: string;
-  originFileObj?: File;
   fileId?: number;
   fileKey?: string;
   size?: number;
@@ -39,54 +37,72 @@ const MultiUploadImage: React.FC<MultiUploadProps> = ({
   isParentFormSubmitted = false,
 }) => {
   const [fileList, setFileList] = useState<CustomUploadFile[]>([]);
+  const [isDragging, setIsDragging] = useState(false);
+  const [errorTimers, setErrorTimers] = useState<Record<string, number>>({});
   const currentPathname = usePathname();
 
-  // Upload queue management
   const uploadQueueRef = useRef<File[]>([]);
   const isUploadingRef = useRef(false);
+  const timerRefs = useRef<Record<string, NodeJS.Timeout>>({});
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const CF_PUBLIC_URL = process.env.NEXT_PUBLIC_CF_PUBLIC_ACCESS_URL;
-
   const SESSION_KEY = `tempFiles_multi_${currentPathname}`;
   const UPLOADED_PATH_KEY = "latest_uploaded_multi_path";
 
-  const { mutate: uploadFile, isPending: uploadLoading } = usePostData<
-    { data: FileType },
-    FormData
-  >();
-  const { mutate: deleteFile, isPending: deleteLoading } =
-    useDeleteData<FileType>();
+  const { mutate: uploadFile, isPending: uploadLoading } = usePostData<{ data: FileType }, FormData>();
+  const { mutate: deleteFile, isPending: deleteLoading } = useDeleteData<FileType>();
 
-  const updateSessionIds = useCallback(
-    (newIds: number[]) => {
-      if (typeof window !== "undefined") {
-        if (newIds.length === 0) {
-          sessionStorage.removeItem(SESSION_KEY);
-          sessionStorage.removeItem(UPLOADED_PATH_KEY);
-        } else {
-          sessionStorage.setItem(SESSION_KEY, JSON.stringify(newIds));
-          sessionStorage.setItem(UPLOADED_PATH_KEY, currentPathname);
-        }
+  // --- Yardımçı Funksiyalar ---
+  
+  const updateSessionIds = useCallback((newIds: number[]) => {
+    if (typeof window !== "undefined") {
+      if (newIds.length === 0) {
+        sessionStorage.removeItem(SESSION_KEY);
+        sessionStorage.removeItem(UPLOADED_PATH_KEY);
+      } else {
+        sessionStorage.setItem(SESSION_KEY, JSON.stringify(newIds));
+        sessionStorage.setItem(UPLOADED_PATH_KEY, currentPathname);
       }
-    },
-    [SESSION_KEY, UPLOADED_PATH_KEY, currentPathname]
-  );
+    }
+  }, [SESSION_KEY, UPLOADED_PATH_KEY, currentPathname]);
+
+  const startErrorTimer = useCallback((fileUid: string) => {
+    if (timerRefs.current[fileUid]) return;
+
+    setErrorTimers((prev) => ({ ...prev, [fileUid]: 10 }));
+
+    timerRefs.current[fileUid] = setInterval(() => {
+      setErrorTimers((prev) => {
+        const currentTime = prev[fileUid];
+        
+        if (currentTime === undefined || currentTime <= 1) {
+          if (timerRefs.current[fileUid]) {
+            clearInterval(timerRefs.current[fileUid]);
+            delete timerRefs.current[fileUid];
+          }
+          setFileList((list) => list.filter((f) => f.uid !== fileUid));
+          const { [fileUid]: _, ...rest } = prev;
+          return rest;
+        }
+        return { ...prev, [fileUid]: currentTime - 1 };
+      });
+    }, 1000);
+  }, []);
 
   const processNextUpload = useCallback(() => {
-    if (isUploadingRef.current || uploadQueueRef.current.length === 0) {
-      return;
-    }
+    if (isUploadingRef.current || uploadQueueRef.current.length === 0) return;
 
     const fileToUpload = uploadQueueRef.current.shift();
     if (!fileToUpload) return;
 
     isUploadingRef.current = true;
+    const tempUid = `upload-${Date.now()}-${Math.random()}-${fileToUpload.name}`;
 
     const tempFile: CustomUploadFile = {
-      uid: `rc-upload-${Date.now()}-${Math.random()}-${fileToUpload.name}`,
+      uid: tempUid,
       name: fileToUpload.name,
       status: "uploading",
-      originFileObj: fileToUpload,
       type: fileToUpload.type,
       size: fileToUpload.size,
     };
@@ -100,399 +116,155 @@ const MultiUploadImage: React.FC<MultiUploadProps> = ({
       { endpoint: "files/upload-file", payload: formData },
       {
         onSuccess: (response) => {
-          message.success(`${fileToUpload.name} uğurla yükləndi`);
           const fileData = response.data;
-          const newFileId = fileData.fileId;
-
-          // Update session storage
-          const currentIds = files
-            .map((f) => f?.fileId)
-            .filter(Boolean) as number[];
-          const newIds = [...currentIds, newFileId];
-          updateSessionIds(newIds);
-
-          // Update file list
           setFileList((prev) =>
             prev.map((f) =>
-              f.uid === tempFile.uid
-                ? {
-                    ...f,
-                    status: "done",
-                    url: fileData.relativePath,
-                    fileId: fileData.fileId,
-                    fileKey: fileData.fileKey,
-                    type: fileData.type || fileToUpload.type,
-                  }
+              f.uid === tempUid
+                ? { ...f, status: "done", url: fileData.relativePath, fileId: fileData.fileId, fileKey: fileData.fileKey }
                 : f
             )
           );
 
-          // Update parent state
-          const newFile: UploadedFileMeta = {
-            fileId: fileData.fileId,
-            fileKey: fileData.fileKey || "",
-            type: fileData.type || fileToUpload.type || "unknown",
-            publicUrl: fileData.fullUrl || "",
-            path: fileData.relativePath || "",
-            fullUrl: fileData.fullUrl || "",
-          };
-
-          setFiles((prev) => [...prev, newFile]);
+          setFiles((prev) => {
+            const newFile: UploadedFileMeta = {
+              fileId: fileData.fileId,
+              fileKey: fileData.fileKey || "",
+              type: fileData.type || fileToUpload.type || "unknown",
+              publicUrl: fileData.fullUrl || "",
+              path: fileData.relativePath || "",
+              fullUrl: fileData.fullUrl || "",
+            };
+            const updated = [...prev, newFile];
+            updateSessionIds(updated.map(f => f?.fileId).filter(Boolean) as number[]);
+            return updated;
+          });
 
           isUploadingRef.current = false;
           processNextUpload();
         },
-        onError: (error) => {
-          message.error(
-            `${fileToUpload.name} yükləmə zamanı xəta baş verdi. ${
-              error instanceof Error ? error.message : String(error)
-            }`
-          );
+        onError: () => {
           setFileList((prev) =>
-            prev.map((f) =>
-              f.uid === tempFile.uid ? { ...f, status: "error" } : f
-            )
+            prev.map((f) => (f.uid === tempUid ? { ...f, status: "error" } : f))
           );
-
+          startErrorTimer(tempUid);
           isUploadingRef.current = false;
           processNextUpload();
         },
       }
     );
-  }, [uploadFile, setFiles, files, updateSessionIds]);
+  }, [uploadFile, setFiles, updateSessionIds, startErrorTimer]);
 
-  const beforeUpload = (file: File) => {
-    const isValidSize = file.size / 1024 / 1024 < maxSize;
-    if (!isValidSize) {
-      message.error(`${file.name} faylı ${maxSize}MB limitini aşır.`);
-      return false;
+  // --- Event Handler-lər ---
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFiles = e.target.files;
+    if (selectedFiles) {
+      const filesArray = Array.from(selectedFiles).filter(f => f.size / 1024 / 1024 < maxSize);
+      const availableSlot = maxCount - fileList.filter(f => f.status !== "error").length;
+      const finalFiles = filesArray.slice(0, availableSlot);
+      
+      if (finalFiles.length > 0) {
+        uploadQueueRef.current.push(...finalFiles);
+        processNextUpload();
+      }
     }
-
-    const currentFileCount = fileList.filter(
-      (f) => f.status !== "removed"
-    ).length;
-    const newFilesCount = uploadQueueRef.current.length + 1;
-
-    if (currentFileCount + newFilesCount > maxCount) {
-      message.error(`Maksimum ${maxCount} fayl yükləyə bilərsiniz.`);
-      return false;
-    }
-
-    uploadQueueRef.current.push(file);
-
-    // Start processing if not already uploading
-    if (!isUploadingRef.current) {
-      processNextUpload();
-    }
-
-    return false;
+    if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
   const handleRemove = async (uploadFile: CustomUploadFile) => {
-    if (!uploadFile?.fileId) {
-      message.error("Fayl ID tapılmadı, silinmə uğursuz oldu.");
-      return false;
+    if (timerRefs.current[uploadFile.uid]) {
+      clearInterval(timerRefs.current[uploadFile.uid]);
+      delete timerRefs.current[uploadFile.uid];
     }
 
-    try {
-      deleteFile(
-        { endpoint: `files/delete-file/${uploadFile.fileId}` },
-        {
-          onSuccess: () => {
-            setFileList((prev) => prev.filter((f) => f.uid !== uploadFile.uid));
-            setFiles((prev) =>
-              prev.filter((f) => f?.fileId !== uploadFile.fileId)
-            );
-
-            // Update session storage
-            const newIds = files
-              .filter(Boolean)
-              .filter((f) => f?.fileId !== uploadFile.fileId)
-              .map((f) => f?.fileId as number);
-            updateSessionIds(newIds);
-
-            message.success("Fayl uğurla silindi");
-          },
-          onError: (error) => {
-            console.error("Delete API error:", (error as Error).message);
-            message.error("Fayl silinərkən xəta baş verdi");
-          },
-        }
-      );
-      return true;
-    } catch (error) {
-      console.error("Delete API error:", (error as Error).message);
-      message.error("Fayl silinərkən xəta baş verdi");
-      return false;
+    if (!uploadFile.fileId) {
+      setFileList(prev => prev.filter(f => f.uid !== uploadFile.uid));
+      return;
     }
+
+    deleteFile(
+      { endpoint: `files/delete-file/${uploadFile.fileId}` },
+      {
+        onSuccess: () => {
+          setFileList(prev => prev.filter(f => f.uid !== uploadFile.uid));
+          setFiles(prev => {
+            const updated = prev.filter(f => f?.fileId !== uploadFile.fileId);
+            updateSessionIds(updated.map(f => f?.fileId).filter(Boolean) as number[]);
+            return updated;
+          });
+        },
+      }
+    );
   };
 
-  const cleanupTempFiles = useCallback(async () => {
-    if (typeof window === "undefined" || isParentFormSubmitted) return;
+  // --- Təmizlik və Session Management ---
 
-    const pathIds = sessionStorage.getItem(SESSION_KEY);
-    const idsToCleanup: number[] = pathIds ? JSON.parse(pathIds) : [];
-
-    if (idsToCleanup.length === 0) return;
-
-    try {
-      const formData = new FormData();
-      formData.append("fileIds", JSON.stringify(idsToCleanup));
-      navigator.sendBeacon("/api/files/cleanup-temp-files", formData);
-      sessionStorage.removeItem(SESSION_KEY);
-      sessionStorage.removeItem(UPLOADED_PATH_KEY);
-    } catch (error) {
-      console.error("Cleanup error:", error);
-    }
-  }, [isParentFormSubmitted, SESSION_KEY, UPLOADED_PATH_KEY]);
-
-  // Cleanup on beforeunload
-  useEffect(() => {
-    if (typeof window === "undefined" || isParentFormSubmitted) return;
-
-    window.addEventListener("beforeunload", cleanupTempFiles);
-
-    return () => {
-      window.removeEventListener("beforeunload", cleanupTempFiles);
-    };
-  }, [cleanupTempFiles, isParentFormSubmitted]);
-
-  // Cleanup on pathname change
   useEffect(() => {
     return () => {
-      if (typeof window === "undefined" || isParentFormSubmitted) return;
-
-      const uploadedPath = sessionStorage.getItem(UPLOADED_PATH_KEY);
-      const sessionIds = sessionStorage.getItem(SESSION_KEY);
-      const idsInSession: number[] = sessionIds ? JSON.parse(sessionIds) : [];
-
-      if (
-        idsInSession.length > 0 &&
-        uploadedPath &&
-        uploadedPath !== currentPathname
-      ) {
-        cleanupTempFiles();
-      }
+      Object.values(timerRefs.current).forEach(clearInterval);
     };
-  }, [
-    cleanupTempFiles,
-    isParentFormSubmitted,
-    currentPathname,
-    UPLOADED_PATH_KEY,
-    SESSION_KEY,
-  ]);
+  }, []);
 
-  // Reset on parent form submit
   useEffect(() => {
     if (isParentFormSubmitted) {
       setFileList([]);
       uploadQueueRef.current = [];
       isUploadingRef.current = false;
-      if (typeof window !== "undefined") {
-        sessionStorage.removeItem(SESSION_KEY);
-        sessionStorage.removeItem(UPLOADED_PATH_KEY);
-      }
+      Object.values(timerRefs.current).forEach(clearInterval);
+      timerRefs.current = {};
+      setErrorTimers({});
     }
-  }, [isParentFormSubmitted, SESSION_KEY, UPLOADED_PATH_KEY]);
+  }, [isParentFormSubmitted]);
 
   const getFullImageUrl = (currentFile: CustomUploadFile) => {
     if (!currentFile.url) return "";
-
-    if (currentFile.url.startsWith("blob:")) {
-      return currentFile.url;
-    }
-
-    const cleanUrl = currentFile.url.startsWith("/")
-      ? currentFile.url.slice(1)
-      : currentFile.url;
-
-    return `${CF_PUBLIC_URL}${cleanUrl}`;
-  };
-
-  const formatFileSize = (bytes: number) => {
-    if (bytes === 0) return "0 B";
-    const k = 1024;
-    const sizes = ["B", "KB", "MB", "GB"];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + " " + sizes[i];
-  };
-
-  const renderFileList = () => {
-    if (fileList.length === 0) return null;
-
-    return (
-      <div className="mt-5 flex flex-col gap-2.5">
-        {fileList.map((currentFile) => {
-          const isImage =
-            currentFile.type?.startsWith("image/") ||
-            currentFile.url?.match(/\.(jpe?g|png|gif|webp|svg)$/i);
-
-          const fullImageUrl = getFullImageUrl(currentFile);
-
-          return (
-            <div
-              key={currentFile.uid}
-              className="p-3 border border-gray-300 rounded-lg bg-gray-50 flex items-center justify-between gap-3"
-            >
-              <div className="flex items-center gap-3 flex-1 min-w-0">
-                {isImage && currentFile.url ? (
-                  <img
-                    src={fullImageUrl}
-                    alt={currentFile.name}
-                    className="w-12 h-12 object-cover rounded-md border border-gray-200"
-                  />
-                ) : (
-                  <div className="w-12 h-12 flex items-center justify-center bg-blue-50 rounded-md border border-blue-200">
-                    <InboxOutlined className="text-xl text-blue-500" />
-                  </div>
-                )}
-
-                <div className="flex-1 min-w-0">
-                  <div className="text-sm font-medium text-gray-800 truncate">
-                    {currentFile.name}
-                  </div>
-                  <div className="text-xs text-gray-500 mt-0.5">
-                    {currentFile.status === "uploading" && "Yüklənir..."}
-                    {currentFile.status === "done" && (
-                      <>
-                        Uğurla yükləndi
-                        {currentFile.size &&
-                          ` • ${formatFileSize(currentFile.size)}`}
-                      </>
-                    )}
-                    {currentFile.status === "error" && (
-                      <span className="text-red-500">Xəta baş verdi</span>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex gap-2 items-center">
-                {currentFile.status === "uploading" && (
-                  <div className="w-5 h-5 border-2 border-gray-200 border-t-blue-500 rounded-full animate-spin" />
-                )}
-
-                {currentFile.status === "done" && (
-                  <>
-                    {isImage ? (
-                      <ReactFancyBox>
-                        <a
-                          href={fullImageUrl}
-                          data-fancybox="multi-gallery"
-                          className="px-3 py-1.5 border border-gray-300 rounded bg-white cursor-pointer text-xs text-blue-500 hover:border-blue-500 hover:bg-blue-50 transition-all no-underline"
-                        >
-                          Bax
-                        </a>
-                      </ReactFancyBox>
-                    ) : (
-                      <a
-                        href={fullImageUrl}
-                        download={currentFile.name}
-                        className="px-3 py-1.5 border border-gray-300 rounded bg-white cursor-pointer text-xs text-blue-500 hover:border-blue-500 hover:bg-blue-50 transition-all no-underline"
-                      >
-                        Yüklə
-                      </a>
-                    )}
-                    <button
-                      onClick={() => handleRemove(currentFile)}
-                      disabled={deleteLoading}
-                      type="button"
-                      className="px-3 py-1.5 border border-red-500 rounded bg-white cursor-pointer text-xs text-red-500 hover:bg-red-50 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
-                    >
-                      Sil
-                    </button>
-                  </>
-                )}
-
-                {currentFile.status === "error" && (
-                  <button
-                    onClick={() => handleRemove(currentFile)}
-                    type="button"
-                    className="px-3 py-1.5 border border-red-500 rounded bg-white cursor-pointer text-xs text-red-500 hover:bg-red-50 transition-all"
-                  >
-                    Sil
-                  </button>
-                )}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    );
-  };
-
-  const DraggerComponent = (Upload as any).Dragger || Upload;
-
-  const uploadProps = {
-    name: "file",
-    multiple: true,
-    fileList: [],
-    beforeUpload: beforeUpload,
-    maxCount: maxCount,
-    showUploadList: false,
-    disabled: uploadLoading || deleteLoading,
-    accept: acceptType,
+    if (currentFile.url.startsWith("blob:")) return currentFile.url;
+    return `${CF_PUBLIC_URL}${currentFile.url.startsWith("/") ? currentFile.url.slice(1) : currentFile.url}`;
   };
 
   return (
-    <div className="w-full relative">
-      <style jsx>{`
-        @keyframes spin {
-          0% {
-            transform: rotate(0deg);
-          }
-          100% {
-            transform: rotate(360deg);
-          }
-        }
+    <div className="w-full">
+      <input ref={fileInputRef} type="file" onChange={handleFileSelect} accept={acceptType} multiple className="hidden" />
 
-        :global(.ant-upload.ant-upload-drag) {
-          position: relative !important;
-          width: 100% !important;
-          height: auto !important;
-          border: 1px dashed #d9d9d9 !important;
-          border-radius: 8px !important;
-          background-color: #fafafa !important;
-          transition: border-color 0.3s !important;
-        }
+      <div
+        onClick={() => !uploadLoading && !deleteLoading && fileInputRef.current?.click()}
+        onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
+        onDragLeave={() => setIsDragging(false)}
+        onDrop={(e) => { e.preventDefault(); setIsDragging(false); if(e.dataTransfer.files) handleFileSelect({ target: { files: e.dataTransfer.files } } as any); }}
+        className={`relative border-[2px] border-dashed rounded-lg p-8 text-center cursor-pointer transition-all ${isDragging ? "border-blue-500 bg-blue-50" : "border-gray-300"} ${uploadLoading || deleteLoading ? "opacity-50 cursor-not-allowed" : ""}`}
+      >
+        <Upload className="mx-auto mb-4 text-blue-500" size={48} />
+        <p className="text-gray-700 font-medium">{label}</p>
+        <p className="text-xs text-gray-400 mt-2">Maksimum {maxCount} fayl, hər biri {maxSize}MB</p>
+      </div>
 
-        :global(.ant-upload.ant-upload-drag:hover) {
-          border-color: #1890ff !important;
-        }
+      <div className="mt-5 flex flex-col gap-2.5">
+        {fileList.map((file) => (
+          <div key={file.uid} className={`p-3 border rounded-lg flex items-center justify-between gap-3 ${file.status === "error" ? "border-red-300 bg-red-50" : "border-gray-200 bg-gray-50"}`}>
+            <div className="flex items-center gap-3 flex-1 min-w-0">
+              {file.status === "error" ? <AlertCircle className="text-red-500" size={24} /> : 
+               file.type?.startsWith("image/") && file.url ? <img src={getFullImageUrl(file)} className="w-12 h-12 object-cover rounded" /> : 
+               <File className="text-blue-500" size={24} />}
+              
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium truncate">{file.name}</p>
+                <p className="text-xs text-gray-500">
+                  {file.status === "uploading" ? "Yüklənir..." : file.status === "error" ? <span className="text-red-500">Xəta ({errorTimers[file.uid]}s)</span> : "Tamamlandı"}
+                </p>
+              </div>
+            </div>
 
-        :global(.ant-upload.ant-upload-drag .ant-upload-btn) {
-          position: relative !important;
-          display: block !important;
-          width: 100% !important;
-          height: 100% !important;
-          padding: 32px 16px !important;
-        }
-
-        :global(.ant-upload-drag-container) {
-          position: relative !important;
-          display: block !important;
-        }
-      `}</style>
-
-      <DraggerComponent {...uploadProps}>
-        <p className="ant-upload-drag-icon">
-          <InboxOutlined style={{ fontSize: 48, color: "#1890ff" }} />
-        </p>
-        <p className="ant-upload-text">{label}</p>
-        <p className="ant-upload-hint">
-          Maksimum {maxCount} fayl, hər biri {maxSize}MB-dan kiçik olmalıdır.
-        </p>
-        {fileList.length > 0 && (
-          <p className="ant-upload-hint mt-2 font-medium">
-            Hazırda {fileList.filter((f) => f.status === "done").length} fayl
-            yüklənib
-            {uploadQueueRef.current.length > 0 &&
-              ` (${uploadQueueRef.current.length} növbədə)`}
-          </p>
-        )}
-      </DraggerComponent>
-
-      {renderFileList()}
+            <div className="flex gap-2">
+              {file.status === "done" && (
+                <button onClick={() => handleRemove(file)} className="text-xs text-red-600 border border-red-300 px-3 py-1.5 rounded hover:bg-red-50">Sil</button>
+              )}
+              {file.status === "error" && (
+                <button onClick={() => handleRemove(file)} className="p-1 hover:bg-red-100 rounded-full"><X className="text-red-500" size={20} /></button>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

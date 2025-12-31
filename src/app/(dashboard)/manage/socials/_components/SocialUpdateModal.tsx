@@ -1,12 +1,10 @@
-// app/(dashboard)/manage/socials/_components/SocialUpdateModal.tsx
 "use client";
-import React, { useTransition, useEffect } from "react";
-import { Modal, Select, Spin, Space } from "antd";
-import { useForm, Controller } from "react-hook-form";
+import { useTransition, useEffect } from "react";
+import { Modal, Spin, Space } from "antd";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMessageStore } from "@/src/hooks/useMessageStore";
 import { useServerQuery } from "@/src/hooks/useServerActions";
-import CustomAdminInput from "@/src/app/(dashboard)/manage/_components/createInput";
 import FieldBlock from "@/src/app/(dashboard)/manage/_components/contentBlock";
 import {
   UpdateSocialInput,
@@ -17,6 +15,9 @@ import {
   updateSocial,
 } from "@/src/actions/client/socials.actions";
 import Icons from "@/public/icons";
+import FormWrapper from "@/src/ui/FormBuilder/FormWrapper/FormWrapper";
+import FormSelect from "@/src/ui/FormBuilder/components/FormSelect/FormSelect";
+import FormInput from "@/src/ui/FormBuilder/components/FormInput/FormInput";
 
 interface Social {
   id: number;
@@ -67,15 +68,7 @@ export default function SocialUpdateModal({
 
   const social = socialData?.data as Social | undefined;
 
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors },
-    reset,
-    setValue,
-    watch,
-  } = useForm<UpdateSocialInput>({
+  const generalForm = useForm<UpdateSocialInput>({
     resolver: zodResolver(updateSocialSchema),
     defaultValues: {
       socialName: "",
@@ -84,7 +77,7 @@ export default function SocialUpdateModal({
       status: "published",
     },
   });
-
+  const { handleSubmit, reset, setValue, watch } = generalForm;
   const selectedIcon = watch("iconName");
 
   useEffect(() => {
@@ -165,85 +158,52 @@ export default function SocialUpdateModal({
           </Space>
         </div>
       ) : (
-        <form className="space-y-5 mt-6">
+        <FormWrapper form={generalForm} className="space-y-5 mt-6">
           <FieldBlock>
             {/* Social Name */}
             <div>
-              <CustomAdminInput
-                title="Sosial Şəbəkə Adı"
+              <FormInput
+                label="Sosial Şəbəkə Adı"
                 placeholder="Məsələn: Facebook, Instagram"
-                required={true}
-                error={errors.socialName?.message}
-                {...register("socialName")}
+                fieldName="socialName"
               />
             </div>
 
             {/* Social Link */}
             <div>
-              <CustomAdminInput
-                title="Link"
+              <FormInput
+                label="Link"
                 placeholder="https://facebook.com/yourpage"
-                required={true}
-                error={errors.socialLink?.message}
-                {...register("socialLink")}
+                fieldName="socialLink"
               />
             </div>
 
             {/* Icon Selection */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Icon seçin <span className="text-red-500">*</span>
-              </label>
-              <Controller
-                name="iconName"
-                control={control}
-                render={({ field }) => (
-                  <Select
-                    {...field}
-                    placeholder="Icon seçin"
-                    className="w-full"
-                    size="large"
-                    showSearch
-                    optionFilterProp="label"
-                    filterOption={(input, option) =>
-                      (option?.label as string)
-                        ?.toLowerCase()
-                        .includes(input.toLowerCase())
-                    }
-                  >
-                    {availableIcons.map((icon) => (
-                      <Select.Option
-                        key={icon.name}
-                        value={icon.name}
-                        label={icon.label}
-                      >
-                        <Space>
-                          <div className="w-5 h-5">
-                            <IconPreview iconName={icon.name} />
-                          </div>
-                          <span>{icon.label}</span>
-                        </Space>
-                      </Select.Option>
-                    ))}
-                  </Select>
-                )}
+              <FormSelect
+                fieldName="iconName"
+                optionFilterProp="label"
+                filterOption={(input, option) =>
+                  (option?.label as string)
+                    ?.toLowerCase()
+                    .includes(input.toLowerCase())
+                }
+                placeholder="Icon seçin"
+                className="w-full"
+                size="large"
+                showSearch
+                options={availableIcons}
               />
-              {errors.iconName && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.iconName.message}
-                </p>
-              )}
             </div>
 
-            {/* Icon Preview */}
             {selectedIcon && (
-              <div className="bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-xl p-5">
+              <div className="bg-linear-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-xl p-5">
                 <p className="text-sm font-semibold text-gray-700 mb-3">
                   Icon Önizləmə:
                 </p>
                 <div className="flex items-center justify-center">
                   <div className="w-20 h-20 bg-white rounded-xl shadow-md flex items-center justify-center">
-                    <div className="w-12 h-12  flex items-center justify-center text-blue-600">
+                    <div className="w-12 h-12 flex items-center justify-center text-blue-600">
                       <IconPreview iconName={selectedIcon} />
                     </div>
                   </div>
@@ -256,23 +216,15 @@ export default function SocialUpdateModal({
 
             {/* Status */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Status
-              </label>
-              <Controller
-                name="status"
-                control={control}
-                render={({ field }) => (
-                  <Select
-                    {...field}
-                    className="w-full"
-                    size="large"
-                    options={[
-                      { value: "published", label: "✓ Aktiv" },
-                      { value: "draft", label: "○ Deaktiv" },
-                    ]}
-                  />
-                )}
+              <FormSelect
+                fieldName="status"
+                className="w-full"
+                size="large"
+                label="Status"
+                options={[
+                  { value: "published", label: "✓ Aktiv" },
+                  { value: "draft", label: "○ Deaktiv" },
+                ]}
               />
             </div>
           </FieldBlock>
@@ -284,7 +236,7 @@ export default function SocialUpdateModal({
               Yenilə düyməsini basın
             </p>
           </div>
-        </form>
+        </FormWrapper>
       )}
     </Modal>
   );

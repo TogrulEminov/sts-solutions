@@ -47,6 +47,7 @@ export interface Column<T extends BaseItem> {
 export type CountGenericType = {
   title: string;
   count: string;
+  suffix: string;
 };
 export type InfoGenericType = {
   title: string;
@@ -94,6 +95,7 @@ export interface Enum {
   id: number;
   documentId: string;
   count?: number;
+  isActive?: boolean;
   createdAt: Date;
   updatedAt: Date;
   status: Status;
@@ -137,9 +139,11 @@ export interface CustomUploadFile {
 
 interface CategoryTranslation {
   title: string;
+  highlight?: string;
   description: string;
   id: number;
   documentId: string;
+  features?: InfoGenericType[];
   locale: string;
   seo: Seo;
 }
@@ -160,6 +164,7 @@ interface SectionContentTr {
   title: string;
   description: string;
   subTitle?: string;
+  highlightWord?: string;
   id: number;
   documentId: string;
   slug: string;
@@ -185,4 +190,327 @@ export interface Social {
   status: "published" | "draft";
   createdAt: Date;
   updatedAt: Date;
+}
+
+//slider
+interface SliderTranslation {
+  title: string;
+  description: string;
+  id: number;
+  documentId: string;
+  slug: string;
+  locale: string;
+  seo: Seo;
+}
+export interface SliderItem {
+  id: number;
+  documentId: string;
+  status: Status;
+  imageUrl: FileType | null;
+  createdAt: string;
+  updatedAt: string;
+  translations: SliderTranslation[];
+}
+
+// fag
+interface FagItemTr {
+  title: string;
+  description: string;
+  id: number;
+  documentId: string;
+  slug: string;
+  locale: string;
+}
+
+export interface FagItem {
+  id: number;
+  documentId: string;
+  status: Status;
+  createdAt: string;
+  updatedAt: string;
+  translations: FagItemTr[];
+}
+
+// strategic goals
+
+interface StrategicTranslation {
+  title: string;
+  description: string;
+  id: number;
+  documentId: string;
+  features?: InfoGenericType[];
+  locale: string;
+}
+
+export interface StrategicItem {
+  id: number;
+  documentId: string;
+  slug: string;
+  status: Status;
+  imageUrl: FileType | null;
+  createdAt: string;
+  updatedAt: string;
+  translations: StrategicTranslation[];
+}
+
+interface IAboutHomeTranslations {
+  id: number;
+  title: string;
+  subtitle?: string;
+  slug: string;
+  description: string;
+  statistics?: CountGenericType[];
+  sectors?: InfoGenericType[] | any;
+  locale: CustomLocales;
+  documentId?: string | null;
+  createdAt: Date | string;
+  updatedAt: Date | string;
+}
+export interface IAboutHome {
+  id: number;
+  documentId: string;
+  isDeleted: boolean;
+  status: Status;
+  imageUrl?: FileType;
+  gallery?: FileType[];
+  translations?: IAboutHomeTranslations[];
+  userId?: string | null;
+  createdAt: Date | string;
+  updatedAt: Date | string;
+}
+
+export interface IAboutTranslations {
+  id: number;
+  title: string;
+  slug: string;
+  highlightWord?: string;
+  description: string;
+  statistics?: CountGenericType[] | null;
+  advantages?: InfoGenericType[] | null;
+  locale: CustomLocales;
+  documentId: string | null;
+  createdAt: Date | string;
+  updatedAt: Date | string;
+}
+
+export interface IAbout {
+  id: number;
+  documentId: string;
+  isDeleted: boolean;
+  status: Status;
+  imageUrl?: FileType;
+  translations?: IAboutTranslations[];
+  createdAt: Date | string;
+  updatedAt: Date | string;
+}
+// 1. Enumlar (Status və Locales-ə uyğun)
+export enum Locales {
+  az = "az",
+  en = "en",
+  ru = "ru",
+}
+
+// 2. Tərcümə Modeli üçün İnterfeys (ContactInformationTranslation)
+interface IContactInformationTranslation {
+  id: number;
+  adress: string;
+  title: string;
+  description: string;
+  about: string;
+  hightlightWord?: string;
+  workHours: string;
+  documentId: string;
+  tag?: string | null;
+  support: string;
+  locale: Locales;
+  createdAt: Date | string;
+  updatedAt: Date | string;
+}
+
+// 3. Əsas Əlaqə Modeli üçün İnterfeys (ContactInformation)
+export interface IContactInformation {
+  id: number;
+  documentId: string;
+  createdAt: Date | string;
+  updatedAt: Date | string;
+  phone: string;
+  phoneSecond?: string | null;
+  latitude?: string | null;
+  longitude?: string | null;
+  adressLink: string;
+  whatsapp: string;
+  email: string;
+  translations?: IContactInformationTranslation[];
+  userId?: string | null;
+  user?: any; // User interfeysiniz bura gəlməlidir
+  isDeleted: boolean;
+}
+ 
+
+// connection
+type ConnectionTranslation = {
+  title: string;
+  slug: string;
+  id: number;
+  description?: string | undefined;
+  documentId: string;
+  locale: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export interface ConnectionItem {
+  id: number;
+  documentId: string;
+  slug: string;
+  // status: Status;
+  orderNumber: number;
+  imageUrl: FileType;
+  url: string;
+  createdAt: string;
+  updatedAt: string;
+  translations: ConnectionTranslation[];
+}
+
+// employee
+
+interface EmployeeTr {
+  title: string;
+  description: string;
+  id: number;
+  documentId: string;
+  locale: string;
+  slug: string;
+}
+
+export interface Employee {
+  id: number;
+  documentId: string;
+  imageUrl: FileType | null;
+  createdAt: string;
+  orderNumber: number;
+  position: Enum;
+  positionId?: string;
+  email: string;
+  phone: string;
+  experience: number;
+  updatedAt: string;
+  translations: EmployeeTr[];
+}
+
+// projects
+interface ProjectsTr {
+  title: string;
+  description: string;
+  subTitle?: string;
+  id: number;
+  documentId: string;
+  locale: string;
+  slug: string;
+  seo: Seo;
+}
+
+export interface Projects {
+  id: number;
+  documentId: string;
+  imageUrl: FileType | null;
+  gallery: FileType[] | null;
+  createdAt: string;
+  updatedAt: string;
+  translations: ProjectsTr[];
+}
+
+// service
+interface ServicesCategoryItemTr {
+  title: string;
+  subtitle?: string;
+  description: string;
+  id: number;
+  documentId: string;
+  locale: string;
+  slug: string;
+  seo: Seo;
+}
+
+export interface ServicesCategoryItem {
+  id: number;
+  documentId: string;
+  imageUrl: FileType | null;
+  gallery: FileType[] | null;
+  createdAt: string;
+  updatedAt: string;
+  translations: ServicesCategoryItemTr[];
+}
+
+// service sub
+interface ServicesSubCategoryItemTr {
+  title: string;
+  subtitle?: string;
+  description: string;
+  id: number;
+  features: InfoGenericType[];
+  documentId: string;
+  locale: string;
+  slug: string;
+  seo: Seo;
+}
+
+export interface ServicesSubCategoryItem {
+  id: number;
+  documentId: string;
+  imageUrl: FileType | null;
+  gallery: FileType[] | null;
+  createdAt: string;
+  updatedAt: string;
+  servicesCategory: ServicesCategoryItem[];
+  servicesCategoryId?: string;
+  translations: ServicesSubCategoryItemTr[];
+}
+
+// blog
+interface BlogTranslation {
+  title: string;
+  description: string;
+  slug: string;
+  id: number;
+  documentId: string;
+  locale: string;
+  readTime: string;
+  tags: string[];
+  seo?: Seo | undefined;
+}
+
+export interface BlogItem {
+  id: number;
+  documentId: string;
+  // status?: Status | undefined;
+  view: number;
+  imageUrl: FileType | null;
+  createdAt: string;
+  updatedAt: string;
+  translations: BlogTranslation[];
+}
+
+// solutions
+interface SolutionsTr {
+  title: string;
+  subTitle?: string;
+  subDescription?: string;
+  description: string;
+  id: number;
+  documentId: string;
+  locale: string;
+  slug: string;
+  seo: Seo;
+  problems: InfoGenericType[];
+}
+
+export interface SolutionsItem {
+  id: number;
+  documentId: string;
+  imageUrl: FileType | null;
+  gallery: FileType[] | null;
+  createdAt: string;
+  updatedAt: string;
+  translations: SolutionsTr[];
 }

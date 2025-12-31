@@ -69,7 +69,7 @@ export default function ChangePasswordPage() {
               type="password"
               autoComplete="current-password"
               required
-              className="text-[#555] text-sm px-4 py-4 ease-border outline-none rounded-sm border-2 border-[#e1e5e9]"
+              className="text-[#555] text-sm px-4 py-4 ease-border outline-none rounded-sm border-[2px] border-[#e1e5e9]"
               placeholder="Parolunuz daxil edin"
               value={formData.password}
               onChange={handleChange}
@@ -89,7 +89,7 @@ export default function ChangePasswordPage() {
               type="password"
               autoComplete="new-password"
               required
-              className="text-[#555] text-sm px-4 py-4 ease-border outline-none rounded-sm border-2 border-[#e1e5e9]"
+              className="text-[#555] text-sm px-4 py-4 ease-border outline-none rounded-sm border-[2px] border-[#e1e5e9]"
               placeholder="Parolunuzu yenidən edin"
               value={formData.confirmPassword}
               onChange={handleChange}

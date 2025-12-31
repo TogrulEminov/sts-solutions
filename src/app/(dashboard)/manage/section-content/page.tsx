@@ -1,5 +1,5 @@
 "use client";
-import React, { Suspense } from "react";
+import { Suspense } from "react";
 import { usePaginationQuery } from "@/src/hooks/usePaginationQuery";
 import { Pagination } from "antd";
 import WhiteBlockTitleArea from "../_components/whiteBlockTitle";
@@ -21,13 +21,14 @@ import {
 } from "@/src/services/interface";
 import { getSectionContent } from "@/src/actions/client/section.actions";
 import { useSession } from "next-auth/react";
+import { section_content_list } from "@/src/services/interface/constant";
 
 export default function SectionContentAdminPage() {
   const { data: session } = useSession();
   const isSuperAdmin = session?.user.role === "SUPER_ADMIN";
   const { queryParams, handleChange, locale } = usePaginationQuery();
   const { data, isLoading, isError, refetch } = useServerQuery(
-    "section-content",
+    section_content_list,
     getSectionContent,
     {
       params: {
@@ -76,12 +77,12 @@ export default function SectionContentAdminPage() {
         <TableTypesArea<SectionContent>
           columns={columns}
           page="section-content"
-          model="sectionContent"
+          model={section_content_list}
           dataItems={(data?.data as unknown as SectionContent[]) || []}
           isError={isError}
           refetch={refetch}
           locale={locale}
-          invalidateQueryKey="section-content"
+          invalidateQueryKey={section_content_list}
           isLoading={isLoading}
           isAdmin={Boolean(isSuperAdmin)}
         />

@@ -11,8 +11,8 @@ import {
   Clock,
   Tag,
   Link2,
-  Image,
   Images,
+  Image,
 } from "lucide-react";
 import { getForCards } from "./getFullimageUrl";
 import { Status } from "../generated/prisma/enums";
@@ -42,7 +42,7 @@ export const createSlugColumn = <
   dataIndex: "slug",
   render: (slug) => (
     <div className="flex items-center gap-2 px-3 py-1.5 bg-blue-50 text-blue-700 rounded-lg border border-blue-200 max-w-fit">
-      <Link2 className="w-3.5 h-3.5 flex-shrink-0" />
+      <Link2 className="w-3.5 h-3.5 shrink-0" />
       <span className="text-xs font-mono font-medium truncate">{slug}</span>
     </div>
   ),
@@ -56,7 +56,7 @@ export const createKeyColumn = <
   dataIndex: "key",
   render: (key) => (
     <div className="flex items-center gap-2 px-3 py-1.5 bg-purple-50 text-purple-700 rounded-lg border border-purple-200 max-w-fit">
-      <Tag className="w-3.5 h-3.5 flex-shrink-0" />
+      <Tag className="w-3.5 h-3.5 shrink-0" />
       <span className="text-xs font-mono font-semibold">{key}</span>
     </div>
   ),
@@ -161,7 +161,7 @@ export const createImageColumn = <T extends BaseItem>({
       className="flex items-center justify-center w-9 h-9 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors cursor-pointer"
       title="Şəkli dəyiş"
     >
-      <Image className="w-4 h-4" />
+      <Image className="w-4 h-4"/>
     </Link>
   ),
 });

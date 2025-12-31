@@ -105,7 +105,7 @@ export default function SocialCard({ social, onEdit, onRefetch }: Props) {
       {/* Main Content */}
       <div className="flex flex-col items-center pt-2">
         {/* Icon */}
-        <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+        <div className="w-20 h-20 rounded-full bg-linear-to-br from-blue-50 to-blue-100 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
           <div className="w-12 h-12 flex items-center justify-center text-blue-600">
             <SocialIcon iconName={social.iconName} />
           </div>
@@ -124,7 +124,7 @@ export default function SocialCard({ social, onEdit, onRefetch }: Props) {
             rel="noopener noreferrer"
             className="text-xs text-gray-500 hover:text-blue-600 flex items-center gap-1 max-w-full truncate mb-4"
           >
-            <LinkOutlined className="text-xs flex-shrink-0" />
+            <LinkOutlined className="text-xs shrink-0" />
             <span className="truncate">{social.socialLink}</span>
           </Link>
         </Tooltip>

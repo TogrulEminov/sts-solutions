@@ -78,7 +78,7 @@ export default function CreateUserPage() {
             autoComplete="name"
             required
             className={
-              "px-4 py-3 border-2 border-[#e1e5e9]  rounded-lg text-base ease-border outline-none focus:border-[#3b82f6]"
+              "px-4 py-3 border-[2px] border-[#e1e5e9]  rounded-lg text-base ease-border outline-none focus:border-[#3b82f6]"
             }
             placeholder="İstifadəçinin ad və soyadını daxil edin"
             value={formData.name}
@@ -100,7 +100,7 @@ export default function CreateUserPage() {
             autoComplete="username"
             required
             className={
-              "px-4 py-3 border-2 border-[#e1e5e9]  rounded-lg text-base ease-border outline-none focus:border-[#3b82f6]"
+              "px-4 py-3 border-[2px] border-[#e1e5e9]  rounded-lg text-base ease-border outline-none focus:border-[#3b82f6]"
             }
             placeholder="Unikal istifadəçi adı daxil edin"
             value={formData.username}
@@ -119,7 +119,7 @@ export default function CreateUserPage() {
             autoComplete="email"
             required
             className={
-              "px-4 py-3 border-2 border-[#e1e5e9]  rounded-lg text-base ease-border outline-none focus:border-[#3b82f6]"
+              "px-4 py-3 border-[2px] border-[#e1e5e9]  rounded-lg text-base ease-border outline-none focus:border-[#3b82f6]"
             }
             placeholder="Email adresini daxil edin"
             value={formData.email}
@@ -141,7 +141,7 @@ export default function CreateUserPage() {
             autoComplete="new-password"
             required
             className={
-              "px-4 py-3 border-2 border-[#e1e5e9]  rounded-lg text-base ease-border outline-none focus:border-[#3b82f6]"
+              "px-4 py-3 border-[2px] border-[#e1e5e9]  rounded-lg text-base ease-border outline-none focus:border-[#3b82f6]"
             }
             placeholder="Yeni parol daxil edin"
             value={formData.password}
