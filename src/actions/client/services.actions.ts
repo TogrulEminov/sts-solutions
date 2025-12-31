@@ -14,10 +14,10 @@ import {
 import { createSlug } from "@/src/lib/slugifyHelper";
 import { checkAuthServerAction } from "@/src/middleware/checkAuthorization";
 import {
-  CreateServiceInput,
-  createServiceSchema,
-  UpdateServiceInput,
-  uptadeServiceSchema,
+  CreateServiceCategoryInput,
+  createServiceCategorySchema,
+  UpdateServiceCategoryInput,
+  uptadeServiceCategorySchema,
 } from "@/src/schema/service.schema";
 
 type ActionResult<T = unknown> = {
@@ -30,7 +30,7 @@ type ActionResult<T = unknown> = {
 };
 
 type GetProps = {
-  page: number;
+  page?: number;
   query?: string;
   pageSize: number;
   locale: Locales;
@@ -39,14 +39,19 @@ type GetByIDProps = {
   id: string;
   locale: Locales;
 };
-export async function getServices({ page, pageSize, query, locale }: GetProps) {
+export async function getServicesCategory({
+  page,
+  pageSize,
+  query,
+  locale,
+}: GetProps) {
   const customPage = page || 1;
   const customPageSize = Math.min(Number(pageSize) || 12, 100);
   const skip = (customPage - 1) * customPageSize;
   const take = customPageSize;
   const searchTerm = query?.trim();
 
-  const whereClause: Prisma.ServicesWhereInput = {
+  const whereClause: Prisma.ServicesCategoryWhereInput = {
     isDeleted: false,
     translations: {
       some: {
@@ -62,13 +67,12 @@ export async function getServices({ page, pageSize, query, locale }: GetProps) {
   };
   // ✅ PARALEL SORĞU: Data gətirmə və count eyni anda icra olunur.
   const [data, totalCount] = await Promise.all([
-    db.services.findMany({
+    db.servicesCategory.findMany({
       where: whereClause,
       select: {
         id: true,
         status: true,
         documentId: true,
-        expertiseId: true,
         gallery: {
           select: {
             id: true,
@@ -102,7 +106,7 @@ export async function getServices({ page, pageSize, query, locale }: GetProps) {
       skip: skip,
       take: take,
     }),
-    db.services.count({ where: whereClause }),
+    db.servicesCategory.count({ where: whereClause }),
   ]);
   const totalPages = Math.ceil(totalCount / customPageSize);
   return {
@@ -116,10 +120,10 @@ export async function getServices({ page, pageSize, query, locale }: GetProps) {
     },
   };
 }
-export async function getServicesById({ locale, id }: GetByIDProps) {
+export async function getServicesCategoryById({ locale, id }: GetByIDProps) {
   try {
     const byUuid = isUuid(id);
-    const whereClause: Prisma.ServicesWhereInput = byUuid
+    const whereClause: Prisma.ServicesCategoryWhereInput = byUuid
       ? {
           isDeleted: false,
           documentId: id,
@@ -131,27 +135,13 @@ export async function getServicesById({ locale, id }: GetByIDProps) {
           },
         };
 
-    const category = await db.services.findFirst({
+    const category = await db.servicesCategory.findFirst({
       where: whereClause,
       select: {
         id: true,
         documentId: true,
         status: true,
         createdAt: true,
-        expertiseId: true,
-        expertise: {
-          where: {
-            isDeleted: false,
-            translations: {
-              some: {
-                locale: locale,
-              },
-            },
-          },
-          include: {
-            translations: true,
-          },
-        },
         updatedAt: true,
         imageUrl: {
           select: {
@@ -165,13 +155,10 @@ export async function getServicesById({ locale, id }: GetByIDProps) {
           select: {
             id: true,
             title: true,
-            steps: true,
-            offerings: true,
-            ourStrengths: true,
+            subtitle: true,
             description: true,
             slug: true,
             locale: true,
-            highlight: true,
             seo: {
               select: {
                 metaDescription: true,
@@ -208,8 +195,8 @@ export async function getServicesById({ locale, id }: GetByIDProps) {
     };
   }
 }
-export async function createServices(
-  input: CreateServiceInput
+export async function createServicesCategory(
+  input: CreateServiceCategoryInput
 ): Promise<ActionResult> {
   const { user, error } = await checkAuthServerAction([
     Role.ADMIN,
@@ -225,7 +212,7 @@ export async function createServices(
     };
   }
   try {
-    const validateData = createServiceSchema.safeParse(input);
+    const validateData = createServiceCategorySchema.safeParse(input);
     if (!validateData?.success) {
       return {
         code: "VALIDATION_ERROR",
@@ -238,11 +225,7 @@ export async function createServices(
       description,
       locale,
       imageId,
-      expertiseId,
-      highlight,
-      offerings,
-      ourStrengths,
-      steps,
+      subtitle,
       galleryIds,
       metaTitle,
       metaDescription,
@@ -251,7 +234,7 @@ export async function createServices(
 
     const customSlug = createSlug(title);
     // ✅ SELECT OPTIMIZATION: Təkrarlığı yoxlamaq üçün yalnız id-ni gətir
-    const existingData = await db.services.findFirst({
+    const existingData = await db.servicesCategory.findFirst({
       where: {
         isDeleted: false,
         translations: {
@@ -268,9 +251,8 @@ export async function createServices(
       };
     }
 
-    const newData = await db.services.create({
+    const newData = await db.servicesCategory.create({
       data: {
-        expertiseId: expertiseId ? String(expertiseId) : null,
         gallery: {
           connect: galleryIds?.map((id) => ({ id: Number(id) })),
         },
@@ -281,10 +263,7 @@ export async function createServices(
             description: description ?? "",
             locale: locale,
             slug: customSlug,
-            ourStrengths: JSON.stringify(ourStrengths),
-            steps: JSON.stringify(steps),
-            offerings: JSON.stringify(offerings),
-            highlight: highlight,
+            subtitle: subtitle,
             seo: {
               create: {
                 metaTitle: metaTitle || "",
@@ -321,9 +300,9 @@ export async function createServices(
     };
   }
 }
-export async function uptadeServices(
+export async function uptadeServicesCategory(
   id: string,
-  input: UpdateServiceInput
+  input: UpdateServiceCategoryInput
 ): Promise<ActionResult> {
   const { user, error } = await checkAuthServerAction([
     Role.ADMIN,
@@ -340,7 +319,7 @@ export async function uptadeServices(
   }
   try {
     // ✅ SELECT OPTIMIZATION: Include əvəzinə minimal select istifadə edilir
-    const existingCategory = await db.services.findUnique({
+    const existingCategory = await db.servicesCategory.findUnique({
       where: {
         documentId: id,
         isDeleted: false,
@@ -357,7 +336,7 @@ export async function uptadeServices(
     if (!existingCategory) {
       return { success: false, code: "NOT_FOUND", error: "Category not found" };
     }
-    const parsedInput = uptadeServiceSchema.safeParse(input);
+    const parsedInput = uptadeServiceCategorySchema.safeParse(input);
     if (!parsedInput.success) {
       return {
         success: false,
@@ -370,11 +349,7 @@ export async function uptadeServices(
       title,
       description,
       locale,
-      highlight,
-      expertiseId,
-      offerings,
-      ourStrengths,
-      steps,
+      subtitle,
       metaTitle,
       metaDescription,
       metaKeywords,
@@ -386,10 +361,9 @@ export async function uptadeServices(
     const finalSlug = customSlug || existingSlug;
     const uptadeData = await db.$transaction(
       async (prisma) => {
-        const updatedData = await prisma.services.update({
+        const updatedData = await prisma.servicesCategory.update({
           where: { documentId: id },
           data: {
-            expertiseId: expertiseId ? String(expertiseId) : null,
             translations: {
               upsert: {
                 where: {
@@ -400,10 +374,7 @@ export async function uptadeServices(
                   description: description ?? null,
                   locale,
                   slug: finalSlug,
-                  offerings: JSON.stringify(offerings),
-                  steps: JSON.stringify(steps),
-                  ourStrengths: JSON.stringify(ourStrengths),
-                  highlight: highlight,
+                  subtitle: subtitle,
                   seo: {
                     create: {
                       metaTitle: metaTitle ?? "",
@@ -418,10 +389,7 @@ export async function uptadeServices(
                   description: description ?? null,
                   locale,
                   slug: finalSlug,
-                  offerings: JSON.stringify(offerings),
-                  steps: JSON.stringify(steps),
-                  ourStrengths: JSON.stringify(ourStrengths),
-                  highlight: highlight,
+                  subtitle: subtitle,
                   seo: {
                     upsert: {
                       create: {
@@ -473,7 +441,7 @@ export async function uptadeServices(
     };
   }
 }
-export async function uptadeServicesImage(
+export async function uptadeServicesCategoryImage(
   id: string,
   input: ImgInput
 ): Promise<ActionResult> {
@@ -491,7 +459,7 @@ export async function uptadeServicesImage(
     };
   }
   try {
-    const existingData = await db.services.findUnique({
+    const existingData = await db.servicesCategory.findUnique({
       where: { documentId: id, isDeleted: false },
       select: { id: true, imageId: true },
     });
@@ -508,7 +476,7 @@ export async function uptadeServicesImage(
     }
     const { imageId } = parsedInput.data;
 
-    const uptadeData = await db.services.update({
+    const uptadeData = await db.servicesCategory.update({
       where: { documentId: id },
       data: {
         imageId: Number(imageId),
@@ -548,7 +516,7 @@ export async function uptadeServicesImage(
     };
   }
 }
-export async function uptadeServicesImages(
+export async function uptadeServicesCategoryImages(
   id: string,
   input: GalleryInput
 ): Promise<ActionResult> {
@@ -566,7 +534,7 @@ export async function uptadeServicesImages(
     };
   }
   try {
-    const existingData = await db.services.findUnique({
+    const existingData = await db.servicesCategory.findUnique({
       where: { documentId: id, isDeleted: false },
       select: { id: true, documentId: true },
     });
@@ -582,7 +550,7 @@ export async function uptadeServicesImages(
       };
     }
     const { galleryIds } = parsedInput.data;
-    const uptadeData = await db.services.update({
+    const uptadeData = await db.servicesCategory.update({
       where: { documentId: id },
       data: {
         gallery: {

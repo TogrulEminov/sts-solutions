@@ -4,7 +4,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useServerQuery } from "@/src/hooks/useServerActions";
 import { CustomLocales } from "@/src/services/interface";
 import Content from "./_components/content";
-import ImgContent from "./_components/image";
 import { getHomeAbout } from "@/src/actions/client/about-home.actions";
 import GalleryUpdateImagePage from "./_components/gallery";
 import { about_home_list } from "@/src/services/interface/constant";
@@ -55,7 +54,6 @@ export default function AboutPage() {
       </div>
 
       <Content existingData={existingData?.data as any} refetch={refetch} />
-      <ImgContent existingData={existingData?.data as any} refetch={refetch} />
       <GalleryUpdateImagePage
         existingData={existingData?.data as any}
         refetch={refetch}

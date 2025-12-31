@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useTransition, useState, useEffect } from "react";
 import { message } from "antd";
 import { useForm } from "react-hook-form";
@@ -21,8 +21,6 @@ export default function GalleryUpdateImagePage({
   existingData,
   refetch,
 }: Props) {
-  const params = useParams();
-  const id = Array.isArray(params?.id) ? params.id[0] : params?.id;
   const [isPending, startTransition] = useTransition();
   const currentPathname = usePathname();
   const router = useRouter();

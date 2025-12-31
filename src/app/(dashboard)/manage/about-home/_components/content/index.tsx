@@ -19,9 +19,9 @@ import {
   upsertHomeAboutSchema,
 } from "@/src/schema/about-home.schema";
 import { upsertHomeAbout } from "@/src/actions/client/about-home.actions";
-import FormWrapper from "@/src/globalElements/FormBuilder/FormWrapper/FormWrapper";
-import FormInput from "@/src/globalElements/FormBuilder/components/FormInput/FormInput";
-import FormTextArea from "@/src/globalElements/FormBuilder/components/FormTextArea/FormTextArea";
+import FormWrapper from "@/src/ui/FormBuilder/FormWrapper/FormWrapper";
+import FormInput from "@/src/ui/FormBuilder/components/FormInput/FormInput";
+import FormTextArea from "@/src/ui/FormBuilder/components/FormTextArea/FormTextArea";
 import CustomAdminEditor from "@/src/app/(dashboard)/manage/_components/CreateEditor";
 interface Props {
   existingData: IAboutHome | undefined;
@@ -38,16 +38,13 @@ export default function Content({ existingData, refetch }: Props) {
     () => ({
       title: existingData?.translations?.[0]?.title || "",
       description: existingData?.translations?.[0]?.description || "",
-      chairmanTitle: existingData?.translations?.[0]?.chairmanTitle || "",
-      chairmanMessage: existingData?.translations?.[0]?.chairmanMessage || "",
-      chairmanName: existingData?.translations?.[0]?.chairmanName || "",
-      chairmanRole: existingData?.translations?.[0]?.chairmanRole || "",
+      subtitle: existingData?.translations?.[0]?.subtitle || "",
       locale: locale as CustomLocales,
       statistics: parseJSON<CountGenericType>(
         existingData?.translations?.[0]?.statistics
       ),
-      advantages: parseJSON<InfoGenericType>(
-        existingData?.translations?.[0]?.advantages
+      sectors: parseJSON<InfoGenericType>(
+        existingData?.translations?.[0]?.sectors
       ),
     }),
     [existingData, locale]
@@ -58,13 +55,12 @@ export default function Content({ existingData, refetch }: Props) {
     mode: "onChange",
     values: formValues,
   });
-  const { control, formState, handleSubmit, reset, watch, setValue } =
+  const { control, formState, handleSubmit, reset, getValues, setValue } =
     generalFormInput;
   const { isDirty, errors } = formState;
-  const description = watch("description");
-  const advantagesFieldArray = useFieldArray({
+  const sectorsFieldArray = useFieldArray({
     control,
-    name: "advantages",
+    name: "sectors",
   });
   const statisticsFieldArray = useFieldArray({
     control,
@@ -126,7 +122,7 @@ export default function Content({ existingData, refetch }: Props) {
             />
             <CustomAdminEditor
               title="Qısa məlumat"
-              value={description}
+              value={getValues("description")}
               onChange={(value) =>
                 setValue("description", value, {
                   shouldValidate: true,
@@ -213,18 +209,18 @@ export default function Content({ existingData, refetch }: Props) {
           {/* Advantages Section */}
           <FieldBlock title="Üstünlüklərimiz">
             <div className="space-y-4 max-w-2xl">
-              {advantagesFieldArray.fields.map((field, index) => (
+              {sectorsFieldArray.fields.map((field, index) => (
                 <div
                   key={field.id}
                   className="p-4 border border-gray-200 rounded-lg bg-gray-50"
                 >
                   <div className="flex items-start justify-between mb-3">
                     <h4 className="text-sm font-medium text-gray-700">
-                      Üstünlük {index + 1}
+                      Sektor {index + 1}
                     </h4>
                     <button
                       type="button"
-                      onClick={() => advantagesFieldArray.remove(index)}
+                      onClick={() => sectorsFieldArray.remove(index)}
                       className="px-3 py-1.5 cursor-pointer bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors text-sm"
                       title="Sil"
                     >
@@ -234,13 +230,9 @@ export default function Content({ existingData, refetch }: Props) {
 
                   <div className="space-y-3">
                     <FormInput
-                      fieldName={`advantages.${index}.title` as const}
-                      label="Başlıq"
-                      placeholder="Üstünlük başlığı"
-                    />
-                    <FormTextArea
-                      fieldName={`advantages.${index}.description` as const}
-                      label="Qısa məlumat"
+                      fieldName={`sectors.${index}.title` as const}
+                      label="Sektor başlığı ̰"
+                      placeholder="Sektor başlığı"
                     />
                   </div>
                 </div>
@@ -248,9 +240,7 @@ export default function Content({ existingData, refetch }: Props) {
 
               <button
                 type="button"
-                onClick={() =>
-                  advantagesFieldArray.append({ title: "", description: "" })
-                }
+                onClick={() => sectorsFieldArray.append({ title: "" })}
                 className="w-full px-4 py-2 cursor-pointer max-w-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center gap-2"
               >
                 <svg

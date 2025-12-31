@@ -12,8 +12,6 @@ import {
 import { createSlug } from "@/src/lib/slugifyHelper";
 import { generateUUID } from "@/src/lib/uuidHelper";
 import { checkAuthServerAction } from "@/src/middleware/checkAuthorization";
-import { revalidateAll } from "@/src/utils/revalidate";
-import { CACHE_TAG_GROUPS } from "@/src/config/cacheTags";
 import {
   UpsertHomeAboutInput,
   upsertHomeAboutSchema,
@@ -97,17 +95,8 @@ export async function upsertHomeAbout(
       };
     }
 
-    const {
-      title,
-      description,
-      locale,
-      advantages,
-      statistics,
-      chairmanMessage,
-      chairmanName,
-      chairmanRole,
-      chairmanTitle,
-    } = validateData.data;
+    const { title, description, locale, sectors, subtitle, statistics } =
+      validateData.data;
     const custom_slug = createSlug(title);
 
     // ✅ TRANSACTION WITH TIMEOUT (5s/10s)
@@ -144,24 +133,19 @@ export async function upsertHomeAbout(
             title,
             description: description || "",
             slug: custom_slug,
-            advantages: JSON.stringify(advantages),
+            subtitle,
+            sectors: JSON.stringify(sectors),
             statistics: JSON.stringify(statistics),
-            chairmanMessage,
-            chairmanName,
-            chairmanRole,
-            chairmanTitle,
           },
           create: {
             documentId: mainRecord.documentId,
             title,
             description: description || "",
             slug: custom_slug,
-            advantages: JSON.stringify(advantages),
+            subtitle,
+            sectors: JSON.stringify(sectors),
             statistics: JSON.stringify(statistics),
-            chairmanMessage,
-            chairmanName,
-            chairmanRole,
-            chairmanTitle,
+
             locale: locale,
           },
         });
@@ -283,7 +267,7 @@ export async function updateHomeAboutImage(
   }
 }
 
-export async function uptadeHomeAboutGalleryImages( 
+export async function uptadeHomeAboutGalleryImages(
   id: string,
   input: GalleryInput
 ): Promise<ActionResult> {

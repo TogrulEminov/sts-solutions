@@ -12,7 +12,7 @@ const NoDataInfo = ({
 }) => {
   return (
     <div className="flex items-center justify-center p-8">
-      <div className="max-w-xl w-full bg-white rounded-2xl border-[4px] border-dashed border-slate-200 p-12">
+      <div className="max-w-xl w-full bg-white rounded-2xl border-4 border-dashed border-slate-200 p-12">
         <div className="flex flex-col items-center text-center space-y-6">
           {/* Image with Info Badge */}
           <div className="relative">

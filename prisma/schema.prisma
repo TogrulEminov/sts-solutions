@@ -22,24 +22,27 @@ model User {
   createdUsers User[]  @relation("UserCreated")
   isDeleted    Boolean @default(false)
 
-  updatedById         String? // Bu istifadəçi kim tərəfindən yenilənib?
-  updatedBy           User?                @relation("UserUpdated", fields: [updatedById], references: [id])
-  updatedUsers        User[]               @relation("UserUpdated")
-  Categories          Categories[]
-  SectionContent      SectionContent[]
-  faqs                Faq[]
-  sliders             Slider[]
-  strategicGoals      StrategicGoals[]
-  abouts              AboutHome[]
-  about               About[]
-  testimonials        Testimonials[]
-  contactInformations ContactInformation[]
-  youtubes            Youtube[]
-  partners            Partners[]
-  positions           Position[]
-  employees           Employee[]
-  projects            Projects[]
-  blogs               Blog[]
+  updatedById           String? // Bu istifadəçi kim tərəfindən yenilənib?
+  updatedBy             User?                 @relation("UserUpdated", fields: [updatedById], references: [id])
+  updatedUsers          User[]                @relation("UserUpdated")
+  Categories            Categories[]
+  SectionContent        SectionContent[]
+  faqs                  Faq[]
+  sliders               Slider[]
+  strategicGoals        StrategicGoals[]
+  abouts                AboutHome[]
+  about                 About[]
+  testimonials          Testimonials[]
+  contactInformations   ContactInformation[]
+  youtubes              Youtube[]
+  partners              Partners[]
+  positions             Position[]
+  employees             Employee[]
+  projects              Projects[]
+  blogs                 Blog[]
+  sectors               Solutions[]
+  servicesCategories    ServicesCategory[]
+  servicesSubCategories ServicesSubCategory[]
 
   @@index([isDeleted])
   @@index([email, username])
@@ -58,46 +61,58 @@ model VerificationToken {
 }
 
 model File {
-  id              Int             @id @default(autoincrement())
-  fileKey         String          @unique
-  originalName    String
-  mimeType        String
-  fileSize        Int
-  publicUrl       String
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
-  categoryImage   Categories?     @relation("CategoryFiles")
-  seoImage        Seo?            @relation("SeoFiles")
-  slider          Slider?         @relation("SliderImg")
-  strategicGoals  StrategicGoals? @relation("StrategicGoalsFiles")
-  about           AboutHome?      @relation("AboutFile")
-  aboutGallery    AboutHome?      @relation("aboutGallery", fields: [aboutId], references: [id])
-  aboutId         Int?
-  aboutMain       About?          @relation("aboutMain")
-  testimonials    Testimonials?   @relation("testimonialsFile")
-  youtube         Youtube?        @relation("youtubeFile")
-  partners        Partners?       @relation("partnersFiles")
-  employee        Employee?       @relation("employeeFiles")
-  projects        Projects?       @relation("projectsImage")
-  projectsGallery Projects?       @relation("ProjectsMainGallery", fields: [projectsId], references: [id])
-  projectsId      Int?
-  blog            Blog?           @relation("BlogFiles")
+  id                         Int                  @id @default(autoincrement())
+  fileKey                    String               @unique
+  originalName               String
+  mimeType                   String
+  fileSize                   Int
+  publicUrl                  String
+  createdAt                  DateTime             @default(now())
+  updatedAt                  DateTime             @updatedAt
+  categoryImage              Categories?          @relation("CategoryFiles")
+  seoImage                   Seo?                 @relation("SeoFiles")
+  slider                     Slider?              @relation("SliderImg")
+  strategicGoals             StrategicGoals?      @relation("StrategicGoalsFiles")
+  about                      AboutHome?           @relation("AboutFile")
+  aboutGallery               AboutHome?           @relation("aboutGallery", fields: [aboutId], references: [id])
+  aboutId                    Int?
+  aboutMain                  About?               @relation("aboutMain")
+  testimonials               Testimonials?        @relation("testimonialsFile")
+  youtube                    Youtube?             @relation("youtubeFile")
+  partners                   Partners?            @relation("partnersFiles")
+  employee                   Employee?            @relation("employeeFiles")
+  projects                   Projects?            @relation("projectsImage")
+  projectsGallery            Projects?            @relation("ProjectsMainGallery", fields: [projectsId], references: [id])
+  projectsId                 Int?
+  blog                       Blog?                @relation("BlogFiles")
+  solutions                  Solutions?           @relation("SolutionsImage")
+  solutionsGallery           Solutions?           @relation("SolutionsMainGallery", fields: [solutionsId], references: [id])
+  solutionsId                Int?
+  servicesCategory           ServicesCategory?    @relation("ServicesCategoryImage")
+  servicesCategoryGalery     ServicesCategory?    @relation("ServicesCategoryMainGallery", fields: [servicesCategoryId], references: [id])
+  servicesCategoryId         Int?
+  servicesSubCategory        ServicesSubCategory? @relation("ServicesSubCategoryImage")
+  servicesSubCategoryGallery ServicesSubCategory? @relation("ServicesSubCategoryMainGallery", fields: [servicesSubCategoryId], references: [id])
+  servicesSubCategoryId      Int?
 
   @@index([createdAt, mimeType]) // Filter by type and date
 }
 
 model Seo {
-  id                         Int                          @id @default(autoincrement())
-  metaDescription            String
-  metaKeywords               String
-  metaTitle                  String
-  locale                     Locales                      @default(az)
-  imageId                    Int?                         @unique
-  imageUrl                   File?                        @relation("SeoFiles", fields: [imageId], references: [id], onDelete: SetNull)
-  categories                 CategoriesTranslations[]
-  strategicGoalsTranslations StrategicGoalsTranslations[]
-  projectsTranslations       ProjectsTranslations[]
-  blogTranslations           BlogTranslations[]
+  id                              Int                               @id @default(autoincrement())
+  metaDescription                 String
+  metaKeywords                    String
+  metaTitle                       String
+  locale                          Locales                           @default(az)
+  imageId                         Int?                              @unique
+  imageUrl                        File?                             @relation("SeoFiles", fields: [imageId], references: [id], onDelete: SetNull)
+  categories                      CategoriesTranslations[]
+  strategicGoalsTranslations      StrategicGoalsTranslations[]
+  projectsTranslations            ProjectsTranslations[]
+  blogTranslations                BlogTranslations[]
+  solutionsTranslations           SolutionsTranslation[]
+  servicesCategoryTranslations    ServicesCategoryTranslations[]
+  servicesSubCategoryTranslations ServicesSubCategoryTranslations[]
 
   @@index([locale])
   @@index([imageId])
@@ -149,6 +164,7 @@ model CategoriesTranslations {
   id          Int         @id @default(autoincrement())
   title       String
   description String
+  highlight   String?
   features    Json?
   locale      Locales     @default(az)
   document    Categories? @relation(fields: [documentId], references: [documentId], onDelete: Cascade)
@@ -352,20 +368,15 @@ model AboutHome {
 }
 
 model AboutHomeTranslations {
-  id          Int    @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
   // Ümumi Məlumatlar
   title       String // Başlıq
+  subtitle    String?
   slug        String
   description String // Qısa məlumat (və ya ümumi təsvir)
   // Dinamik Məlumatlar (JSON olaraq saxlamaq daha rahatdır)
   statistics  Json? // Statistika (məs: [{ "label": "Müştəri", "value": "500+" }])
-  advantages  Json? // Üstünlüklər (məs: ["Sürətli çatdırılma", "Keyfiyyət"])
-
-  // Başqanın Mesajı Bölməsi
-  chairmanTitle   String? // Başqanın mesajı başlığı (məs: "Gələcəyə baxış")
-  chairmanMessage String? @db.Text // Başqanın mesajı (Uzun mətn üçün @db.Text)
-  chairmanName    String? // Başqanın adı və soyadı
-  chairmanRole    String? // Vəzifəsi (məs: "İdarə Heyətinin Sədri")
+  sectors     Json? // Üstünlüklər (məs: ["Sürətli çatdırılma", "Keyfiyyət"])
 
   // Sistem Məlumatları
   locale     Locales    @default(az)
@@ -716,6 +727,49 @@ model ProjectsTranslations {
   @@index([seoId])
 }
 
+// Solutions
+model Solutions {
+  id           Int                    @id @default(autoincrement())
+  documentId   String                 @unique @default(cuid())
+  isDeleted    Boolean                @default(false)
+  status       Status                 @default(published)
+  imageId      Int?                   @unique
+  imageUrl     File?                  @relation("SolutionsImage", fields: [imageId], references: [id], onDelete: SetNull)
+  createdAt    DateTime               @default(now())
+  updatedAt    DateTime               @updatedAt
+  translations SolutionsTranslation[]
+  user         User?                  @relation(fields: [userId], references: [id])
+  userId       String?
+  gallery      File[]                 @relation("SolutionsMainGallery")
+
+  @@index([isDeleted, status]) // List + ordering
+  @@index([userId, isDeleted])
+}
+
+model SolutionsTranslation {
+  id             Int        @id @default(autoincrement())
+  title          String
+  slug           String
+  subTitle       String?
+  description    String?
+  subDescription String?
+  problems       Json?
+  locale         Locales    @default(az)
+  document       Solutions? @relation(fields: [documentId], references: [documentId], onDelete: Cascade)
+  documentId     String?
+  seo            Seo?       @relation(fields: [seoId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  seoId          Int?
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  @@unique([documentId, locale])
+  @@index([locale])
+  @@index([documentId])
+  @@index([slug])
+  @@index([title])
+  @@index([seoId])
+}
+
 // blog
 model Blog {
   id           Int                @id @default(autoincrement())
@@ -753,6 +807,92 @@ model BlogTranslations {
   @@unique([documentId, locale]) // ✅ əla
   @@index([slug, locale]) // Slug lookup by locale
   @@index([documentId]) // FK
+  @@index([seoId])
+}
+
+// services-category
+model ServicesCategory {
+  id           Int                            @id @default(autoincrement())
+  documentId   String                         @unique @default(cuid())
+  isDeleted    Boolean                        @default(false)
+  status       Status                         @default(published)
+  imageId      Int?                           @unique
+  imageUrl     File?                          @relation("ServicesCategoryImage", fields: [imageId], references: [id], onDelete: SetNull)
+  createdAt    DateTime                       @default(now())
+  updatedAt    DateTime                       @updatedAt
+  translations ServicesCategoryTranslations[]
+  user         User?                          @relation(fields: [userId], references: [id])
+  userId       String?
+  gallery      File[]                         @relation("ServicesCategoryMainGallery")
+  subCategory  ServicesSubCategory[]
+
+  @@index([isDeleted, status])
+  @@index([userId, isDeleted])
+}
+
+model ServicesCategoryTranslations {
+  id          Int               @id @default(autoincrement())
+  title       String
+  slug        String
+  subtitle    String?
+  description String?
+  locale      Locales           @default(az)
+  document    ServicesCategory? @relation(fields: [documentId], references: [documentId], onDelete: Cascade)
+  documentId  String?
+  seo         Seo?              @relation(fields: [seoId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  seoId       Int?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  @@unique([documentId, locale])
+  @@index([locale])
+  @@index([documentId])
+  @@index([slug])
+  @@index([title])
+  @@index([seoId])
+}
+
+// services-sub-category
+model ServicesSubCategory {
+  id                 Int                               @id @default(autoincrement())
+  documentId         String                            @unique @default(cuid())
+  isDeleted          Boolean                           @default(false)
+  status             Status                            @default(published)
+  imageId            Int?                              @unique
+  imageUrl           File?                             @relation("ServicesSubCategoryImage", fields: [imageId], references: [id], onDelete: SetNull)
+  createdAt          DateTime                          @default(now())
+  updatedAt          DateTime                          @updatedAt
+  translations       ServicesSubCategoryTranslations[]
+  user               User?                             @relation(fields: [userId], references: [id])
+  userId             String?
+  gallery            File[]                            @relation("ServicesSubCategoryMainGallery")
+  servicesCategory   ServicesCategory?                 @relation(fields: [servicesCategoryId], references: [documentId])
+  servicesCategoryId String?
+
+  @@index([isDeleted, status])
+  @@index([userId, isDeleted])
+}
+
+model ServicesSubCategoryTranslations {
+  id          Int                  @id @default(autoincrement())
+  title       String
+  slug        String
+  subtitle    String?
+  description String?
+  features    Json?
+  locale      Locales              @default(az)
+  document    ServicesSubCategory? @relation(fields: [documentId], references: [documentId], onDelete: Cascade)
+  documentId  String?
+  seo         Seo?                 @relation(fields: [seoId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  seoId       Int?
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @updatedAt
+
+  @@unique([documentId, locale])
+  @@index([locale])
+  @@index([documentId])
+  @@index([slug])
+  @@index([title])
   @@index([seoId])
 }
 

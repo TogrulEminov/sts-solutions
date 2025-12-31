@@ -61,6 +61,7 @@ export default function CategriesUptadeContent() {
   const formValues = useMemo(
     () => ({
       title: existingData?.translations?.[0]?.title || "",
+      highlight: existingData?.translations?.[0]?.highlight || "",
       description: existingData?.translations?.[0]?.description || "",
       slug: existingData?.slug || "",
       metaTitle: existingData?.translations?.[0]?.seo.metaTitle || "",
@@ -129,6 +130,11 @@ export default function CategriesUptadeContent() {
                 label="Başlıq"
                 placeholder="Başlıq"
                 fieldName="title"
+              />
+                 <FormInput
+                label="Aktiv söz"
+                placeholder="Aktiv söz"
+                fieldName="highlight"
               />
               <FormSelect
                 label="Səhifəni seçin"

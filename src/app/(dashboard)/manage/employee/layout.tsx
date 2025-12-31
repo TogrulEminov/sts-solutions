@@ -9,7 +9,7 @@ export default function EmployeeLayout({
     <Suspense
       fallback={
         <div className="flex flex-col items-center justify-center min-h-screen bg-white  transition-colors duration-300">
-          <div className="h-12 w-12 border-[4px] border-indigo-500 border-t-transparent border-solid rounded-full animate-spin"></div>
+          <div className="h-12 w-12 border-4 border-indigo-500 border-t-transparent border-solid rounded-full animate-spin"></div>
           <p className="mt-4 text-lg font-medium text-gray-700 dark:text-gray-300">
             Məlumat yüklənir...
           </p>

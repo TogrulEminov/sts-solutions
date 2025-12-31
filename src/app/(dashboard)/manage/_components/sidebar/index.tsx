@@ -9,17 +9,18 @@ import {
   Mail,
   Briefcase,
   Users,
-  Video,
   Image,
-  Star,
   HelpCircle,
   UserCircle,
   Trash2,
   ArrowRight,
   Target,
-  BookKey,
   Projector,
-  MonitorCloud,
+  Layers,
+  Boxes,
+  Info,
+  Contact,
+  Key,
 } from "lucide-react";
 const Sidebar = () => {
   const pathname = usePathname();
@@ -37,14 +38,20 @@ const Sidebar = () => {
           icon: FileText,
         },
         { href: "/manage/contact", label: "Əlaqə", icon: Mail },
-        { href: "/manage/about-main", label: "Haqqımızda", icon: Users },
         { href: "/manage/projects", label: "Layihələr", icon: Projector },
-        { href: "/manage/services", label: "Xidmətlər", icon: MonitorCloud },
         {
-          href: "/manage/youtube-media",
-          label: "Youtube videolarımız",
-          icon: Video,
+          href: "/manage/services-category",
+          label: "Əsas xidmətlər",
+          icon: Layers,
         },
+        {
+          href: "/manage/services-sub-category",
+          label: "Alt xidmətlər",
+          icon: Boxes,
+        },
+        { href: "/manage/contact", label: "Əlaqə", icon: Contact },
+        { href: "/manage/blog", label: "Bloqlar", icon: FileText },
+        { href: "/manage/solutions", label: "Həllərimiz", icon: Key },
       ],
     },
     {
@@ -53,11 +60,10 @@ const Sidebar = () => {
         { href: "/manage/slider", label: "Slayder", icon: Image },
         {
           href: "/manage/about-home",
-          label: "Başkan məlumatları",
-          icon: Image,
+          label: "Haqqımızda ana səhifə məlumatları",
+          icon: Info,
         },
         { href: "/manage/partners", label: "Partnyorlar", icon: Users },
-        { href: "/manage/branches", label: "Tədbir ölkələri", icon: Users },
         {
           href: "/manage/fag",
           label: "Tez-tez verilən suallar",
@@ -69,7 +75,6 @@ const Sidebar = () => {
       title: "Haqqımızda səhifəsi",
       items: [
         { href: "/manage/employee", label: "İşçilərimiz", icon: UserCircle },
-        { href: "/manage/testimonials", label: "Müştəri Rəyləri", icon: Star },
         {
           href: "/manage/strategic-goals",
           label: "Strateji Hədəflər",
@@ -81,11 +86,6 @@ const Sidebar = () => {
       title: "Komponentlər",
       items: [
         { href: "/manage/position", label: "Vəzifələr", icon: Briefcase },
-        {
-          href: "/manage/expertise",
-          label: "İxtisaslaşdıqımız sahələr",
-          icon: BookKey,
-        },
         { href: "/manage/socials", label: "Sosial şəbəkələr", icon: Users },
         {
           href: "/manage/section-content",

@@ -139,6 +139,7 @@ export interface CustomUploadFile {
 
 interface CategoryTranslation {
   title: string;
+  highlight?: string;
   description: string;
   id: number;
   documentId: string;
@@ -255,14 +256,11 @@ export interface StrategicItem {
 interface IAboutHomeTranslations {
   id: number;
   title: string;
+  subtitle?: string;
   slug: string;
   description: string;
   statistics?: CountGenericType[];
-  advantages?: InfoGenericType[] | any;
-  chairmanTitle?: string | null;
-  chairmanMessage?: string | null;
-  chairmanName?: string | null;
-  chairmanRole?: string | null;
+  sectors?: InfoGenericType[] | any;
   locale: CustomLocales;
   documentId?: string | null;
   createdAt: Date | string;
@@ -305,31 +303,6 @@ export interface IAbout {
   createdAt: Date | string;
   updatedAt: Date | string;
 }
-type TestimonialsTr = {
-  title: string;
-  slug: string;
-  id: number;
-  description: string;
-  documentId: string;
-  locale: string;
-  nameSurname: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export interface TestimonialsItem {
-  id: number;
-  documentId: string;
-  slug: string;
-  rate: number;
-  company: string;
-  status: Status;
-  imageUrl: FileType;
-  createdAt: string;
-  updatedAt: string;
-  translations: TestimonialsTr[];
-}
-
 // 1. Enumlar (Status və Locales-ə uyğun)
 export enum Locales {
   az = "az",
@@ -372,29 +345,7 @@ export interface IContactInformation {
   user?: any; // User interfeysiniz bura gəlməlidir
   isDeleted: boolean;
 }
-
-// youtube
-interface YoutubeTranslations {
-  id: number;
-  title: string;
-  description: string;
-  slug: string;
-  locale: string;
-  documentId: string;
-  createdAt: string;
-  updatedAt: string;
-}
-export interface YoutubeItems {
-  id: number;
-  documentId: string;
-  status: Status;
-  url: string;
-  imageUrl: FileType;
-  duration: string;
-  createdAt: string;
-  updatedAt: string;
-  translations: YoutubeTranslations[];
-}
+ 
 
 // connection
 type ConnectionTranslation = {
@@ -451,12 +402,11 @@ export interface Employee {
 interface ProjectsTr {
   title: string;
   description: string;
+  subTitle?: string;
   id: number;
   documentId: string;
   locale: string;
   slug: string;
-  address: string;
-  highlight: string;
   seo: Seo;
 }
 
@@ -465,41 +415,56 @@ export interface Projects {
   documentId: string;
   imageUrl: FileType | null;
   gallery: FileType[] | null;
-  eventDate: string;
   createdAt: string;
-  eventHistory: boolean;
-  expertise: Enum;
-  expertiseId?: string;
   updatedAt: string;
-  branchesId: string;
   translations: ProjectsTr[];
 }
 
 // service
-interface ServicesItemTr {
+interface ServicesCategoryItemTr {
   title: string;
+  subtitle?: string;
   description: string;
   id: number;
   documentId: string;
   locale: string;
   slug: string;
-  highlight: string;
   seo: Seo;
-  ourStrengths: InfoGenericType[];
-  offerings: InfoGenericType[];
-  steps: InfoGenericType[];
 }
 
-export interface ServiceItem {
+export interface ServicesCategoryItem {
   id: number;
   documentId: string;
   imageUrl: FileType | null;
   gallery: FileType[] | null;
   createdAt: string;
-  expertise: Enum;
-  expertiseId?: string;
   updatedAt: string;
-  translations: ServicesItemTr[];
+  translations: ServicesCategoryItemTr[];
+}
+
+// service sub
+interface ServicesSubCategoryItemTr {
+  title: string;
+  subtitle?: string;
+  description: string;
+  id: number;
+  features: InfoGenericType[];
+  documentId: string;
+  locale: string;
+  slug: string;
+  seo: Seo;
+}
+
+export interface ServicesSubCategoryItem {
+  id: number;
+  documentId: string;
+  imageUrl: FileType | null;
+  gallery: FileType[] | null;
+  createdAt: string;
+  updatedAt: string;
+  servicesCategory: ServicesCategoryItem[];
+  servicesCategoryId?: string;
+  translations: ServicesSubCategoryItemTr[];
 }
 
 // blog
@@ -524,4 +489,28 @@ export interface BlogItem {
   createdAt: string;
   updatedAt: string;
   translations: BlogTranslation[];
+}
+
+// solutions
+interface SolutionsTr {
+  title: string;
+  subTitle?: string;
+  subDescription?: string;
+  description: string;
+  id: number;
+  documentId: string;
+  locale: string;
+  slug: string;
+  seo: Seo;
+  problems: InfoGenericType[];
+}
+
+export interface SolutionsItem {
+  id: number;
+  documentId: string;
+  imageUrl: FileType | null;
+  gallery: FileType[] | null;
+  createdAt: string;
+  updatedAt: string;
+  translations: SolutionsTr[];
 }

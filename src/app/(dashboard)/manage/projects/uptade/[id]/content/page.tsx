@@ -51,17 +51,12 @@ export default function UpdateContent() {
   const formValues = useMemo(
     () => ({
       title: existingData?.translations?.[0]?.title || "",
+      subtitle: existingData?.translations?.[0]?.subTitle || "",
       description: existingData?.translations?.[0]?.description || "",
-      address: existingData?.translations?.[0]?.address || "",
-      highlight: existingData?.translations?.[0]?.highlight || "",
-      eventHistory: existingData?.eventHistory || false,
-      eventDate: existingData?.eventDate || "",
-      expertiseId: existingData?.expertiseId || "",
       metaTitle: existingData?.translations?.[0]?.seo?.metaTitle || "",
       metaDescription:
         existingData?.translations?.[0]?.seo?.metaDescription || "",
       metaKeywords: existingData?.translations?.[0]?.seo?.metaDescription || "",
-      branchesId: existingData?.branchesId || "",
       locale: locale as CustomLocales,
     }),
     [existingData, locale]

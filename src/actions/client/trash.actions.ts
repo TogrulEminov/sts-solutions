@@ -4,21 +4,20 @@ import { db } from "@/src/lib/admin/prismaClient";
 import { Role } from "@/src/generated/prisma/enums";
 import { checkAuthServerAction } from "@/src/middleware/checkAuthorization";
 import {
-  branches_list,
   categories_content_list,
   employee_list,
-  expertise_list,
   fag_get_list,
   goals_content_list,
   partners_main_list,
   position_list,
   projects_list,
   section_content_list,
-  service_list,
   slider_get_list,
   social_main_list,
-  testimonials_main_list,
-  youtube_main_list,
+  service_category_list,
+  service_sub_category_list,
+  blog_list,
+  solutions_list,
 } from "@/src/services/interface/constant";
 
 // ════════════════════════════════════════════════════════════════
@@ -66,16 +65,15 @@ const MODEL_MAP: { [key: string]: any } = {
   [fag_get_list]: db.faq,
   [section_content_list]: db.sectionContent,
   [goals_content_list]: db.strategicGoals, // Eyni modeldirsə problem deyil
-  [testimonials_main_list]: db.testimonials,
-  [youtube_main_list]: db.youtube,
   [partners_main_list]: db.partners,
   [social_main_list]: db.social,
   [employee_list]: db.employee,
   [position_list]: db.position,
   [projects_list]: db.projects,
-  [service_list]: db.services,
-  [expertise_list]: db.expertise,
-  [branches_list]: db.branch,
+  [service_category_list]: db.servicesCategory,
+  [service_sub_category_list]: db.servicesSubCategory,
+  [blog_list]: db.blog,
+  [solutions_list]: db.solutions,
 };
 
 // ════════════════════════════════════════════════════════════════

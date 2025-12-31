@@ -41,6 +41,7 @@ export default function CreateCategories() {
       slug: "",
       metaTitle: "",
       metaDescription: "",
+      highlight:"",
       metaKeywords: "",
       imageId: "",
       features: [{ title: "" }],
@@ -106,11 +107,11 @@ export default function CreateCategories() {
                 label="Başlıq"
                 placeholder="Başlıq"
                 fieldName="title"
-                styles={{
-                  input: {
-                    height: "40px",
-                  },
-                }}
+              />
+              <FormInput
+                label="Aktiv söz"
+                placeholder="Aktiv söz"
+                fieldName="highlight"
               />
               <FormSelect
                 label="Səhifəni seçin"

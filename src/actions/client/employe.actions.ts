@@ -74,7 +74,6 @@ export async function getEmployee({
         status: true,
         documentId: true,
         email: true,
-        experience: true,
         position: true,
         id: true,
         imageUrl: {
@@ -145,9 +144,8 @@ export async function getEmployeeById({ locale, id }: GetByIDProps) {
         id: true,
         documentId: true,
         status: true,
+        phone:true,
         email: true,
-        experience: true,
-        emailResponse: true,
         orderNumber: true,
         createdAt: true,
         positionId: true,
@@ -236,8 +234,8 @@ export async function createEmployee(
       imageId,
       orderNumber,
       positionId,
-      emailResponse,
       email,
+      phone,
     } = validateData.data;
 
     const customSlug = createSlug(title);
@@ -262,8 +260,8 @@ export async function createEmployee(
     const newData = await db.employee.create({
       data: {
         orderNumber: Number(orderNumber) || null,
-        emailResponse,
         email: email ?? "",
+        phone,
         positionId: positionId,
         imageId: imageId ? Number(imageId) : null,
         translations: {
@@ -356,7 +354,7 @@ export async function uptadeEmployee(
         errors: formatZodErrors(parsedInput.error),
       };
     }
-    const { title, description, locale, orderNumber, positionId, email } =
+    const { title, description, locale, orderNumber, positionId, email ,phone} =
       parsedInput.data;
 
     const customSlug = createSlug(title);
@@ -374,6 +372,7 @@ export async function uptadeEmployee(
           data: {
             positionId: positionId,
             orderNumber: Number(orderNumber) || null,
+            phone,
             email: email ?? "",
             translations: {
               upsert: {
