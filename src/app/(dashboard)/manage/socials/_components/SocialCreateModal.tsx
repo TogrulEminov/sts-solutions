@@ -1,11 +1,10 @@
 // app/(dashboard)/manage/socials/_components/SocialCreateModal.tsx
 "use client";
 import { useTransition } from "react";
-import { Modal, Select, Space } from "antd";
-import { useForm, Controller } from "react-hook-form";
+import { Modal } from "antd";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMessageStore } from "@/src/hooks/useMessageStore";
-import CustomAdminInput from "@/src/app/(dashboard)/manage/_components/createInput";
 import FieldBlock from "@/src/app/(dashboard)/manage/_components/contentBlock";
 import {
   CreateSocialInput,
@@ -13,6 +12,9 @@ import {
 } from "@/src/schema/social.schema";
 import Icons from "@/public/icons";
 import { createSocial } from "@/src/actions/client/socials.actions";
+import FormWrapper from "@/src/ui/FormBuilder/FormWrapper/FormWrapper";
+import FormInput from "@/src/ui/FormBuilder/components/FormInput/FormInput";
+import FormSelect from "@/src/ui/FormBuilder/components/FormSelect/FormSelect";
 
 interface Props {
   isOpen: boolean;
@@ -39,14 +41,7 @@ export default function SocialCreateModal({
   const [isPending, startTransition] = useTransition();
   const { success, error } = useMessageStore();
 
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors },
-    reset,
-    watch,
-  } = useForm<CreateSocialInput>({
+  const generalForm = useForm<CreateSocialInput>({
     resolver: zodResolver(createSocialSchema),
     defaultValues: {
       socialName: "",
@@ -55,7 +50,14 @@ export default function SocialCreateModal({
       status: "published",
     },
   });
-
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+    reset,
+    watch,
+  } = generalForm;
   const selectedIcon = watch("iconName");
 
   const onSubmit = async (data: CreateSocialInput) => {
@@ -111,79 +113,46 @@ export default function SocialCreateModal({
         className: "h-10",
       }}
     >
-      <form className="space-y-5 mt-6">
+      <FormWrapper form={generalForm} className="space-y-5 mt-6">
         <FieldBlock>
           {/* Social Name */}
           <div>
-            <CustomAdminInput
-              title="Sosial Şəbəkə Adı"
+            <FormInput
+              label="Sosial Şəbəkə Adı"
               placeholder="Məsələn: Facebook, Instagram"
-              required={true}
-              error={errors.socialName?.message}
-              {...register("socialName")}
+              fieldName="socialName"
             />
           </div>
 
           {/* Social Link */}
           <div>
-            <CustomAdminInput
-              title="Link"
+            <FormInput
+              label="Link"
               placeholder="https://facebook.com/yourpage"
-              required={true}
-              error={errors.socialLink?.message}
-              {...register("socialLink")}
+              fieldName="socialLink"
             />
           </div>
 
           {/* Icon Selection */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Icon seçin <span className="text-red-500">*</span>
-            </label>
-            <Controller
-              name="iconName"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  placeholder="Icon seçin"
-                  className="w-full"
-                  size="large"
-                  showSearch
-                  optionFilterProp="label"
-                  filterOption={(input, option) =>
-                    (option?.label as string)
-                      ?.toLowerCase()
-                      .includes(input.toLowerCase())
-                  }
-                >
-                  {availableIcons.map((icon) => (
-                    <Select.Option
-                      key={icon.name}
-                      value={icon.name}
-                      label={icon.label}
-                    >
-                      <Space>
-                        <div className="w-5 h-5">
-                          <IconPreview iconName={icon.name} />
-                        </div>
-                        <span>{icon.label}</span>
-                      </Space>
-                    </Select.Option>
-                  ))}
-                </Select>
-              )}
+            <FormSelect
+              fieldName="iconName"
+              optionFilterProp="label"
+              filterOption={(input, option) =>
+                (option?.label as string)
+                  ?.toLowerCase()
+                  .includes(input.toLowerCase())
+              }
+              placeholder="Icon seçin"
+              className="w-full"
+              size="large"
+              showSearch
+              options={availableIcons}
             />
-            {errors.iconName && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.iconName.message}
-              </p>
-            )}
           </div>
 
-          {/* Icon Preview */}
           {selectedIcon && (
-            <div className="bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-xl p-5">
+            <div className="bg-linear-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-xl p-5">
               <p className="text-sm font-semibold text-gray-700 mb-3">
                 Icon Önizləmə:
               </p>
@@ -202,23 +171,15 @@ export default function SocialCreateModal({
 
           {/* Status */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Status
-            </label>
-            <Controller
-              name="status"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  className="w-full"
-                  size="large"
-                  options={[
-                    { value: "published", label: "✓ Aktiv" },
-                    { value: "draft", label: "○ Deaktiv" },
-                  ]}
-                />
-              )}
+            <FormSelect
+              fieldName="status"
+              className="w-full"
+              size="large"
+              label="Status"
+              options={[
+                { value: "published", label: "✓ Aktiv" },
+                { value: "draft", label: "○ Deaktiv" },
+              ]}
             />
           </div>
         </FieldBlock>
@@ -230,7 +191,7 @@ export default function SocialCreateModal({
             (https:// ilə başlayan)
           </p>
         </div>
-      </form>
+      </FormWrapper>
     </Modal>
   );
 }

@@ -278,12 +278,12 @@ export default function UsersPage() {
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 placeholder="Yeni şifrəni daxil edin"
-                className="grow-[1] px-4 py-2.5 m-0 border-[#ddd] outline-none border w-full h-full"
+                className="grow px-4 py-2.5 m-0 border-[#ddd] outline-none border w-full h-full"
               />
               <button
                 onClick={handleCopyPassword}
                 className="px-4 py-2.5 border border-[#ccc] bg-[#f0f0f0] cursor-pointer rounded-[5px]"
-                title="Şifrəni kopyala"
+                aria-label="Şifrəni kopyala"
               >
                 Copy
               </button>

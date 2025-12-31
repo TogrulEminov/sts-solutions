@@ -1,12 +1,45 @@
 "use server";
-
-import { db } from "@/src/lib/admin/prismaClient";
 import deleteImageService from "@/src/extensions/upload/delete-image";
 import { checkAuthServerAction } from "@/src/middleware/checkAuthorization";
 import { revalidateAll } from "@/src/utils/revalidate";
 import { CACHE_TAG_GROUPS } from "@/src/config/cacheTags";
 import { Role } from "@/src/generated/prisma/enums";
-
+// Models with standard 'title' field in translations
+import {
+  branches_list,
+  categories_content_list,
+  employee_list,
+  expertise_list,
+  fag_get_list,
+  goals_content_list,
+  partners_main_list,
+  position_list,
+  projects_list,
+  section_content_list,
+  service_list,
+  slider_get_list,
+  social_main_list,
+  testimonials_main_list,
+  youtube_main_list,
+} from "@/src/services/interface/constant";
+import { db } from "@/src/lib/admin/prismaClient";
+const MODEL_MAP: { [key: string]: any } = {
+  [categories_content_list]: db.categories,
+  [slider_get_list]: db.slider,
+  [fag_get_list]: db.faq,
+  [section_content_list]: db.sectionContent,
+  [goals_content_list]: db.strategicGoals, // Eyni modeldirsə problem deyil
+  [testimonials_main_list]: db.testimonials,
+  [youtube_main_list]: db.youtube,
+  [partners_main_list]: db.partners,
+  [social_main_list]: db.social,
+  [employee_list]: db.employee,
+  [position_list]: db.position,
+  [projects_list]: db.projects,
+  [service_list]: db.services,
+  [expertise_list]: db.expertise,
+  [branches_list]: db.branch,
+};
 // ════════════════════════════════════════════════════════════════
 // TYPES
 // ════════════════════════════════════════════════════════════════
@@ -47,10 +80,6 @@ const IMAGE_FIELD_CONFIG = {
     "mainImage",
   ],
   arrayFields: ["gallery", "floors", "images"],
-};
-
-const MODEL_MAP: { [key: string]: any } = {
-  categories: db.categories,
 };
 
 // ════════════════════════════════════════════════════════════════

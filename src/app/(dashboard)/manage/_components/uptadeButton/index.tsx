@@ -44,7 +44,7 @@ const UptadeButton = ({ link, documentId }: Props) => {
           </Link>
         </div>
       }
-      title="Dil seçin"
+      label="Dil seçin"
       trigger="click"
       open={editOpen === documentId}
       onOpenChange={(open: boolean) => handleOpenChange(documentId, open)}

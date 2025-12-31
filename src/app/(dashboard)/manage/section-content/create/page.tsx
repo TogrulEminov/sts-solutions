@@ -1,9 +1,7 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useTransition } from "react";
+import { useTransition } from "react";
 import FieldBlock from "@/src/app/(dashboard)/manage/_components/contentBlock";
-import CustomAdminInput from "@/src/app/(dashboard)/manage/_components/createInput";
-import CustomAdminEditor from "@/src/app/(dashboard)/manage/_components/CreateEditor";
 import pageData from "@/src/json/main/page.json";
 import NavigateBtn from "@/src/app/(dashboard)/manage/_components/navigateBtn";
 import CreateButton from "@/src/app/(dashboard)/manage/_components/createButton";
@@ -16,7 +14,10 @@ import {
   createSectionContentSchema,
 } from "@/src/schema/section.schema";
 import { createSectionContent } from "@/src/actions/client/section.actions";
-import CustomAdminSelect from "../../_components/singleSelect";
+import FormWrapper from "@/src/ui/FormBuilder/FormWrapper/FormWrapper";
+import FormInput from "@/src/ui/FormBuilder/components/FormInput/FormInput";
+import FormSelect from "@/src/ui/FormBuilder/components/FormSelect/FormSelect";
+import FormTextArea from "@/src/ui/FormBuilder/components/FormTextArea/FormTextArea";
 
 type OptionTypes = {
   value: string;
@@ -28,23 +29,18 @@ export default function CreateSectionContent() {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const { success, error } = useMessageStore();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isDirty },
-    setValue,
-    watch,
-    reset,
-  } = useForm<CreateSectionContentInput>({
+  const sectionContentForm = useForm<CreateSectionContentInput>({
+    mode: "onChange",
     resolver: zodResolver(createSectionContentSchema),
     defaultValues: {
       title: "",
+      subTitle: "",
+      highlightWord: "",
       description: "",
       key: "",
       locale: locale as CustomLocales,
     },
   });
-  const description = watch("description");
 
   const onSubmit = async (data: CreateSectionContentInput) => {
     startTransition(async () => {
@@ -54,7 +50,7 @@ export default function CreateSectionContent() {
 
       if (result.success) {
         success("Məlumat uğurla yadda saxlandı!");
-        reset();
+        sectionContentForm.reset();
         router.back();
         router.refresh();
       } else {
@@ -77,39 +73,41 @@ export default function CreateSectionContent() {
             ? "İngilis dilində daxil et"
             : "Rus dilində daxil et"}
         </h1>
-        <form
-          onSubmit={handleSubmit(onSubmit)}
+        <FormWrapper
+          form={sectionContentForm}
+          onSubmit={sectionContentForm.handleSubmit(onSubmit)}
           className={"grid grid-cols-1 gap-5"}
         >
           <div className={"flex flex-col space-y-5"}>
             <FieldBlock>
-              <CustomAdminInput
-                title="Başlıq"
+              <FormInput
+                label="Başlıq"
                 placeholder="Başlıq"
-                required={true}
-                error={errors.title?.message}
-                {...register("title")}
+                fieldName="title"
+              />
+              <FormInput
+                label="Aktiv söz"
+                placeholder="Aktiv söz"
+                fieldName="highlightWord"
+              />
+              <FormInput
+                label="Alt başlıq"
+                placeholder="Alt başlıq"
+                fieldName="subTitle"
+              />
+              <FormInput
+                label="Başlıq"
+                placeholder="Başlıq"
+                fieldName="title"
               />
 
-              <CustomAdminSelect
-                title="Açar sözünü seçin"
+              <FormSelect
+                label="Açar sözünü seçin"
                 placeholder="Seçin"
-                required={true}
                 options={pageOptions}
-                error={errors.key?.message}
-                {...register("key")}
+                fieldName="key"
               />
-              <CustomAdminEditor
-                title="Qısa məlumat"
-                value={description}
-                onChange={(value) =>
-                  setValue("description", value, {
-                    shouldValidate: true,
-                    shouldDirty: true,
-                  })
-                }
-                error={errors.description?.message}
-              />
+              <FormTextArea label="Qısa məlumat" fieldName="description" />
             </FieldBlock>
           </div>
           <div className={"flex flex-col space-y-5"}>
@@ -117,11 +115,11 @@ export default function CreateSectionContent() {
               <NavigateBtn />
               <CreateButton
                 isLoading={isPending}
-                disabled={!isDirty || isPending}
+                disabled={!sectionContentForm.formState.isDirty || isPending}
               />
             </div>
           </div>
-        </form>
+        </FormWrapper>
       </section>
     </>
   );

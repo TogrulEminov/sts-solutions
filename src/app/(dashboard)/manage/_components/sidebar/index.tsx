@@ -8,24 +8,19 @@ import {
   FileText,
   Mail,
   Briefcase,
-  FileCheck,
   Users,
-  Award,
   Video,
   Image,
   Star,
   HelpCircle,
-  Zap,
-  Building,
   UserCircle,
-  MapPin,
-  Settings,
   Trash2,
   ArrowRight,
-  Images,
-  Container,
+  Target,
+  BookKey,
+  Projector,
+  MonitorCloud,
 } from "lucide-react";
-
 const Sidebar = () => {
   const pathname = usePathname();
   const { data: session } = useSession();
@@ -42,73 +37,59 @@ const Sidebar = () => {
           icon: FileText,
         },
         { href: "/manage/contact", label: "Əlaqə", icon: Mail },
-        { href: "/manage/service-main", label: "Xidmətlər Kateqoriyalar", icon: Briefcase },
-         {
-          href: "/manage/service-category",
-          label: "Xidmətlər sahələri",
-          icon: Container,
-        },
-        { href: "/manage/blog", label: "Bloqlar", icon: FileCheck },
-        { href: "/manage/about", label: "Haqqımızda", icon: Users },
-        { href: "/manage/partners", label: "Partnyorlar", icon: Users },
-        { href: "/manage/branches", label: "Filiallar", icon: Building },
-        { href: "/manage/certificates", label: "Sertifikatlar", icon: Award },
+        { href: "/manage/about-main", label: "Haqqımızda", icon: Users },
+        { href: "/manage/projects", label: "Layihələr", icon: Projector },
+        { href: "/manage/services", label: "Xidmətlər", icon: MonitorCloud },
         {
           href: "/manage/youtube-media",
           label: "Youtube videolarımız",
           icon: Video,
-        },
-        {
-          href: "/manage/photo-gallery",
-          label: "Şəkil qalereyası",
-          icon: Images,
         },
       ],
     },
     {
       title: "Ana səhifə",
       items: [
-        { href: "/manage/hero", label: "Hero", icon: Image },
-        { href: "/manage/features", label: "Niyə biz?", icon: Star },
-        { href: "/manage/advantages", label: "Üstünlüklərimiz", icon: Zap },
+        { href: "/manage/slider", label: "Slayder", icon: Image },
+        {
+          href: "/manage/about-home",
+          label: "Başkan məlumatları",
+          icon: Image,
+        },
+        { href: "/manage/partners", label: "Partnyorlar", icon: Users },
+        { href: "/manage/branches", label: "Tədbir ölkələri", icon: Users },
         {
           href: "/manage/fag",
           label: "Tez-tez verilən suallar",
           icon: HelpCircle,
         },
-        {
-          href: "/manage/work-process",
-          label: "İş prosesləri",
-          icon: Settings,
-        },
-        { href: "/manage/testimonials", label: "Müştəri Rəyləri", icon: Star },
       ],
     },
     {
       title: "Haqqımızda səhifəsi",
       items: [
         { href: "/manage/employee", label: "İşçilərimiz", icon: UserCircle },
+        { href: "/manage/testimonials", label: "Müştəri Rəyləri", icon: Star },
+        {
+          href: "/manage/strategic-goals",
+          label: "Strateji Hədəflər",
+          icon: Target,
+        },
       ],
-    },
-    {
-      title: "Ofislərimiz",
-      items: [{ href: "/manage/offices", label: "Ofislər", icon: MapPin }],
     },
     {
       title: "Komponentlər",
       items: [
         { href: "/manage/position", label: "Vəzifələr", icon: Briefcase },
+        {
+          href: "/manage/expertise",
+          label: "İxtisaslaşdıqımız sahələr",
+          icon: BookKey,
+        },
         { href: "/manage/socials", label: "Sosial şəbəkələr", icon: Users },
-        { href: "/manage/contact-enum", label: "Müraciət mövzusu", icon: Mail },
-       
         {
           href: "/manage/section-content",
           label: "Bölüm başlıqları",
-          icon: FileText,
-        },
-        {
-          href: "/manage/section-cta",
-          label: "Alt Bölüm başlıqları",
           icon: FileText,
         },
       ],

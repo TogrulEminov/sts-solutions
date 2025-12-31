@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useCallback, useRef, useEffect } from "react";
-import { Upload, message } from "antd";
-import { InboxOutlined } from "@ant-design/icons";
+import { Upload, X, Image as ImageIcon, File, AlertCircle } from "lucide-react";
 import { usePostData, useDeleteData } from "@/src/hooks/useApi";
 import { FileType, UploadedFileMeta } from "@/src/services/interface";
 import ReactCrop, {
@@ -14,13 +13,13 @@ import "react-image-crop/dist/ReactCrop.css";
 import { getCroppedImg } from "@/src/utils/cropImageUtility";
 import ReactFancyBox from "@/src/lib/fancybox";
 import { usePathname } from "next/navigation";
+
 interface CustomUploadFile {
-  type: any;
+  type: string;
   uid: string;
   name: string;
-  status: "done" | "uploading" | "error" | "removed";
+  status: "done" | "uploading" | "error";
   url?: string;
-  originFileObj?: File;
   fileId?: number;
   fileKey?: string;
 }
@@ -31,7 +30,6 @@ interface ImageUploadProps {
   label?: string;
   acceptType?: string;
   isImageCropActive?: boolean;
-  maxSize?: number;
   isParentFormSubmitted?: boolean;
 }
 
@@ -48,22 +46,22 @@ const SingleUploadImage: React.FC<ImageUploadProps> = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [cropSrc, setCropSrc] = useState<string | null>(null);
   const [pendingFile, setPendingFile] = useState<File | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [errorTimer, setErrorTimer] = useState<number | null>(null);
   const currentPathname = usePathname();
   const [imageDimensions, setImageDimensions] = useState<{
     width: number;
     height: number;
   } | null>(null);
-
   const [crop, setCrop] = useState<Crop>();
   const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
-  const [aspect, setAspect] = useState<number | undefined>(16 / 9);
-
+  const [aspect, setAspect] = useState<number | undefined>(undefined);
   const imgRef = useRef<HTMLImageElement | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
   const CF_PUBLIC_URL = process.env.NEXT_PUBLIC_CF_PUBLIC_ACCESS_URL;
-
   const SESSION_KEY = `tempFiles_${currentPathname}`;
   const UPLOADED_PATH_KEY = "latest_uploaded_path";
-
   const { mutate: uploadFile, isPending: uploadLoading } = usePostData<
     { data: FileType },
     FormData
@@ -71,9 +69,35 @@ const SingleUploadImage: React.FC<ImageUploadProps> = ({
   const { mutate: deleteFile, isPending: deleteLoading } =
     useDeleteData<FileType>();
 
-  const isImageFile = (f: File): boolean => {
-    return f?.type?.startsWith("image/") ?? false;
-  };
+  const isImageFile = (f: File): boolean => f?.type?.startsWith("image/");
+
+  // Error auto-remove timer
+  useEffect(() => {
+    if (fileList[0]?.status === "error") {
+      setErrorTimer(10);
+
+      timerRef.current = setInterval(() => {
+        setErrorTimer((prev) => {
+          if (prev === null || prev <= 1) {
+            if (timerRef.current) clearInterval(timerRef.current);
+            setFileList([]);
+            return null;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+
+      return () => {
+        if (timerRef.current) clearInterval(timerRef.current);
+      };
+    } else {
+      setErrorTimer(null);
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+    }
+  }, [fileList]);
 
   const uploadFileToServer = useCallback(
     (fileToUpload: File) => {
@@ -82,10 +106,9 @@ const SingleUploadImage: React.FC<ImageUploadProps> = ({
       }
 
       const tempFile: CustomUploadFile = {
-        uid: `rc-upload-${Date.now()}-${fileToUpload.name}`,
+        uid: `upload-${Date.now()}-${fileToUpload.name}`,
         name: fileToUpload.name,
         status: "uploading",
-        originFileObj: fileToUpload,
         type: fileToUpload.type,
       };
 
@@ -98,7 +121,6 @@ const SingleUploadImage: React.FC<ImageUploadProps> = ({
         { endpoint: "files/upload-file", payload: formData },
         {
           onSuccess: (response) => {
-            message.success("Fayl uğurla yükləndi");
             const fileData = response.data;
             const newFileId = fileData.fileId;
 
@@ -111,21 +133,17 @@ const SingleUploadImage: React.FC<ImageUploadProps> = ({
               return newIds;
             });
 
-            setFileList(
-              (prev) =>
-                prev.map((f) =>
-                  f.uid === tempFile.uid
-                    ? {
-                        ...f,
-                        status: "done",
-                        url: fileData.relativePath,
-                        fileId: fileData.fileId,
-                        fileKey: fileData.fileKey,
-                        type: fileData.type || fileToUpload.type,
-                      }
-                    : f
-                ) as CustomUploadFile[]
-            );
+            setFileList([
+              {
+                ...tempFile,
+                status: "done",
+                url: fileData.relativePath,
+                fileId: fileData.fileId,
+                fileKey: fileData.fileKey,
+                type: fileData.type || fileToUpload.type,
+              },
+            ]);
+
             setFile({
               fileId: fileData.fileId,
               fileKey: fileData.fileKey ?? "",
@@ -135,18 +153,8 @@ const SingleUploadImage: React.FC<ImageUploadProps> = ({
               fullUrl: fileData.fullUrl,
             });
           },
-          onError: (error) => {
-            message.error(
-              `Fayl yükləmə zamanı xəta baş verdi. ${
-                error instanceof Error ? error.message : String(error)
-              }`
-            );
-            setFileList(
-              (prev) =>
-                prev.map((f) =>
-                  f.uid === tempFile.uid ? { ...f, status: "error" } : f
-                ) as CustomUploadFile[]
-            );
+          onError: () => {
+            setFileList([{ ...tempFile, status: "error" }]);
             setFile(null);
           },
         }
@@ -155,21 +163,46 @@ const SingleUploadImage: React.FC<ImageUploadProps> = ({
     [uploadFile, setFile, SESSION_KEY, currentPathname, uploadedFileIds]
   );
 
-  const beforeUpload = (uploadedFile: File) => {
+  const processFile = (uploadedFile: File) => {
     if (isImageCropActive && isImageFile(uploadedFile)) {
       const reader = new FileReader();
-      reader.addEventListener("load", () => {
+      reader.onload = () => {
         setCropSrc(reader.result as string);
         setPendingFile(uploadedFile);
         setIsModalOpen(true);
-        document.body.classList.add("no-scroll");
-      });
+      };
       reader.readAsDataURL(uploadedFile);
-      return false;
     } else {
       setFileList([]);
       uploadFileToServer(uploadedFile);
-      return false;
+    }
+  };
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files[0]) {
+      processFile(files[0]);
+    }
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const files = e.dataTransfer.files;
+    if (files && files[0]) {
+      processFile(files[0]);
     }
   };
 
@@ -193,48 +226,51 @@ const SingleUploadImage: React.FC<ImageUploadProps> = ({
     try {
       const blob = await getCroppedImg(imgRef.current, completedCrop);
       if (blob) {
-        const fileExtension = pendingFile.name.split(".").pop()?.toLowerCase();
-        const mimeType = fileExtension ? `image/${fileExtension}` : "image/png";
-        const originalName =
-          pendingFile.name.split(".").slice(0, -1).join(".") || "cropped";
-        const croppedFile = new File(
+        const fileExtension =
+          pendingFile.name.split(".").pop()?.toLowerCase() || "png";
+        const mimeType = `image/${fileExtension}`;
+        const originalName = pendingFile.name.replace(/\.[^/.]+$/, "");
+
+        const croppedFile = new (window.File as any)(
           [blob],
           `${originalName}_cropped.${fileExtension}`,
           { type: mimeType }
         );
-
         closeModal();
         uploadFileToServer(croppedFile);
       }
     } catch (e) {
-      console.error(e);
-      message.error("Şəkli kəsmək mümkün olmadı.");
+      console.error("Error cropping image:", e);
     }
   };
-
   const handleDimensionChange = (
     dimension: "width" | "height",
     value: number
   ) => {
-    if (value > 0 && crop && imgRef.current && completedCrop) {
+    if (value > 0 && imgRef.current) {
       const { naturalWidth, naturalHeight } = imgRef.current;
-      let newWidth = completedCrop.width;
-      let newHeight = completedCrop.height;
+
+      // Cari pikselləri götürürük və ya sıfırdan başlayırıq
+      let newPixelWidth = completedCrop?.width || 0;
+      let newPixelHeight = completedCrop?.height || 0;
 
       if (dimension === "width") {
-        newWidth = Math.min(value, naturalWidth);
-        if (aspect) newHeight = newWidth / aspect;
+        newPixelWidth = Math.min(value, naturalWidth);
+        if (aspect) newPixelHeight = newPixelWidth / aspect;
       } else {
-        newHeight = Math.min(value, naturalHeight);
-        if (aspect) newWidth = newHeight * aspect;
+        newPixelHeight = Math.min(value, naturalHeight);
+        if (aspect) newPixelWidth = newPixelHeight * aspect;
       }
 
       const newPixelCrop: PixelCrop = {
-        ...completedCrop,
-        width: Math.max(1, newWidth),
-        height: Math.max(1, newHeight),
+        unit: "px",
+        x: completedCrop?.x || 0,
+        y: completedCrop?.y || 0,
+        width: newPixelWidth,
+        height: newPixelHeight,
       };
 
+      // Faizlə olan crop-u da yeniləməliyik ki, vizual olaraq qutu yerində qalsın
       const newPercentCrop: Crop = {
         unit: "%",
         x: (newPixelCrop.x / naturalWidth) * 100,
@@ -252,7 +288,6 @@ const SingleUploadImage: React.FC<ImageUploadProps> = ({
     setIsModalOpen(false);
     setCropSrc(null);
     setPendingFile(null);
-    document.body.classList.remove("no-scroll");
     setCrop(undefined);
     setCompletedCrop(undefined);
     setImageDimensions(null);
@@ -274,49 +309,41 @@ const SingleUploadImage: React.FC<ImageUploadProps> = ({
     }
   };
 
-  const handleRemove = async (uploadFile: any) => {
+  const handleRemove = async (uploadFile: CustomUploadFile) => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+
     if (!uploadFile.fileId) {
-      message.error("Fayl ID tapılmadı, silinmə uğursuz oldu.");
-      return false;
+      setFileList([]);
+      setFile(null);
+      return;
     }
 
-    try {
-      await deleteFile(
-        { endpoint: `files/delete-file/${uploadFile.fileId}` },
-        {
-          onSuccess: () => {
-            const removedId = uploadFile.fileId;
-            setFile(null);
-            setFileList([]);
+    await deleteFile(
+      { endpoint: `files/delete-file/${uploadFile.fileId}` },
+      {
+        onSuccess: () => {
+          const removedId = uploadFile.fileId!;
+          setFile(null);
+          setFileList([]);
 
-            setUploadedFileIds((prev) => {
-              const newIds = prev.filter((id) => id !== removedId);
-              if (typeof window !== "undefined") {
-                if (newIds.length === 0) {
-                  sessionStorage.removeItem(SESSION_KEY);
-                  sessionStorage.removeItem(UPLOADED_PATH_KEY);
-                } else {
-                  sessionStorage.setItem(SESSION_KEY, JSON.stringify(newIds));
-                }
+          setUploadedFileIds((prev) => {
+            const newIds = prev.filter((id) => id !== removedId);
+            if (typeof window !== "undefined") {
+              if (newIds.length === 0) {
+                sessionStorage.removeItem(SESSION_KEY);
+                sessionStorage.removeItem(UPLOADED_PATH_KEY);
+              } else {
+                sessionStorage.setItem(SESSION_KEY, JSON.stringify(newIds));
               }
-              return newIds;
-            });
-
-            message.success("Fayl uğurla silindi");
-          },
-          onError: (error) => {
-            console.error("Delete API error:", (error as Error).message);
-            message.error("Fayl silinərkən xəta baş verdi");
-            return false;
-          },
-        }
-      );
-      return true;
-    } catch (error) {
-      console.error("Delete API error:", (error as Error).message);
-      message.error("Fayl silinərkən xəta baş verdi");
-      return false;
-    }
+            }
+            return newIds;
+          });
+        },
+      }
+    );
   };
 
   useEffect(() => {
@@ -331,17 +358,12 @@ const SingleUploadImage: React.FC<ImageUploadProps> = ({
     const pathIds = sessionStorage.getItem(SESSION_KEY);
     const idsToCleanup: number[] = pathIds ? JSON.parse(pathIds) : [];
 
-    if (idsToCleanup.length === 0 || isParentFormSubmitted) {
-      return;
-    }
+    if (idsToCleanup.length === 0 || isParentFormSubmitted) return;
 
     try {
       const formData = new FormData();
       formData.append("fileIds", JSON.stringify(idsToCleanup));
-
-      console.log("Cleanup çağırıldı. Silinəcək ID-lər:", idsToCleanup);
       navigator.sendBeacon("/api/files/cleanup-temp-files", formData);
-
       sessionStorage.removeItem(SESSION_KEY);
       sessionStorage.removeItem(UPLOADED_PATH_KEY);
     } catch (error) {
@@ -350,33 +372,20 @@ const SingleUploadImage: React.FC<ImageUploadProps> = ({
   }, [isParentFormSubmitted, SESSION_KEY]);
 
   useEffect(() => {
-    if (typeof window === "undefined" || isParentFormSubmitted) {
-      return;
-    }
-
+    if (typeof window === "undefined" || isParentFormSubmitted) return;
     window.addEventListener("beforeunload", cleanupTempFiles);
-
-    return () => {
-      window.removeEventListener("beforeunload", cleanupTempFiles);
-    };
+    return () => window.removeEventListener("beforeunload", cleanupTempFiles);
   }, [cleanupTempFiles, isParentFormSubmitted]);
 
   useEffect(() => {
     return () => {
-      if (typeof window === "undefined" || isParentFormSubmitted) {
-        return;
-      }
-
+      if (typeof window === "undefined" || isParentFormSubmitted) return;
       const uploadedPath = sessionStorage.getItem(UPLOADED_PATH_KEY);
-
       if (
         uploadedFileIds.length > 0 &&
         uploadedPath &&
         uploadedPath !== currentPathname
       ) {
-        console.log(
-          `Daxili Naviqasiya (Path Change) Cleanup: ${uploadedPath} -> ${currentPathname}`
-        );
         cleanupTempFiles();
       }
     };
@@ -390,384 +399,199 @@ const SingleUploadImage: React.FC<ImageUploadProps> = ({
 
   const getFullImageUrl = (currentFile: CustomUploadFile) => {
     if (!currentFile.url) return "";
-
-    if (currentFile.url.startsWith("blob:")) {
-      return currentFile.url;
-    }
-
+    if (currentFile.url.startsWith("blob:")) return currentFile.url;
     const cleanUrl = currentFile.url.startsWith("/")
       ? currentFile.url.slice(1)
       : currentFile.url;
-
     return `${CF_PUBLIC_URL}${cleanUrl}`;
   };
 
-  const renderFilePreview = () => {
-    const currentFile = fileList[0];
-    if (!currentFile) return null;
-
-    const isImage =
-      currentFile.type?.startsWith("image/") ||
-      currentFile.url?.match(/\.(jpe?g|png|gif|webp|svg)$/i);
-
-    const fullImageUrl = getFullImageUrl(currentFile);
-
-    return (
-      <div
-        style={{
-          marginTop: "20px",
-          padding: "15px",
-          border: "1px solid #d9d9d9",
-          borderRadius: "8px",
-          backgroundColor: "#fafafa",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: "15px",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "12px",
-            flex: 1,
-          }}
-        >
-          {isImage && currentFile.url ? (
-            <img
-              src={fullImageUrl}
-              alt={currentFile.name}
-              style={{
-                width: "60px",
-                height: "60px",
-                objectFit: "cover",
-                borderRadius: "6px",
-                border: "1px solid #e0e0e0",
-              }}
-            />
-          ) : (
-            <div
-              style={{
-                width: "60px",
-                height: "60px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "#e6f7ff",
-                borderRadius: "6px",
-                border: "1px solid #91d5ff",
-              }}
-            >
-              <InboxOutlined style={{ fontSize: 24, color: "#1890ff" }} />
-            </div>
-          )}
-
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <div
-              style={{
-                fontSize: "14px",
-                fontWeight: "500",
-                color: "#262626",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-              }}
-            >
-              {currentFile.name}
-            </div>
-
-            <div
-              style={{ fontSize: "12px", color: "#8c8c8c", marginTop: "4px" }}
-            >
-              {currentFile.status === "uploading" && "Yüklənir..."}
-              {currentFile.status === "done" && "Uğurla yükləndi"}
-              {currentFile.status === "error" && (
-                <span style={{ color: "#ff4d4f" }}>Xəta baş verdi</span>
-              )}
-            </div>
-          </div>
-        </div>
-
-        <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-          {currentFile.status === "uploading" && (
-            <div
-              style={{
-                width: "20px",
-                height: "20px",
-                border: "2px solid #f0f0f0",
-                borderTopColor: "#1890ff",
-                borderRadius: "50%",
-                animation: "spin 1s linear infinite",
-              }}
-            />
-          )}
-
-          {currentFile.status === "done" && (
-            <>
-              {isImage ? (
-                <ReactFancyBox>
-                  <a
-                    href={fullImageUrl}
-                    data-fancybox="gallery-1"
-                    style={{
-                      padding: "6px 12px",
-                      border: "1px solid #d9d9d9",
-                      borderRadius: "4px",
-                      backgroundColor: "#fff",
-                      cursor: "pointer",
-                      fontSize: "13px",
-                      color: "#1890ff",
-                      transition: "all 0.2s",
-                      textDecoration: "none",
-                      display: "inline-block",
-                    }}
-                    onMouseOver={(e) => {
-                      e.currentTarget.style.borderColor = "#1890ff";
-                      e.currentTarget.style.backgroundColor = "#e6f7ff";
-                    }}
-                    onMouseOut={(e) => {
-                      e.currentTarget.style.borderColor = "#d9d9d9";
-                      e.currentTarget.style.backgroundColor = "#fff";
-                    }}
-                  >
-                    Önizləmə
-                  </a>
-                </ReactFancyBox>
-              ) : (
-                <a
-                  href={fullImageUrl}
-                  download={currentFile.name}
-                  style={{
-                    padding: "6px 12px",
-                    border: "1px solid #d9d9d9",
-                    borderRadius: "4px",
-                    backgroundColor: "#fff",
-                    cursor: "pointer",
-                    fontSize: "13px",
-                    color: "#1890ff",
-                    transition: "all 0.2s",
-                    textDecoration: "none",
-                    display: "inline-block",
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.borderColor = "#1890ff";
-                    e.currentTarget.style.backgroundColor = "#e6f7ff";
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.borderColor = "#d9d9d9";
-                    e.currentTarget.style.backgroundColor = "#fff";
-                  }}
-                >
-                  Yüklə
-                </a>
-              )}
-
-              <button
-                onClick={() => handleRemove(currentFile)}
-                disabled={deleteLoading}
-                type="button"
-                style={{
-                  padding: "6px 12px",
-                  border: "1px solid #ff4d4f",
-                  borderRadius: "4px",
-                  backgroundColor: "#fff",
-                  cursor: deleteLoading ? "not-allowed" : "pointer",
-                  fontSize: "13px",
-                  color: "#ff4d4f",
-                  transition: "all 0.2s",
-                  opacity: deleteLoading ? 0.6 : 1,
-                }}
-                onMouseOver={(e) => {
-                  if (!deleteLoading) {
-                    e.currentTarget.style.backgroundColor = "#fff1f0";
-                  }
-                }}
-                onMouseOut={(e) => {
-                  e.currentTarget.style.backgroundColor = "#fff";
-                }}
-              >
-                {deleteLoading ? "Silinir..." : "Sil"}
-              </button>
-            </>
-          )}
-
-          {currentFile.status === "error" && (
-            <button
-              onClick={() => handleRemove(currentFile)}
-              type="button"
-              style={{
-                padding: "6px 12px",
-                border: "1px solid #ff4d4f",
-                borderRadius: "4px",
-                backgroundColor: "#fff",
-                cursor: "pointer",
-                fontSize: "13px",
-                color: "#ff4d4f",
-              }}
-            >
-              Sil
-            </button>
-          )}
-        </div>
-      </div>
-    );
-  };
-
-  const DraggerComponent = (Upload as any).Dragger || Upload;
-
-  const uploadProps = {
-    name: "file",
-    multiple: false,
-    fileList: [],
-    beforeUpload: beforeUpload,
-    maxCount: 1,
-    showUploadList: false,
-    disabled: uploadLoading || deleteLoading,
-    accept: acceptType,
-  };
-
-  const DraggerContent = () => (
-    <>
-      <p className="ant-upload-drag-icon">
-        <InboxOutlined style={{ fontSize: 48, color: "#1890ff" }} />
-      </p>
-      <p className="ant-upload-text">{label}</p>
-    </>
-  );
+  const currentFile = fileList[0];
+  const isImage =
+    currentFile?.type?.startsWith("image/") ||
+    currentFile?.url?.match(/\.(jpe?g|png|gif|webp|svg)$/i);
 
   return (
     <>
-      <style>
-        {`
-    @keyframes spin {
-     0% { transform: rotate(0deg); }
-     100% { transform: rotate(360deg); }
-    }
-    `}
-      </style>
+      <div className="w-full">
+        <input
+          ref={fileInputRef}
+          type="file"
+          onChange={handleFileSelect}
+          accept={acceptType}
+          disabled={uploadLoading || deleteLoading}
+          className="hidden"
+        />
 
-      <DraggerComponent {...uploadProps}>
-        <DraggerContent />
-      </DraggerComponent>
-      {renderFilePreview()}
-      {isModalOpen && cropSrc && (
         <div
-          style={{
-            position: "fixed",
-            inset: 0,
-            backgroundColor: "rgba(0, 0, 0, 0.75)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            zIndex: 1000,
-          }}
+          onClick={() =>
+            !uploadLoading && !deleteLoading && fileInputRef.current?.click()
+          }
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+          className={`
+            relative border-[2px] border-dashed rounded-lg p-8 text-center cursor-pointer
+            transition-all duration-200 hover:border-blue-400 hover:bg-blue-50
+            ${isDragging ? "border-blue-500 bg-blue-50" : "border-gray-300"}
+            ${
+              uploadLoading || deleteLoading
+                ? "opacity-50 cursor-not-allowed"
+                : ""
+            }
+          `}
         >
+          <Upload className="mx-auto mb-4 text-blue-500" size={48} />
+          <p className="text-gray-700 font-medium mb-1">{label}</p>
+          <p className="text-sm text-gray-500">Və ya faylı bura sürüşdürün</p>
+        </div>
+
+        {currentFile && (
           <div
-            style={{
-              width: "auto",
-              maxWidth: "90vw",
-              maxHeight: "90vh",
-              background: "#fff",
-              overflowY: "auto",
-              padding: "20px",
-              borderRadius: "12px",
-              display: "flex",
-              flexDirection: "column",
-              gap: "15px",
-            }}
+            className={`mt-5 p-4 border rounded-lg flex items-center justify-between gap-4 ${
+              currentFile.status === "error"
+                ? "border-red-300 bg-red-50"
+                : "border-gray-200 bg-gray-50"
+            }`}
           >
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: "#f0f2f5",
-                borderRadius: "8px",
-                padding: "10px",
-              }}
-            >
+            <div className="flex items-center gap-3 flex-1 min-w-0">
+              {currentFile.status === "error" ? (
+                <div className="w-14 h-14 flex items-center justify-center bg-red-100 rounded border border-red-200">
+                  <AlertCircle className="text-red-500" size={24} />
+                </div>
+              ) : isImage && currentFile.url ? (
+                <img
+                  src={getFullImageUrl(currentFile)}
+                  alt={currentFile.name}
+                  className="w-14 h-14 object-cover rounded border border-gray-200"
+                />
+              ) : (
+                <div className="w-14 h-14 flex items-center justify-center bg-blue-100 rounded border border-blue-200">
+                  <File className="text-blue-500" size={24} />
+                </div>
+              )}
+
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-gray-900 truncate">
+                  {currentFile.name}
+                </p>
+                <p className="text-xs text-gray-500 mt-1">
+                  {currentFile.status === "uploading" && "Yüklənir..."}
+                  {currentFile.status === "done" && "Uğurla yükləndi"}
+                  {currentFile.status === "error" && (
+                    <span className="text-red-500">
+                      Xəta baş verdi
+                      {errorTimer !== null && ` (${errorTimer}s)`}
+                    </span>
+                  )}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex gap-2 items-center">
+              {currentFile.status === "uploading" && (
+                <div className="w-5 h-5 border-[2px] border-gray-200 border-t-blue-500 rounded-full animate-spin" />
+              )}
+
+              {currentFile.status === "done" && (
+                <>
+                  {isImage ? (
+                    <ReactFancyBox>
+                      <a
+                        href={getFullImageUrl(currentFile)}
+                        data-fancybox="gallery"
+                        className="px-3 py-1.5 border border-gray-300 rounded text-sm text-blue-600 hover:bg-blue-50 hover:border-blue-400 transition-colors"
+                      >
+                        <ImageIcon size={16} className="inline mr-1" />
+                        Önizləmə
+                      </a>
+                    </ReactFancyBox>
+                  ) : (
+                    <a
+                      href={getFullImageUrl(currentFile)}
+                      download={currentFile.name}
+                      className="px-3 py-1.5 border border-gray-300 rounded text-sm text-blue-600 hover:bg-blue-50 hover:border-blue-400 transition-colors"
+                    >
+                      Yüklə
+                    </a>
+                  )}
+
+                  <button
+                    onClick={() => handleRemove(currentFile)}
+                    disabled={deleteLoading}
+                    type="button"
+                    className="px-3 py-1.5 border border-red-300 rounded text-sm text-red-600 hover:bg-red-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    {deleteLoading ? "Silinir..." : "Sil"}
+                  </button>
+                </>
+              )}
+
+              {currentFile.status === "error" && (
+                <button
+                  onClick={() => handleRemove(currentFile)}
+                  type="button"
+                  className="p-2 hover:bg-red-100 rounded-full transition-colors cursor-pointer"
+                  title="Bağla"
+                >
+                  <X className="text-red-500" size={20} />
+                </button>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {isModalOpen && cropSrc && (
+        <div className="fixed inset-0 bg-black/75 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl max-w-[95vw] overflow-x-auto w-full max-h-[90vh] overflow-y-auto p-6 flex flex-col gap-4">
+            <div className="flex items-center justify-center bg-gray-100 rounded-lg p-4 overflow-auto max-h-[65vh]">
               <ReactCrop
                 crop={crop}
                 onChange={(_, percentCrop) => setCrop(percentCrop)}
                 onComplete={(c) => setCompletedCrop(c)}
                 aspect={aspect}
+                className="max-w-full" // Konteynerdən kənara çıxmaması üçün
               >
                 <img
                   ref={imgRef}
                   src={cropSrc}
                   onLoad={onImageLoad}
                   alt="Kəsiləcək şəkil"
+                  // BU HİSSƏ ÇOX VACİBDİR:
+                  style={{
+                    maxWidth: "100%",
+                    height: "auto",
+                    display: "block",
+                  }}
                 />
               </ReactCrop>
             </div>
 
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "15px",
-                padding: "10px",
-                border: "1px solid #e0e0e0",
-                borderRadius: "8px",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  gap: "10px",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
+            <div className="border border-gray-200 rounded-lg p-4 space-y-4">
+              <div className="flex gap-4 justify-center items-center text-sm">
                 {imageDimensions && (
                   <p>
-                    Orijinal Ölçü:
-                    <strong>{imageDimensions.width}px</strong> x
-                    <strong>{imageDimensions.height}px</strong>
+                    Orijinal: <strong>{imageDimensions.width}</strong> x{" "}
+                    <strong>{imageDimensions.height}</strong>px
                   </p>
                 )}
-
                 {completedCrop?.width && completedCrop?.height ? (
                   <p>
-                    Kəsilmiş Ölçü:
-                    <strong>{Math.round(completedCrop.width)}px</strong> x
-                    <strong>{Math.round(completedCrop.height)}px</strong>
+                    Kəsilmiş: <strong>{Math.round(completedCrop.width)}</strong>{" "}
+                    x <strong>{Math.round(completedCrop.height)}</strong>px
                   </p>
                 ) : (
-                  <p style={{ color: "#888" }}>Kəsim sahəsini tənzimləyin...</p>
+                  <p className="text-gray-500">Kəsim sahəsini tənzimləyin</p>
                 )}
               </div>
 
-              <div
-                style={{
-                  display: "flex",
-                  gap: "10px",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "5px",
-                    alignItems: "center",
-                  }}
-                >
-                  <label
-                    htmlFor="width-input"
-                    style={{
-                      fontSize: "12px",
-                      color: "#555",
-                      fontWeight: "500",
-                    }}
-                  >
+              <div className="flex gap-4 justify-center items-center">
+                <div className="flex flex-col gap-1">
+                  <label className="text-xs text-gray-600 font-medium">
                     En (px)
                   </label>
-
                   <input
-                    id="width-input"
                     type="number"
                     value={completedCrop ? Math.round(completedCrop.width) : 0}
                     onChange={(e) =>
@@ -776,40 +600,17 @@ const SingleUploadImage: React.FC<ImageUploadProps> = ({
                         parseInt(e.target.value, 10) || 0
                       )
                     }
-                    style={{
-                      width: "80px",
-                      padding: "8px",
-                      border: "1px solid #ccc",
-                      borderRadius: "5px",
-                      textAlign: "center",
-                      fontSize: "14px",
-                    }}
+                    className="w-20 px-3 py-2 border border-gray-300 rounded text-center text-sm"
                   />
                 </div>
 
-                <span style={{ fontSize: "1.2rem", color: "#888" }}>x</span>
+                <span className="text-xl text-gray-400 mt-5">×</span>
 
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "5px",
-                    alignItems: "center",
-                  }}
-                >
-                  <label
-                    htmlFor="height-input"
-                    style={{
-                      fontSize: "12px",
-                      color: "#555",
-                      fontWeight: "500",
-                    }}
-                  >
+                <div className="flex flex-col gap-1">
+                  <label className="text-xs text-gray-600 font-medium">
                     Hündürlük (px)
                   </label>
-
                   <input
-                    id="height-input"
                     type="number"
                     value={completedCrop ? Math.round(completedCrop.height) : 0}
                     onChange={(e) =>
@@ -818,128 +619,46 @@ const SingleUploadImage: React.FC<ImageUploadProps> = ({
                         parseInt(e.target.value, 10) || 0
                       )
                     }
-                    style={{
-                      width: "80px",
-                      padding: "8px",
-                      border: "1px solid #ccc",
-                      borderRadius: "5px",
-                      textAlign: "center",
-                      fontSize: "14px",
-                    }}
+                    className="w-20 px-3 py-2 border border-gray-300 rounded text-center text-sm"
                   />
                 </div>
               </div>
 
-              <div
-                style={{
-                  display: "flex",
-                  gap: "10px",
-                  justifyContent: "center",
-                  flexWrap: "wrap",
-                }}
-              >
-                <button
-                  onClick={() => handleAspectChange(undefined)}
-                  type="button"
-                  style={{
-                    backgroundColor: !aspect ? "#1890ff" : "#f0f0f0",
-                    color: !aspect ? "#fff" : "#000",
-                    border: "1px solid #ccc",
-                    borderRadius: "5px",
-                    padding: "8px 12px",
-                    cursor: "pointer",
-                    transition: "all 0.2s ease",
-                  }}
-                >
-                  Sərbəst
-                </button>
-
-                <button
-                  onClick={() => handleAspectChange(16 / 9)}
-                  type="button"
-                  style={{
-                    backgroundColor: aspect === 16 / 9 ? "#1890ff" : "#f0f0f0",
-                    color: aspect === 16 / 9 ? "#fff" : "#000",
-                    border: "1px solid #ccc",
-                    borderRadius: "5px",
-                    padding: "8px 12px",
-                    cursor: "pointer",
-                    transition: "all 0.2s ease",
-                  }}
-                >
-                  16:9
-                </button>
-
-                <button
-                  onClick={() => handleAspectChange(4 / 3)}
-                  type="button"
-                  style={{
-                    backgroundColor: aspect === 4 / 3 ? "#1890ff" : "#f0f0f0",
-                    color: aspect === 4 / 3 ? "#fff" : "#000",
-                    border: "1px solid #ccc",
-                    borderRadius: "5px",
-                    padding: "8px 12px",
-                    cursor: "pointer",
-                    transition: "all 0.2s ease",
-                  }}
-                >
-                  4:3
-                </button>
-
-                <button
-                  onClick={() => handleAspectChange(1 / 1)}
-                  type="button"
-                  style={{
-                    backgroundColor: aspect === 1 / 1 ? "#1890ff" : "#f0f0f0",
-                    color: aspect === 1 / 1 ? "#fff" : "#000",
-                    border: "1px solid #ccc",
-                    borderRadius: "5px",
-                    padding: "8px 12px",
-                    cursor: "pointer",
-                    transition: "all 0.2s ease",
-                  }}
-                >
-                  Kvadrat
-                </button>
+              <div className="flex gap-2 justify-center flex-wrap">
+                {[
+                  { label: "Sərbəst", value: undefined },
+                  { label: "16:9", value: 16 / 9 },
+                  { label: "4:3", value: 4 / 3 },
+                  { label: "Kvadrat", value: 1 },
+                ].map((item) => (
+                  <button
+                    key={item.label}
+                    onClick={() => handleAspectChange(item.value)}
+                    type="button"
+                    className={`px-4 py-2 rounded text-sm font-medium transition-colors ${
+                      aspect === item.value
+                        ? "bg-blue-500 text-white"
+                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    }`}
+                  >
+                    {item.label}
+                  </button>
+                ))}
               </div>
             </div>
 
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "flex-end",
-                gap: "10px",
-                marginTop: "10px",
-              }}
-            >
+            <div className="flex justify-end gap-3">
               <button
                 onClick={closeModal}
                 type="button"
-                style={{
-                  padding: "10px 20px",
-                  border: "none",
-                  borderRadius: "5px",
-                  cursor: "pointer",
-                  fontWeight: "bold",
-                  backgroundColor: "#f1f1f1",
-                  color: "#333",
-                }}
+                className="px-5 py-2 bg-gray-100 text-gray-700 rounded font-medium hover:bg-gray-200 transition-colors"
               >
                 Ləğv et
               </button>
-
               <button
                 onClick={handleSaveCrop}
                 type="button"
-                style={{
-                  padding: "10px 20px",
-                  border: "none",
-                  borderRadius: "5px",
-                  cursor: "pointer",
-                  fontWeight: "bold",
-                  backgroundColor: "#007bff",
-                  color: "white",
-                }}
+                className="px-5 py-2 bg-blue-500 text-white rounded font-medium hover:bg-blue-600 transition-colors"
               >
                 Yadda Saxla
               </button>

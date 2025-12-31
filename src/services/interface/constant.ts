@@ -1,0 +1,15 @@
+export const slider_get_list = "slider_get_list";
+export const fag_get_list = "fag_get_list";
+export const section_content_list = "section_content_list";
+export const categories_content_list = "categories_content_list";
+export const goals_content_list = "goals_content_list";
+export const testimonials_main_list = "testimonials_main_list";
+export const contact_main_list = "contact_main_list";
+export const youtube_main_list = "youtube_main_list";
+export const partners_main_list = "partners_main_list";
+export const social_main_list = "social_main_list";
+export const employee_list = "employee_list";
+export const position_list = "position_list";
+export const projects_list = "projects_list";
+export const service_list = "service_list";
+export const blog_list = "blog_list";

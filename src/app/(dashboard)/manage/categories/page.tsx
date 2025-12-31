@@ -1,5 +1,5 @@
 "use client";
-import React, { Suspense } from "react";
+import { Suspense } from "react";
 import { usePaginationQuery } from "@/src/hooks/usePaginationQuery";
 import { Pagination } from "antd";
 import WhiteBlockTitleArea from "../_components/whiteBlockTitle";
@@ -18,11 +18,12 @@ import { useSession } from "next-auth/react";
 import { Spin } from "antd";
 import { getCategories } from "@/src/actions/client/category.actions";
 import { useServerQuery } from "@/src/hooks/useServerActions";
+import { categories_content_list } from "@/src/services/interface/constant";
 
 export default function AdminCategoriesPage() {
   const { queryParams, handleChange, locale } = usePaginationQuery();
   const { data, isLoading, isError, refetch } = useServerQuery(
-    "categories",
+    categories_content_list,
     getCategories,
     {
       params: {
@@ -76,12 +77,12 @@ export default function AdminCategoriesPage() {
         <TableTypesArea<CategoryItem>
           columns={columns}
           page="categories"
-          model="categories"
+          model={categories_content_list}
           dataItems={(data?.data as unknown as CategoryItem[]) || []}
           isError={isError}
           refetch={refetch}
           locale={locale}
-          invalidateQueryKey="categories"
+          invalidateQueryKey={categories_content_list}
           isLoading={isLoading}
           isAdmin={isSuperAdmin}
         />

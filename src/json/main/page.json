@@ -126,5 +126,15 @@
       "value": "image-first",
       "label": "Şəkil birinci gəlsin"
     }
+  ],
+  "goals": [
+    {
+      "label": "Missiyamız",
+      "value": "mission"
+    },
+    {
+      "label": "Vizyonumuz",
+      "value": "vision"
+    }
   ]
 }

@@ -9,6 +9,7 @@ import SocialCreateModal from "./_components/SocialCreateModal";
 import SocialUpdateModal from "./_components/SocialUpdateModal";
 import { getSocials } from "@/src/actions/client/socials.actions";
 import { Social } from "@/src/services/interface";
+import { social_main_list } from "@/src/services/interface/constant";
 
 export default function SocialsPage() {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -17,7 +18,7 @@ export default function SocialsPage() {
   const [page, setPage] = useState(1);
 
   const { data, isLoading, refetch, isError } = useServerQuery(
-    `socials-${page}-${searchQuery}`,
+    `${social_main_list}-${page}-${searchQuery}`,
     () =>
       getSocials({
         page,
@@ -67,7 +68,7 @@ export default function SocialsPage() {
       <div className="bg-white rounded-lg shadow-md p-6">
         {isLoading ? (
           <div className="flex justify-center p-12">
-            <Spin size="large" tip="Yüklənir..." />
+            <Spin size="large" />
           </div>
         ) : isError ? (
           <Empty

@@ -188,8 +188,8 @@ export async function createCategory(
       slug,
       metaTitle,
       metaDescription,
-      locale,
       metaKeywords,
+      locale,
       imageId,
     } = validateData.data;
 

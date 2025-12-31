@@ -19,7 +19,7 @@ export default function TableImageTitle({
   return (
     <div className="flex items-start gap-3 p-2 rounded-lg hover:bg-gray-50 transition-colors max-w-md">
       {imageUrl && (
-        <div className="relative flex-shrink-0">
+        <div className="relative shrink-0">
           <CustomImage
             src={imageUrl}
             width={64}

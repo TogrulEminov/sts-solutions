@@ -3,8 +3,6 @@ import { useParams, useSearchParams } from "next/navigation";
 import { useMemo, useTransition } from "react";
 import FieldBlock from "@/src/app/(dashboard)/manage/_components/contentBlock";
 import NavigateBtn from "@/src/app/(dashboard)/manage/_components/navigateBtn";
-import CustomAdminEditor from "@/src/app/(dashboard)/manage/_components/CreateEditor";
-import CustomAdminInput from "@/src/app/(dashboard)/manage/_components/createInput";
 import SubmitAdminButton from "@/src/app/(dashboard)/manage/_components/submitBtn";
 import { CustomLocales, SectionContent } from "@/src/services/interface";
 import { useServerQueryById } from "@/src/hooks/useServerActions";
@@ -16,7 +14,10 @@ import {
   UpdateSectionContentInput,
   uptadeSectionContentSchema,
 } from "@/src/schema/section.schema";
-import CustomAdminSelect from "../../../../_components/singleSelect";
+import { section_content_list } from "@/src/services/interface/constant";
+import FormInput from "@/src/ui/FormBuilder/components/FormInput/FormInput";
+import FormSelect from "@/src/ui/FormBuilder/components/FormSelect/FormSelect";
+import FormTextArea from "@/src/ui/FormBuilder/components/FormTextArea/FormTextArea";
 
 type OptionTypes = {
   value: string;
@@ -41,7 +42,7 @@ export default function SectionUptadeContent() {
     };
   };
   const { data: existingData } = useServerQueryById<SectionContent>(
-    `section-content`,
+    section_content_list,
     getDataWrapper,
     id,
     { locale }
@@ -50,24 +51,17 @@ export default function SectionUptadeContent() {
     () => ({
       title: existingData?.translations?.[0]?.title || "",
       description: existingData?.translations?.[0]?.description || "",
+      highlightWord: existingData?.translations?.[0]?.highlightWord || "",
       subTitle: existingData?.translations?.[0]?.subTitle || "",
       key: existingData?.key || "",
       locale: locale as CustomLocales,
     }),
     [existingData, locale]
   );
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isDirty },
-    setValue,
-    watch,
-  } = useForm<UpdateSectionContentInput>({
+  const sectionContentForm = useForm<UpdateSectionContentInput>({
     resolver: zodResolver(uptadeSectionContentSchema),
     values: formValues,
   });
-
-  const description = watch("description");
 
   const onSubmit = async (data: UpdateSectionContentInput) => {
     startTransition(async () => {
@@ -91,38 +85,25 @@ export default function SectionUptadeContent() {
         </h1>
 
         <form
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={sectionContentForm.handleSubmit(onSubmit)}
           className={"grid grid-cols-1 gap-3"}
         >
           <div className={"flex flex-col space-y-4"}>
             <FieldBlock>
-              <CustomAdminInput
-                title="Başlıq"
+              <FormInput
+                label="Başlıq"
                 placeholder="Başlıq"
+                fieldName="title"
                 required={true}
-                error={errors.title?.message}
-                {...register("title")}
               />
 
-              <CustomAdminSelect
-                title="Açar sözünü seçin"
+              <FormSelect
+                label="Açar sözünü seçin"
                 placeholder="Seçin"
-                required={true}
+                fieldName="key"
                 options={pageOptions}
-                error={errors.key?.message}
-                {...register("key")}
               />
-              <CustomAdminEditor
-                title="Qısa məlumat"
-                value={description}
-                onChange={(value) =>
-                  setValue("description", value, {
-                    shouldValidate: true,
-                    shouldDirty: true,
-                  })
-                }
-                error={errors.description?.message}
-              />
+              <FormTextArea label="Qısa məlumat" fieldName="description" />
             </FieldBlock>
           </div>
           <div className={"flex flex-col space-y-4"}>
@@ -131,7 +112,7 @@ export default function SectionUptadeContent() {
               <SubmitAdminButton
                 title={existingData?.translations?.[0]?.title}
                 isLoading={isPending}
-                disabled={!isDirty || isPending}
+                disabled={!sectionContentForm.formState.isDirty || isPending}
               />
             </div>
           </div>
