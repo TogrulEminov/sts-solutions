@@ -165,6 +165,7 @@ model CategoriesTranslations {
   title       String
   description String
   highlight   String?
+  subTitle    String?
   features    Json?
   locale      Locales     @default(az)
   document    Categories? @relation(fields: [documentId], references: [documentId], onDelete: Cascade)
@@ -394,17 +395,18 @@ model AboutHomeTranslations {
 
 // about
 model About {
-  id           Int                 @id @default(autoincrement())
-  documentId   String              @unique @default(cuid())
-  isDeleted    Boolean             @default(false)
-  status       Status              @default(published)
-  imageId      Int?                @unique
-  imageUrl     File?               @relation("aboutMain", fields: [imageId], references: [id], onDelete: SetNull)
-  createdAt    DateTime            @default(now())
-  updatedAt    DateTime            @updatedAt
-  translations AboutTranslations[]
-  user         User?               @relation(fields: [userId], references: [id])
-  userId       String?
+  id              Int                 @id @default(autoincrement())
+  documentId      String              @unique @default(cuid())
+  isDeleted       Boolean             @default(false)
+  status          Status              @default(published)
+  imageId         Int?                @unique
+  imageUrl        File?               @relation("aboutMain", fields: [imageId], references: [id], onDelete: SetNull)
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+  translations    AboutTranslations[]
+  user            User?               @relation(fields: [userId], references: [id])
+  userId          String?
+  experienceYears Int?
 
   @@index([isDeleted])
   @@index([status])
@@ -414,18 +416,24 @@ model About {
 }
 
 model AboutTranslations {
-  id            Int      @id @default(autoincrement())
-  title         String
-  slug          String
-  highlightWord String?
-  description   String
-  statistics    Json?
-  advantages    Json?
-  locale        Locales  @default(az)
-  document      About?   @relation(fields: [documentId], references: [documentId], onDelete: Cascade)
-  documentId    String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id                    Int     @id @default(autoincrement())
+  title                 String
+  description           String
+  slug                  String
+  sectors               Json?
+  // who we are
+  subTitle              String?
+  subDescription        String?
+  experienceDescription String?
+  // team
+  teamDescription String?
+  statistics      Json?
+  purpose         Json?
+  locale          Locales  @default(az)
+  document        About?   @relation(fields: [documentId], references: [documentId], onDelete: Cascade)
+  documentId      String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
   @@unique([documentId, locale])
   @@index([locale])

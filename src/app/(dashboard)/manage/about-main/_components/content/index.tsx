@@ -6,7 +6,7 @@ import NavigateBtn from "@/src/app/(dashboard)/manage/_components/navigateBtn";
 import {
   CountGenericType,
   CustomLocales,
-  IAboutHome,
+  IAbout,
   InfoGenericType,
 } from "@/src/services/interface";
 import { useForm, useFieldArray } from "react-hook-form";
@@ -14,16 +14,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMemo, useTransition } from "react";
 import { useMessageStore } from "@/src/hooks/useMessageStore";
 import { parseJSON } from "@/src/utils/checkSlug";
-import {
-  UpsertHomeAboutInput,
-  upsertHomeAboutSchema,
-} from "@/src/schema/about-home.schema";
+import { UpsertHomeAboutInput } from "@/src/schema/about-home.schema";
 import { upsertHomeAbout } from "@/src/actions/client/about-home.actions";
 import FormWrapper from "@/src/ui/FormBuilder/FormWrapper/FormWrapper";
 import FormInput from "@/src/ui/FormBuilder/components/FormInput/FormInput";
 import CustomAdminEditor from "@/src/app/(dashboard)/manage/_components/CreateEditor";
+import {
+  UpsertAboutMainInput,
+  upsertAboutMainSchema,
+} from "@/src/schema/about-main.schema";
 interface Props {
-  existingData: IAboutHome | undefined;
+  existingData: IAbout | undefined;
   refetch: () => void;
 }
 
@@ -37,7 +38,12 @@ export default function Content({ existingData, refetch }: Props) {
     () => ({
       title: existingData?.translations?.[0]?.title || "",
       description: existingData?.translations?.[0]?.description || "",
-      subtitle: existingData?.translations?.[0]?.subtitle || "",
+      subTitle: existingData?.translations?.[0]?.subTitle || "",
+      subDescription: existingData?.translations?.[0]?.subDescription || "",
+      experienceYears: existingData?.experienceYears || 10,
+      experienceDescription:
+        existingData?.translations?.[0]?.experienceDescription || "",
+      teamDescription: existingData?.translations?.[0]?.teamDescription || "",
       locale: locale as CustomLocales,
       statistics: parseJSON<CountGenericType>(
         existingData?.translations?.[0]?.statistics
@@ -45,12 +51,15 @@ export default function Content({ existingData, refetch }: Props) {
       sectors: parseJSON<InfoGenericType>(
         existingData?.translations?.[0]?.sectors
       ),
+      purpose: parseJSON<InfoGenericType>(
+        existingData?.translations?.[0]?.sectors
+      ),
     }),
     [existingData, locale]
   );
 
-  const generalFormInput = useForm<UpsertHomeAboutInput>({
-    resolver: zodResolver(upsertHomeAboutSchema),
+  const generalFormInput = useForm<UpsertAboutMainInput>({
+    resolver: zodResolver(upsertAboutMainSchema),
     mode: "onChange",
     values: formValues,
   });
@@ -64,6 +73,10 @@ export default function Content({ existingData, refetch }: Props) {
   const statisticsFieldArray = useFieldArray({
     control,
     name: "statistics" as any,
+  });
+  const purposeFieldArray = useFieldArray({
+    control,
+    name: "purpose" as any,
   });
 
   const onSubmit = handleSubmit(async (data: UpsertHomeAboutInput) => {
@@ -98,7 +111,6 @@ export default function Content({ existingData, refetch }: Props) {
         <div className="flex flex-col space-y-4">
           <FieldBlock>
             <FormInput label="Başlıq" placeholder="Başlıq" fieldName="title" />
-            <FormInput label="Alt başlıq" placeholder="Alt başlıq" fieldName="subtitle" />
             <CustomAdminEditor
               title="Qısa məlumat"
               value={getValues("description")}
@@ -111,10 +123,55 @@ export default function Content({ existingData, refetch }: Props) {
               error={errors.description?.message}
             />
           </FieldBlock>
+          <FieldBlock>
+            <FormInput
+              label="Alt başlıq"
+              placeholder="Alt başlıq"
+              fieldName="subTitle"
+            />
+
+            <CustomAdminEditor
+              title="Alt məlumat"
+              value={getValues("subDescription")}
+              onChange={(value) =>
+                setValue("subDescription", value, {
+                  shouldValidate: true,
+                  shouldDirty: true,
+                })
+              }
+              error={errors.description?.message}
+            />
+          </FieldBlock>
+
+          <FieldBlock>
+            <FormInput
+              label="Təcrübə"
+              placeholder="Təcrübə"
+              fieldName="experienceYears"
+            />
+            <FormInput
+              label="Təcrübə məlumat"
+              placeholder="illik təcrübə"
+              fieldName="experienceDescription"
+            />
+          </FieldBlock>
+          <FieldBlock>
+            <CustomAdminEditor
+              title="Komanda məlumat"
+              value={getValues("teamDescription")}
+              onChange={(value) =>
+                setValue("teamDescription", value, {
+                  shouldValidate: true,
+                  shouldDirty: true,
+                })
+              }
+              error={errors.teamDescription?.message}
+            />
+          </FieldBlock>
         </div>
 
         <div className="flex flex-col space-y-4">
-          {/* STATISTICS Section */}
+          {/* Features Section */}
           <FieldBlock title="Statistika">
             <div className="space-y-3 max-w-sm">
               {statisticsFieldArray.fields.map((field, index) => (
@@ -184,9 +241,68 @@ export default function Content({ existingData, refetch }: Props) {
               </button>
             </div>
           </FieldBlock>
+          <FieldBlock title="Məqsədimiz">
+            <div className="space-y-3 max-w-sm">
+              {purposeFieldArray.fields.map((field, index) => (
+                <div key={field.id} className="flex items-start gap-2">
+                  <div className="flex-1">
+                    <FormInput
+                      fieldName={`purpose.${index}.title` as const}
+                      placeholder={`Statistics ${index + 1}`}
+                    />
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => purposeFieldArray.remove(index)}
+                    className="mt-1 px-3 cursor-pointer py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+                    title="Sil"
+                  >
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              ))}
 
-          {/* sectors Section */}
-          <FieldBlock title="Sektorlar">
+              <button
+                type="button"
+                onClick={() =>
+                  purposeFieldArray.append({
+                    title: "",
+                  })
+                }
+                className="w-full px-4 py-2 cursor-pointer bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center gap-2"
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 4v16m8-8H4"
+                  />
+                </svg>
+                Məqsəd əlavə et
+              </button>
+            </div>
+          </FieldBlock>
+
+          {/* Advantages Section */}
+          <FieldBlock title="Sektorlarımız">
             <div className="space-y-4 max-w-2xl">
               {sectorsFieldArray.fields.map((field, index) => (
                 <div

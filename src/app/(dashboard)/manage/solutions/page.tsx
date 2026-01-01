@@ -22,13 +22,13 @@ import {
   SolutionsItem,
 } from "@/src/services/interface";
 import { solutions_list } from "@/src/services/interface/constant";
-import { getProjects } from "@/src/actions/client/projects.actions";
+import { getSolutions } from "@/src/actions/client/solutions.actions";
 
 export default function AdminPage() {
   const { queryParams, handleChange, locale } = usePaginationQuery();
   const { data, isLoading, isError, refetch } = useServerQuery(
     solutions_list,
-    getProjects,
+    getSolutions,
     {
       params: {
         page: queryParams.page,

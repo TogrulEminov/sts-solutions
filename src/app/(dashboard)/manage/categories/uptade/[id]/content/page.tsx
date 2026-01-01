@@ -7,8 +7,8 @@ import SubmitAdminButton from "@/src/app/(dashboard)/manage/_components/submitBt
 import pageData from "@/src/json/main/page.json";
 import {
   CategoryItem,
+  CountGenericType,
   CustomLocales,
-  InfoGenericType,
 } from "@/src/services/interface";
 import { useServerQueryById } from "@/src/hooks/useServerActions";
 import {
@@ -62,6 +62,7 @@ export default function CategriesUptadeContent() {
     () => ({
       title: existingData?.translations?.[0]?.title || "",
       highlight: existingData?.translations?.[0]?.highlight || "",
+      subTitle: existingData?.translations?.[0]?.subTitle || "",
       description: existingData?.translations?.[0]?.description || "",
       slug: existingData?.slug || "",
       metaTitle: existingData?.translations?.[0]?.seo.metaTitle || "",
@@ -69,7 +70,7 @@ export default function CategriesUptadeContent() {
         existingData?.translations?.[0]?.seo.metaDescription || "",
       metaKeywords: existingData?.translations?.[0]?.seo.metaKeywords || "",
       locale: locale as CustomLocales,
-      tags: parseJSON<InfoGenericType>(
+      tags: parseJSON<CountGenericType>(
         existingData?.translations?.[0]?.features
       ),
     }),
@@ -131,7 +132,12 @@ export default function CategriesUptadeContent() {
                 placeholder="Başlıq"
                 fieldName="title"
               />
-                 <FormInput
+              <FormInput
+                label="Alt başlıq"
+                placeholder="Alt başlıq"
+                fieldName="subTitle"
+              />
+              <FormInput
                 label="Aktiv söz"
                 placeholder="Aktiv söz"
                 fieldName="highlight"
@@ -149,10 +155,18 @@ export default function CategriesUptadeContent() {
               <div className="space-y-3 max-w-sm">
                 {fields.map((field, index) => (
                   <div key={field.id} className="flex items-start gap-2">
-                    <div className="flex-1">
+                    <div className="flex-1 flex flex-col space-y-3">
                       <FormInput
                         fieldName={`features.${index}.title` as const}
-                        placeholder={`Teq ${index + 1}`}
+                        placeholder={`Başlıq ${index + 1}`}
+                      />
+                      <FormInput
+                        fieldName={`features.${index}.count` as const}
+                        placeholder={`Say ${index + 1}`}
+                      />
+                      <FormInput
+                        fieldName={`features.${index}.suffix` as const}
+                        placeholder={`Suffix ${index + 1}`}
                       />
                     </div>
                     <button

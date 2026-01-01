@@ -6,7 +6,6 @@ import { useSession } from "next-auth/react";
 import { useToggleState } from "@/src/lib/zustand/useMultiToggleStore";
 import {
   FileText,
-  Mail,
   Briefcase,
   Users,
   Image,
@@ -37,7 +36,6 @@ const Sidebar = () => {
           label: "Meta məlumatlar",
           icon: FileText,
         },
-        { href: "/manage/contact", label: "Əlaqə", icon: Mail },
         { href: "/manage/projects", label: "Layihələr", icon: Projector },
         {
           href: "/manage/services-category",

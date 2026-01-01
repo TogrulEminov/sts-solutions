@@ -39,12 +39,13 @@ export default function CreateCategories() {
       title: "",
       description: "",
       slug: "",
+      subTitle:"",
       metaTitle: "",
       metaDescription: "",
-      highlight:"",
+      highlight: "",
       metaKeywords: "",
       imageId: "",
-      features: [{ title: "" }],
+      features: [{ title: "", count: "", suffix: "" }],
       locale: locale as CustomLocales,
     },
   });
@@ -109,6 +110,11 @@ export default function CreateCategories() {
                 fieldName="title"
               />
               <FormInput
+                label="Alt başlıq"
+                placeholder="Alt başlıq"
+                fieldName="subTitle"
+              />
+              <FormInput
                 label="Aktiv söz"
                 placeholder="Aktiv söz"
                 fieldName="highlight"
@@ -126,10 +132,18 @@ export default function CreateCategories() {
               <div className="space-y-3 max-w-sm">
                 {fields.map((field, index) => (
                   <div key={field.id} className="flex items-start gap-2">
-                    <div className="flex-1">
+                    <div className="flex-1 flex flex-col space-y-3">
                       <FormInput
                         fieldName={`features.${index}.title` as const}
-                        placeholder={`Teq ${index + 1}`}
+                        placeholder={`Başlıq ${index + 1}`}
+                      />
+                      <FormInput
+                        fieldName={`features.${index}.count` as const}
+                        placeholder={`Say ${index + 1}`}
+                      />
+                      <FormInput
+                        fieldName={`features.${index}.suffix` as const}
+                        placeholder={`Suffix ${index + 1}`}
                       />
                     </div>
                     <button
