@@ -83,7 +83,7 @@ function ComponentWrapper({
         htmlFor={id}
         className={`
           ${s.label} ${labelClassName}
-          block text-sm font-medium
+          block text-base mb-1 font-medium
           text-gray-700 w-full  
         `}
       >

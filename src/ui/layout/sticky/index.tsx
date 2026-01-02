@@ -1,17 +1,14 @@
 "use client";
-import Icons from "@/public/icons";
 import { usePathname } from "@/src/i18n/navigation";
+import { Social } from "@/src/services/interface";
+import { renderSocialIcon } from "@/src/utils/renderSocials";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-const socialLinks = [
-  { name: "Facebook", icon: Icons.Facebook, href: "" },
-  { name: "Instagram", icon: Icons.Instagram, href: "" },
-  { name: "LinkedIn", icon: Icons.Linkedin, href: "" },
-  { name: "YouTube", icon: Icons.Youtube, href: "" },
-];
-
-export default function StickySocial() {
+interface Props {
+  socialData: Social[];
+}
+export default function StickySocial({ socialData }: Props) {
   const pathanme = usePathname();
   const [isSticky, setIsSticky] = useState(false);
 
@@ -35,6 +32,9 @@ export default function StickySocial() {
   if (pathanme === "/contact") {
     return;
   }
+  if(!socialData?.length){
+    return null
+  }
   return (
     <div
       className={`fixed z-90 top-1/2 -translate-y-1/2 transition-all duration-700 ease-in-out hidden lg:block ${
@@ -48,31 +48,27 @@ export default function StickySocial() {
             : "rounded-[10px] p-2.5"
         }`}
       >
-        {socialLinks.map((social, index) => {
-          const IconComponent = social.icon;
+        {socialData.map((social, index) => {
           return (
             <div key={index} className="relative group">
               <Link
-                href={social.href}
+                href={social?.socialLink}
                 className={`flex items-center justify-center transition-all duration-300 ${
-                  index !== socialLinks.length - 1 ? "mb-1 lg:mb-4" : ""
+                  index !== socialData.length - 1 ? "mb-1 lg:mb-4" : ""
                 } ${
                   isSticky
                     ? "w-12 h-12 hover:w-auto hover:pr-3 hover:pl-3 hover:gap-3"
                     : "w-8 h-8"
                 } group-hover:bg-white/10 rounded-lg`}
               >
-                <IconComponent
-                  width={16}
-                  height={16}
-                  fill="white"
-                  className="transition-all duration-300 group-hover:scale-110 hrink-0"
-                />
-
-                {/* Tooltip for non-sticky state */}
+                {renderSocialIcon({
+                  iconName: social?.iconName,
+                  className:
+                    "transition-all duration-300 group-hover:scale-110 hrink-0",
+                })}
                 {!isSticky && (
                   <span className="absolute right-12 ml-3 px-3 py-1.5 bg-ui-1 text-white text-sm font-medium rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 whitespace-nowrap">
-                    {social.name}
+                    {social.socialName}
                     <span className="absolute left-24 top-1/2 -translate-y-1/2 border-4 border-transparent border-r-6"></span>
                   </span>
                 )}

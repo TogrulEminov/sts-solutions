@@ -13,5 +13,53 @@
     "title": "Məlumat tapılmadı",
     "description": "Burada hələ heç bir məlumat mövcud deyil. Tezliklə yenilənəcək!",
     "btn": "Ana səhifəyə qayıt"
+  },
+  "sidebar": {
+    "contact_information": "Əlaqə məlumatları",
+    "follow_us": "Bizi izləyin",
+    "changeLang": "Dil dəyişmə"
+  },
+  "header": {
+    "newServices": "Yeni xidmətimiz",
+    "learnMore": "Ətraflı öyrən",
+    "follow_us": "Bizi izləyin",
+    "contact_us": "Bizimlə əlaqə",
+    "email_address": "Email ünvanı",
+    "address": "Ünvanımız",
+    "apply": "Müraciət et",
+    "applyLabel": "Bizimlə əlaqə saxlayın və müraciət edin"
+  },
+  "cta": {
+    "first": "Təmir və servis",
+    "second": "24/7 xidmətinizdə",
+    "partnersBtn": "Bizimlə əməkdaşlıq et"
+  },
+  "footer": {
+    "services": "Xidmətlərimiz",
+    "mainLinks": "Əsas keçidlər",
+    "contact": "Əlaqə",
+    "phone": "Telefon",
+    "email": "E-mail",
+    "address": "Ünvanımız",
+    "rightsReserved": "Bütün hüquqlar qorunur"
+  },
+  "pages": {
+    "about": "Haqqımızda",
+    "services": "Xidmətlərimiz",
+    "projects": "Lahiyələr",
+    "solutions": "Həllərimiz",
+    "blogs": "Bloqlar"
+  },
+  "contactForm": {
+    "apply_form": "Müraciət forması",
+    "completed": "Tamamlanma",
+    "area": "sahə",
+    "name":"Ad",
+    "email":"E-mail",
+    "phone":"Mobil nömrə",
+    "selectService":"Xidmət seçin",
+    "note":"Mesajınız",
+    "sending":"Göndərilir",
+    "send":"Göndər"
   }
 }

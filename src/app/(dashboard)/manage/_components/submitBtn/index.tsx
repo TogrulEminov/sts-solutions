@@ -55,7 +55,7 @@ const SubmitAdminButton: React.FC<SubmitButtonProps> = ({
       >
         {/* Hover Effect Background */}
         {!isLoading && (
-          <span className="absolute inset-0 bg-gradient-to-r from-blue-700 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <span className="absolute inset-0 bg-linear-to-r from-blue-700 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         )}
 
         {/* Content */}

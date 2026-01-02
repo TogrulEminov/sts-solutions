@@ -7,7 +7,6 @@ import {
 import { Link, usePathname } from "@/src/i18n/navigation";
 import { MotionDiv, MotionNav } from "@/src/lib/motion/motion";
 import { AnimatePresence, motion } from "framer-motion";
-import Icons from "@/public/icons";
 import CustomLink from "next/link";
 import {
   Home,
@@ -23,7 +22,14 @@ import {
 } from "lucide-react";
 import Logo from "../../logo";
 import LanguageBtn from "../header/top/language";
-
+import { IContactInformation, Social } from "@/src/services/interface";
+import { renderSocialIcon } from "@/src/utils/renderSocials";
+import { clearPhoneRegex } from "@/src/lib/domburify";
+import { useTranslations } from "next-intl";
+interface Props {
+  socialData?: Social[] |undefined;
+  contactData?: IContactInformation | undefined;
+}
 const mainNavLinks = [
   { href: "/", label: "Ana səhifə", icon: Home },
   { href: "/about", label: "Haqqımızda", icon: Info },
@@ -41,36 +47,13 @@ const afterNavLinks = [
   { href: "/contact", label: "Əlaqə", icon: Mail },
 ];
 
-const socialLinks = [
-  {
-    name: "Facebook",
-    href: "https://facebook.com",
-    icon: Icons.Facebook,
-  },
-  {
-    name: "Instagram",
-    href: "https://instagram.com",
-    icon: Icons.Instagram,
-  },
-  {
-    name: "LinkedIn",
-    href: "https://linkedin.com",
-    icon: Icons.Linkedin,
-  },
-  {
-    name: "Telegram",
-    href: "https://t.me",
-    icon: Icons.Telegram,
-  },
-];
-
-export default function Sidebar() {
+export default function Sidebar({ socialData, contactData }: Props) {
   const { close } = useToggleStore();
   const isSidebarOpen = useToggleState("main-sidebar");
   const id = useId();
   const pathname = usePathname();
   const [servicesOpen, setServicesOpen] = useState(false);
-
+  const t = useTranslations();
   const handleClose = useCallback(() => {
     document.body.classList.remove("overflow-hidden");
     close("main-sidebar");
@@ -368,95 +351,94 @@ export default function Sidebar() {
             >
               <div className="flex flex-col space-y-4 mb-6">
                 <h3 className="text-white/60 text-xs font-inter font-bold uppercase tracking-wider mb-4">
-                  Dil dəyişmə
+                  {t("sidebar.changeLang")}
                 </h3>
                 <LanguageBtn />
               </div>
               <h3 className="text-white/60 text-xs font-inter font-bold uppercase tracking-wider mb-4">
-                Əlaqə məlumatları
+                {t("sidebar.contact_information")}
               </h3>
 
               <div className="space-y-4">
-                {/* Phone */}
-                <motion.div
-                  className="group"
-                  whileHover={{ x: 5 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <CustomLink
-                    href="tel:+994552624037"
-                    className="flex items-center gap-3 text-white/80 hover:text-white transition-colors duration-300"
+                {contactData?.phone && (
+                  <motion.div
+                    className="group"
+                    whileHover={{ x: 5 }}
+                    transition={{ duration: 0.2 }}
                   >
-                    <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-white/10 group-hover:bg-ui-1/30 transition-colors duration-300">
-                      <Phone className="w-5 h-5" />
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="text-xs text-white/50 font-inter">
-                        Telefon
-                      </span>
-                      <span className="text-sm font-inter font-medium">
-                        +994 55 262 40 37
-                      </span>
-                    </div>
-                  </CustomLink>
-                </motion.div>
-
-                {/* Email */}
-                <motion.div
-                  className="group"
-                  whileHover={{ x: 5 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <CustomLink
-                    href="mailto:example@example.com"
-                    className="flex items-center gap-3 text-white/80 hover:text-white transition-colors duration-300"
+                    <CustomLink
+                      href={`tel:${clearPhoneRegex(contactData?.phone)}`}
+                      className="flex items-center gap-3 text-white/80 hover:text-white transition-colors duration-300"
+                    >
+                      <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-white/10 group-hover:bg-ui-1/30 transition-colors duration-300">
+                        <Phone className="w-5 h-5" />
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-xs text-white/50 font-inter">
+                          Telefon
+                        </span>
+                        <span className="text-sm font-inter font-medium">
+                          {clearPhoneRegex(contactData?.phone)}
+                        </span>
+                      </div>
+                    </CustomLink>
+                  </motion.div>
+                )}
+                {contactData?.email && (
+                  <motion.div
+                    className="group"
+                    whileHover={{ x: 5 }}
+                    transition={{ duration: 0.2 }}
                   >
-                    <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-white/10 group-hover:bg-ui-1/30 transition-colors duration-300">
-                      <Mail className="w-5 h-5" />
+                    <CustomLink
+                      href={`mailto:${contactData?.email}`}
+                      className="flex items-center gap-3 text-white/80 hover:text-white transition-colors duration-300"
+                    >
+                      <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-white/10 group-hover:bg-ui-1/30 transition-colors duration-300">
+                        <Mail className="w-5 h-5" />
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-xs text-white/50 font-inter">
+                          Email
+                        </span>
+                        <span className="text-sm font-inter font-medium">
+                          {contactData?.email}
+                        </span>
+                      </div>
+                    </CustomLink>
+                  </motion.div>
+                )}
+                {contactData?.translations?.[0]?.adress && (
+                  <motion.div
+                    className="group"
+                    whileHover={{ x: 5 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <div className="flex items-center gap-3 text-white/80">
+                      <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-white/10 group-hover:bg-ui-1/30 transition-colors duration-300">
+                        <MapPin className="w-5 h-5" />
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-xs text-white/50 font-inter">
+                          Ünvan
+                        </span>
+                        <span className="text-sm font-inter font-medium">
+                          {contactData?.translations?.[0]?.adress}
+                        </span>
+                      </div>
                     </div>
-                    <div className="flex flex-col">
-                      <span className="text-xs text-white/50 font-inter">
-                        Email
-                      </span>
-                      <span className="text-sm font-inter font-medium">
-                        example@example.com
-                      </span>
-                    </div>
-                  </CustomLink>
-                </motion.div>
-
-                {/* Address */}
-                <motion.div
-                  className="group"
-                  whileHover={{ x: 5 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <div className="flex items-center gap-3 text-white/80">
-                    <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-white/10 group-hover:bg-ui-1/30 transition-colors duration-300">
-                      <MapPin className="w-5 h-5" />
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="text-xs text-white/50 font-inter">
-                        Ünvan
-                      </span>
-                      <span className="text-sm font-inter font-medium">
-                        Bakı, Azərbaycan
-                      </span>
-                    </div>
-                  </div>
-                </motion.div>
+                  </motion.div>
+                )}
               </div>
 
               {/* Social Media */}
               <div className="mt-6 pt-6 border-t border-white/10">
                 <h3 className="text-white/60 text-xs font-inter font-bold uppercase tracking-wider mb-4">
-                  Bizi izləyin
+                  {t("sidebar.follow_us")}
                 </h3>
 
                 <div className="flex items-center gap-3">
-                  {socialLinks.map((social, index) => {
-                    const IconComponent = social.icon;
-
+                  {socialData?.map((social, index) => {
                     return (
                       <motion.div
                         key={index}
@@ -467,20 +449,22 @@ export default function Sidebar() {
                         whileTap={{ scale: 0.95 }}
                       >
                         <CustomLink
-                          href={social.href}
+                          href={social.socialLink}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="group relative flex items-center justify-center w-11 h-11 rounded-xl bg-white/10 hover:bg-ui-1 border border-white/20 hover:border-ui-1 transition-all duration-300 overflow-hidden"
-                          aria-label={social.name}
+                          aria-label={social.socialName}
                         >
                           <span className="absolute inset-0 bg-ui-1/0 group-hover:bg-ui-1/20 blur-xl transition-all duration-300" />
 
-                          <IconComponent
-                            width={18}
-                            height={18}
-                            fill="white"
-                            className="relative z-10 transition-transform duration-300 group-hover:scale-110"
-                          />
+                          {renderSocialIcon({
+                            iconName: "",
+                            fill: "white",
+                            width: 18,
+                            height: 18,
+                            className:
+                              "relative z-10 transition-transform duration-300 group-hover:scale-110",
+                          })}
                         </CustomLink>
                       </motion.div>
                     );

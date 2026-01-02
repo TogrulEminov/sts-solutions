@@ -4,8 +4,19 @@ import CustomImage from "@/src/globalElements/ImageTag";
 import actionImg from "@/public/assets/call-action.webp";
 import Icons from "@/public/icons";
 import { motion } from "framer-motion";
-
-export default function CallAction() {
+import { useToggleStore } from "@/src/lib/zustand/useMultiToggleStore";
+import { useTranslations } from "next-intl";
+import { SectionContent } from "@/src/services/interface";
+interface Props {
+  sectionData: SectionContent;
+}
+export default function CallAction({ sectionData }: Props) {
+  const { open } = useToggleStore();
+  const t = useTranslations();
+  const handleOpen = () => {
+    document.body.classList.toggle("overflow-hidden");
+    open("apply-button");
+  };
   return (
     <section className="py-8 lg:py-14 relative flex items-center overflow-hidden min-h-fit lg:min-h-56">
       <motion.div
@@ -36,12 +47,10 @@ export default function CallAction() {
             className="flex flex-col space-y-4 lg:col-span-8"
           >
             <strong className="font-inter font-bold text-2xl lg:text-[32px] lg:leading-[42px] text-white">
-              STS Mühəndislik- texniki problemlərin ağıllı həlli
+              {sectionData?.translations?.[0]?.title}
             </strong>
             <p className="font-inter text-base lg:text-lg text-white font-normal">
-              Şirkətimiz, müştərinin iş proseslərini effektiv şəkildə
-              təkmilləşdirərək, texnologiyaların avtomatlaşması ilə həllər
-              təqdim edir.
+              {sectionData?.translations?.[0]?.description}
             </p>
           </motion.article>
 
@@ -55,11 +64,12 @@ export default function CallAction() {
             <div className="col-span-2 lg:flex lg:justify-end">
               <motion.button
                 type="button"
+                onClick={handleOpen}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="flex items-center w-full justify-center lg:w-fit group text-white cursor-pointer gap-x-3 bg-ui-1 gap-2 font-inter h-12.5 py-3 px-6 rounded-[30px] transition-all duration-300 group"
               >
-                Bizimlə əməkdaşlıq et
+                {t("cta.partnersBtn")}
                 <motion.div
                   className="inline-block"
                   whileHover={{ rotate: 45, x: 5 }}
@@ -79,7 +89,7 @@ export default function CallAction() {
               className="flex items-center gap-x-2 font-inter font-bold lg:text-[21px] lg:leading-[27px] text-white"
             >
               <Icons.Settings />
-              Təmir və servis
+              {t("cta.first")}
             </motion.span>
 
             <motion.span
@@ -91,7 +101,7 @@ export default function CallAction() {
               className="flex items-center gap-x-2 font-inter font-bold lg:text-[21px] lg:leading-[27px] text-white"
             >
               <Icons.CallCenter />
-              24/7 xidmətinizdə
+              {t("cta.second")}
             </motion.span>
           </motion.div>
         </div>

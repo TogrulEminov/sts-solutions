@@ -21,7 +21,6 @@ import {
 import { upsertHomeAbout } from "@/src/actions/client/about-home.actions";
 import FormWrapper from "@/src/ui/FormBuilder/FormWrapper/FormWrapper";
 import FormInput from "@/src/ui/FormBuilder/components/FormInput/FormInput";
-import FormTextArea from "@/src/ui/FormBuilder/components/FormTextArea/FormTextArea";
 import CustomAdminEditor from "@/src/app/(dashboard)/manage/_components/CreateEditor";
 interface Props {
   existingData: IAboutHome | undefined;
@@ -99,27 +98,7 @@ export default function Content({ existingData, refetch }: Props) {
         <div className="flex flex-col space-y-4">
           <FieldBlock>
             <FormInput label="Başlıq" placeholder="Başlıq" fieldName="title" />
-            <FormInput
-              label="Başkan başlıqı"
-              placeholder="Başkan başlıqı"
-              fieldName="chairmanTitle"
-            />
-
-            <FormInput
-              label="Başkan vəzifə"
-              placeholder="Başkan vəzifə"
-              fieldName="chairmanRole"
-            />
-            <FormInput
-              label="Başkan ad,soyad"
-              placeholder="Başkan ad,soyad"
-              fieldName="chairmanName"
-            />
-            <FormTextArea
-              label="Başkan mesajı"
-              placeholder="Qısa başlıq"
-              fieldName="chairmanMessage"
-            />
+            <FormInput label="Alt başlıq" placeholder="Alt başlıq" fieldName="subtitle" />
             <CustomAdminEditor
               title="Qısa məlumat"
               value={getValues("description")}
@@ -135,7 +114,7 @@ export default function Content({ existingData, refetch }: Props) {
         </div>
 
         <div className="flex flex-col space-y-4">
-          {/* Features Section */}
+          {/* STATISTICS Section */}
           <FieldBlock title="Statistika">
             <div className="space-y-3 max-w-sm">
               {statisticsFieldArray.fields.map((field, index) => (
@@ -206,8 +185,8 @@ export default function Content({ existingData, refetch }: Props) {
             </div>
           </FieldBlock>
 
-          {/* Advantages Section */}
-          <FieldBlock title="Üstünlüklərimiz">
+          {/* sectors Section */}
+          <FieldBlock title="Sektorlar">
             <div className="space-y-4 max-w-2xl">
               {sectorsFieldArray.fields.map((field, index) => (
                 <div

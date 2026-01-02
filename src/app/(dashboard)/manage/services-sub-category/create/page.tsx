@@ -165,7 +165,7 @@ export default function CreateContent() {
               <div className="space-y-3 max-w-sm">
                 {servicesCategory.fields.map((field, index) => (
                   <div key={field.id} className="flex items-start gap-2">
-                    <div className="flex-1">
+                    <div className="flex-1 flex flex-col space-y-3">
                       <FormInput
                         fieldName={`features.${index}.title` as const}
                         placeholder={`Başlıq ${index + 1}`}

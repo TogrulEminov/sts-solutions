@@ -192,6 +192,7 @@ export async function createCategory(
       highlight,
       locale,
       imageId,
+      subTitle,
     } = validateData.data;
 
     const existingData = await db.categories.findFirst({
@@ -221,6 +222,7 @@ export async function createCategory(
             description: description ?? "",
             highlight: highlight,
             locale: locale,
+            subTitle,
             seo: {
               create: {
                 metaTitle: metaTitle || "",
@@ -316,6 +318,7 @@ export async function uptadeCategory(
       metaKeywords,
       locale,
       highlight,
+      subTitle,
     } = parsedInput.data;
     const uptadeData = await db.$transaction(async (prisma: any) => {
       const updatedData = await prisma.categories.update({
@@ -332,6 +335,7 @@ export async function uptadeCategory(
                 description: description ?? "",
                 highlight,
                 locale,
+                subTitle,
                 seo: {
                   create: {
                     metaTitle: metaTitle ?? "",
@@ -345,6 +349,7 @@ export async function uptadeCategory(
                 title,
                 description,
                 highlight,
+                subTitle,
                 seo: {
                   upsert: {
                     create: {

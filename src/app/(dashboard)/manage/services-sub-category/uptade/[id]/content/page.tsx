@@ -94,9 +94,9 @@ export default function UpdateContent() {
     reset,
     control,
   } = generalForm;
-  const servicesCategory = useFieldArray({
+  const featuresCategory = useFieldArray({
     control,
-    name: "servicesCategory" as any,
+    name: "features" as any,
   });
 
   const { data: enumsData } = useServerQuery(
@@ -109,6 +109,8 @@ export default function UpdateContent() {
       },
     }
   );
+
+  
   const enumOptions = useDropdownOptions(
     enumsData?.data?.flatMap((item) =>
       item.translations.map((tr) => ({
@@ -188,9 +190,9 @@ export default function UpdateContent() {
           <div className={"flex flex-col space-y-4"}>
             <FieldBlock title="Şirkətin güclü tərəfləri">
               <div className="space-y-3 max-w-sm">
-                {servicesCategory.fields.map((field, index) => (
+                {featuresCategory.fields.map((field, index) => (
                   <div key={field.id} className="flex items-start gap-2">
-                    <div className="flex-1">
+                    <div className="flex-1 flex flex-col space-y-3">
                       <FormInput
                         fieldName={`features.${index}.title` as const}
                         placeholder={`Başlıq ${index + 1}`}
@@ -203,7 +205,7 @@ export default function UpdateContent() {
                     </div>
                     <button
                       type="button"
-                      onClick={() => servicesCategory.remove(index)}
+                      onClick={() => featuresCategory.remove(index)}
                       className="mt-1 px-3 cursor-pointer py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
                       aria-label="Sil"
                     >
@@ -227,7 +229,7 @@ export default function UpdateContent() {
                 <button
                   type="button"
                   onClick={() =>
-                    servicesCategory.append({
+                    featuresCategory.append({
                       title: "",
                       description: "",
                     })

@@ -21,6 +21,7 @@ import {
   UpdateServiceCategoryInput,
   uptadeServiceCategorySchema,
 } from "@/src/schema/service.schema";
+import FormSwitch from "@/src/ui/FormBuilder/components/FormSwitch/FormSwitch";
 
 export default function UpdateContent() {
   const params = useParams();
@@ -51,6 +52,7 @@ export default function UpdateContent() {
   const formValues = useMemo(
     () => ({
       title: existingData?.translations?.[0]?.title || "",
+      isMain: existingData?.isMain || false,
       description: existingData?.translations?.[0]?.description || "",
       subtitle: existingData?.translations?.[0]?.subtitle || "",
       metaTitle: existingData?.translations?.[0]?.seo?.metaTitle || "",
@@ -112,6 +114,10 @@ export default function UpdateContent() {
                 label="Başlıq"
                 placeholder="Başlıq"
                 fieldName="title"
+              />
+              <FormSwitch
+                label="Ana səhifədə görünəcəkmi?"
+                fieldName="isMain"
               />
               <FormInput
                 label="Alt başlıq"

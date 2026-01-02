@@ -142,6 +142,7 @@ export async function getServicesSubCategoryById({ locale, id }: GetByIDProps) {
         documentId: true,
         status: true,
         createdAt: true,
+        servicesCategoryId: true,
         updatedAt: true,
         imageUrl: {
           select: {
@@ -231,6 +232,7 @@ export async function createServicesSubCategory(
       metaTitle,
       features,
       metaDescription,
+      servicesCategoryId,
       metaKeywords,
     } = validateData.data;
 
@@ -258,6 +260,7 @@ export async function createServicesSubCategory(
         gallery: {
           connect: galleryIds?.map((id) => ({ id: Number(id) })),
         },
+        servicesCategoryId: servicesCategoryId || undefined,
         imageId: imageId ? Number(imageId) : null,
         translations: {
           create: {

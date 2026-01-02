@@ -18,6 +18,7 @@ import {
   createServiceCategorySchema,
 } from "@/src/schema/service.schema";
 import { createServicesCategory } from "@/src/actions/client/services.actions";
+import FormSwitch from "@/src/ui/FormBuilder/components/FormSwitch/FormSwitch";
 
 export default function CreateContent() {
   const searchParams = useSearchParams();
@@ -39,6 +40,7 @@ export default function CreateContent() {
       metaDescription: "",
       metaKeywords: "",
       metaTitle: "",
+      isMain:false,
       locale: locale as CustomLocales,
     },
   });
@@ -99,6 +101,7 @@ export default function CreateContent() {
                 placeholder="Başlıq"
                 fieldName="title"
               />
+              <FormSwitch label="Ana səhifədə görünəcəkmi?" fieldName="isMain"/>
               <FormInput
                 label="Alt Başlıq"
                 placeholder="Alt Başlıq"

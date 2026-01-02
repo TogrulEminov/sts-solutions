@@ -9,10 +9,16 @@ import { Link } from "@/src/i18n/navigation";
 import Icons from "@/public/icons";
 import { useRef } from "react";
 import HeroImageAnimation from "./image";
+import { useToggleStore } from "@/src/lib/zustand/useMultiToggleStore";
 
 export default function SliderArea() {
   const swiperRef = useRef<SwiperCore | null>(null);
+  const { open } = useToggleStore();
 
+  const handleOpen = () => {
+    document.body.classList.toggle("overflow-hidden");
+    open("apply-button");
+  };
   const handleSwiper = (swiper: SwiperCore) => {
     swiperRef.current = swiper;
   };
@@ -113,6 +119,8 @@ export default function SliderArea() {
                       </Link>
 
                       <button
+                        onClick={handleOpen}
+                        aria-label="Bizimlə əlaqə saxlayın və müraciət edin"
                         type="button"
                         className="group flex items-center justify-center gap-4 font-inter font-normal lg:text-base text-white cursor-pointer bg-white/14 backdrop-blur-sm border-2 border-white/60  rounded-4xl w-full h-10.5 sm:w-[198px] sm:h-12.5 transition-all duration-300 hover:gap-3 hover:bg-white hover:text-ui-1 hover:shadow-[0_8px_30px_rgba(255,255,255,0.3)] active:scale-95"
                       >

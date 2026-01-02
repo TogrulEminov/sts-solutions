@@ -140,6 +140,7 @@ export interface CustomUploadFile {
 interface CategoryTranslation {
   title: string;
   highlight?: string;
+  subTitle?: string;
   description: string;
   id: number;
   documentId: string;
@@ -278,15 +279,19 @@ export interface IAboutHome {
   createdAt: Date | string;
   updatedAt: Date | string;
 }
-
+// about main
 export interface IAboutTranslations {
   id: number;
   title: string;
   slug: string;
-  highlightWord?: string;
   description: string;
+  subTitle: string;
+  subDescription: string;
+  experienceDescription: string;
+  teamDescription: string;
   statistics?: CountGenericType[] | null;
-  advantages?: InfoGenericType[] | null;
+  purpose?: InfoGenericType[] | null;
+  sectors?: InfoGenericType[] | null;
   locale: CustomLocales;
   documentId: string | null;
   createdAt: Date | string;
@@ -299,6 +304,7 @@ export interface IAbout {
   isDeleted: boolean;
   status: Status;
   imageUrl?: FileType;
+  experienceYears: number;
   translations?: IAboutTranslations[];
   createdAt: Date | string;
   updatedAt: Date | string;
@@ -316,12 +322,9 @@ interface IContactInformationTranslation {
   adress: string;
   title: string;
   description: string;
-  about: string;
   hightlightWord?: string;
   workHours: string;
   documentId: string;
-  tag?: string | null;
-  support: string;
   locale: Locales;
   createdAt: Date | string;
   updatedAt: Date | string;
@@ -345,7 +348,6 @@ export interface IContactInformation {
   user?: any; // User interfeysiniz bura gəlməlidir
   isDeleted: boolean;
 }
- 
 
 // connection
 type ConnectionTranslation = {
@@ -438,6 +440,7 @@ export interface ServicesCategoryItem {
   imageUrl: FileType | null;
   gallery: FileType[] | null;
   createdAt: string;
+  isMain:boolean,
   updatedAt: string;
   translations: ServicesCategoryItemTr[];
 }
