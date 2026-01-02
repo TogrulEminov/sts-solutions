@@ -8,13 +8,18 @@ import ServicesCategorySection from "./services-category";
 import AboutSection from "./about";
 import ServicesSection from "./services";
 import HeroSection from "./hero";
-
-export default async function HomePageContainer() {
+interface Props {
+  homeData: any;
+}
+export default async function HomePageContainer({ homeData }: Props) {
   return (
     <>
-      <HeroSection />
-      <ServicesSection />
-      <AboutSection />
+      <HeroSection sliderData={homeData?.data?.sliderData} />
+      <ServicesSection
+        sectionData={homeData?.sections?.servicesMainSection}
+        existingData={homeData?.data?.servicesData}
+      />
+      <AboutSection exisingData={homeData?.data?.aboutData} />
       <ServicesCategorySection />
       <SolutionsSection />
       <PartnerSection />

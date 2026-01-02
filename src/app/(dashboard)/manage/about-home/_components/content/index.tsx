@@ -122,15 +122,15 @@ export default function Content({ existingData, refetch }: Props) {
                   <div className="flex-1">
                     <FormInput
                       fieldName={`statistics.${index}.title` as const}
-                      placeholder={`Statistics ${index + 1}`}
+                      placeholder={`Statistics başlıq ${index + 1}`}
                     />
                     <FormInput
                       fieldName={`statistics.${index}.suffix` as const}
-                      placeholder={`Statistics ${index + 1}`}
+                      placeholder={`Statistics suffix ${index + 1}`}
                     />
                     <FormInput
                       fieldName={`statistics.${index}.count` as const}
-                      placeholder={`Statistics ${index + 1}`}
+                      placeholder={`Statistics  say ${index + 1}`}
                     />
                   </div>
                   <button

@@ -17,7 +17,7 @@ const fetchLayout = async ({ locale }: GetProps) => {
       },
       orderBy: { createdAt: "asc" },
     }),
-    db.contactInformation.findMany({
+    db.contactInformation.findFirst({
       where: {
         translations: {
           some: {
@@ -25,7 +25,9 @@ const fetchLayout = async ({ locale }: GetProps) => {
           },
         },
       },
-      orderBy: { createdAt: "asc" },
+      include: {
+        translations: true,
+      },
     }),
     db.servicesCategory.findMany({
       where: {

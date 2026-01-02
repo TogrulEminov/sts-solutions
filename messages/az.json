@@ -1,5 +1,4 @@
 {
-  "home": "Ana səhifə",
   "notfound": {
     "title": "Axtardığınız Səhifə Tapılmadı",
     "description": "Axtardığınız səhifə mövcud deyil və ya silinib. Zəhmət olmasa səhifəni yenidən yoxlayın və ya ana səhifəyə qayıdın.",
@@ -17,7 +16,8 @@
   "sidebar": {
     "contact_information": "Əlaqə məlumatları",
     "follow_us": "Bizi izləyin",
-    "changeLang": "Dil dəyişmə"
+    "changeLang": "Dil dəyişmə",
+    "navLabel": "Sosial media linklər"
   },
   "header": {
     "newServices": "Yeni xidmətimiz",
@@ -54,12 +54,20 @@
     "apply_form": "Müraciət forması",
     "completed": "Tamamlanma",
     "area": "sahə",
-    "name":"Ad",
-    "email":"E-mail",
-    "phone":"Mobil nömrə",
-    "selectService":"Xidmət seçin",
-    "note":"Mesajınız",
-    "sending":"Göndərilir",
-    "send":"Göndər"
+    "name": "Ad",
+    "email": "E-mail",
+    "phone": "Mobil nömrə",
+    "selectService": "Xidmət seçin",
+    "note": "Mesajınız",
+    "sending": "Göndərilir",
+    "send": "Göndər"
+  },
+  "home": {
+    "main": "Ana səhifə",
+    "services":"Bütün xidmətlərimiz",
+    "readMore":"Daha ətraflı",
+    "applyBtn":"Bizə müraciət et",
+    "sectors":"Xidmət sektorlarımız",
+    "moreInfo":"Daha çox məlumat al"
   }
 }

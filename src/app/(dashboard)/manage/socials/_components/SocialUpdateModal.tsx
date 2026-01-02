@@ -14,10 +14,10 @@ import {
   getSocialById,
   updateSocial,
 } from "@/src/actions/client/socials.actions";
-import Icons from "@/public/icons";
 import FormWrapper from "@/src/ui/FormBuilder/FormWrapper/FormWrapper";
 import FormSelect from "@/src/ui/FormBuilder/components/FormSelect/FormSelect";
 import FormInput from "@/src/ui/FormBuilder/components/FormInput/FormInput";
+import { renderSocialIcon } from "@/src/utils/renderSocials";
 
 interface Social {
   id: number;
@@ -38,14 +38,14 @@ interface Props {
 }
 
 const availableIcons = [
-  { name: "Facebook", label: "Facebook" },
-  { name: "Instagram", label: "Instagram" },
-  { name: "Twitter", label: "Twitter" },
-  { name: "Linkedin", label: "Linkedin" },
-  { name: "Youtube", label: "Youtube" },
-  { name: "Telegram", label: "Telegram" },
-  { name: "Whatsapp", label: "Whatsapp" },
-  { name: "Tiktok", label: "Tiktok" },
+  { value: "Facebook", label: "Facebook" },
+  { value: "Instagram", label: "Instagram" },
+  { value: "Twitter", label: "Twitter" },
+  { value: "Linkedin", label: "Linkedin" },
+  { value: "Youtube", label: "Youtube" },
+  { value: "Telegram", label: "Telegram" },
+  { value: "Whatsapp", label: "Whatsapp" },
+  { value: "Tiktok", label: "Tiktok" },
 ];
 
 export default function SocialUpdateModal({
@@ -77,8 +77,7 @@ export default function SocialUpdateModal({
       status: "published",
     },
   });
-  const { handleSubmit, reset, setValue, watch } = generalForm;
-  const selectedIcon = watch("iconName");
+  const { handleSubmit, reset, setValue } = generalForm;
 
   useEffect(() => {
     if (social && isOpen) {
@@ -117,18 +116,6 @@ export default function SocialUpdateModal({
     onClose();
   };
 
-  const IconPreview = ({ iconName }: { iconName: string }) => {
-    if (!iconName) return null;
-
-    const IconComponent = Icons[iconName as keyof typeof Icons];
-
-    if (!IconComponent || typeof IconComponent !== "function") {
-      return null;
-    }
-
-    return IconComponent({ fill: "currentColor" });
-  };
-
   return (
     <Modal
       title={
@@ -152,7 +139,7 @@ export default function SocialUpdateModal({
     >
       {isLoading ? (
         <div className="flex justify-center items-center p-16">
-          <Space direction="vertical" align="center" size="large">
+          <Space orientation="vertical" align="center" size="large">
             <Spin size="large" />
             <p className="text-gray-500">Yüklənir...</p>
           </Space>
@@ -196,7 +183,7 @@ export default function SocialUpdateModal({
               />
             </div>
 
-            {selectedIcon && (
+            {generalForm.getValues("iconName") && (
               <div className="bg-linear-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-xl p-5">
                 <p className="text-sm font-semibold text-gray-700 mb-3">
                   Icon Önizləmə:
@@ -204,12 +191,15 @@ export default function SocialUpdateModal({
                 <div className="flex items-center justify-center">
                   <div className="w-20 h-20 bg-white rounded-xl shadow-md flex items-center justify-center">
                     <div className="w-12 h-12 flex items-center justify-center text-blue-600">
-                      <IconPreview iconName={selectedIcon} />
+                      {renderSocialIcon({
+                        iconName: generalForm.getValues("iconName") || "",
+                        fill: "currentColor",
+                      })}
                     </div>
                   </div>
                 </div>
                 <p className="text-xs text-gray-600 text-center mt-3 font-mono">
-                  {selectedIcon}
+                  {generalForm.getValues("iconName")}
                 </p>
               </div>
             )}

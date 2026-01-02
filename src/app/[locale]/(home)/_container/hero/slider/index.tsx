@@ -10,11 +10,16 @@ import Icons from "@/public/icons";
 import { useRef } from "react";
 import HeroImageAnimation from "./image";
 import { useToggleStore } from "@/src/lib/zustand/useMultiToggleStore";
-
-export default function SliderArea() {
+import { FileType, SliderItem } from "@/src/services/interface";
+import { getForCards } from "@/src/utils/getFullimageUrl";
+import { useTranslations } from "next-intl";
+interface Props {
+  sliderData: SliderItem[];
+}
+export default function SliderArea({ sliderData }: Props) {
   const swiperRef = useRef<SwiperCore | null>(null);
   const { open } = useToggleStore();
-
+  const t = useTranslations();
   const handleOpen = () => {
     document.body.classList.toggle("overflow-hidden");
     open("apply-button");
@@ -79,16 +84,15 @@ export default function SliderArea() {
         className="w-full h-full"
         loop={true}
       >
-        {[
-          "https://res.cloudinary.com/da403zlyf/image/upload/v1766260482/120440_p3ocpo.jpg",
-          "https://res.cloudinary.com/da403zlyf/image/upload/v1766260496/2151615117_u2mtid.jpg",
-        ].map((item, index) => {
+        {sliderData?.map((slider) => {
           return (
-            <SwiperSlide className="h-full" key={index}>
+            <SwiperSlide className="h-full" key={slider?.documentId}>
               <div className="relative h-full flex items-center z-6">
                 <div className="absolute w-full h-full lg:w-[50%] lg:h-[1080px] bg-ui-2/51 lg:bottom-[unset] top-0 left-0 bottom-0 right-0 lg:right-[unset] z-2 lg:-left-[8%] lg:-top-20 lg:-rotate-[15.73deg]"></div>
                 <div className="absolute hidden lg:flex w-[34.07px] left-[50%] z-2 top-[147px] bg-ui-2/46 -rotate-[15.73deg] h-[940px]"></div>
-                <HeroImageAnimation src={item} />
+                <HeroImageAnimation
+                  src={getForCards(slider?.imageUrl as FileType)}
+                />
                 <div className="container relative z-4">
                   <div className="flex flex-col h-full space-y-10">
                     <Link
@@ -100,20 +104,22 @@ export default function SliderArea() {
                         fill="#1BAFBF"
                         className="transition-transform duration-300 group-hover:translate-x-1"
                       />
-                      <span className="relative z-10">Bütün xidmətlərimiz</span>
+                      <span className="relative z-10">
+                        {t("home.services")}
+                      </span>
 
                       <span className="absolute inset-0  bg-linear-to-r from-ui-1/0 via-ui-1/20 to-ui-1/0 translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></span>
                     </Link>
-                    <strong className="lg:max-w-101 font-inter font-extrabold text-[36px] leading-11 max-w-90 sm:text-[56px] lg:leading-16 text-white">
-                      Mühəndislik xidmətlərimiz
+                    <strong className="lg:max-w-101 relative z-5 font-inter font-extrabold text-[36px] leading-11 max-w-90 sm:text-[56px] lg:leading-16 text-white">
+                      {slider?.translations?.[0]?.title}
                     </strong>
                     <div className="flex items-start sm:items-center flex-col sm:flex-row gap-5">
                       <Link
-                        href={"/"}
+                        href={(slider?.link || "/services") as any}
                         className="group w-full h-10.5 sm:w-[161px] sm:h-12.5 text-white bg-ui-1 rounded-4xl flex items-center gap-2 font-inter font-normal text-base justify-center transition-all duration-300 hover:gap-4 hover:pr-2 hover:shadow-[0_8px_30px_rgba(27,175,191,0.5)] active:scale-95"
                       >
                         <span className="transition-transform duration-300 group-hover:-translate-x-1">
-                          Daha ətraflı
+                          {t("home.readMore")}
                         </span>
                         <Icons.ArrowEast className="transition-all duration-500 group-hover:translate-x-2 group-hover:-rotate-45" />
                       </Link>
@@ -128,7 +134,7 @@ export default function SliderArea() {
                           fill="currentColor"
                           className="transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-12"
                         />
-                        <span>Bizə müraciət et</span>
+                        <span>{t("home.applyBtn")}</span>
                       </button>
                     </div>
                   </div>
@@ -138,28 +144,29 @@ export default function SliderArea() {
           );
         })}
       </MySwiper>
-      <div className="absolute right-10 lg:right-[unset] lg:left-1/2  xl:left-[2%] bottom-8 lg:bottom-12 xl:bottom-[unset]  xl:top-[55%] xl:-translate-y-1/2 z-10  flex xl:flex-col items-center gap-5">
-        <button
-          type="button"
-          aria-label="prev button for services slider"
-          onClick={goPrev}
-          className="w-12 h-12 rounded-full shrink-0 border-2 border-white/30 flex items-center justify-center cursor-pointer transition-all duration-300 hover:bg-white/10 hover:border-white hover:scale-110"
-        >
-          <Icons.ArrowLeft />
-        </button>
+      {sliderData?.length > 1 && (
+        <div className="absolute right-10 lg:right-[unset] lg:left-1/2  xl:left-[2%] bottom-8 lg:bottom-12 xl:bottom-[unset]  xl:top-[55%] xl:-translate-y-1/2 z-10  flex xl:flex-col items-center gap-5">
+          <button
+            type="button"
+            aria-label="prev button for services slider"
+            onClick={goPrev}
+            className="w-12 h-12 rounded-full shrink-0 border-2 border-white/30 flex items-center justify-center cursor-pointer transition-all duration-300 hover:bg-white/10 hover:border-white hover:scale-110"
+          >
+            <Icons.ArrowLeft />
+          </button>
 
-        <div className="custom-pagination flex flex-row xl:flex-col gap-3"></div>
+          <div className="custom-pagination flex flex-row xl:flex-col gap-3"></div>
 
-        <button
-          type="button"
-          onClick={goNext}
-          aria-label="next button for services slider"
-          className="w-12 h-12 rounded-full shrink-0 border-2 border-white/30 flex items-center justify-center cursor-pointer transition-all duration-300 hover:bg-white/10 hover:border-white hover:scale-110"
-        >
-          <Icons.ArrowRight />
-        </button>
-      </div>
-
+          <button
+            type="button"
+            onClick={goNext}
+            aria-label="next button for services slider"
+            className="w-12 h-12 rounded-full shrink-0 border-2 border-white/30 flex items-center justify-center cursor-pointer transition-all duration-300 hover:bg-white/10 hover:border-white hover:scale-110"
+          >
+            <Icons.ArrowRight />
+          </button>
+        </div>
+      )}
       <style jsx global>{`
         .hero-slider .custom-pagination {
           gap: 12px;

@@ -209,6 +209,7 @@ export interface SliderItem {
   status: Status;
   imageUrl: FileType | null;
   createdAt: string;
+  link?: string;
   updatedAt: string;
   translations: SliderTranslation[];
 }
@@ -440,7 +441,7 @@ export interface ServicesCategoryItem {
   imageUrl: FileType | null;
   gallery: FileType[] | null;
   createdAt: string;
-  isMain:boolean,
+  isMain: boolean;
   updatedAt: string;
   translations: ServicesCategoryItemTr[];
 }

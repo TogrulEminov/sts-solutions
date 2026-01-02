@@ -10,11 +10,11 @@ import {
   CreateSocialInput,
   createSocialSchema,
 } from "@/src/schema/social.schema";
-import Icons from "@/public/icons";
 import { createSocial } from "@/src/actions/client/socials.actions";
 import FormWrapper from "@/src/ui/FormBuilder/FormWrapper/FormWrapper";
 import FormInput from "@/src/ui/FormBuilder/components/FormInput/FormInput";
 import FormSelect from "@/src/ui/FormBuilder/components/FormSelect/FormSelect";
+import { renderSocialIcon } from "@/src/utils/renderSocials";
 
 interface Props {
   isOpen: boolean;
@@ -23,14 +23,14 @@ interface Props {
 }
 
 const availableIcons = [
-  { name: "Facebook", label: "Facebook" },
-  { name: "Instagram", label: "Instagram" },
-  { name: "Twitter", label: "Twitter" },
-  { name: "Linkedin", label: "Linkedin" },
-  { name: "Youtube", label: "Youtube" },
-  { name: "Telegram", label: "Telegram" },
-  { name: "Whatsapp", label: "Whatsapp" },
-  { name: "Tiktok", label: "Tiktok" },
+  { value: "Facebook", label: "Facebook" },
+  { value: "Instagram", label: "Instagram" },
+  { value: "Twitter", label: "Twitter" },
+  { value: "Linkedin", label: "Linkedin" },
+  { value: "Youtube", label: "Youtube" },
+  { value: "Telegram", label: "Telegram" },
+  { value: "Whatsapp", label: "Whatsapp" },
+  { value: "Tiktok", label: "Tiktok" },
 ];
 
 export default function SocialCreateModal({
@@ -50,15 +50,7 @@ export default function SocialCreateModal({
       status: "published",
     },
   });
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors },
-    reset,
-    watch,
-  } = generalForm;
-  const selectedIcon = watch("iconName");
+  const { handleSubmit, reset } = generalForm;
 
   const onSubmit = async (data: CreateSocialInput) => {
     startTransition(async () => {
@@ -78,18 +70,6 @@ export default function SocialCreateModal({
   const handleCancel = () => {
     reset();
     onClose();
-  };
-
-  const IconPreview = ({ iconName }: { iconName: string }) => {
-    if (!iconName) return null;
-
-    const IconComponent = Icons[iconName as keyof typeof Icons];
-
-    if (!IconComponent || typeof IconComponent !== "function") {
-      return null;
-    }
-
-    return IconComponent({ fill: "currentColor" });
   };
 
   return (
@@ -151,7 +131,7 @@ export default function SocialCreateModal({
             />
           </div>
 
-          {selectedIcon && (
+          {generalForm.getValues("iconName") && (
             <div className="bg-linear-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-xl p-5">
               <p className="text-sm font-semibold text-gray-700 mb-3">
                 Icon Önizləmə:
@@ -159,12 +139,17 @@ export default function SocialCreateModal({
               <div className="flex items-center justify-center">
                 <div className="w-20 h-20 bg-white rounded-xl shadow-md flex items-center justify-center">
                   <div className="w-12 h-12 flex items-center justify-center text-blue-600">
-                    <IconPreview iconName={selectedIcon} />
+                    {renderSocialIcon({
+                      iconName: generalForm.getValues("iconName"),
+                      width: 24,
+                      height: 24,
+                      fill: "currentColor",
+                    })}
                   </div>
                 </div>
               </div>
               <p className="text-xs text-gray-600 text-center mt-3 font-mono">
-                {selectedIcon}
+                {generalForm.getValues("iconName")}
               </p>
             </div>
           )}

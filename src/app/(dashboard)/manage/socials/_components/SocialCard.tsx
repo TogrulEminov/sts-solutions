@@ -90,7 +90,11 @@ export default function SocialCard({ social, onEdit, onRefetch }: Props) {
   return (
     <Card
       className="group relative overflow-hidden border border-gray-200 hover:border-blue-400 hover:shadow-lg transition-all duration-300"
-      bodyStyle={{ padding: "20px" }}
+      styles={{
+        body: {
+          padding: "20px",
+        },
+      }}
     >
       {/* Status Badge - Top Right */}
       <div className="absolute top-3 right-3">

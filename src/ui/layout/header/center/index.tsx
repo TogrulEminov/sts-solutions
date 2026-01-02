@@ -14,6 +14,8 @@ interface Props {
 
 export default function HeaderCenter({ isSticky, contactData }: Props) {
   const t = useTranslations();
+  console.log(contactData);
+  
   return (
     <>
       <div className="relative">
@@ -21,7 +23,7 @@ export default function HeaderCenter({ isSticky, contactData }: Props) {
           className={`bg-ui-2 flex items-center transition-all duration-500 ${
             isSticky
               ? "py-4 min-h-20 pb-3 lg:pb-5 pt-3"
-              : "py-4 min-h-25 lg:pb-8 lg:pt-5"
+              : "py-4 min-h-28.5 lg:pb-8 lg:pt-5"
           }`}
         >
           <div className="container flex  items-center justify-between">

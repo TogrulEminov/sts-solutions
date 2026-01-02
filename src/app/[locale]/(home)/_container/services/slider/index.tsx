@@ -6,8 +6,11 @@ import Icons from "@/public/icons";
 import { Autoplay } from "swiper/modules";
 import { Swiper as SwiperCore } from "swiper/types";
 import ServicesMain from "@/src/globalElements/cards/services-main";
-
-export default function SliderArea() {
+import { ServicesCategoryItem } from "@/src/services/interface";
+interface Props {
+  existingData: ServicesCategoryItem[];
+}
+export default function SliderArea({ existingData }: Props) {
   const swiperRef = useRef<SwiperCore | null>(null);
 
   const breakpoints = {
@@ -15,7 +18,7 @@ export default function SliderArea() {
     480: { slidesPerView: 2, spaceBetween: 10 },
     768: { slidesPerView: 3 },
     1024: { slidesPerView: 4.5 },
-    1600: { slidesPerView:5.5 },
+    1600: { slidesPerView: 5.5 },
   };
   const autoplayOptions = {
     delay: 3500,
@@ -80,10 +83,10 @@ export default function SliderArea() {
         className="w-full lg:min-w-screen"
         loop={true}
       >
-        {Array.from({ length: 20 }).map((_, index) => {
+        {existingData?.map((service) => {
           return (
-            <SwiperSlide className="h-full" key={index}>
-              <ServicesMain />
+            <SwiperSlide className="h-full" key={service?.documentId}>
+              <ServicesMain service={service} />
             </SwiperSlide>
           );
         })}

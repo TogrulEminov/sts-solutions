@@ -1,8 +1,16 @@
 "use client";
 import { motion } from "framer-motion";
 import CustomImage from "../../ImageTag";
-import logo from "@/public/assets/logo/sts-logo.svg"
-export default function Services3DTilt() {
+import logo from "@/public/assets/logo/sts-logo.svg";
+import { FileType, ServicesCategoryItem } from "@/src/services/interface";
+import { getForCards } from "@/src/utils/getFullimageUrl";
+import { Link } from "@/src/i18n/navigation";
+interface Props {
+  service: ServicesCategoryItem;
+}
+export default function Services3DTilt({ service }: Props) {
+  const { imageUrl, translations } = service;
+  const { slug, title } = translations?.[0];
   return (
     <motion.div
       className="relative rounded-xl overflow-hidden h-70 lg:h-96 flex items-end justify-start cursor-pointer perspective-1000"
@@ -17,6 +25,18 @@ export default function Services3DTilt() {
       }}
       style={{ transformStyle: "preserve-3d" }}
     >
+      <Link
+        aria-label={title}
+        className="absolute inset-0 z-2 w-full block h-full opacity-0"
+        href={{
+          pathname: "/services/[category]",
+          params: {
+            category: slug,
+          },
+        }}
+      >
+        {title}
+      </Link>
       <motion.div
         className="absolute inset-0"
         whileHover={{ scale: 1.15 }}
@@ -27,7 +47,7 @@ export default function Services3DTilt() {
           className="h-full w-full object-cover"
           height={327}
           title=""
-          src="https://i.pinimg.com/1200x/84/7c/b6/847cb696c3080ad4d29d496b48f18ef1.jpg"
+          src={getForCards(imageUrl as FileType)}
         />
         <motion.div
           className="absolute inset-0 bg-linear-to-br from-ui-2/20 to-ui-2/20"
@@ -56,7 +76,7 @@ export default function Services3DTilt() {
           />
         </motion.div>
         <strong className="font-inter mr-4 p-5 font-semibold text-sm lg:text-2xl text-ui-16">
-          Mühəndislik xidmətləri
+          {title}
         </strong>
       </motion.article>
     </motion.div>

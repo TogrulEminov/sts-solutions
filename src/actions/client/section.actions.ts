@@ -167,7 +167,8 @@ export async function createSectionContent(
         errors: formatZodErrors(validateData.error),
       };
     }
-    const { title, description, locale, key } = validateData.data;
+    const { title, description, locale, key, highlightWord } =
+      validateData.data;
 
     const customSlug = createSlug(title);
     const existingData = await db.sectionContent.findFirst({
@@ -196,6 +197,7 @@ export async function createSectionContent(
             slug: customSlug,
             description: description ?? "",
             locale: locale,
+            highlightWord,
           },
         },
       },
@@ -272,7 +274,7 @@ export async function uptadeSectionContent(
         errors: formatZodErrors(parsedInput.error),
       };
     }
-    const { title, description, key, locale } = parsedInput.data;
+    const { title, description, key, locale, highlightWord } = parsedInput.data;
     const customSlug = createSlug(title);
     const uptadeData = await db.$transaction(async (prisma: any) => {
       const updatedData = await prisma.sectionContent.update({
@@ -292,11 +294,13 @@ export async function uptadeSectionContent(
                 description: description ?? "",
                 locale,
                 slug: customSlug || existingData.translations?.[0]?.slug,
+                highlightWord,
               },
               update: {
                 title,
                 description,
                 slug: customSlug || existingData.translations?.[0]?.slug,
+                highlightWord,
               },
             },
           },

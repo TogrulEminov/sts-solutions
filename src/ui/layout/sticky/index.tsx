@@ -63,6 +63,7 @@ export default function StickySocial({ socialData }: Props) {
               >
                 {renderSocialIcon({
                   iconName: social?.iconName,
+                  fill:"white",
                   className:
                     "transition-all duration-300 group-hover:scale-110 hrink-0",
                 })}

@@ -81,12 +81,16 @@
   ],
   "sectionsContent": [
     {
-      "value": "services",
-      "label": "Xidmətlər bölümü"
+      "value": "servicesMain",
+      "label": "Əsas Xidmətlər bölümü"
     },
     {
-      "value": "process",
-      "label": "Prosess bölümü"
+      "value": "servicesSub",
+      "label": "Alt Xidmətlər bölümü"
+    },
+    {
+      "value": "solutions",
+      "label": "Həllərimiz bölümü"
     },
     {
       "value": "partners",
@@ -97,8 +101,8 @@
       "label": "Bloqlar bölümü"
     },
     {
-      "value": "media",
-      "label": "Media bölümü"
+      "value": "consulting",
+      "label": "Konsultatsiya"
     },
     {
       "value": "fag",
