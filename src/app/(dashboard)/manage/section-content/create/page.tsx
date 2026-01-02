@@ -95,12 +95,6 @@ export default function CreateSectionContent() {
                 placeholder="Alt başlıq"
                 fieldName="subTitle"
               />
-              <FormInput
-                label="Başlıq"
-                placeholder="Başlıq"
-                fieldName="title"
-              />
-
               <FormSelect
                 label="Açar sözünü seçin"
                 placeholder="Seçin"

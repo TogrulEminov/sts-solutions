@@ -24,6 +24,7 @@
     "antd": "^6.0.1",
     "bcryptjs": "^3.0.3",
     "dayjs": "^1.11.19",
+    "ejs": "^3.1.10",
     "framer-motion": "^12.23.25",
     "imask": "^7.6.1",
     "jodit-react": "^5.2.38",
@@ -52,6 +53,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/ejs": "^3.1.5",
     "@types/lodash.debounce": "^4.0.9",
     "@types/node": "^20",
     "@types/nodemailer": "^7.0.4",

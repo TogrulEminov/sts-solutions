@@ -25,7 +25,7 @@ export default async function LocalLayout({
   return (
     <>
       <NextIntlClientProvider messages={messages}>
-        <ProviderComponent>{children}</ProviderComponent>
+        <ProviderComponent locale={locale}>{children}</ProviderComponent>
       </NextIntlClientProvider>
     </>
   );

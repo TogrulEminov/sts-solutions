@@ -416,7 +416,7 @@ model About {
 }
 
 model AboutTranslations {
-  id                    Int     @id @default(autoincrement())
+  id                    Int      @id @default(autoincrement())
   title                 String
   description           String
   slug                  String
@@ -426,14 +426,14 @@ model AboutTranslations {
   subDescription        String?
   experienceDescription String?
   // team
-  teamDescription String?
-  statistics      Json?
-  purpose         Json?
-  locale          Locales  @default(az)
-  document        About?   @relation(fields: [documentId], references: [documentId], onDelete: Cascade)
-  documentId      String?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  teamDescription       String?
+  statistics            Json?
+  purpose               Json?
+  locale                Locales  @default(az)
+  document              About?   @relation(fields: [documentId], references: [documentId], onDelete: Cascade)
+  documentId            String?
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
 
   @@unique([documentId, locale])
   @@index([locale])
@@ -491,8 +491,8 @@ model ContactInformation {
   phoneSecond  String?
   latitude     String?
   longitude    String?
-  adressLink   String
-  whatsapp     String
+  adressLink   String?
+  whatsapp     String?
   email        String
   translations ContactInformationTranslation[]
   user         User?                           @relation(fields: [userId], references: [id])
@@ -511,12 +511,10 @@ model ContactInformationTranslation {
   adress         String
   title          String
   description    String
-  about          String
   hightlightWord String?
   workHours      String
   documentId     String
   tag            String?
-  support        String
   locale         Locales            @default(az)
   document       ContactInformation @relation(fields: [documentId], references: [documentId], onDelete: Cascade)
   createdAt      DateTime           @default(now())
@@ -833,6 +831,7 @@ model ServicesCategory {
   userId       String?
   gallery      File[]                         @relation("ServicesCategoryMainGallery")
   subCategory  ServicesSubCategory[]
+  isMain       Boolean?
 
   @@index([isDeleted, status])
   @@index([userId, isDeleted])
@@ -902,6 +901,27 @@ model ServicesSubCategoryTranslations {
   @@index([slug])
   @@index([title])
   @@index([seoId])
+}
+
+// contact us
+model ApplyForm {
+  id         Int      @id @default(autoincrement())
+  documentId String   @unique @default(cuid())
+  isDeleted  Boolean  @default(false)
+  status     Status   @default(published)
+  title      String
+  email      String
+  phone      String
+  services   String
+  message    String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([isDeleted])
+  @@index([status])
+  @@index([createdAt])
+  @@index([email])
+  @@index([phone])
 }
 
 enum Locales {

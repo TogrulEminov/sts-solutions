@@ -7,7 +7,7 @@ import { generateUUID } from "@/src/lib/uuidHelper";
 import {
   UpsertContactInput,
   upsertContactSchema,
-} from "@/src/schema/contact.schema"
+} from "@/src/schema/contact.schema";
 import { checkAuthServerAction } from "@/src/middleware/checkAuthorization";
 
 type ActionResult<T = unknown> = {
@@ -46,10 +46,9 @@ export async function getContact({ locale }: GetProps) {
           title: true,
           description: true,
           adress: true,
-      about:true,
           workHours: true,
+          hightlightWord:true,
           tag: true,
-          support: true,
           locale: true,
         },
       },
@@ -100,14 +99,12 @@ export async function upsertContact(
       adressLink,
       adress,
       workHours,
-      tag,
-      support,
       locale,
       title,
       description,
       longitude,
       latitude,
-      about,hightlightWord
+      hightlightWord,
     } = validateData.data;
 
     // ✅ TRANSACTION WITH TIMEOUT: Ardıcıl yazma əməliyyatlarını qorumaq üçün
@@ -191,12 +188,10 @@ export async function upsertContact(
         let translation;
         const translationData = {
           workHours: workHours || "",
-          tag: tag || "",
-          support: support || "",
           adress,
           title,
           description,
-          about,hightlightWord
+          hightlightWord,
         };
 
         // Translation UPDATE
@@ -210,12 +205,10 @@ export async function upsertContact(
               description: true,
               adress: true,
               workHours: true,
-              about:true,
               tag: true,
-              support: true,
               locale: true,
               documentId: true,
-              hightlightWord:true,
+              hightlightWord: true,
             }, // ✅ SELECT OPTIMIZATION
           });
           // Translation CREATE
@@ -230,11 +223,10 @@ export async function upsertContact(
               id: true,
               title: true,
               description: true,
-              about:true,
               adress: true,
               workHours: true,
               tag: true,
-              support: true,hightlightWord:true,
+              hightlightWord: true,
               locale: true,
               documentId: true,
             }, // ✅ SELECT OPTIMIZATION
@@ -251,7 +243,6 @@ export async function upsertContact(
         timeout: 10000, // 10 saniyə timeout əlavə edildi
       }
     );
-
 
     return {
       success: true,

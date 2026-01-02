@@ -1,10 +1,22 @@
 "use client";
 import { motion } from "framer-motion";
 import Logo from "../../logo";
-import Social from "./social";
+import SocialComponent from "./social";
 import { Link } from "@/src/i18n/navigation";
+import Customlink from "next/link";
 import CustomLink from "next/link";
-
+import {
+  IContactInformation,
+  ServicesCategoryItem,
+  Social,
+} from "@/src/services/interface";
+import { useTranslations } from "next-intl";
+import { clearPhoneRegex } from "@/src/lib/domburify";
+interface Props {
+  socialData: Social[] | undefined;
+  contactData: IContactInformation | undefined;
+  servicesData: ServicesCategoryItem[] | undefined;
+}
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -30,7 +42,12 @@ const linkVariants = {
   hover: { x: 4, transition: { duration: 0.2 } },
 };
 
-export default function Footer() {
+export default function Footer({
+  contactData,
+  servicesData,
+  socialData,
+}: Props) {
+  const t = useTranslations();
   return (
     <footer className="bg-ui-2">
       <motion.div
@@ -45,7 +62,7 @@ export default function Footer() {
           variants={itemVariants}
         >
           <Logo isWhite={true} />
-          <Social />
+          <SocialComponent socialData={socialData} />
         </motion.div>
 
         <motion.div
@@ -57,135 +74,127 @@ export default function Footer() {
             variants={itemVariants}
           >
             <strong className="font-inter font-medium text-base text-white">
-              Services
+              {t("footer.mainLinks")}
             </strong>
             <div className="flex flex-col space-y-3">
               <motion.div variants={linkVariants} whileHover="hover">
                 <Link
-                  href={"/"}
+                  href={"/about"}
                   className="font-inter text-base text-white/40 font-medium transition-colors hover:text-white/60"
                 >
-                  Business Strategy
+                  {t("pages.about")}
                 </Link>
               </motion.div>
               <motion.div variants={linkVariants} whileHover="hover">
                 <Link
-                  href={"/"}
+                  href={"/services"}
                   className="font-inter text-base text-white/40 font-medium transition-colors hover:text-white/60"
                 >
-                  Financial Consulting
+                  {t("pages.services")}
                 </Link>
               </motion.div>
               <motion.div variants={linkVariants} whileHover="hover">
                 <Link
-                  href={"/"}
+                  href={"/projects"}
                   className="font-inter text-base text-white/40 font-medium transition-colors hover:text-white/60"
                 >
-                  HR & Talent Management
+                  {t("pages.projects")}
                 </Link>
               </motion.div>
               <motion.div variants={linkVariants} whileHover="hover">
                 <Link
-                  href={"/"}
+                  href={"/solutions"}
                   className="font-inter text-base text-white/40 font-medium transition-colors hover:text-white/60"
                 >
-                  IT Solutions
+                  {t("pages.solutions")}
                 </Link>
               </motion.div>
               <motion.div variants={linkVariants} whileHover="hover">
                 <Link
-                  href={"/"}
+                  href={"/blog"}
                   className="font-inter text-base text-white/40 font-medium transition-colors hover:text-white/60"
                 >
-                  Marketing & Branding
+                  {t("pages.blogs")}
                 </Link>
               </motion.div>
             </div>
           </motion.div>
+          {servicesData?.length && (
+            <motion.div
+              className="flex flex-col space-y-4"
+              variants={itemVariants}
+            >
+              <strong className="font-inter font-medium text-base text-white">
+                {t("footer.services")}
+              </strong>
+              <div className="flex flex-col space-y-3">
+                {servicesData?.map((services) => {
+                  return (
+                    <motion.div
+                      variants={linkVariants}
+                      whileHover="hover"
+                      key={services?.documentId}
+                    >
+                      <Link
+                        href={{
+                          pathname: "/services/[category]",
+                          params: {
+                            category: services?.translations?.[0]?.slug,
+                          },
+                        }}
+                        className="font-inter text-base text-white/40 font-medium transition-colors hover:text-white/60"
+                      >
+                        {services?.translations?.[0]?.title}
+                      </Link>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </motion.div>
+          )}
 
           <motion.div
             className="flex flex-col space-y-4"
             variants={itemVariants}
           >
             <strong className="font-inter font-medium text-base text-white">
-              Quick Links
+              {t("footer.contact")}
             </strong>
             <div className="flex flex-col space-y-3">
-              <motion.div variants={linkVariants} whileHover="hover">
-                <Link
-                  href={"/"}
-                  className="font-inter text-base text-white/40 font-medium transition-colors hover:text-white/60"
-                >
-                  Home
-                </Link>
-              </motion.div>
-              <motion.div variants={linkVariants} whileHover="hover">
-                <Link
-                  href={"/"}
-                  className="font-inter text-base text-white/40 font-medium transition-colors hover:text-white/60"
-                >
-                  About Us
-                </Link>
-              </motion.div>
-              <motion.div variants={linkVariants} whileHover="hover">
-                <Link
-                  href={"/"}
-                  className="font-inter text-base text-white/40 font-medium transition-colors hover:text-white/60"
-                >
-                  Services
-                </Link>
-              </motion.div>
-              <motion.div variants={linkVariants} whileHover="hover">
-                <Link
-                  href={"/"}
-                  className="font-inter text-base text-white/40 font-medium transition-colors hover:text-white/60"
-                >
-                  Projects
-                </Link>
-              </motion.div>
-              <motion.div variants={linkVariants} whileHover="hover">
-                <Link
-                  href={"/"}
-                  className="font-inter text-base text-white/40 font-medium transition-colors hover:text-white/60"
-                >
-                  Solutions
-                </Link>
-              </motion.div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            className="flex flex-col space-y-4"
-            variants={itemVariants}
-          >
-            <strong className="font-inter font-medium text-base text-white">
-              Contact Us
-            </strong>
-            <div className="flex flex-col space-y-3">
-              <motion.div variants={linkVariants} whileHover="hover">
-                <Link
-                  href={"/"}
-                  className="font-inter text-base text-white/40 font-medium transition-colors hover:text-white/60"
-                >
-                  Phone: (123) 456-7890
-                </Link>
-              </motion.div>
-              <motion.div variants={linkVariants} whileHover="hover">
-                <Link
-                  href={"/"}
-                  className="font-inter text-base text-white/40 font-medium transition-colors hover:text-white/60"
-                >
-                  Email: info@companyname.com
-                </Link>
-              </motion.div>
-              <motion.div variants={linkVariants} whileHover="hover">
-                <Link
-                  href={"/"}
-                  className="font-inter text-base text-white/40 font-medium transition-colors hover:text-white/60"
-                >
-                  Address: City, State, ZIP Code
-                </Link>
-              </motion.div>
+              {contactData?.phone && (
+                <motion.div variants={linkVariants} whileHover="hover">
+                  <Customlink
+                    href={`tel:${clearPhoneRegex(contactData?.phone)}`}
+                    aria-label="Contact us with phone"
+                    className="font-inter text-base text-white/40 font-medium transition-colors hover:text-white/60"
+                  >
+                    {t("footer.phone")}: {contactData?.phone}
+                  </Customlink>
+                </motion.div>
+              )}
+              {contactData?.email && (
+                <motion.div variants={linkVariants} whileHover="hover">
+                  <Customlink
+                    href={"/"}
+                    aria-label="Contact us with email"
+                    className="font-inter text-base text-white/40 font-medium transition-colors hover:text-white/60"
+                  >
+                    {t("footer.email")}: {contactData?.email}
+                  </Customlink>
+                </motion.div>
+              )}
+              {contactData?.translations?.[0]?.adress && (
+                <motion.div variants={linkVariants} whileHover="hover">
+                  <Customlink
+                    aria-label="Our company adress"
+                    href={contactData?.adressLink || "#"}
+                    className="font-inter text-base text-white/40 font-medium transition-colors hover:text-white/60"
+                  >
+                    {t("footer.address")}:
+                    {contactData?.translations?.[0]?.adress}
+                  </Customlink>
+                </motion.div>
+              )}
             </div>
           </motion.div>
         </motion.div>
@@ -207,7 +216,8 @@ export default function Footer() {
               transition={{ duration: 0.5, delay: 0.7 }}
               className="font-inter font-medium text-center lg:text-start text-white/50 text-sm lg:text-base order-2 md:order-1"
             >
-              © 2015-2025 GlobTm. All rights reserved
+              © {new Date().getFullYear()} STS Solution.{" "}
+              {t("footer.rightsReserved")}
             </motion.p>
 
             {/* Site by */}

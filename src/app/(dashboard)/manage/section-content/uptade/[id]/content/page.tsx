@@ -18,6 +18,7 @@ import { section_content_list } from "@/src/services/interface/constant";
 import FormInput from "@/src/ui/FormBuilder/components/FormInput/FormInput";
 import FormSelect from "@/src/ui/FormBuilder/components/FormSelect/FormSelect";
 import FormTextArea from "@/src/ui/FormBuilder/components/FormTextArea/FormTextArea";
+import FormWrapper from "@/src/ui/FormBuilder/FormWrapper/FormWrapper";
 
 type OptionTypes = {
   value: string;
@@ -84,7 +85,8 @@ export default function SectionUptadeContent() {
             : "Rus dilində daxil et"}
         </h1>
 
-        <form
+        <FormWrapper
+          form={sectionContentForm}
           onSubmit={sectionContentForm.handleSubmit(onSubmit)}
           className={"grid grid-cols-1 gap-3"}
         >
@@ -94,14 +96,22 @@ export default function SectionUptadeContent() {
                 label="Başlıq"
                 placeholder="Başlıq"
                 fieldName="title"
-                required={true}
               />
-
+              <FormInput
+                label="Aktiv söz"
+                placeholder="Aktiv söz"
+                fieldName="highlightWord"
+              />
+              <FormInput
+                label="Alt başlıq"
+                placeholder="Alt başlıq"
+                fieldName="subTitle"
+              />
               <FormSelect
                 label="Açar sözünü seçin"
                 placeholder="Seçin"
-                fieldName="key"
                 options={pageOptions}
+                fieldName="key"
               />
               <FormTextArea label="Qısa məlumat" fieldName="description" />
             </FieldBlock>
@@ -116,7 +126,7 @@ export default function SectionUptadeContent() {
               />
             </div>
           </div>
-        </form>
+        </FormWrapper>
       </section>
     </>
   );

@@ -1,6 +1,42 @@
 import React from "react";
 import ServicesCategoryPageContainer from "../_container/category";
-
+import { Metadata } from "next";
+import { generatePageMetadata } from "@/src/utils/metadata";
+import { getServicesStaticById } from "@/src/actions/static/service.actions";
+import { routing } from "@/src/i18n/routing";
+interface PageProps {
+  params: Promise<{ locale: string; category: string }>;
+}
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale, category } = await params;
+  return generatePageMetadata({
+    locale: locale,
+    customPath: "services",
+    category: category,
+    dataType: "servicesCategory",
+    detail: true,
+  });
+}
+export async function generateStaticParams() {
+  try {
+    const result = await getServicesStaticById();
+    const params = result?.data?.flatMap((service) =>
+      routing.locales.flatMap((locale) =>
+        service.translations
+          .filter((t) => t.locale === locale && t.slug) // ✅ Filter by locale
+          .map((translation) => ({
+            locale: locale.toLowerCase(),
+            category: translation.slug,
+          }))
+      )
+    );
+    return params;
+  } catch (error) {
+    console.error("generateStaticParams error:", error);
+  }
+}
 export default async function ServicesPage() {
   return <ServicesCategoryPageContainer />;
 }

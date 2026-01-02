@@ -1,44 +1,17 @@
 "use client";
-import Icons from "@/public/icons";
-import Link from "next/link";
+import { Link } from "@/src/i18n/navigation";
 import LanguageBtn from "./language";
+import { Social } from "@/src/services/interface";
+import { renderSocialIcon } from "@/src/utils/renderSocials";
+import { useTranslations } from "next-intl";
+import CustomLink from "next/link";
 interface Props {
   className?: string;
-  isSticky?: boolean;
+  isSticky?: boolean;socialData?: Social[] | undefined;
 }
-const socialLinks = [
-  {
-    name: "Facebook",
-    href: "https://facebook.com/yourcompany",
-    icon: Icons.Facebook,
-    label: "Facebook səhifəmizi ziyarət edin",
-  },
-  {
-    name: "Instagram",
-    href: "https://instagram.com/yourcompany",
-    icon: Icons.Instagram,
-    label: "Instagram profilimizi izləyin",
-  },
-  {
-    name: "LinkedIn",
-    href: "https://linkedin.com/company/yourcompany",
-    icon: Icons.Linkedin,
-    label: "LinkedIn səhifəmizə qoşulun",
-  },
-  {
-    name: "Telegram",
-    href: "https://t.me/yourcompany",
-    icon: Icons.Telegram,
-    label: "Telegram kanalımıza abunə olun",
-  },
-  {
-    name: "TikTok",
-    href: "https://tiktok.com/@yourcompany",
-    icon: Icons.Tiktok,
-    label: "TikTok hesabımızı izləyin",
-  },
-];
-export default function HeaderTop({ className, isSticky }: Props) {
+
+export default function HeaderTop({ className, isSticky, socialData }: Props) {
+  const t = useTranslations();
   return (
     <div
       className={`bg-ui-1 hidden lg:flex justify-end items-center w-full  transition-all duration-500 ease-in-out relative ${
@@ -64,18 +37,18 @@ export default function HeaderTop({ className, isSticky }: Props) {
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
               </span>
               <span className="text-white/90 text-sm font-inter font-semibold transition-all duration-300 group-hover:text-white">
-                Yeni xidmətimiz
+                {t("header.newServices")}
               </span>
             </span>
 
             <div className="h-4 w-px bg-white/30"></div>
 
             <Link
-              href="/"
+              href="/services"
               className="flex items-center gap-1 text-white text-sm font-inter transition-all duration-300 group-hover:gap-2"
             >
               <span className="transition-all duration-300 group-hover:-translate-x-0.5">
-                Ətraflı öyrən
+                {t("header.learnMore")}
               </span>
               <span className="transition-all duration-300 group-hover:translate-x-1">
                 →
@@ -97,15 +70,14 @@ export default function HeaderTop({ className, isSticky }: Props) {
                     : "fadeIn 0.6s ease-out 0.3s both",
                 }}
               >
-                Bizi izləyin
+                {t("header.follow_us")}
               </span>
 
               <ul className="flex items-center gap-3">
-                {socialLinks.map((social, index) => {
-                  const IconComponent = social.icon;
+                {socialData?.map((social, index) => {
                   return (
                     <li
-                      key={social.name}
+                      key={social.iconName}
                       className="relative"
                       style={{
                         animation: isSticky
@@ -115,33 +87,29 @@ export default function HeaderTop({ className, isSticky }: Props) {
                             }s both`,
                       }}
                     >
-                      <Link
-                        href={social.href}
+                      <CustomLink
+                        href={social.socialLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label={social.label}
+                        aria-label={social.iconName}
                         className="group relative inline-flex items-center justify-center w-9 h-9 isolate"
                       >
-                        {/* Glow layers */}
                         <span className="absolute inset-0 rounded-full bg-white/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></span>
                         <span className="absolute inset-0 rounded-full bg-white/10 blur-xl scale-150 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></span>
-
-                        {/* Ripple container */}
                         <span className="absolute inset-0 overflow-hidden rounded-full pointer-events-none">
                           <span className="absolute inset-0 rounded-full border border-white/40 scale-100 group-hover:scale-150 opacity-100 group-hover:opacity-0 transition-all duration-700"></span>
                           <span className="absolute inset-0 rounded-full border border-white/30 scale-100 group-hover:scale-[1.8] opacity-100 group-hover:opacity-0 transition-all duration-900 delay-75"></span>
                           <span className="absolute inset-0 rounded-full border border-white/20 scale-100 group-hover:scale-[2.2] opacity-100 group-hover:opacity-0 transition-all duration-1000 delay-150"></span>
                         </span>
 
-                        {/* Center background */}
                         <span className="absolute inset-0 rounded-full bg-white/0 group-hover:bg-white/20 transition-all duration-300 scale-0 group-hover:scale-100 pointer-events-none"></span>
-
-                        {/* Icon */}
-                        <IconComponent
-                          fill="white"
-                          className="relative z-10 w-4 h-4 transition-all duration-500 group-hover:scale-110 group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]"
-                        />
-                      </Link>
+                        {renderSocialIcon({
+                          iconName: social?.iconName,
+                          fill: "white",
+                          className:
+                            "relative z-10 w-4 h-4 transition-all duration-500 group-hover:scale-110 group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]",
+                        })}
+                      </CustomLink>
                     </li>
                   );
                 })}

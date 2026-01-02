@@ -73,6 +73,7 @@ export async function getServicesCategory({
         id: true,
         status: true,
         documentId: true,
+        isMain: true,
         gallery: {
           select: {
             id: true,
@@ -143,6 +144,7 @@ export async function getServicesCategoryById({ locale, id }: GetByIDProps) {
         status: true,
         createdAt: true,
         updatedAt: true,
+        isMain: true,
         imageUrl: {
           select: {
             id: true,
@@ -230,6 +232,7 @@ export async function createServicesCategory(
       metaTitle,
       metaDescription,
       metaKeywords,
+      isMain,
     } = validateData.data;
 
     const customSlug = createSlug(title);
@@ -256,6 +259,7 @@ export async function createServicesCategory(
         gallery: {
           connect: galleryIds?.map((id) => ({ id: Number(id) })),
         },
+        isMain,
         imageId: imageId ? Number(imageId) : null,
         translations: {
           create: {
@@ -353,6 +357,7 @@ export async function uptadeServicesCategory(
       metaTitle,
       metaDescription,
       metaKeywords,
+      isMain,
     } = parsedInput.data;
 
     const customSlug = createSlug(title);
@@ -364,6 +369,7 @@ export async function uptadeServicesCategory(
         const updatedData = await prisma.servicesCategory.update({
           where: { documentId: id },
           data: {
+            isMain,
             translations: {
               upsert: {
                 where: {

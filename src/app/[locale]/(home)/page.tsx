@@ -5,6 +5,7 @@ import HomePageContainer from "./_container";
 interface PageProps {
   params: Promise<{ locale: string }>;
 }
+
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {

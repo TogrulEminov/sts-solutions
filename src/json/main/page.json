@@ -101,20 +101,16 @@
       "label": "Media bölümü"
     },
     {
-      "value": "branches",
-      "label": "Filiallar bölümü"
-    },
-    {
-      "value": "testimonials",
-      "label": "Rəy bölümü"
-    },
-    {
       "value": "fag",
       "label": "Suallar bölümü"
     },
     {
       "value": "employee",
       "label": "Əməkdaşlar bölümü"
+    },
+    {
+      "value": "contactCta",
+      "label": "Əlaqə cta bölümü"
     }
   ],
   "titleImage": [

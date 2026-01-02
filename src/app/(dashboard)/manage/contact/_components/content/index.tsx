@@ -39,14 +39,11 @@ export default function Content({ existingData, refetch }: Props) {
       latitude: (existingData?.latitude as string | undefined) ?? undefined,
       longitude: (existingData?.longitude as string | undefined) ?? undefined,
       whatsapp: existingData?.whatsapp ?? "",
-      tag: existingData?.translations?.[0]?.tag ?? "",
       adress: existingData?.translations?.[0]?.adress ?? "",
       title: existingData?.translations?.[0]?.title ?? "",
       hightlightWord: existingData?.translations?.[0]?.hightlightWord ?? "",
-      about: existingData?.translations?.[0]?.about ?? "",
       description: existingData?.translations?.[0]?.description ?? "",
       workHours: existingData?.translations?.[0]?.workHours ?? "",
-      support: existingData?.translations?.[0]?.support ?? "",
       locale: locale as CustomLocales,
     }),
     [existingData, locale]
@@ -85,7 +82,6 @@ export default function Content({ existingData, refetch }: Props) {
           ? "İngilis dilində daxil et"
           : "Rus dilində daxil et"}
       </h1>
-
       <FormWrapper
         form={generalForm}
         onSubmit={onSubmit}
@@ -94,34 +90,20 @@ export default function Content({ existingData, refetch }: Props) {
         <div className="flex flex-col space-y-4">
           <FieldBlock title="Tərcümə ediləcək form məlumatları">
             <FormInput label="Başlıq" placeholder="Başlıq" fieldName="title" />
-
             <FormInput
-              label="Nişan (Tag)"
-              placeholder="Nişan"
-              fieldName="tag"
+              label="Aktiv söz"
+              placeholder="Aktiv söz"
+              fieldName="hightlightWord"
             />
-
             <FormInput
               label="İş saatları"
               placeholder="İş saatlarını daxil edin"
               fieldName="workHours"
             />
-
             <FormInput
               label="Ünvan"
               placeholder="Ünvanı daxil edin"
               fieldName="adress"
-            />
-
-            <FormInput
-              label="Dəstək məlumatı"
-              placeholder="Dəstək məlumatını daxil edin"
-              fieldName="support"
-            />
-            <FormTextArea
-              label="Footer  məlumat"
-              placeholder="Footer  məlumat"
-              fieldName="about"
             />
             <FormTextArea
               label="Qısa məlumat"

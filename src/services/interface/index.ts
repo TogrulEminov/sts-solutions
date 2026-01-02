@@ -322,12 +322,9 @@ interface IContactInformationTranslation {
   adress: string;
   title: string;
   description: string;
-  about: string;
   hightlightWord?: string;
   workHours: string;
   documentId: string;
-  tag?: string | null;
-  support: string;
   locale: Locales;
   createdAt: Date | string;
   updatedAt: Date | string;
@@ -443,6 +440,7 @@ export interface ServicesCategoryItem {
   imageUrl: FileType | null;
   gallery: FileType[] | null;
   createdAt: string;
+  isMain:boolean,
   updatedAt: string;
   translations: ServicesCategoryItemTr[];
 }
