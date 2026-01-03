@@ -5,56 +5,13 @@ import { Autoplay, FreeMode } from "swiper/modules";
 import { motion } from "framer-motion";
 import "swiper/css";
 import "swiper/css/free-mode";
+import { ConnectionItem, FileType } from "@/src/services/interface";
+import { getForCards } from "@/src/utils/getFullimageUrl";
 
-const partners = [
-  {
-    id: 1,
-    name: "Company 1",
-    logo: "https://res.cloudinary.com/da403zlyf/image/upload/v1765486544/logo_smhyo8.webp",
-  },
-  {
-    id: 2,
-    name: "Company 2",
-    logo: "https://res.cloudinary.com/da403zlyf/image/upload/v1765486544/logo_smhyo8.webp",
-  },
-  {
-    id: 3,
-    name: "Company 3",
-    logo: "https://res.cloudinary.com/da403zlyf/image/upload/v1765486544/logo_smhyo8.webp",
-  },
-  {
-    id: 4,
-    name: "Company 4",
-    logo: "https://res.cloudinary.com/da403zlyf/image/upload/v1765486544/logo_smhyo8.webp",
-  },
-  {
-    id: 5,
-    name: "Company 5",
-    logo: "https://res.cloudinary.com/da403zlyf/image/upload/v1765486544/logo_smhyo8.webp",
-  },
-  {
-    id: 6,
-    name: "Company 6",
-    logo: "https://res.cloudinary.com/da403zlyf/image/upload/v1765486544/logo_smhyo8.webp",
-  },
-  {
-    id: 7,
-    name: "Company 7",
-    logo: "https://res.cloudinary.com/da403zlyf/image/upload/v1765486544/logo_smhyo8.webp",
-  },
-  {
-    id: 8,
-    name: "Company 8",
-    logo: "https://res.cloudinary.com/da403zlyf/image/upload/v1765486544/logo_smhyo8.webp",
-  },
-  {
-    id: 9,
-    name: "Company 9",
-    logo: "https://res.cloudinary.com/da403zlyf/image/upload/v1765486544/logo_smhyo8.webp",
-  },
-];
-
-export default function SlideArea() {
+interface Props {
+  existingData?: ConnectionItem[];
+}
+export default function SlideArea({ existingData }: Props) {
   return (
     <motion.div
       className="relative flex-1 overflow-hidden w-full py-6"
@@ -85,8 +42,8 @@ export default function SlideArea() {
         }}
         className="w-full lg:min-w-screen"
       >
-        {partners.map((partner, index) => (
-          <SwiperSlide key={partner.id} className="!w-auto">
+        {existingData?.map((partner, index) => (
+          <SwiperSlide key={partner.id} className="w-auto!">
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
@@ -97,7 +54,10 @@ export default function SlideArea() {
                 ease: "easeOut",
               }}
             >
-              <PartnerCard image={partner.logo} title={partner.name} />
+              <PartnerCard
+                image={getForCards(partner?.imageUrl as FileType)}
+                title={partner.translations?.[0]?.title}
+              />
             </motion.div>
           </SwiperSlide>
         ))}

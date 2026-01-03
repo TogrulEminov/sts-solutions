@@ -12,6 +12,7 @@ interface Props {
   homeData: any;
 }
 export default async function HomePageContainer({ homeData }: Props) {
+  
   return (
     <>
       <HeroSection sliderData={homeData?.data?.sliderData} />
@@ -20,9 +21,9 @@ export default async function HomePageContainer({ homeData }: Props) {
         existingData={homeData?.data?.servicesData}
       />
       <AboutSection exisingData={homeData?.data?.aboutData} />
-      <ServicesCategorySection />
-      <SolutionsSection />
-      <PartnerSection />
+      <ServicesCategorySection  sectionData={homeData?.sections?.servicesSubSection} existingData={homeData?.data?.servicesMainData}/>
+      <SolutionsSection  sectionData={homeData?.sections?.solutionsSection} existingData={homeData?.data?.solutionsData}/>
+      <PartnerSection   sectionData={homeData?.sections?.partnersSection} existingData={homeData?.data?.partnersData}/>
       <ProjectsSection />
       <ConsultingSection />
       <NewsSection />

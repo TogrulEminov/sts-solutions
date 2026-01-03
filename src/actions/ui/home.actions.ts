@@ -224,7 +224,25 @@ export const fetchHome = async ({ locale }: GetProps) => {
         },
       },
       include: {
-        subCategory: true,
+        subCategory: {
+          where: {
+            translations: {
+              some: {
+                locale: validatedLocale,
+              },
+            },
+          },
+          include: {
+            imageUrl: {
+              select: {
+                id: true,
+                publicUrl: true,
+                fileKey: true,
+              },
+            },
+            translations: true,
+          },
+        },
         imageUrl: {
           select: {
             id: true,
@@ -265,7 +283,7 @@ export const fetchHome = async ({ locale }: GetProps) => {
             slug: true,
             subTitle: true,
             description: true,
-            highlightWord:true,
+            highlightWord: true,
           },
         },
       },

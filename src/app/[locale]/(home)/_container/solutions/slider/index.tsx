@@ -7,8 +7,11 @@ import { Autoplay } from "swiper/modules";
 import { Swiper as SwiperCore } from "swiper/types";
 import AnimatedProjectButton from "@/src/ui/link/second";
 import SolutionsCard from "@/src/globalElements/cards/solutions";
-
-export default function SliderArea() {
+import { SolutionsItem } from "@/src/services/interface";
+interface Props {
+  existingData: SolutionsItem[];
+}
+export default function SliderArea({ existingData }: Props) {
   const swiperRef = useRef<SwiperCore | null>(null);
 
   const breakpoints = {
@@ -82,10 +85,10 @@ export default function SliderArea() {
         className="w-full lg:min-w-screen"
         loop={true}
       >
-        {Array.from({ length: 10 }).map((_, index) => {
+        {existingData?.map((solution) => {
           return (
-            <SwiperSlide className="h-full" key={index}>
-              <SolutionsCard />
+            <SwiperSlide className="h-full" key={solution?.documentId}>
+              <SolutionsCard solution={solution} />
             </SwiperSlide>
           );
         })}

@@ -442,6 +442,7 @@ export interface ServicesCategoryItem {
   gallery: FileType[] | null;
   createdAt: string;
   isMain: boolean;
+  subCategory: ServicesSubCategoryItem[];
   updatedAt: string;
   translations: ServicesCategoryItemTr[];
 }

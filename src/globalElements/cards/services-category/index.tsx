@@ -2,11 +2,19 @@
 import React from "react";
 import { motion } from "framer-motion";
 import CustomImage from "../../ImageTag";
-
-export default function ServicesCard() {
+import { FileType, ServicesSubCategoryItem } from "@/src/services/interface";
+import { getForCards } from "@/src/utils/getFullimageUrl";
+import { Link } from "@/src/i18n/navigation";
+interface Props {
+  service: ServicesSubCategoryItem;
+  category: string;
+}
+export default function ServicesCard({ service, category }: Props) {
+  const { translations, imageUrl } = service;
+  const { title, slug } = translations?.[0];
   return (
     <motion.div
-      className="rounded-xl overflow-hidden bg-white/17 border-2 border-transparent p-2 flex flex-col space-y-3 group cursor-pointer"
+      className="rounded-xl relative overflow-hidden bg-white/17 border-2 border-transparent p-2 flex flex-col space-y-3 group cursor-pointer"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
@@ -19,6 +27,19 @@ export default function ServicesCard() {
         },
       }}
     >
+      <Link
+        className="absolute block w-full h-full inset-0 z-2 opacity-0"
+        aria-label="Service Detail page link"
+        href={{
+          pathname: "/services/[category]/[slug]",
+          params: {
+            category: category,
+            slug: slug,
+          },
+        }}
+      >
+        {title}
+      </Link>
       {/* Image Container */}
       <motion.figure
         className="h-60 rounded-lg overflow-hidden relative"
@@ -27,9 +48,7 @@ export default function ServicesCard() {
         <CustomImage
           width={347}
           height={240}
-          src={
-            "https://i.pinimg.com/736x/17/d3/12/17d312159d1a5be61b88bb3ac8dab849.jpg"
-          }
+          src={getForCards(imageUrl as FileType)}
           title=""
           className="w-full h-full object-cover"
         />
@@ -58,7 +77,7 @@ export default function ServicesCard() {
           },
         }}
       >
-        Avtomatlaşdırma və İdarəetmə Sistemləri
+        {title}
       </motion.strong>
     </motion.div>
   );

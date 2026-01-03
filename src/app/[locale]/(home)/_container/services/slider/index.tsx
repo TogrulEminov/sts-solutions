@@ -17,8 +17,7 @@ export default function SliderArea({ existingData }: Props) {
     0: { slidesPerView: 1.5, spaceBetween: 10 },
     480: { slidesPerView: 2, spaceBetween: 10 },
     768: { slidesPerView: 3 },
-    1024: { slidesPerView: 4.5 },
-    1600: { slidesPerView: 5.5 },
+    1024: { slidesPerView: 3.5 },
   };
   const autoplayOptions = {
     delay: 3500,

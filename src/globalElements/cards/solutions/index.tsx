@@ -2,8 +2,14 @@
 import { motion } from "framer-motion";
 import CustomImage from "../../ImageTag";
 import { Link } from "@/src/i18n/navigation";
-
-export default function SolutionsCard() {
+import { FileType, SolutionsItem } from "@/src/services/interface";
+import { getForCards } from "@/src/utils/getFullimageUrl";
+interface Props {
+  solution: SolutionsItem;
+}
+export default function SolutionsCard({ solution }: Props) {
+  const { imageUrl, translations } = solution;
+  const { slug, title } = translations?.[0];
   return (
     <motion.div
       className="relative overflow-hidden rounded-lg lg:rounded-[20px] h-60 lg:h-120 flex items-end justify-start group cursor-pointer"
@@ -13,12 +19,17 @@ export default function SolutionsCard() {
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       whileHover="hover"
     >
-      <Link href={{
-        pathname:"/solutions/[slug]",
-        params:{
-          slug:"test"
-        }
-      }} className="absolute inset-0 w-full h-full z-1 opacity-0">   PLC, SCADA sistemlərinin qurulması</Link>
+      <Link
+        href={{
+          pathname: "/solutions/[slug]",
+          params: {
+            slug: slug,
+          },
+        }}
+        className="absolute inset-0 w-full h-full z-1 opacity-0"
+      >
+        {title}
+      </Link>
       <motion.div
         className="absolute inset-0 w-full h-full overflow-hidden"
         variants={{
@@ -33,9 +44,7 @@ export default function SolutionsCard() {
           height={481}
           title=""
           className="w-full h-full object-cover"
-          src={
-            "https://i.pinimg.com/736x/44/bd/f0/44bdf034c61356032e5931a3343edc1f.jpg"
-          }
+          src={getForCards(imageUrl as FileType)}
         />
         {/* Gradient Overlay */}
         <motion.div
@@ -72,7 +81,7 @@ export default function SolutionsCard() {
           ease: [0.16, 1, 0.3, 1],
         }}
       >
-        PLC, SCADA sistemlərinin qurulması
+        {title}
       </motion.strong>
 
       <motion.div
