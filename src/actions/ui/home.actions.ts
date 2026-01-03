@@ -20,6 +20,7 @@ export const fetchHome = async ({ locale }: GetProps) => {
     blogsData,
     fagData,
     servicesMainData,
+    contactData,
     sections,
   ] = await Promise.all([
     db.slider.findMany({
@@ -254,6 +255,19 @@ export const fetchHome = async ({ locale }: GetProps) => {
       },
       take: 12,
     }),
+    db.contactInformation.findFirst({
+      where: {
+        isDeleted: false,
+        translations: {
+          some: {
+            locale: validatedLocale,
+          },
+        },
+      },
+      include: {
+        translations: true,
+      },
+    }),
     // Section Contents
     db.sectionContent.findMany({
       where: {
@@ -264,6 +278,7 @@ export const fetchHome = async ({ locale }: GetProps) => {
             "servicesSub",
             "partners",
             "consulting",
+            "projects",
             "blog",
             "fag",
             "solutions",
@@ -306,6 +321,7 @@ export const fetchHome = async ({ locale }: GetProps) => {
       projectsData,
       blogsData,
       fagData,
+      contactData,
       servicesMainData,
     },
     sections: {

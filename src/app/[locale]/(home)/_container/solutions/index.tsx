@@ -5,7 +5,7 @@ interface Props {
   sectionData: SectionContent;
   existingData: SolutionsItem[];
 }
-export default function SolutionsSection({ sectionData, existingData }: Props) {
+export default async function  SolutionsSection({ sectionData, existingData }: Props) {
   if (!existingData.length || !sectionData) {
     return null;
   }

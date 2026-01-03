@@ -12,7 +12,6 @@ interface Props {
   homeData: any;
 }
 export default async function HomePageContainer({ homeData }: Props) {
-  
   return (
     <>
       <HeroSection sliderData={homeData?.data?.sliderData} />
@@ -21,13 +20,35 @@ export default async function HomePageContainer({ homeData }: Props) {
         existingData={homeData?.data?.servicesData}
       />
       <AboutSection exisingData={homeData?.data?.aboutData} />
-      <ServicesCategorySection  sectionData={homeData?.sections?.servicesSubSection} existingData={homeData?.data?.servicesMainData}/>
-      <SolutionsSection  sectionData={homeData?.sections?.solutionsSection} existingData={homeData?.data?.solutionsData}/>
-      <PartnerSection   sectionData={homeData?.sections?.partnersSection} existingData={homeData?.data?.partnersData}/>
-      <ProjectsSection />
-      <ConsultingSection />
-      <NewsSection />
-      <FagSection />
+      <ServicesCategorySection
+        sectionData={homeData?.sections?.servicesSubSection}
+        existingData={homeData?.data?.servicesMainData}
+      />
+      <SolutionsSection
+        sectionData={homeData?.sections?.solutionsSection}
+        existingData={homeData?.data?.solutionsData}
+      />
+      <PartnerSection
+        sectionData={homeData?.sections?.partnersSection}
+        existingData={homeData?.data?.partnersData}
+      />
+      <ProjectsSection
+        sectionData={homeData?.sections?.projectsSection}
+        existingData={homeData?.data?.projectsData}
+      />
+      <ConsultingSection
+        sectionData={homeData?.sections?.consultingSection}
+        existingData={homeData?.data?.contactData}
+        services={homeData?.data?.servicesData}
+      />
+      <NewsSection
+        sectionData={homeData?.sections?.blogSection}
+        existingData={homeData?.data?.blogsData}
+      />
+      <FagSection
+        sectionData={homeData?.sections?.fagSection}
+        existingData={homeData?.data?.fagData}
+      />
     </>
   );
 }

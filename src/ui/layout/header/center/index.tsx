@@ -47,7 +47,7 @@ export default function HeaderCenter({ isSticky, contactData }: Props) {
                       href={`tel:${clearPhoneRegex(contactData?.phone)}`}
                       className="font-normal font-inter text-xs text-white transition-all duration-300 hover:text-white/80 hover:translate-x-1"
                     >
-                      {clearPhoneRegex(contactData?.phone)}
+                      {contactData?.phone}
                     </Link>
                   </article>
                 </li>

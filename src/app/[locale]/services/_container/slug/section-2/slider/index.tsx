@@ -7,7 +7,12 @@ import ReactFancyBox from "@/src/lib/fancybox";
 import { Swiper as SwiperCore } from "swiper/types";
 import Icons from "@/public/icons";
 import { useRef } from "react";
-export default function SliderArea() {
+import { FileType } from "@/src/services/interface";
+import { getForCards } from "@/src/utils/getFullimageUrl";
+interface Props {
+  existingData: FileType[];
+}
+export default function SliderArea({ existingData }: Props) {
   const swiperRef = useRef<SwiperCore | null>(null);
   const breakpoints = {
     0: { slidesPerView: 2, spaceBetween: 10 },
@@ -38,7 +43,7 @@ export default function SliderArea() {
       swiperRef.current.slidePrev();
     }
   };
-
+  if (!existingData?.length) return;
   return (
     <ReactFancyBox className="flex flex-col space-y-5 lg:space-y-10">
       <div className="container flex items-center justify-end">
@@ -77,10 +82,10 @@ export default function SliderArea() {
         className="w-full lg:min-w-screen"
         loop={true}
       >
-        {Array.from({ length: 10 }).map((_, index) => {
+        {existingData.map((img, index) => {
           return (
             <SwiperSlide className="h-40! lg:h-full!" key={index}>
-              <GalleryCard />
+              <GalleryCard img={getForCards(img as FileType)} index={index} />
             </SwiperSlide>
           );
         })}

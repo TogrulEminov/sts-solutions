@@ -70,7 +70,7 @@ export default function CategriesUptadeContent() {
         existingData?.translations?.[0]?.seo.metaDescription || "",
       metaKeywords: existingData?.translations?.[0]?.seo.metaKeywords || "",
       locale: locale as CustomLocales,
-      tags: parseJSON<CountGenericType>(
+      features: parseJSON<CountGenericType>(
         existingData?.translations?.[0]?.features
       ),
     }),
@@ -151,7 +151,7 @@ export default function CategriesUptadeContent() {
               <FormTextArea label="Qısa məlumat" fieldName="description" />
             </FieldBlock>
             {/* Features Section */}
-            <FieldBlock title="Teqler">
+            <FieldBlock title="Xüsusiyyətlər">
               <div className="space-y-3 max-w-sm">
                 {fields.map((field, index) => (
                   <div key={field.id} className="flex items-start gap-2">
@@ -163,10 +163,6 @@ export default function CategriesUptadeContent() {
                       <FormInput
                         fieldName={`features.${index}.count` as const}
                         placeholder={`Say ${index + 1}`}
-                      />
-                      <FormInput
-                        fieldName={`features.${index}.suffix` as const}
-                        placeholder={`Suffix ${index + 1}`}
                       />
                     </div>
                     <button

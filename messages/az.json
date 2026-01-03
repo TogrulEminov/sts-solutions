@@ -60,14 +60,25 @@
     "selectService": "Xidmət seçin",
     "note": "Mesajınız",
     "sending": "Göndərilir",
-    "send": "Göndər"
+    "send": "Göndər",
+    "contactFormHome": "Əlaqə forması",
+    "contactFormDescHome": "Formu doldurun, sizinlə əlaqə saxlayaq"
   },
   "home": {
     "main": "Ana səhifə",
-    "services":"Bütün xidmətlərimiz",
-    "readMore":"Daha ətraflı",
-    "applyBtn":"Bizə müraciət et",
-    "sectors":"Xidmət sektorlarımız",
-    "moreInfo":"Daha çox məlumat al"
+    "services": "Bütün xidmətlərimiz",
+    "readMore": "Daha ətraflı",
+    "applyBtn": "Bizə müraciət et",
+    "sectors": "Xidmət sektorlarımız",
+    "moreInfo": "Daha çox məlumat al",
+    "projectsLink": "Layihələrimizlə tanış ol",
+    "send": "Göndər",
+    "sending": "Göndərilir",
+    "all": "Hamısı",
+    "seeMore": "Ətraflı bax"
+  },
+  "services": {
+    "subTitle": "Xidmətlərimizə aiddir",
+    "subTitleTwo": "Xidmətlərimizin tərkibinə daxildir"
   }
 }

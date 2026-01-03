@@ -4,12 +4,14 @@ import {
   MotionParagraph,
   MotionStrong,
 } from "@/src/lib/motion/motion";
+import { InfoGenericType } from "@/src/services/interface";
 
 interface Props {
   index: number;
+  item: InfoGenericType;
 }
 
-export default function ServicesProduct({ index }: Props) {
+export default function ServicesProduct({ index, item }: Props) {
   return (
     <MotionDiv
       className="bg-ui-23 px-4 lg:px-8 py-2 lg:py-4 rounded-xl lg:rounded-[20px] flex flex-col space-y-5"
@@ -35,7 +37,7 @@ export default function ServicesProduct({ index }: Props) {
         <span className="w-8 h-8 shrink-0 lg:w-13.5 lg:h-13.5 rounded-full bg-ui-2 font-inter font-extrabold text-white flex items-center justify-center">
           {index}
         </span>
-        Avtomatika idarəetmə panellərinin yığılması, təmiri, modernizasiyası
+        {item?.title}
       </MotionStrong>
 
       <MotionParagraph
@@ -46,12 +48,7 @@ export default function ServicesProduct({ index }: Props) {
         }}
         transition={{ delay: 0.4, duration: 0.5 }}
       >
-        Avtomatika idarəetmə panelləri sənaye və texnoloji proseslərin mərkəzi
-        idarəetmə nöqtəsi olaraq avadanlıqların təhlükəsiz, stabil və effektiv
-        işləməsini təmin edir. Şirkətimiz müxtəlif təyinatlı avtomatika
-        panellərinin layihələndirilməsi, yığılması, istismara verilməsi, texniki
-        baxışı və modernizasiyası üzrə kompleks mühəndislik xidmətləri təqdim
-        edir.
+        {item?.description}
       </MotionParagraph>
     </MotionDiv>
   );

@@ -8,7 +8,7 @@ interface Props {
   existingData: ConnectionItem[];
 }
 export default function PartnerSection({ sectionData, existingData }: Props) {
-  if (!existingData.length || !sectionData) {
+  if (!existingData?.length || !sectionData) {
     return null;
   }
 

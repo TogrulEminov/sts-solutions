@@ -3,59 +3,21 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { Plus, Minus } from "lucide-react";
-
-interface AccordionItem {
-  id: string;
-  question: string;
-  answer: string;
-}
+import { FagItem } from "@/src/services/interface";
 
 interface FaqAccordionProps {
-  items?: AccordionItem[];
+  items?: FagItem[];
 }
 
-const defaultItems: AccordionItem[] = [
-  {
-    id: "1",
-    question: "STS Engineering hansı xidmətləri təqdim edir?",
-    answer:
-      "STS Engineering müəssisələr üçün texniki problemlərin həllini, avadanlıq təmiri və quraşdırılması, mühəndislik konsultasiyası və 24/7 texniki dəstək xidmətlərini təqdim edir.",
-  },
-  {
-    id: "2",
-    question: "Xidmət müqaviləsi necə bağlanır?",
-    answer:
-      "Xidmət müqaviləsi bağlamaq üçün bizimlə əlaqə saxlayın, ehtiyaclarınızı müzakirə edək və sizin üçün ən uyğun həll planını hazırlayaq.",
-  },
-  {
-    id: "3",
-    question: "Texniki dəstək nə qədər sürətlidir?",
-    answer:
-      "24/7 xidmət göstəririk və təcili hallarda 2 saat ərzində yerində dəstək təmin edirik.",
-  },
-  {
-    id: "4",
-    question: "Hansı sənaye sahələrində çalışırsınız?",
-    answer:
-      "Biz neft və qaz, kimya sənayesi, əczaçılıq, qida istehsalı və digər sənaye sahələrində geniş təcrübəyə malikik.",
-  },
-  {
-    id: "5",
-    question: "Qiymətlər necə müəyyən edilir?",
-    answer:
-      "Qiymətlər layihənin mürəkkəbliyi, avadanlıqların növü və xidmətin həcmindən asılı olaraq fərdi qaydada müəyyən edilir.",
-  },
-];
+export default function FaqAccordion({ items }: FaqAccordionProps) {
+  const [openId, setOpenId] = useState<number | null>(null);
 
-export default function FaqAccordion({
-  items = defaultItems,
-}: FaqAccordionProps) {
-  const [openId, setOpenId] = useState<string | null>(null);
-
-  const toggleAccordion = (id: string) => {
+  const toggleAccordion = (id: number) => {
     setOpenId(openId === id ? null : id);
   };
-
+  if (!items?.length) {
+    return null;
+  }
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -79,7 +41,7 @@ export default function FaqAccordion({
             aria-expanded={openId === item.id}
           >
             <span className="text-base lg:text-lg font-semibold text-ui-5 group-hover:text-ui-4 transition-colors duration-200">
-              {item.question}
+              {item.translations?.[0]?.title}
             </span>
             <motion.div
               animate={{ rotate: openId === item.id ? 180 : 0 }}
@@ -110,7 +72,7 @@ export default function FaqAccordion({
                     transition={{ duration: 0.3 }}
                     className="text-slate-600 text-sm lg:text-base leading-relaxed"
                   >
-                    {item.answer}
+                    {item.translations?.[0]?.description}
                   </motion.p>
                 </div>
               </motion.div>

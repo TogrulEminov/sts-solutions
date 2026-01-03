@@ -59,20 +59,12 @@
       "label": "Haqqımızda"
     },
     {
-      "value": "certificates",
-      "label": "Sertifikatlar"
+      "value": "solutions",
+      "label": "Həllərimiz"
     },
     {
-      "value": "media",
-      "label": "Medya video"
-    },
-    {
-      "value": "gallery",
-      "label": "Qalereya"
-    },
-    {
-      "value": "partner",
-      "label": "Partnyorlar"
+      "value": "projects",
+      "label": "Lahiyələrimiz"
     },
     {
       "value": "contact",
@@ -85,6 +77,10 @@
       "label": "Əsas Xidmətlər bölümü"
     },
     {
+      "value": "servicesCategoriesMain",
+      "label": "Xidmətlər səhifəsi bölümü"
+    },
+    {
       "value": "servicesSub",
       "label": "Alt Xidmətlər bölümü"
     },
@@ -95,6 +91,10 @@
     {
       "value": "partners",
       "label": "Partnyorlar bölümü"
+    },
+    {
+      "value": "projects",
+      "label": "Lahiyələrimiz"
     },
     {
       "value": "blog",

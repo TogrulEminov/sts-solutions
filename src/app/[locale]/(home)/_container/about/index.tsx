@@ -4,7 +4,7 @@ import { IAboutHome } from "@/src/services/interface";
 interface Props {
   exisingData: IAboutHome;
 }
-export default function AboutSection({ exisingData }: Props) {
+export default async function AboutSection({ exisingData }: Props) {
   return (
     <section className="lg:py-25 py-10">
       <div className="container">

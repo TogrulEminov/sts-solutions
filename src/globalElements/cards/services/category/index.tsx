@@ -10,14 +10,21 @@ import {
   MotionStrong,
 } from "@/src/lib/motion/motion";
 import logo from "@/public/assets/logo/sts-logo.svg";
-export default function ServicesCategoryCard() {
+import { ServicesSubCategoryItem } from "@/src/services/interface";
+interface Props {
+  service: ServicesSubCategoryItem;
+  category: string;
+}
+export default function ServicesCategoryCard({ service, category }: Props) {
+  const { translations } = service;
+  const { title, slug, seo } = translations?.[0];
   return (
     <Link
       href={{
         pathname: "/services/[category]/[slug]",
         params: {
-          category: "muhendislik-xidmetleri",
-          slug: "avtomatlasdirma-ve-idaretme-sistemleri",
+          category: category,
+          slug: slug,
         },
       }}
       className="block"
@@ -32,7 +39,6 @@ export default function ServicesCategoryCard() {
         }}
         transition={{ duration: 0.3, ease: "easeOut" }}
       >
-        {/* Background overlay animation */}
         <MotionDiv
           className="absolute w-full h-full inset-0 z-1 bg-ui-2"
           variants={{
@@ -43,7 +49,6 @@ export default function ServicesCategoryCard() {
           style={{ transformOrigin: "bottom" }}
         />
 
-        {/* Icon container */}
         <MotionFigure
           className="w-10 lg:w-16 h-10 lg:h-16 mb-5 rounded-xl relative z-2 flex items-center justify-center"
           variants={{
@@ -55,13 +60,12 @@ export default function ServicesCategoryCard() {
           <CustomImage
             width={32}
             height={32}
-            title=""
+            title={seo?.metaTitle}
             src={logo}
             className="w-8 lg:w-13 h-auto lg:h-10 brightness-0 invert-100 duration-300 transition-all group-hover:invert-0"
           />
         </MotionFigure>
 
-        {/* Title */}
         <MotionStrong
           className="relative z-2 text-xl lg:text-[28px] lg:leading-8 font-extrabold"
           variants={{
@@ -70,10 +74,8 @@ export default function ServicesCategoryCard() {
           }}
           transition={{ duration: 0.3 }}
         >
-          Mühəndislik xidmətlərimiz
+          {title}
         </MotionStrong>
-
-        {/* Arrow button */}
         <MotionSpan
           className="w-10 h-10 lg:w-14 lg:h-14  absolute z-2 rounded-lg bg-ui-1 bottom-4 text-white flex items-center justify-center right-4"
           variants={{

@@ -5,17 +5,12 @@ import { MotionArticle, MotionDiv } from "@/src/lib/motion/motion";
 import Icons from "@/public/icons";
 import logo from "@/public/assets/logo/sts-logo.svg";
 import CustomImage from "@/src/globalElements/ImageTag";
-const services = [
-  "Mühəndislik",
-  "Təchizat",
-  "Service",
-  "Energy Management",
-  "SmartFactory",
-  "Smart City",
-  "ERP",
-];
-
-export default function ServicesTagSection() {
+import { SectionContent, ServicesCategoryItem } from "@/src/services/interface";
+interface Props {
+  services: ServicesCategoryItem[];
+  sectionData:SectionContent
+}
+export default function ServicesTagSection({ services ,sectionData}: Props) {
   const { ref, inView } = useInView({
     threshold: 0.2,
     triggerOnce: true,
@@ -35,12 +30,10 @@ export default function ServicesTagSection() {
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
             <strong className="font-inter text-2xl lg:text-[40px] lg:leading-12 text-ui-21 font-bold">
-              Xidmət təkliflərimiz
+            {sectionData?.translations?.[0]?.title}
             </strong>
             <p className="font-inter font-medium text-base text-ui-21">
-              İstənilən sənaye prosesini daha təhlükəsiz, sürətli və effektiv
-              edən ağıllı mühəndislik və avtomatlaşdırma həllərini sizin üçün
-              hazırlayırıq.
+              {sectionData?.translations?.[0]?.description}
             </p>
           </MotionArticle>
 
@@ -57,7 +50,12 @@ export default function ServicesTagSection() {
                 className="lg:col-span-4"
               >
                 <Link
-                  href={"/"}
+                  href={{
+                    pathname: "/services/[category]",
+                    params: {
+                      category: item?.translations?.[0]?.slug,
+                    },
+                  }}
                   className="relative flex gap-3 lg:gap-5 items-center justify-start w-full p-2 lg:p-4 bg-ui-2 rounded-xl lg:rounded-[20px] min-h-12 lg:min-h-25.5 font-inter font-bold lg:text-[28px] lg:leading-9 text-white hover:shadow-lg transition-shadow duration-300 overflow-hidden group"
                 >
                   <div className="absolute inset-0 w-full h-full">
@@ -74,7 +72,7 @@ export default function ServicesTagSection() {
                   </figure>
 
                   <span className="relative z-10 text-sm lg:text-base">
-                    {item}
+                    {item?.translations?.[0]?.title}
                   </span>
                   <Icons.ArrowEast
                     fill="currentColor"

@@ -144,7 +144,7 @@ interface CategoryTranslation {
   description: string;
   id: number;
   documentId: string;
-  features?: InfoGenericType[];
+  features?: any[];
   locale: string;
   seo: Seo;
 }
@@ -157,6 +157,7 @@ export interface CategoryItem {
   imageUrl: FileType | null;
   createdAt: string;
   updatedAt: string;
+  features: any[];
   translations: CategoryTranslation[];
 }
 

@@ -3,6 +3,9 @@ import ServicesDetailPageContainer from "../../_container/slug";
 import { Metadata } from "next";
 import { getServicesStaticById } from "@/src/actions/static/service.actions";
 import { routing } from "@/src/i18n/routing";
+import { validateLocale } from "@/src/helper/validateLocale";
+import { fetchServicesSubCategory } from "@/src/actions/ui/service-sub-category.actions";
+import { notFound } from "next/navigation";
 interface PageProps {
   params: Promise<{ locale: string; slug: string; category: string }>;
 }
@@ -49,6 +52,16 @@ export async function generateStaticParams() {
     console.error("generateStaticParams error:", error);
   }
 }
-export default async function ServicesDetailPage() {
-  return <ServicesDetailPageContainer />;
+export default async function ServicesDetailPage({ params }: PageProps) {
+  const { slug, locale } = await params;
+  const validatedLocale = validateLocale(locale);
+
+  const existingData = await fetchServicesSubCategory({
+    locale: validatedLocale,
+    slug: slug,
+  });
+  if (!existingData?.data?.servicesDetailData?.translations?.length) {
+    notFound();
+  }
+  return <ServicesDetailPageContainer existingData={existingData}/>;
 }

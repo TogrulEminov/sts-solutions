@@ -3,12 +3,19 @@ import CustomImage from "@/src/globalElements/ImageTag";
 import { Link } from "@/src/i18n/navigation";
 import React from "react";
 import logo from "@/public/assets/logo/sts-logo.svg";
-export default function ServicesMainCard() {
+import { ServicesCategoryItem } from "@/src/services/interface";
+interface Props {
+  service: ServicesCategoryItem;
+}
+export default function ServicesMainCard({ service }: Props) {
+  const { translations } = service;
+
+  const { title, slug } = translations?.[0];
   return (
     <Link
       href={{
         pathname: "/services/[category]",
-        params: { category: "muhendislik-xidmetleri" },
+        params: { category: slug },
       }}
       className="flex flex-col relative p-4 h-60 lg:h-80 rounded-2xl overflow-hidden group  border border-ui-27 group-hover:border-ui-27"
     >
@@ -17,13 +24,13 @@ export default function ServicesMainCard() {
         <CustomImage
           width={64}
           height={64}
-          title=""
+          title={title}
           src={logo}
           className="w-8 lg:w-13 h-auto lg:h-10 brightness-0 invert-0 duration-300 transition-all group-hover:invert-100"
         />
       </figure>
       <strong className="relative 0 z-2 text-xl lg:text-[28px] lg:leading-8 duration-300 transition-all text-white  group-hover:text-ui-1 font-extrabold">
-        Mühəndislik xidmətlərimiz
+        {title}
       </strong>
 
       <span className="w-10 h-10 lg:w-14 lg:h-14 absolute z-2 rounded-xl lg:rounded-2xl bg-ui-1 bottom-4  text-white flex items-center justify-center right-4">

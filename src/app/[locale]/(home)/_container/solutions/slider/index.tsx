@@ -8,12 +8,13 @@ import { Swiper as SwiperCore } from "swiper/types";
 import AnimatedProjectButton from "@/src/ui/link/second";
 import SolutionsCard from "@/src/globalElements/cards/solutions";
 import { SolutionsItem } from "@/src/services/interface";
+import { useTranslations } from "next-intl";
 interface Props {
   existingData: SolutionsItem[];
 }
 export default function SliderArea({ existingData }: Props) {
   const swiperRef = useRef<SwiperCore | null>(null);
-
+  const t = useTranslations();
   const breakpoints = {
     0: { slidesPerView: 1.5, spaceBetween: 10 },
     480: { slidesPerView: 2, spaceBetween: 10 },
@@ -49,26 +50,28 @@ export default function SliderArea({ existingData }: Props) {
   return (
     <div className="flex flex-col space-y-10">
       <div className="flex items-center justify-between">
-        <AnimatedProjectButton link="/" title="Ətraflı bax" />
-        <div className="hidden lg:flex items-center gap-x-3 justify-center  w-fit">
-          <button
-            type="button"
-            aria-label="prev button for services slider"
-            onClick={goPrev}
-            className=" cursor-pointer w-10 h-10 lg:w-17 lg:h-17 flex items-center justify-center rounded-full  bg-ui-1     transition-colors duration-200 hover:bg-ui-2"
-          >
-            <Icons.ArrowLeft />
-          </button>
+        <AnimatedProjectButton link="/solutions" title={t("home.seeMore")} />
+        {existingData?.length > 3 && (
+          <div className="hidden lg:flex items-center gap-x-3 justify-center  w-fit">
+            <button
+              type="button"
+              aria-label="prev button for services slider"
+              onClick={goPrev}
+              className=" cursor-pointer w-10 h-10 lg:w-17 lg:h-17 flex items-center justify-center rounded-full  bg-ui-1     transition-colors duration-200 hover:bg-ui-2"
+            >
+              <Icons.ArrowLeft />
+            </button>
 
-          <button
-            type="button"
-            onClick={goNext}
-            aria-label="next button for services slider"
-            className="w-10 h-10 lg:w-17 lg:h-17 cursor-pointer  flex items-center justify-center rounded-full  bg-ui-1     transition-colors duration-200 hover:bg-ui-2"
-          >
-            <Icons.ArrowRight />
-          </button>
-        </div>
+            <button
+              type="button"
+              onClick={goNext}
+              aria-label="next button for services slider"
+              className="w-10 h-10 lg:w-17 lg:h-17 cursor-pointer  flex items-center justify-center rounded-full  bg-ui-1     transition-colors duration-200 hover:bg-ui-2"
+            >
+              <Icons.ArrowRight />
+            </button>
+          </div>
+        )}
       </div>
       <MySwiper
         modules={[Autoplay]}

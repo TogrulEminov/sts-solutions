@@ -85,12 +85,11 @@ export default function ContactModal({ servicesData }: Props) {
   });
   const [progress, setProgress] = useState(0);
 
-  // eslint-disable-next-line react-hooks/incompatible-library
-  const title = methods.watch("title");
-  const email = methods.watch("email");
-  const phone = methods.watch("phone");
-  const services = methods.watch("services");
-  const message = methods.watch("message");
+  const title = methods.getValues("title");
+  const email = methods.getValues("email");
+  const phone = methods.getValues("phone");
+  const services = methods.getValues("services");
+  const message = methods.getValues("message");
 
   // useMemo ilə hesablama
   const { filledCount, totalFields, progressPercentage } = useMemo(() => {
@@ -130,7 +129,7 @@ export default function ContactModal({ servicesData }: Props) {
     servicesData?.flatMap((item) =>
       item.translations.map((tr) => ({
         ...tr,
-        value: tr.documentId,
+        value: tr.title,
         label: tr.title,
       }))
     ) || [],
@@ -242,6 +241,7 @@ export default function ContactModal({ servicesData }: Props) {
           <motion.div
             className="flex flex-col space-y-1"
             variants={fieldVariants}
+            key="title-field"
           >
             <label className="font-inter font-medium text-sm text-ui-12">
               {t("contactForm.name")} <sup className="text-red-500">*</sup>
@@ -266,6 +266,7 @@ export default function ContactModal({ servicesData }: Props) {
 
           {/* Email Field */}
           <motion.div
+            key="email-field"
             className="flex flex-col space-y-1"
             variants={fieldVariants}
           >
@@ -292,6 +293,7 @@ export default function ContactModal({ servicesData }: Props) {
 
           {/* Phone Field */}
           <motion.div
+            key="phone-field"
             className="flex flex-col space-y-1 col-span-2"
             variants={fieldVariants}
           >
@@ -320,6 +322,7 @@ export default function ContactModal({ servicesData }: Props) {
 
           {/* Services Field */}
           <motion.div
+            key="services-field"
             className="flex flex-col space-y-1 lg:col-span-2"
             variants={fieldVariants}
           >
@@ -350,6 +353,7 @@ export default function ContactModal({ servicesData }: Props) {
 
           {/* Message Field */}
           <motion.div
+            key="message-field"
             className="flex flex-col space-y-1 lg:col-span-2"
             variants={fieldVariants}
           >
@@ -376,7 +380,11 @@ export default function ContactModal({ servicesData }: Props) {
           </motion.div>
 
           {/* Submit Button */}
-          <motion.div className="lg:col-span-2 flex" variants={fieldVariants}>
+          <motion.div
+            className="lg:col-span-2 flex"
+            key="submit-button"
+            variants={fieldVariants}
+          >
             <motion.button
               type="submit"
               disabled={isPending}

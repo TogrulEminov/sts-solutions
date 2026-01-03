@@ -1,9 +1,11 @@
-import React from "react";
 import ServicesCategoryPageContainer from "../_container/category";
 import { Metadata } from "next";
 import { generatePageMetadata } from "@/src/utils/metadata";
 import { getServicesStaticById } from "@/src/actions/static/service.actions";
 import { routing } from "@/src/i18n/routing";
+import { validateLocale } from "@/src/helper/validateLocale";
+import { fetchServicesCategory } from "@/src/actions/ui/service-category.actions";
+import { notFound } from "next/navigation";
 interface PageProps {
   params: Promise<{ locale: string; category: string }>;
 }
@@ -37,6 +39,17 @@ export async function generateStaticParams() {
     console.error("generateStaticParams error:", error);
   }
 }
-export default async function ServicesPage() {
-  return <ServicesCategoryPageContainer />;
+export default async function ServicesPage({ params }: PageProps) {
+  const { locale, category } = await params;
+  const validatedLocale = validateLocale(locale);
+
+  const existingData = await fetchServicesCategory({
+    locale: validatedLocale,
+    category: category,
+  });
+
+  if (!existingData?.data?.servicesDetailData?.translations?.length) {
+    notFound();
+  }
+  return <ServicesCategoryPageContainer existingData={existingData}/>;
 }

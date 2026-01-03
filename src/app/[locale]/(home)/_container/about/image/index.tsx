@@ -5,7 +5,7 @@ interface Props {
   gallery?: FileType[];
   title?: string;
 }
-export default function AboutImage({ gallery, title }: Props) {
+export default  async function AboutImage({ gallery, title }: Props) {
   return (
     <div className="relative w-full   lg:-left-16 2xl:-left-25">
       <div className="relative flex flex-col  min-h-[300px] lg:min-h-[600px]">

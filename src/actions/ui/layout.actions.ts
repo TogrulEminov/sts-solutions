@@ -31,6 +31,7 @@ const fetchLayout = async ({ locale }: GetProps) => {
     }),
     db.servicesCategory.findMany({
       where: {
+        isDeleted: false,
         translations: {
           some: {
             locale: validatedLocale,

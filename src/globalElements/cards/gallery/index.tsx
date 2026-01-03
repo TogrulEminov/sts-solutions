@@ -6,15 +6,14 @@ import Link from "next/link";
 interface Props {
   index?: number;
   className?: string;
+  img:string
 }
 
-export default function GalleryCard({ index = 0, className }: Props) {
+export default function GalleryCard({ index = 0, className ,img}: Props) {
   return (
     <Link
       data-fancybox="gallery"
-      href={
-        "https://res.cloudinary.com/da403zlyf/image/upload/v1766332215/068b0ad823abd6d13ea028a7c184bda060f72f3d_fwver7.png"
-      }
+      href={img}
       className={`${styles.galleryCard} ${className} rounded-xl overflow-hidden group h-full cursor-pointer relative`}
       style={{ animationDelay: `${index * 0.1}s` }}
     >
@@ -22,9 +21,7 @@ export default function GalleryCard({ index = 0, className }: Props) {
         <CustomImage
           width={300}
           height={300}
-          src={
-            "https://res.cloudinary.com/da403zlyf/image/upload/v1766332215/068b0ad823abd6d13ea028a7c184bda060f72f3d_fwver7.png"
-          }
+          src={img}
           title=""
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
         />

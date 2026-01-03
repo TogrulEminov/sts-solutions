@@ -3,18 +3,19 @@ import React, { Suspense } from "react";
 import { Pagination } from "antd";
 import { useRouter, usePathname } from "@/src/i18n/navigation";
 import { useSearchParams } from "next/navigation";
+import { PaginationItem } from "@/src/services/interface";
 
 interface GlobalPaginationProps {
-  total: number;
+  paginations: PaginationItem;
 }
 
-const GlobalPagination: React.FC<GlobalPaginationProps> = ({ total }) => {
+const GlobalPagination: React.FC<GlobalPaginationProps> = ({ paginations }) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const currentPage = parseInt(searchParams.get("page") || "1", 10);
-  const pageSize = parseInt(searchParams.get("pageSize") || "10", 10);
+  const currentPage = parseInt(searchParams.get("page") || "1", 12);
+  const pageSize = parseInt(searchParams.get("pageSize") || "12", 12);
 
   const onChange = (page: number, newPageSize: number) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -23,7 +24,7 @@ const GlobalPagination: React.FC<GlobalPaginationProps> = ({ total }) => {
 
     router.push(`${pathname}?${params.toString()}` as any);
   };
-
+  if (paginations?.page <= paginations?.totalPages) return null;
   return (
     <Suspense>
       <div className="w-full flex items-center justify-center">
@@ -31,7 +32,7 @@ const GlobalPagination: React.FC<GlobalPaginationProps> = ({ total }) => {
           current={currentPage}
           pageSize={pageSize}
           showSizeChanger={false}
-          total={total}
+          total={paginations?.totalPages}
           onChange={onChange}
         />
       </div>

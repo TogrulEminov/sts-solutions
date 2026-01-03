@@ -5,7 +5,7 @@ import {
 } from "@/src/schema/form.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useTransition } from "react";
 import { motion } from "framer-motion";
 import FormWrapper from "@/src/ui/FormBuilder/FormWrapper/FormWrapper";
 import FormInput from "@/src/ui/FormBuilder/components/FormInput/FormInput";
@@ -13,6 +13,10 @@ import FormPhone from "@/src/ui/FormBuilder/components/FormPhone";
 import FormSelect from "@/src/ui/FormBuilder/components/FormSelect/FormSelect";
 import FormTextArea from "@/src/ui/FormBuilder/components/FormTextArea/FormTextArea";
 import { CheckCircle2 } from "lucide-react";
+import { createContactUs } from "@/src/actions/ui/form.actions";
+import { useTranslations } from "next-intl";
+import { ServicesCategoryItem } from "@/src/services/interface";
+import { useDropdownOptions } from "@/src/hooks/useDropdownOptions";
 
 const containerVariants = {
   hidden: { opacity: 0, y: 50 },
@@ -52,7 +56,11 @@ const fieldVariants = {
   },
 };
 
-export default function FormContactWrapper() {
+interface Props {
+  servicesData: ServicesCategoryItem[];
+}
+export default function FormContactWrapper({ servicesData }: Props) {
+  const t = useTranslations();
   const methods = useForm<CreateCallActionInput>({
     mode: "onChange",
     resolver: zodResolver(createCallActionSchema),
@@ -66,16 +74,13 @@ export default function FormContactWrapper() {
   });
 
   const [progress, setProgress] = useState(0);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
-  // eslint-disable-next-line react-hooks/incompatible-library
-  const title = methods.watch("title");
-  const email = methods.watch("email");
-  const phone = methods.watch("phone");
-  const services = methods.watch("services");
-  const message = methods.watch("message");
-
-  // useMemo ilə hesablama
+  const title = methods.getValues("title");
+  const email = methods.getValues("email");
+  const phone = methods.getValues("phone");
+  const services = methods.getValues("services");
+  const message = methods.getValues("message");
   const { filledCount, totalFields, progressPercentage } = useMemo(() => {
     const fields = [title, email, phone, services, message];
     const filled = fields.filter(
@@ -90,23 +95,30 @@ export default function FormContactWrapper() {
       progressPercentage: percentage,
     };
   }, [title, email, phone, services, message]);
-
-  // Progress update - yalnız dəyər dəyişəndə
   useEffect(() => {
     setProgress(progressPercentage);
   }, [progressPercentage]);
 
+  const enumOptions = useDropdownOptions(
+    servicesData?.flatMap((item) =>
+      item.translations.map((tr) => ({
+        ...tr,
+        value: tr.title,
+        label: tr.title,
+      }))
+    ) || [],
+    "value",
+    "label"
+  );
   const handleSubmit = async (data: CreateCallActionInput) => {
-    setIsSubmitting(true);
-    console.log("Form Data:", data);
-
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    setIsSubmitting(false);
-
-    // Form-u reset et (istəyirsənsə)
-    methods.reset();
+    startTransition(async () => {
+      try {
+        await createContactUs(data);
+        methods.reset();
+      } catch (error) {
+        console.error("Submit error:", error);
+      }
+    });
   };
 
   return (
@@ -123,10 +135,10 @@ export default function FormContactWrapper() {
         <div className="flex flex-col space-y-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-col space-y-1">
             <h3 className="font-inter font-bold text-lg sm:text-2xl text-ui-2">
-              Əlaqə forması
+              {t("contactForm.contactFormHome")}
             </h3>
             <p className="font-inter text-sm text-gray-500">
-              Formu doldurun, sizinlə əlaqə saxlayaq
+              {t("contactForm.contactFormDescHome")}
             </p>
           </div>
 
@@ -155,10 +167,10 @@ export default function FormContactWrapper() {
             </motion.div>
             <div className="flex flex-col">
               <span className="font-inter text-xs text-gray-500">
-                Tamamlanma
+                {t("contactForm.completed")}
               </span>
               <span className="font-inter font-semibold text-sm text-ui-2">
-                {filledCount}/{totalFields} sahə
+                {filledCount}/{totalFields} {t("contactForm.area")}
               </span>
             </div>
           </motion.div>
@@ -194,11 +206,12 @@ export default function FormContactWrapper() {
       >
         {/* Ad Field */}
         <motion.div
+          key="title-field"
           className="flex flex-col space-y-1"
           variants={fieldVariants}
         >
           <label className="font-inter font-medium text-sm text-ui-12">
-            Ad <sup className="text-red-500">*</sup>
+            {t("contactForm.name")} <sup className="text-red-500">*</sup>
           </label>
           <FormInput
             type="text"
@@ -220,11 +233,12 @@ export default function FormContactWrapper() {
 
         {/* Email Field */}
         <motion.div
+          key="email-field"
           className="flex flex-col space-y-1"
           variants={fieldVariants}
         >
           <label className="font-inter font-medium text-sm text-ui-12">
-            Email <sup className="text-red-500">*</sup>
+            {t("contactForm.email")} <sup className="text-red-500">*</sup>
           </label>
           <FormInput
             type="email"
@@ -246,11 +260,12 @@ export default function FormContactWrapper() {
 
         {/* Phone Field */}
         <motion.div
+          key="phone-field"
           className="flex flex-col space-y-1 col-span-2"
           variants={fieldVariants}
         >
           <label className="font-inter font-medium text-sm text-ui-12">
-            Mobil nömrə <sup className="text-red-500">*</sup>
+            {t("contactForm.phone")} <sup className="text-red-500">*</sup>
           </label>
           <FormPhone
             fieldName="phone"
@@ -274,14 +289,17 @@ export default function FormContactWrapper() {
 
         {/* Services Field */}
         <motion.div
+          key="services-field"
           className="flex flex-col space-y-1 lg:col-span-2"
           variants={fieldVariants}
         >
           <label className="font-inter font-medium text-sm text-ui-12">
-            Xidmət seçin <sup className="text-red-500">*</sup>
+            {t("contactForm.selectService")}
+            <sup className="text-red-500">*</sup>
           </label>
           <FormSelect
             fieldName="services"
+            options={enumOptions}
             styles={{
               root: {
                 background: "#FAFAFA",
@@ -302,11 +320,12 @@ export default function FormContactWrapper() {
 
         {/* Message Field */}
         <motion.div
+          key="message-field"
           className="flex flex-col space-y-1 lg:col-span-2"
           variants={fieldVariants}
         >
           <label className="font-inter font-medium text-sm text-ui-12">
-            Mesajınız
+            {t("contactForm.note")}
           </label>
           <FormTextArea
             fieldName="message"
@@ -328,16 +347,19 @@ export default function FormContactWrapper() {
         </motion.div>
 
         {/* Submit Button */}
-        <motion.div className="lg:col-span-2 flex" variants={fieldVariants}>
+        <motion.div
+          className="lg:col-span-2 flex"
+          key="submit-button"
+          variants={fieldVariants}
+        >
           <motion.button
             type="submit"
-            disabled={isSubmitting}
+            disabled={isPending}
             className="relative bg-ui-1 w-full px-7 lg:px-12 cursor-pointer h-8 lg:h-10 rounded-md lg:rounded-lg text-white font-inter font-semibold text-sm lg:text-base shadow-lg overflow-hidden group disabled:opacity-70 disabled:cursor-not-allowed"
-            whileHover={{ scale: isSubmitting ? 1 : 1.02, y: -2 }}
-            whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
+            whileHover={{ scale: isPending ? 1 : 1.02, y: -2 }}
+            whileTap={{ scale: isPending ? 1 : 0.98 }}
             transition={{ duration: 0.2 }}
           >
-            {/* Background gradient animation */}
             <motion.div
               className="absolute inset-0 bg-linear-to-r from-ui-1 via-ui-1/90 to-ui-1"
               initial={{ x: "-100%" }}
@@ -345,12 +367,10 @@ export default function FormContactWrapper() {
               transition={{ duration: 0.6, ease: "easeInOut" as const }}
             />
 
-            {/* Glow effect */}
             <span className="absolute inset-0 bg-ui-1/50 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-            {/* Button content */}
             <span className="relative z-10 flex items-center justify-center gap-2">
-              {isSubmitting ? (
+              {isPending ? (
                 <>
                   <motion.svg
                     className="w-5 h-5"
@@ -371,11 +391,11 @@ export default function FormContactWrapper() {
                       d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
                     />
                   </motion.svg>
-                  <span>Göndərilir...</span>
+                  <span> {t("contactForm.sending")}...</span>
                 </>
               ) : (
                 <>
-                  <span>Göndər</span>
+                  <span> {t("contactForm.send")}</span>
                   <motion.svg
                     className="w-5 h-5"
                     initial={{ x: 0 }}
