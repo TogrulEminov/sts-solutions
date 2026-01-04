@@ -1,21 +1,26 @@
+import { IAbout } from "@/src/services/interface";
 import Statistics from "./statistics";
 import CustomImage from "@/src/globalElements/ImageTag";
-
-export default function TeamContent() {
+import { sanitizeHtml } from "@/src/lib/domburify";
+interface Props {
+  existingData: IAbout;
+}
+export default async function TeamContent({ existingData }: Props) {
+  const translations = existingData?.translations?.[0];
   return (
     <section className="pb-10 lg:pb-25">
       <div className="px-0 lg:px-4 container">
         <div className="flex flex-col lg:grid lg:grid-cols-12 gap-5 p-5 lg:p-10 bg-ui-23 rounded-2xl lg:rounded-4xl">
           <div className="lg:col-span-8 flex flex-col space-y-10">
-            <article className="font-inter font-normal text-base lg:text-2xl text-ui-7">
-              Komandamız hər bir sifarişçi üçün hədəf məqsədin effektiv və çevik
-              gerçəkləşməsini təmin etməyə xidmət edən fəaliyyət modeli ilə
-              çalışır. Şirkətimiz çoxşaxəli istiqamətlərlə geniş texniki
-              xidmətlər bacarığı ilə rəqabət üstünlüyü yaradaraq Azərbaycanda öz
-              profili üzrə qabaqcıl dünya şirkətləri standartında və
-              səviyyəsində çox istiqamətli xidmətlər və həllər təqdim edir.
-            </article>
-            <Statistics />
+            {translations?.teamDescription && (
+              <article
+                className="font-inter font-normal text-base lg:text-2xl text-ui-7"
+                dangerouslySetInnerHTML={{
+                  __html: sanitizeHtml(translations?.teamDescription),
+                }}
+              />
+            )}
+            <Statistics existingData={translations?.statistics || []} />
           </div>
           <figure className="lg:col-span-4">
             <CustomImage

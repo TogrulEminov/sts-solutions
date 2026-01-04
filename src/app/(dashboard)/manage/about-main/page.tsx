@@ -5,8 +5,8 @@ import { useServerQuery } from "@/src/hooks/useServerActions";
 import { CustomLocales } from "@/src/services/interface";
 import Content from "./_components/content";
 import { about_main_list } from "@/src/services/interface/constant";
-import { getMainAbout } from "@/src/actions/client/about-main.actions";
 import UpdateImage from "@/src/app/(dashboard)/manage/about-main/_components/image";
+import { getMainAbout } from "@/src/actions/client/about-main.actions";
 export default function AboutPage() {
   const searchParams = useSearchParams();
   const locale = searchParams?.get("locale") ?? "az";
@@ -18,6 +18,8 @@ export default function AboutPage() {
     params.set("locale", newLocale);
     router.replace(`?${params.toString()}`);
   };
+  console.log("locale",locale);
+  
   const { data: existingData, refetch } = useServerQuery(
     about_main_list,
     getMainAbout,
@@ -27,7 +29,6 @@ export default function AboutPage() {
       },
     }
   );
-
   return (
     <section className={"flex flex-col gap-4 mb-4.5"}>
       <h1 className="text-3xl font-inter font-bold text-ui-1 mb-5">

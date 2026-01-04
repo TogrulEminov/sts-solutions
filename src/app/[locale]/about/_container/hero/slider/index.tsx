@@ -1,27 +1,20 @@
 import Link from "next/link";
 import Icons from "@/public/icons";
 import s from "./syle.module.css";
-const sectors = [
-  "Qeyri qida",
-  "Qida",
-  "Alternativ enerji",
-  "Plastik",
-  "Enerji depolama",
-  "Aqro",
-  "Su təsərrüfatı",
-  "Lojistika",
-  "Enerji",
-  "Nəqliyyat",
-  "Tikinti",
-];
+import { InfoGenericType } from "@/src/services/interface";
+import { parseJSON } from "@/src/utils/checkSlug";
+interface Props {
+  sectors: InfoGenericType[];
+}
 
-export default function SliderArea() {
+export default async function SliderArea({ sectors }: Props) {
+  if (!parseJSON<InfoGenericType>(sectors)?.length) return null;
   return (
     <div className="absolute bottom-5 lg:bottom-10 w-full z-4 overflow-hidden">
       <div
         className={`flex ${s.animateMarquee} hover:pause  space-x-2 whitespace-nowrap`}
       >
-        {sectors.map((item, index) => (
+        {parseJSON<InfoGenericType>(sectors)?.map((item, index) => (
           <Link
             key={`first-${index}`}
             href={""}
@@ -32,11 +25,11 @@ export default function SliderArea() {
               fill="currentColor"
               className="relative w-4 lg:w-6 h-4 lg:h-6 z-10 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110"
             />
-            <span className="relative z-10">{item}</span>
+            <span className="relative z-10">{item?.title}</span>
           </Link>
         ))}
 
-        {sectors.map((item, index) => (
+        {parseJSON<InfoGenericType>(sectors)?.map((item, index) => (
           <Link
             key={`second-${index}`}
             href={""}
@@ -47,7 +40,7 @@ export default function SliderArea() {
               fill="currentColor"
               className="relative w-4 lg:w-6 h-4 lg:h-6 z-10 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110"
             />
-            <span className="relative z-10">{item}</span>
+            <span className="relative z-10">{item?.title}</span>
           </Link>
         ))}
       </div>

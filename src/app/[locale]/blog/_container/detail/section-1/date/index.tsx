@@ -1,6 +1,18 @@
+"use client";
 import Icons from "@/public/icons";
-
-export default function DateArea() {
+import { useTranslations } from "next-intl";
+import dayjs from "dayjs";
+import "dayjs/locale/az";
+import "dayjs/locale/ru";
+import "dayjs/locale/en";
+interface Props {
+  date: string;
+  readTime: string;
+  locale: string;
+}
+export default function DateArea({ date, locale, readTime }: Props) {
+  const t = useTranslations();
+  dayjs.locale(locale);
   return (
     <div className="flex items-center gap-2 lg:gap-10">
       <div className="flex items-center gap-1 lg:gap-3">
@@ -9,10 +21,10 @@ export default function DateArea() {
         </figure>
         <article className="flex flex-col space-y-2">
           <span className="font-inter text-[10px] lg:text-xs text-white font-normal">
-            Tarix
+            {t("blog.date")}
           </span>
           <time className="text-white text-sm lg:text-base font-inter font-medium">
-            12.05.2025
+            {dayjs(date).format("D MMMM YYYY")}
           </time>
         </article>
       </div>
@@ -22,10 +34,10 @@ export default function DateArea() {
         </figure>
         <article className="flex flex-col space-y-2">
           <span className="font-inter text-[10px] lg:text-xs text-white font-normal">
-            Oxuma müddəti
+            {t("blog.readTime")}
           </span>
           <strong className="text-white text-sm lg:text-base font-inter font-medium">
-            3 dəq.
+            {readTime}
           </strong>
         </article>
       </div>

@@ -68,7 +68,7 @@ export default function SocialComponent({ socialData }: Props) {
             >
               <Link
                 href={social.socialLink}
-                className="w-8 h-8 lg:w-12 lg:h-12 flex items-center justify-center bg-white/50 hover:bg-white/70 lg:bg-white rounded-full shadow-sm hover:shadow-md transition-shadow"
+                className="w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center bg-white/50 hover:bg-white/70 lg:bg-white text-white lg:text-black rounded-full shadow-sm hover:shadow-md transition-shadow"
                 aria-label={`Visit our ${social.socialName} page`}
                 target="_blank"
                 rel="noopener noreferrer"

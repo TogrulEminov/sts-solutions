@@ -1,10 +1,11 @@
 "use client";
+import { IContactInformation } from "@/src/services/interface";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 
-interface MapProps {
-  lat: string;
-  lng: string;
+interface Props {
+  existingData: IContactInformation;
 }
 
 declare global {
@@ -13,7 +14,9 @@ declare global {
   }
 }
 
-export default function MapSection({ lat, lng }: MapProps) {
+export default function MapSection({ existingData }: Props) {
+  const t = useTranslations("contact");
+  const { latitude, longitude } = existingData;
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<any>(null);
 
@@ -32,7 +35,7 @@ export default function MapSection({ lat, lng }: MapProps) {
 
           // Yeni xəritə yarat
           const map = new window.ymaps.Map(mapRef.current, {
-            center: [Number(lat), Number(lng)],
+            center: [Number(latitude), Number(longitude)],
             zoom: 15,
             controls: [
               "zoomControl",
@@ -43,7 +46,7 @@ export default function MapSection({ lat, lng }: MapProps) {
 
           // Custom marker əlavə et
           const placemark = new window.ymaps.Placemark(
-            [Number(lat), Number(lng)],
+            [Number(latitude), Number(longitude)],
             {
               balloonContentBody: "Baku, Azerbaijan",
             },
@@ -80,7 +83,7 @@ export default function MapSection({ lat, lng }: MapProps) {
         mapInstanceRef.current = null;
       }
     };
-  }, [lat, lng]);
+  }, [latitude, longitude]);
 
   return (
     <section className="pb-10 lg:pb-20">
@@ -137,16 +140,16 @@ export default function MapSection({ lat, lng }: MapProps) {
               </div>
               <div>
                 <h3 className="text-sm font-semibold text-ui-9 mb-1">
-                  Yol tarifi
+                  {t("roadmap")}
                 </h3>
 
                 <Link
-                  href={`https://yandex.com/maps/?pt=${lng},${lat}&z=15&l=map`}
+                  href={`https://yandex.com/maps/?pt=${longitude},${latitude}&z=15&l=map`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm text-6 hover:text-ui-9 transition-colors font-medium"
                 >
-                  Yandex Maps-də aç →
+                  {t("viewMap")} →
                 </Link>
               </div>
             </div>
@@ -170,9 +173,11 @@ export default function MapSection({ lat, lng }: MapProps) {
               </div>
               <div>
                 <h3 className="text-sm font-semibold text-ui-9 mb-1">
-                  İş saatları
+                  {t("workHours")}
                 </h3>
-                <p className="text-sm text-ui-2">B.e - Cümə: 09:00 - 18:00</p>
+                <p className="text-sm text-ui-2">
+                  {existingData?.translations?.[0]?.workHours}
+                </p>
               </div>
             </div>
           </div>

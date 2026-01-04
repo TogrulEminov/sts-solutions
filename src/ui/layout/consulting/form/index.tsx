@@ -6,7 +6,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useEffect, useState, useMemo, useTransition } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import FormWrapper from "@/src/ui/FormBuilder/FormWrapper/FormWrapper";
 import FormInput from "@/src/ui/FormBuilder/components/FormInput/FormInput";
 import FormPhone from "@/src/ui/FormBuilder/components/FormPhone";
@@ -56,11 +56,32 @@ const fieldVariants = {
   },
 };
 
+const successVariants = {
+  hidden: { opacity: 0, scale: 0.8 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      duration: 0.5,
+      ease: "easeOut" as const,
+    },
+  },
+  exit: {
+    opacity: 0,
+    scale: 0.8,
+    transition: {
+      duration: 0.3,
+    },
+  },
+};
+
 interface Props {
   servicesData: ServicesCategoryItem[];
 }
+
 export default function FormContactWrapper({ servicesData }: Props) {
   const t = useTranslations();
+  const [isSuccess, setIsSuccess] = useState(false);
   const methods = useForm<CreateCallActionInput>({
     mode: "onChange",
     resolver: zodResolver(createCallActionSchema),
@@ -81,6 +102,7 @@ export default function FormContactWrapper({ servicesData }: Props) {
   const phone = methods.getValues("phone");
   const services = methods.getValues("services");
   const message = methods.getValues("message");
+
   const { filledCount, totalFields, progressPercentage } = useMemo(() => {
     const fields = [title, email, phone, services, message];
     const filled = fields.filter(
@@ -95,6 +117,7 @@ export default function FormContactWrapper({ servicesData }: Props) {
       progressPercentage: percentage,
     };
   }, [title, email, phone, services, message]);
+
   useEffect(() => {
     setProgress(progressPercentage);
   }, [progressPercentage]);
@@ -110,11 +133,13 @@ export default function FormContactWrapper({ servicesData }: Props) {
     "value",
     "label"
   );
+
   const handleSubmit = async (data: CreateCallActionInput) => {
     startTransition(async () => {
       try {
         await createContactUs(data);
         methods.reset();
+        setIsSuccess(true);
       } catch (error) {
         console.error("Submit error:", error);
       }
@@ -129,303 +154,387 @@ export default function FormContactWrapper({ servicesData }: Props) {
       viewport={{ once: true, margin: "-100px" }}
       variants={containerVariants}
     >
-      {/* Header section */}
-      <motion.div className="flex flex-col space-y-6" variants={headerVariants}>
-        {/* Title */}
-        <div className="flex flex-col space-y-3 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex flex-col space-y-1">
-            <h3 className="font-inter font-bold text-lg sm:text-2xl text-ui-2">
-              {t("contactForm.contactFormHome")}
-            </h3>
-            <p className="font-inter text-sm text-gray-500">
-              {t("contactForm.contactFormDescHome")}
-            </p>
-          </div>
-
-          {/* Compact Progress Badge */}
+      <AnimatePresence mode="wait">
+        {isSuccess ? (
+          // Success State
           <motion.div
-            className="relative flex items-center gap-2 px-4 py-2 rounded-full bg-linear-to-r from-ui-1/10 to-ui-1/5 border border-ui-1/20"
-            initial={{ scale: 0, rotate: -180 }}
-            animate={{ scale: 1, rotate: 0 }}
-            transition={{ duration: 0.5 }}
+            key="success"
+            className="flex flex-col items-center justify-center py-12 lg:py-16 px-6 space-y-6"
+            variants={successVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
           >
             <motion.div
-              className="w-10 h-10 rounded-full border-4 border-gray-200 flex items-center justify-center relative"
-              style={{
-                background: `conic-gradient(#1BAFBF ${progress}%, #E0E0E0 ${progress}%)`,
+              className="w-20 h-20 lg:w-24 lg:h-24 rounded-full bg-green-100 flex items-center justify-center"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{
+                type: "spring",
+                stiffness: 200,
+                damping: 15,
+                delay: 0.1,
               }}
             >
-              <div className="w-7 h-7 rounded-full bg-white flex items-center justify-center">
-                {progress === 100 ? (
-                  <CheckCircle2 className="w-5 h-5 text-ui-1" />
-                ) : (
-                  <span className="font-inter font-bold text-xs text-ui-1">
-                    {Math.round(progress)}%
-                  </span>
-                )}
+              <motion.svg
+                className="w-12 h-12 lg:w-14 lg:h-14 text-green-500"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+              >
+                <motion.path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
+              </motion.svg>
+            </motion.div>
+
+            <motion.h3
+              className="text-2xl lg:text-3xl font-bold font-inter text-ui-1 text-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+            >
+              {t("contactForm.successTitle")}
+            </motion.h3>
+
+            <motion.p
+              className="text-sm lg:text-base text-ui-7 text-center max-w-md"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+            >
+              {t("contactForm.successMessage")}
+            </motion.p>
+
+            <motion.button
+              onClick={() => setIsSuccess(false)}
+              className="mt-4 px-8 py-3 bg-ui-1 hover:bg-ui-4 text-white font-inter font-semibold rounded-lg transition-all duration-300 hover:shadow-lg"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {t("contactForm.close")}
+            </motion.button>
+          </motion.div>
+        ) : (
+          // Form State
+          <motion.div
+            key="form"
+            className="flex flex-col space-y-5"
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
+            {/* Header section */}
+            <motion.div
+              className="flex flex-col space-y-6"
+              variants={headerVariants}
+            >
+              {/* Title */}
+              <div className="flex flex-col space-y-3 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex flex-col space-y-1">
+                  <h3 className="font-inter font-bold text-lg sm:text-2xl text-ui-2">
+                    {t("contactForm.contactFormHome")}
+                  </h3>
+                  <p className="font-inter text-sm text-gray-500">
+                    {t("contactForm.contactFormDescHome")}
+                  </p>
+                </div>
+
+                {/* Compact Progress Badge */}
+                <motion.div
+                  className="relative flex items-center gap-2 px-4 py-2 rounded-full bg-linear-to-r from-ui-1/10 to-ui-1/5 border border-ui-1/20"
+                  initial={{ scale: 0, rotate: -180 }}
+                  animate={{ scale: 1, rotate: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <motion.div
+                    className="w-10 h-10 rounded-full border-4 border-gray-200 flex items-center justify-center relative"
+                    style={{
+                      background: `conic-gradient(#1BAFBF ${progress}%, #E0E0E0 ${progress}%)`,
+                    }}
+                  >
+                    <div className="w-7 h-7 rounded-full bg-white flex items-center justify-center">
+                      {progress === 100 ? (
+                        <CheckCircle2 className="w-5 h-5 text-ui-1" />
+                      ) : (
+                        <span className="font-inter font-bold text-xs text-ui-1">
+                          {Math.round(progress)}%
+                        </span>
+                      )}
+                    </div>
+                  </motion.div>
+                  <div className="flex flex-col">
+                    <span className="font-inter text-xs text-gray-500">
+                      {t("contactForm.completed")}
+                    </span>
+                    <span className="font-inter font-semibold text-sm text-ui-2">
+                      {filledCount}/{totalFields} {t("contactForm.area")}
+                    </span>
+                  </div>
+                </motion.div>
+              </div>
+
+              {/* Linear Progress Bar */}
+              <div className="relative h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                <motion.div
+                  className="absolute inset-y-0 left-0 bg-linear-to-r from-ui-1 to-ui-1/80 rounded-full"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${progress}%` }}
+                  transition={{ duration: 0.5, ease: "easeOut" }}
+                >
+                  {/* Shimmer */}
+                  <motion.div
+                    className="absolute inset-0 bg-linear-to-r from-transparent via-white/40 to-transparent"
+                    animate={{ x: ["-100%", "200%"] }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
+                  />
+                </motion.div>
               </div>
             </motion.div>
-            <div className="flex flex-col">
-              <span className="font-inter text-xs text-gray-500">
-                {t("contactForm.completed")}
-              </span>
-              <span className="font-inter font-semibold text-sm text-ui-2">
-                {filledCount}/{totalFields} {t("contactForm.area")}
-              </span>
-            </div>
+
+            {/* Form Wrapper */}
+            <FormWrapper
+              className="flex flex-col lg:grid gap-2 lg:grid-cols-2"
+              form={methods}
+              onSubmit={methods.handleSubmit(handleSubmit)}
+            >
+              {/* Ad Field */}
+              <motion.div
+                key="title-field"
+                className="flex flex-col space-y-1"
+                variants={fieldVariants}
+              >
+                <label className="font-inter font-medium text-sm text-ui-12">
+                  {t("contactForm.name")} <sup className="text-red-500">*</sup>
+                </label>
+                <FormInput
+                  type="text"
+                  fieldName="title"
+                  styles={{
+                    input: {
+                      background: "#FAFAFA",
+                      border: "1px solid #E0E0E0",
+                      height: "44px",
+                      padding: "0.75rem",
+                      color: "#212121",
+                      borderRadius: "0.5rem",
+                      fontFamily: "'manrope', sans-serif",
+                      fontSize: "0.875rem",
+                    },
+                  }}
+                />
+              </motion.div>
+
+              {/* Email Field */}
+              <motion.div
+                key="email-field"
+                className="flex flex-col space-y-1"
+                variants={fieldVariants}
+              >
+                <label className="font-inter font-medium text-sm text-ui-12">
+                  {t("contactForm.email")} <sup className="text-red-500">*</sup>
+                </label>
+                <FormInput
+                  type="email"
+                  styles={{
+                    input: {
+                      background: "#FAFAFA",
+                      border: "1px solid #E0E0E0",
+                      height: "44px",
+                      color: "#212121",
+                      padding: "0.75rem",
+                      borderRadius: "0.5rem",
+                      fontFamily: "'manrope', sans-serif",
+                      fontSize: "0.875rem",
+                    },
+                  }}
+                  fieldName="email"
+                />
+              </motion.div>
+
+              {/* Phone Field */}
+              <motion.div
+                key="phone-field"
+                className="flex flex-col space-y-1 col-span-2"
+                variants={fieldVariants}
+              >
+                <label className="font-inter font-medium text-sm text-ui-12">
+                  {t("contactForm.phone")} <sup className="text-red-500">*</sup>
+                </label>
+                <FormPhone
+                  fieldName="phone"
+                  placeholder="+994 XX XXX XX XX"
+                  styles={{
+                    input: {
+                      background: "#FAFAFA",
+                      border: "1px solid #E0E0E0",
+                      height: "44px",
+                      color: "#212121",
+                      padding: "0.75rem",
+                      width: "100%",
+                      borderRadius: "0.5rem",
+                      fontFamily: "'manrope', sans-serif",
+                      fontSize: "0.875rem",
+                    },
+                  }}
+                />
+              </motion.div>
+
+              {/* Services Field */}
+              <motion.div
+                key="services-field"
+                className="flex flex-col space-y-1 lg:col-span-2"
+                variants={fieldVariants}
+              >
+                <label className="font-inter font-medium text-sm text-ui-12">
+                  {t("contactForm.selectService")}
+                  <sup className="text-red-500">*</sup>
+                </label>
+                <FormSelect
+                  fieldName="services"
+                  options={enumOptions}
+                  styles={{
+                    root: {
+                      background: "#FAFAFA",
+                      border: "1px solid #E0E0E0",
+                      height: "44px",
+                      color: "#212121",
+                      padding: "0.75rem",
+                      borderRadius: "0.5rem",
+                      fontFamily: "'manrope', sans-serif",
+                      fontSize: "0.875rem",
+                    },
+                    suffix: {
+                      color: "#757575",
+                    },
+                  }}
+                />
+              </motion.div>
+
+              {/* Message Field */}
+              <motion.div
+                key="message-field"
+                className="flex flex-col space-y-1 lg:col-span-2"
+                variants={fieldVariants}
+              >
+                <label className="font-inter font-medium text-sm text-ui-12">
+                  {t("contactForm.note")}
+                </label>
+                <FormTextArea
+                  fieldName="message"
+                  rows={5}
+                  styles={{
+                    textarea: {
+                      background: "#FAFAFA",
+                      border: "1px solid #E0E0E0",
+                      height: "116px",
+                      padding: "0.75rem",
+                      color: "#212121",
+                      borderRadius: "0.5rem",
+                      fontFamily: "'manrope', sans-serif",
+                      fontSize: "0.875rem",
+                      resize: "none",
+                    },
+                  }}
+                />
+              </motion.div>
+
+              {/* Submit Button */}
+              <motion.div
+                className="lg:col-span-2 flex"
+                key="submit-button"
+                variants={fieldVariants}
+              >
+                <motion.button
+                  type="submit"
+                  disabled={isPending}
+                  className="relative bg-ui-1 w-full px-7 lg:px-12 cursor-pointer h-8 lg:h-10 rounded-md lg:rounded-lg text-white font-inter font-semibold text-sm lg:text-base shadow-lg overflow-hidden group disabled:opacity-70 disabled:cursor-not-allowed"
+                  whileHover={{ scale: isPending ? 1 : 1.02, y: -2 }}
+                  whileTap={{ scale: isPending ? 1 : 0.98 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <motion.div
+                    className="absolute inset-0 bg-linear-to-r from-ui-1 via-ui-1/90 to-ui-1"
+                    initial={{ x: "-100%" }}
+                    whileHover={{ x: "100%" }}
+                    transition={{ duration: 0.6, ease: "easeInOut" as const }}
+                  />
+
+                  <span className="absolute inset-0 bg-ui-1/50 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                  <span className="relative z-10 flex items-center justify-center gap-2">
+                    {isPending ? (
+                      <>
+                        <motion.svg
+                          className="w-5 h-5"
+                          animate={{ rotate: 360 }}
+                          transition={{
+                            duration: 1,
+                            repeat: Infinity,
+                            ease: "linear" as const,
+                          }}
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                          />
+                        </motion.svg>
+                        <span> {t("contactForm.sending")}...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span> {t("contactForm.send")}</span>
+                        <motion.svg
+                          className="w-5 h-5"
+                          initial={{ x: 0 }}
+                          whileHover={{ x: 4 }}
+                          transition={{ duration: 0.3 }}
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M13 7l5 5m0 0l-5 5m5-5H6"
+                          />
+                        </motion.svg>
+                      </>
+                    )}
+                  </span>
+
+                  {/* Ripple effect on click */}
+                  <motion.span
+                    className="absolute inset-0 bg-white/20 rounded-lg"
+                    initial={{ scale: 0, opacity: 1 }}
+                    whileTap={{ scale: 2, opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                  />
+                </motion.button>
+              </motion.div>
+            </FormWrapper>
           </motion.div>
-        </div>
-
-        {/* Linear Progress Bar */}
-        <div className="relative h-1.5 bg-gray-100 rounded-full overflow-hidden">
-          <motion.div
-            className="absolute inset-y-0 left-0 bg-linear-to-r from-ui-1 to-ui-1/80 rounded-full"
-            initial={{ width: 0 }}
-            animate={{ width: `${progress}%` }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-          >
-            {/* Shimmer */}
-            <motion.div
-              className="absolute inset-0 bg-linear-to-r from-transparent via-white/40 to-transparent"
-              animate={{ x: ["-100%", "200%"] }}
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-            />
-          </motion.div>
-        </div>
-      </motion.div>
-
-      {/* Form Wrapper */}
-      <FormWrapper
-        className="flex flex-col lg:grid gap-2 lg:grid-cols-2"
-        form={methods}
-        onSubmit={methods.handleSubmit(handleSubmit)}
-      >
-        {/* Ad Field */}
-        <motion.div
-          key="title-field"
-          className="flex flex-col space-y-1"
-          variants={fieldVariants}
-        >
-          <label className="font-inter font-medium text-sm text-ui-12">
-            {t("contactForm.name")} <sup className="text-red-500">*</sup>
-          </label>
-          <FormInput
-            type="text"
-            fieldName="title"
-            styles={{
-              input: {
-                background: "#FAFAFA",
-                border: "1px solid #E0E0E0",
-                height: "44px",
-                padding: "0.75rem",
-                color: "#212121",
-                borderRadius: "0.5rem",
-                fontFamily: "'manrope', sans-serif",
-                fontSize: "0.875rem",
-              },
-            }}
-          />
-        </motion.div>
-
-        {/* Email Field */}
-        <motion.div
-          key="email-field"
-          className="flex flex-col space-y-1"
-          variants={fieldVariants}
-        >
-          <label className="font-inter font-medium text-sm text-ui-12">
-            {t("contactForm.email")} <sup className="text-red-500">*</sup>
-          </label>
-          <FormInput
-            type="email"
-            styles={{
-              input: {
-                background: "#FAFAFA",
-                border: "1px solid #E0E0E0",
-                height: "44px",
-                color: "#212121",
-                padding: "0.75rem",
-                borderRadius: "0.5rem",
-                fontFamily: "'manrope', sans-serif",
-                fontSize: "0.875rem",
-              },
-            }}
-            fieldName="email"
-          />
-        </motion.div>
-
-        {/* Phone Field */}
-        <motion.div
-          key="phone-field"
-          className="flex flex-col space-y-1 col-span-2"
-          variants={fieldVariants}
-        >
-          <label className="font-inter font-medium text-sm text-ui-12">
-            {t("contactForm.phone")} <sup className="text-red-500">*</sup>
-          </label>
-          <FormPhone
-            fieldName="phone"
-            placeholder="+994 XX XXX XX XX"
-            styles={{
-              input: {
-                background: "#FAFAFA",
-                border: "1px solid #E0E0E0",
-                height: "44px",
-                color: "#212121",
-                padding: "0.75rem",
-
-                width: "100%",
-                borderRadius: "0.5rem",
-                fontFamily: "'manrope', sans-serif",
-                fontSize: "0.875rem",
-              },
-            }}
-          />
-        </motion.div>
-
-        {/* Services Field */}
-        <motion.div
-          key="services-field"
-          className="flex flex-col space-y-1 lg:col-span-2"
-          variants={fieldVariants}
-        >
-          <label className="font-inter font-medium text-sm text-ui-12">
-            {t("contactForm.selectService")}
-            <sup className="text-red-500">*</sup>
-          </label>
-          <FormSelect
-            fieldName="services"
-            options={enumOptions}
-            styles={{
-              root: {
-                background: "#FAFAFA",
-                border: "1px solid #E0E0E0",
-                height: "44px",
-                color: "#212121",
-                padding: "0.75rem",
-                borderRadius: "0.5rem",
-                fontFamily: "'manrope', sans-serif",
-                fontSize: "0.875rem",
-              },
-              suffix: {
-                color: "#757575",
-              },
-            }}
-          />
-        </motion.div>
-
-        {/* Message Field */}
-        <motion.div
-          key="message-field"
-          className="flex flex-col space-y-1 lg:col-span-2"
-          variants={fieldVariants}
-        >
-          <label className="font-inter font-medium text-sm text-ui-12">
-            {t("contactForm.note")}
-          </label>
-          <FormTextArea
-            fieldName="message"
-            rows={5}
-            styles={{
-              textarea: {
-                background: "#FAFAFA",
-                border: "1px solid #E0E0E0",
-                height: "116px",
-                padding: "0.75rem",
-                color: "#212121",
-                borderRadius: "0.5rem",
-                fontFamily: "'manrope', sans-serif",
-                fontSize: "0.875rem",
-                resize: "none",
-              },
-            }}
-          />
-        </motion.div>
-
-        {/* Submit Button */}
-        <motion.div
-          className="lg:col-span-2 flex"
-          key="submit-button"
-          variants={fieldVariants}
-        >
-          <motion.button
-            type="submit"
-            disabled={isPending}
-            className="relative bg-ui-1 w-full px-7 lg:px-12 cursor-pointer h-8 lg:h-10 rounded-md lg:rounded-lg text-white font-inter font-semibold text-sm lg:text-base shadow-lg overflow-hidden group disabled:opacity-70 disabled:cursor-not-allowed"
-            whileHover={{ scale: isPending ? 1 : 1.02, y: -2 }}
-            whileTap={{ scale: isPending ? 1 : 0.98 }}
-            transition={{ duration: 0.2 }}
-          >
-            <motion.div
-              className="absolute inset-0 bg-linear-to-r from-ui-1 via-ui-1/90 to-ui-1"
-              initial={{ x: "-100%" }}
-              whileHover={{ x: "100%" }}
-              transition={{ duration: 0.6, ease: "easeInOut" as const }}
-            />
-
-            <span className="absolute inset-0 bg-ui-1/50 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-            <span className="relative z-10 flex items-center justify-center gap-2">
-              {isPending ? (
-                <>
-                  <motion.svg
-                    className="w-5 h-5"
-                    animate={{ rotate: 360 }}
-                    transition={{
-                      duration: 1,
-                      repeat: Infinity,
-                      ease: "linear" as const,
-                    }}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                    />
-                  </motion.svg>
-                  <span> {t("contactForm.sending")}...</span>
-                </>
-              ) : (
-                <>
-                  <span> {t("contactForm.send")}</span>
-                  <motion.svg
-                    className="w-5 h-5"
-                    initial={{ x: 0 }}
-                    whileHover={{ x: 4 }}
-                    transition={{ duration: 0.3 }}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M13 7l5 5m0 0l-5 5m5-5H6"
-                    />
-                  </motion.svg>
-                </>
-              )}
-            </span>
-
-            {/* Ripple effect on click */}
-            <motion.span
-              className="absolute inset-0 bg-white/20 rounded-lg"
-              initial={{ scale: 0, opacity: 1 }}
-              whileTap={{ scale: 2, opacity: 0 }}
-              transition={{ duration: 0.5 }}
-            />
-          </motion.button>
-        </motion.div>
-      </FormWrapper>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }

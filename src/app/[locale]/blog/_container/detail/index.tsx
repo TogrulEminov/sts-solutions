@@ -1,14 +1,15 @@
-import React from "react";
 import FirstSection from "./section-1";
 import SecondSection from "./section-2";
 import ThirdSection from "./section-3";
-
-export default function BlogDetailPageContainer() {
+interface Props {
+  existingData: any;
+}
+export default async function BlogDetailPageContainer({ existingData }: Props) {
   return (
     <>
-      <FirstSection />
-      <SecondSection />
-      <ThirdSection />
+      <FirstSection existingData={existingData?.data?.blogDetailData} />
+      <SecondSection existingData={existingData?.data?.blogDetailData} />
+      <ThirdSection existingData={existingData?.data?.relatedData} />
     </>
   );
 }

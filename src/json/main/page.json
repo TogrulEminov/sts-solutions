@@ -113,6 +113,10 @@
       "label": "Əməkdaşlar bölümü"
     },
     {
+      "value": "process",
+      "label": "Məqsədimiz bölümü"
+    },
+    {
       "value": "contactCta",
       "label": "Əlaqə cta bölümü"
     }

@@ -14,8 +14,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMemo, useTransition } from "react";
 import { useMessageStore } from "@/src/hooks/useMessageStore";
 import { parseJSON } from "@/src/utils/checkSlug";
-import { UpsertHomeAboutInput } from "@/src/schema/about-home.schema";
-import { upsertHomeAbout } from "@/src/actions/client/about-home.actions";
 import FormWrapper from "@/src/ui/FormBuilder/FormWrapper/FormWrapper";
 import FormInput from "@/src/ui/FormBuilder/components/FormInput/FormInput";
 import CustomAdminEditor from "@/src/app/(dashboard)/manage/_components/CreateEditor";
@@ -23,6 +21,9 @@ import {
   UpsertAboutMainInput,
   upsertAboutMainSchema,
 } from "@/src/schema/about-main.schema";
+import FormTextArea from "@/src/ui/FormBuilder/components/FormTextArea/FormTextArea";
+import FormInputNumber from "@/src/ui/FormBuilder/components/FormInputNumber/FormInputNumber";
+import { upsertMainAbout } from "@/src/actions/client/about-main.actions";
 interface Props {
   existingData: IAbout | undefined;
   refetch: () => void;
@@ -40,7 +41,7 @@ export default function Content({ existingData, refetch }: Props) {
       description: existingData?.translations?.[0]?.description || "",
       subTitle: existingData?.translations?.[0]?.subTitle || "",
       subDescription: existingData?.translations?.[0]?.subDescription || "",
-      experienceYears: existingData?.experienceYears || 10,
+      experienceYears: existingData?.experienceYears || undefined,
       experienceDescription:
         existingData?.translations?.[0]?.experienceDescription || "",
       teamDescription: existingData?.translations?.[0]?.teamDescription || "",
@@ -52,7 +53,7 @@ export default function Content({ existingData, refetch }: Props) {
         existingData?.translations?.[0]?.sectors
       ),
       purpose: parseJSON<InfoGenericType>(
-        existingData?.translations?.[0]?.sectors
+        existingData?.translations?.[0]?.purpose
       ),
     }),
     [existingData, locale]
@@ -79,9 +80,9 @@ export default function Content({ existingData, refetch }: Props) {
     name: "purpose" as any,
   });
 
-  const onSubmit = handleSubmit(async (data: UpsertHomeAboutInput) => {
+  const onSubmit = handleSubmit(async (data: UpsertAboutMainInput) => {
     startTransition(async () => {
-      const result = await upsertHomeAbout(data);
+      const result = await upsertMainAbout(data);
       if (result.success) {
         success("Məlumat uğurla yadda saxlandı!");
         reset();
@@ -111,17 +112,7 @@ export default function Content({ existingData, refetch }: Props) {
         <div className="flex flex-col space-y-4">
           <FieldBlock>
             <FormInput label="Başlıq" placeholder="Başlıq" fieldName="title" />
-            <CustomAdminEditor
-              title="Qısa məlumat"
-              value={getValues("description")}
-              onChange={(value) =>
-                setValue("description", value, {
-                  shouldValidate: true,
-                  shouldDirty: true,
-                })
-              }
-              error={errors.description?.message}
-            />
+            <FormTextArea label="Qısa məlumat" fieldName="description" />
           </FieldBlock>
           <FieldBlock>
             <FormInput
@@ -144,7 +135,7 @@ export default function Content({ existingData, refetch }: Props) {
           </FieldBlock>
 
           <FieldBlock>
-            <FormInput
+            <FormInputNumber
               label="Təcrübə"
               placeholder="Təcrübə"
               fieldName="experienceYears"
@@ -176,18 +167,18 @@ export default function Content({ existingData, refetch }: Props) {
             <div className="space-y-3 max-w-sm">
               {statisticsFieldArray.fields.map((field, index) => (
                 <div key={field.id} className="flex items-start gap-2">
+                  <span className="flex items-center justify-center rounded-full text-white w-10 h-10 bg-blue-400">
+                    {index + 1}
+                  </span>
                   <div className="flex-1">
                     <FormInput
                       fieldName={`statistics.${index}.title` as const}
-                      placeholder={`Statistics ${index + 1}`}
-                    />
-                    <FormInput
-                      fieldName={`statistics.${index}.suffix` as const}
-                      placeholder={`Statistics ${index + 1}`}
+                      placeholder={`Statistik başlıqı`}
                     />
                     <FormInput
                       fieldName={`statistics.${index}.count` as const}
-                      placeholder={`Statistics ${index + 1}`}
+                      placeholder={`Statistik ədəd`}
+                     
                     />
                   </div>
                   <button
@@ -237,7 +228,7 @@ export default function Content({ existingData, refetch }: Props) {
                     d="M12 4v16m8-8H4"
                   />
                 </svg>
-                Xüsusiyyət əlavə et
+                Statistika əlavə et
               </button>
             </div>
           </FieldBlock>
@@ -351,7 +342,7 @@ export default function Content({ existingData, refetch }: Props) {
                     d="M12 4v16m8-8H4"
                   />
                 </svg>
-                Üstünlük əlavə et
+                Sektor əlavə et
               </button>
             </div>
           </FieldBlock>

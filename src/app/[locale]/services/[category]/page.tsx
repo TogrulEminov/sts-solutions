@@ -24,19 +24,25 @@ export async function generateMetadata({
 export async function generateStaticParams() {
   try {
     const result = await getServicesStaticById();
+    
+    // 1. Use ?? [] to handle null/undefined data
     const params = result?.data?.flatMap((service) =>
       routing.locales.flatMap((locale) =>
         service.translations
-          .filter((t) => t.locale === locale && t.slug) // ✅ Filter by locale
+          .filter((t) => t.locale === locale && t.slug)
           .map((translation) => ({
             locale: locale.toLowerCase(),
-            category: translation.slug,
+            // 2. IMPORTANT: This key must match your folder name [slug]
+            slug: translation.slug, 
           }))
       )
-    );
+    ) ?? []; 
+
     return params;
   } catch (error) {
     console.error("generateStaticParams error:", error);
+    // 3. Explicitly return an empty array to satisfy TypeScript/Next.js
+    return []; 
   }
 }
 export default async function ServicesPage({ params }: PageProps) {

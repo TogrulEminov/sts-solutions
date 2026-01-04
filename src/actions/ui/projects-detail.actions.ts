@@ -5,19 +5,19 @@ import { db } from "@/src/lib/admin/prismaClient";
 
 type GetProps = {
   locale: Locales;
-  category?: string;
+  slug: string;
 };
 
-export const fetchServicesCategory = async ({ locale, category }: GetProps) => {
+export const fetchProjectsDetail = async ({ locale, slug }: GetProps) => {
   const validatedLocale = validateLocale(locale);
 
-  const [servicesDetailData, servicesData, sectionData] = await Promise.all([
-    db.servicesCategory.findFirst({
+  const [projectsDetailData, servicesData, sections] = await Promise.all([
+    db.projects.findFirst({
       where: {
         isDeleted: false,
         translations: {
           some: {
-            slug: category,
+            slug: slug,
             locale: validatedLocale,
           },
         },
@@ -35,19 +35,6 @@ export const fetchServicesCategory = async ({ locale, category }: GetProps) => {
             id: true,
             publicUrl: true,
             fileKey: true,
-          },
-        },
-        subCategory: {
-          where: {
-            isDeleted: false,
-            translations: {
-              some: {
-                locale: validatedLocale,
-              },
-            },
-          },
-          include: {
-            translations: true,
           },
         },
         translations: {
@@ -74,19 +61,6 @@ export const fetchServicesCategory = async ({ locale, category }: GetProps) => {
             fileKey: true,
           },
         },
-        subCategory: {
-          where: {
-            isDeleted: false,
-            translations: {
-              some: {
-                locale: validatedLocale,
-              },
-            },
-          },
-          include: {
-            translations: true,
-          },
-        },
         imageUrl: {
           select: {
             id: true,
@@ -98,10 +72,13 @@ export const fetchServicesCategory = async ({ locale, category }: GetProps) => {
       },
       take: 12,
     }),
-    db.sectionContent.findFirst({
+
+    db.sectionContent.findMany({
       where: {
         isDeleted: false,
-        key: "servicesMain",
+        key: {
+          in: ["servicesCategoriesMain"],
+        },
         translations: {
           some: {
             locale: validatedLocale,
@@ -114,13 +91,18 @@ export const fetchServicesCategory = async ({ locale, category }: GetProps) => {
     }),
   ]);
 
+  const sectionsMap = sections?.reduce((acc, section) => {
+    acc[`${section?.key}Section`] = section;
+    return acc;
+  }, {} as Record<string, any>);
+
   return {
     data: {
-      servicesDetailData,
+      projectsDetailData,
       servicesData,
     },
     sections: {
-      servicesCta: sectionData,
+      servicesSection: sectionsMap.servicesCategoriesMainSection,
     },
   };
 };

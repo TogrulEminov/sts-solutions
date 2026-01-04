@@ -2,14 +2,23 @@ import ContactHero from "./hero";
 import ContactWrapper from "./wrapper";
 import MapSection from "./wrapper/map";
 import ServicesTagSection from "@/src/ui/layout/services";
-
-export default function ContactPageContainer() {
+interface Props {
+  existingData: any;
+}
+export default function ContactPageContainer({ existingData }: Props) {
   return (
     <>
-      <ContactHero />
-      <ContactWrapper />
-      <MapSection lat="40.394694" lng="49.7725592" />
-      <ServicesTagSection />
+      <ContactHero existingData={existingData?.data?.categoriesData} />
+      <ContactWrapper
+        existingData={existingData?.data?.contactData}
+        socialsData={existingData?.data?.socialsData}
+        servicesData={existingData?.data?.servicesData}
+      />
+      <MapSection  existingData={existingData?.data?.contactData}/>
+      <ServicesTagSection
+        sectionData={existingData?.sections?.servicesMainSection}
+        services={existingData?.data?.servicesData}
+      />
     </>
   );
 }

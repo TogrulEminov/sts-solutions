@@ -1,14 +1,12 @@
-import { CACHE_TAG_GROUPS } from "@/src/config/cacheTags";
 import { Locales } from "@/src/generated/prisma/enums";
 import { validateLocale } from "@/src/helper/validateLocale";
 import { db } from "@/src/lib/admin/prismaClient";
-import { createCachedAction } from "@/src/lib/cache/createCachedAction";
 
 type GetProps = {
   locale: Locales;
 };
 
-const fetchLayout = async ({ locale }: GetProps) => {
+export const fetchLayout = async ({ locale }: GetProps) => {
   const validatedLocale = validateLocale(locale);
   const [socialData, contactData, servicesData, sections] = await Promise.all([
     db.social.findMany({
@@ -92,9 +90,4 @@ const fetchLayout = async ({ locale }: GetProps) => {
     },
   };
 };
-
-export const getLayoutServer = createCachedAction({
-  cacheKey: CACHE_TAG_GROUPS.LAYOUT,
-  revalidate: 60,
-  fetcher: fetchLayout,
-});
+ 

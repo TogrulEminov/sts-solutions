@@ -1,31 +1,13 @@
 "use client";
 import { useInView } from "react-intersection-observer";
-import logo from "@/public/assets/logo/sts-logo.svg"
+import logo from "@/public/assets/logo/sts-logo.svg";
 import CustomImage from "@/src/globalElements/ImageTag";
-const steps = [
-  {
-    id: 1,
-    number: "1",
-    title: "Nəticələrin keyfiyyətinin və miqabət qabiliyyətinin artırılması",
-  },
-  {
-    id: 2,
-    number: "2",
-    title: "Enerji sərfiyyatının optimallaşdırılması və xərcin azaldılması",
-  },
-  {
-    id: 3,
-    number: "3",
-    title: "İşçi qüvvəsinin səmərəli istifadəsi",
-  },
-  {
-    id: 4,
-    number: "4",
-    title: "İstehsal həcminin artırılması",
-  },
-];
-
-export default function ProcessSteps() {
+import { InfoGenericType } from "@/src/services/interface";
+import { parseJSON } from "@/src/utils/checkSlug";
+interface Props {
+  existingData: InfoGenericType[];
+}
+export default function ProcessSteps({ existingData }: Props) {
   const { ref, inView } = useInView({
     threshold: 0.2,
     triggerOnce: true,
@@ -38,9 +20,9 @@ export default function ProcessSteps() {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-35 lg:gap-8 relative"
           ref={ref}
         >
-          {steps.map((step, index) => (
+          {parseJSON<InfoGenericType>(existingData).map((step, index) => (
             <div
-              key={step.id}
+              key={index}
               className="relative flex flex-col items-center"
               style={{
                 opacity: inView ? 1 : 0,
@@ -50,7 +32,13 @@ export default function ProcessSteps() {
             >
               <div className="relative group">
                 <div className="w-[100px] h-[100px] p-3 rounded-full bg-ui-1 flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-ui-1/30">
-                 <CustomImage src={logo} width={100} height={40} title="" className="max-w-13 h-auto"/>
+                  <CustomImage
+                    src={logo}
+                    width={100}
+                    height={40}
+                    title={step?.title}
+                    className="max-w-13 h-auto"
+                  />
                 </div>
 
                 <div
@@ -64,13 +52,20 @@ export default function ProcessSteps() {
                   }}
                 >
                   <span className="font-inter font-bold text-lg text-white">
-                    {step.number}
+                    {index + 1}
                   </span>
                 </div>
               </div>
 
-              {index < steps.length - 1 && (
-                <div className="block absolute top-70 rotate-90 lg:rotate-[unset] lg:top-[50px] lg:left-[85%]   w-20 lg:w-[147px] h-1 bg-ui-5 overflow-hidden">
+              {index < existingData?.length - 1 && (
+                <div
+                  className={`
+      block absolute top-70 rotate-90 lg:rotate-[unset] lg:top-[50px] lg:left-[85%] 
+      w-20 lg:w-[120px] h-1 bg-ui-5 overflow-hidden
+      ${index === 2 ? "hidden lg:block" : ""}
+      ${index === 3 ? "hidden" : ""}
+    `}
+                >
                   <div
                     className="h-full bg-ui-1"
                     style={{

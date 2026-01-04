@@ -106,11 +106,12 @@ export default class Icons {
   }
 
   // socials
-  static Facebook({ fill, width = 16, height = 18 }: IconsProps) {
+  static Facebook({ fill, width = 16, height = 18, className }: IconsProps) {
     return (
       <svg
         width={width}
         height={height}
+        className={className}
         viewBox="0 0 79 147"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -122,10 +123,11 @@ export default class Icons {
       </svg>
     );
   }
-  static Instagram({ fill, width = 16, height = 16 }: IconsProps) {
+  static Instagram({ fill, width = 16, height = 16, className }: IconsProps) {
     return (
       <svg
         width={width}
+        className={className}
         height={height}
         viewBox="0 0 128 128"
         fill="none"
@@ -138,10 +140,11 @@ export default class Icons {
       </svg>
     );
   }
-  static Youtube({ fill, width = 24, height = 16 }: IconsProps) {
+  static Youtube({ fill, width = 24, height = 16, className }: IconsProps) {
     return (
       <svg
         width={width}
+        className={className}
         height={height}
         viewBox="0 0 147 98"
         fill="none"
@@ -154,12 +157,13 @@ export default class Icons {
       </svg>
     );
   }
-  static Linkedin({ fill, width = 16, height = 16 }: IconsProps) {
+  static Linkedin({ fill, width = 16, height = 16, className }: IconsProps) {
     return (
       <svg
         xmlns="http://www.w3.org/2000/svg"
         version="1.1"
         width={width}
+        className={className}
         height={height}
         x="0"
         y="0"
@@ -174,10 +178,11 @@ export default class Icons {
       </svg>
     );
   }
-  static Tiktok({ fill, width = 16, height = 16 }: IconsProps) {
+  static Tiktok({ fill, width = 16, height = 16, className }: IconsProps) {
     return (
       <svg
         width={width}
+        className={className}
         height={height}
         viewBox="0 0 110 127"
         fill="none"
@@ -190,13 +195,14 @@ export default class Icons {
       </svg>
     );
   }
-  static Telegram({ fill }: IconsProps) {
+  static Telegram({ fill, className, width = 16, height = 16 }: IconsProps) {
     return (
       <svg
         xmlns="http://www.w3.org/2000/svg"
         version="1.1"
-        width="16"
-        height="16"
+        width={width}
+        height={height}
+        className={className}
         x="0"
         y="0"
         viewBox="0 0 24 24"
@@ -210,12 +216,13 @@ export default class Icons {
       </svg>
     );
   }
-  static Whatsapp({ fill, width = 16, height = 16 }: IconsProps) {
+  static Whatsapp({ fill, width = 16, height = 16 ,className}: IconsProps) {
     return (
       <svg
         width={width}
         height={height}
         viewBox="0 0 131 131"
+        className={className}
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -226,10 +233,11 @@ export default class Icons {
       </svg>
     );
   }
-  static Twitter({ fill, width = 24, height = 16 }: IconsProps) {
+  static Twitter({ fill, width = 24, height = 16 ,className}: IconsProps) {
     return (
       <svg
         width={width}
+        className={className}
         height={height}
         viewBox="0 0 124 112"
         fill="none"

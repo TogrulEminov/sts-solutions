@@ -14,14 +14,17 @@ export default function UnderConstructionPage() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
+  }, []);
 
-    // ✅ Client-side-da .env oxunur
+  useEffect(() => {
+    if (!mounted) return;
+
+    // ✅ NEXT_PUBLIC_ prefix ilə .env-dən oxuyur
     const launchTimeStr =
-      process.env.NEXT_PUBLIC_LAUNCH_TIME || "2024-12-31T23:59:59Z";
+      process.env.NEXT_PUBLIC_LAUNCH_TIME || "2026-12-31T23:59:59";
     const launchTime = new Date(launchTimeStr);
-
-    console.log("Launch Time:", launchTimeStr); // Debug
 
     const calculateTimeLeft = () => {
       const now = new Date().getTime();
@@ -46,33 +49,37 @@ export default function UnderConstructionPage() {
     const timer = setInterval(calculateTimeLeft, 1000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [mounted]);
 
-  // ✅ SSR hydration mismatch-dən qaçmaq üçün
   if (!mounted) {
-    return null;
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-ui-1">
+        <div className="w-16 h-16 border-4 border-white/20 border-t-white rounded-full animate-spin" />
+      </div>
+    );
   }
 
   return (
-    <div className="min-h-screen py-20 flex items-center justify-center bg-[var(--color-ui-1)] px-4 relative overflow-hidden">
+    <div className="min-h-screen py-12 lg:py-20 flex items-center justify-center bg-linear-to-br from-ui-1 via-ui-5 to-ui-14 px-4 relative overflow-hidden">
       {/* Animated Background Elements */}
-      <div className="absolute inset-0">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-[var(--color-ui-4)]/10 rounded-full blur-3xl animate-pulse" />
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-20 left-10 w-64 lg:w-72 h-64 lg:h-72 bg-ui-4/10 rounded-full blur-3xl animate-pulse" />
         <div
-          className="absolute bottom-20 right-10 w-96 h-96 bg-[var(--color-ui-11)]/10 rounded-full blur-3xl animate-pulse"
+          className="absolute bottom-20 right-10 w-80 lg:w-96 h-80 lg:h-96 bg-ui-11/10 rounded-full blur-3xl animate-pulse"
           style={{ animationDelay: "1s" }}
         />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[var(--color-ui-4)]/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] lg:w-[500px] h-[400px] lg:h-[500px] bg-ui-4/5 rounded-full blur-3xl" />
       </div>
 
       <div className="max-w-5xl w-full relative z-10">
-        <div className="text-center mb-16">
-          <div className="inline-block mb-8">
+        {/* Logo & Title Section */}
+        <div className="text-center mb-12 lg:mb-16">
+          <div className="inline-block mb-6 lg:mb-8">
             <div className="relative">
-              <div className="absolute inset-0 bg-[var(--color-ui-4)]/20 rounded-3xl blur-2xl" />
-              <div className="relative w-32 h-32 bg-gradient-to-br from-[var(--color-ui-4)] to-[var(--color-ui-11)] rounded-3xl flex items-center justify-center shadow-2xl">
+              <div className="absolute inset-0 bg-ui-4/20 rounded-3xl blur-2xl" />
+              <div className="relative w-24 h-24 lg:w-32 lg:h-32 bg-linear-to-br from-ui-4 to-ui-15 rounded-3xl flex items-center justify-center shadow-2xl">
                 <svg
-                  className="w-12 h-12 text-white"
+                  className="w-10 h-10 lg:w-12 lg:h-12 text-white"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -88,24 +95,23 @@ export default function UnderConstructionPage() {
             </div>
           </div>
 
-          {/* Heading */}
-          <h1 className="text-6xl lg:text-8xl font-black text-white mb-6 tracking-tight">
+          <h1 className="text-5xl lg:text-8xl font-black text-white mb-4 lg:mb-6 tracking-tight">
             Tezliklə
           </h1>
-          <p className="text-2xl lg:text-3xl text-[var(--color-ui-2)] font-light max-w-2xl mx-auto">
-            Ağır yükləriniz bizimlə yüngülləşir
+          <p className="text-xl lg:text-3xl text-ui-19 font-light max-w-2xl mx-auto px-4">
+            Smart Technology Solutions
           </p>
 
           {/* Decorative Line */}
-          <div className="flex items-center justify-center gap-4 mt-8">
-            <div className="h-px w-20 bg-gradient-to-r from-transparent to-[var(--color-ui-4)]" />
-            <div className="w-2 h-2 bg-[var(--color-ui-4)] rounded-full animate-pulse" />
-            <div className="h-px w-20 bg-gradient-to-l from-transparent to-[var(--color-ui-4)]" />
+          <div className="flex items-center justify-center gap-4 mt-6 lg:mt-8">
+            <div className="h-px w-16 lg:w-20 bg-linear-to-r from-transparent to-ui-4" />
+            <div className="w-2 h-2 bg-ui-4 rounded-full animate-pulse" />
+            <div className="h-px w-16 lg:w-20 bg-linear-to-l from-transparent to-ui-4" />
           </div>
         </div>
 
         {/* Countdown Timer */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-16">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-6 mb-12 lg:mb-16 px-2">
           {[
             { label: "Gün", value: timeLeft.days },
             { label: "Saat", value: timeLeft.hours },
@@ -113,49 +119,39 @@ export default function UnderConstructionPage() {
             { label: "Saniyə", value: timeLeft.seconds },
           ].map((item, index) => (
             <div key={index} className="relative group">
-              {/* Glow Effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-ui-4)]/20 to-[var(--color-ui-11)]/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-linear-to-br from-ui-4/20 to-ui-15/20 rounded-2xl lg:rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-              {/* Timer Card */}
-              <div className="relative bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 p-8 lg:p-10 text-center hover:bg-white/10 transition-all duration-300 hover:scale-105 hover:border-[var(--color-ui-4)]/50">
-                <div className="text-5xl lg:text-7xl font-black text-white mb-3 tabular-nums">
+              <div className="relative bg-white/5 backdrop-blur-xl rounded-2xl lg:rounded-3xl border border-white/10 p-6 lg:p-10 text-center hover:bg-white/10 transition-all duration-300 hover:scale-105 hover:border-ui-4/50">
+                <div className="text-4xl lg:text-7xl font-black text-white mb-2 lg:mb-3 tabular-nums">
                   {String(item.value).padStart(2, "0")}
                 </div>
-                <div className="text-sm lg:text-base text-[var(--color-ui-2)] uppercase tracking-widest font-semibold">
+                <div className="text-xs lg:text-base text-ui-19 uppercase tracking-widest font-semibold">
                   {item.label}
                 </div>
               </div>
             </div>
           ))}
         </div>
-
-        {/* Description */}
-        <div className="text-center mb-12">
-          <p className="text-[var(--color-ui-2)] text-xl lg:text-2xl max-w-3xl mx-auto leading-relaxed">
-            Sizə inanılmaz bir təcrübə gətirmək üçün çox çalışırıq.
-            <span className="text-[var(--color-ui-4)] font-semibold">
-              {" "}
-              Xüsusi bir şey{" "}
-            </span>
+        <div className="text-center mb-8 lg:mb-12 px-4">
+          <p className="text-ui-19 text-lg lg:text-2xl max-w-3xl mx-auto leading-relaxed">
+            Sizə inanılmaz bir təcrübə gətirmək üçün çox çalışırıq. <br />
+            <span className="text-ui-4 font-semibold"> Xüsusi bir şey </span>
             üçün bizimlə qalın!
           </p>
         </div>
 
-        {/* Contact Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-          {/* Email Card */}
-
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6 mb-8 lg:mb-12 px-2">
           <Link
-            href="mailto:sales@profitransport.az"
+            href="mailto:togruleminov3@gmail.com"
             className="group relative"
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-ui-4)]/20 to-transparent rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute inset-0 bg-linear-to-br from-ui-4/20 to-transparent rounded-2xl lg:rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-            <div className="relative bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 p-8 hover:bg-white/10 transition-all duration-300 hover:border-[var(--color-ui-4)]/50">
-              <div className="flex items-center gap-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-[var(--color-ui-4)] to-[var(--color-ui-11)] rounded-2xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+            <div className="relative bg-white/5 backdrop-blur-xl rounded-2xl lg:rounded-3xl border border-white/10 p-6 lg:p-8 hover:bg-white/10 transition-all duration-300 hover:border-ui-4/50">
+              <div className="flex items-center gap-3 lg:gap-4">
+                <div className="w-12 h-12 lg:w-16 lg:h-16 bg-linear-to-br from-ui-4 to-ui-15 rounded-xl lg:rounded-2xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
                   <svg
-                    className="w-8 h-8 text-white"
+                    className="w-6 h-6 lg:w-8 lg:h-8 text-white"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
@@ -163,28 +159,25 @@ export default function UnderConstructionPage() {
                     <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                   </svg>
                 </div>
-                <div className="flex-1">
-                  <div className="text-[var(--color-ui-2)] text-sm font-semibold mb-1">
+                <div className="flex-1 min-w-0">
+                  <div className="text-ui-19 text-xs lg:text-sm font-semibold mb-1">
                     Email
                   </div>
-                  <div className="text-white text-lg font-bold break-all">
-                    sales@profitransport.az
+                  <div className="text-white text-sm lg:text-lg font-bold truncate">
+                    togruleminov3@gmail.com
                   </div>
                 </div>
               </div>
             </div>
           </Link>
+          <Link href="tel:+994553183569" className="group relative">
+            <div className="absolute inset-0 bg-linear-to-br from-ui-15/20 to-transparent rounded-2xl lg:rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-          {/* Phone Card */}
-
-          <Link href="tel:+994512515999" className="group relative">
-            <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-ui-11)]/20 to-transparent rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-            <div className="relative bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 p-8 hover:bg-white/10 transition-all duration-300 hover:border-[var(--color-ui-11)]/50">
-              <div className="flex items-center gap-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-[var(--color-ui-11)] to-[var(--color-ui-4)] rounded-2xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+            <div className="relative bg-white/5 backdrop-blur-xl rounded-2xl lg:rounded-3xl border border-white/10 p-6 lg:p-8 hover:bg-white/10 transition-all duration-300 hover:border-ui-15/50">
+              <div className="flex items-center gap-3 lg:gap-4">
+                <div className="w-12 h-12 lg:w-16 lg:h-16 bg-linear-to-br from-ui-15 to-ui-4 rounded-xl lg:rounded-2xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
                   <svg
-                    className="w-8 h-8 text-white"
+                    className="w-6 h-6 lg:w-8 lg:h-8 text-white"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
@@ -192,11 +185,11 @@ export default function UnderConstructionPage() {
                   </svg>
                 </div>
                 <div className="flex-1">
-                  <div className="text-[var(--color-ui-2)] text-sm font-semibold mb-1">
+                  <div className="text-ui-19 text-xs lg:text-sm font-semibold mb-1">
                     Telefon
                   </div>
-                  <div className="text-white text-lg font-bold">
-                    +994 51 251 59 99
+                  <div className="text-white text-sm lg:text-lg font-bold">
+                    +994 55 318 35 69
                   </div>
                 </div>
               </div>
@@ -205,13 +198,11 @@ export default function UnderConstructionPage() {
         </div>
 
         {/* Social Links */}
-        <div className="flex justify-center items-center gap-3">
-          <span className="text-[var(--color-ui-2)] text-sm font-medium mr-2">
-            Bizi izləyin:
-          </span>
+        <div className="flex flex-wrap justify-center items-center gap-3 px-4">
+          <span className="text-ui-19 text-sm font-medium">Bizi izləyin:</span>
           {[
             {
-              link: "https://www.instagram.com/profitransport_az/",
+              link: "https://wa.me/994512515999",
               name: "WhatsApp",
               icon: "M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z",
             },
@@ -231,11 +222,11 @@ export default function UnderConstructionPage() {
               href={social.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-12 h-12 bg-white/5 backdrop-blur-sm rounded-xl flex items-center justify-center hover:bg-[var(--color-ui-4)]/20 transition-all hover:scale-110 border border-white/10 hover:border-[var(--color-ui-4)]/50 group"
+              className="w-11 h-11 lg:w-12 lg:h-12 bg-white/5 backdrop-blur-sm rounded-xl flex items-center justify-center hover:bg-ui-4/20 transition-all hover:scale-110 border border-white/10 hover:border-ui-4/50 group"
               aria-label={social.name}
             >
               <svg
-                className="w-5 h-5 text-white group-hover:text-[var(--color-ui-4)] transition-colors"
+                className="w-5 h-5 text-white group-hover:text-ui-4 transition-colors"
                 fill="currentColor"
                 viewBox="0 0 24 24"
               >

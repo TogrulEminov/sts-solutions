@@ -28,6 +28,13 @@ type GetProps = {
 // 1. SELECT OPTIMIZATION (getAbout) - Ən təmiz qalır
 export async function getMainAbout({ locale }: GetProps) {
   const existingItem = await db.about.findFirst({
+    where: {
+      translations: {
+        some: {
+          locale: locale,
+        },
+      },
+    },
     include: {
       imageUrl: {
         select: {
@@ -40,7 +47,9 @@ export async function getMainAbout({ locale }: GetProps) {
         },
       },
       translations: {
-        where: { locale },
+        where: {
+          locale: locale,
+        },
       },
     },
   });
@@ -51,7 +60,6 @@ export async function getMainAbout({ locale }: GetProps) {
   };
 }
 
-// 2. UPSERT ABOUT - Transaction və Select Optimallaşdırılması qorunur
 export async function upsertMainAbout(
   input: UpsertAboutMainInput
 ): Promise<ActionResult> {
@@ -70,7 +78,6 @@ export async function upsertMainAbout(
   }
 
   try {
-    // Validate input
     const validateData = upsertAboutMainSchema.safeParse(input);
     if (!validateData?.success) {
       return {
@@ -95,10 +102,9 @@ export async function upsertMainAbout(
     } = validateData.data;
     const custom_slug = createSlug(title);
 
-    // ✅ TRANSACTION WITH TIMEOUT (5s/10s)
     const result = await db.$transaction(
       async (prisma) => {
-        // 1. Get or Create About record (Select yalnız id və documentId)
+        // 1. Get or Create About record
         let mainRecord = await prisma.about.findFirst({
           where: { isDeleted: false },
           select: {
@@ -112,11 +118,20 @@ export async function upsertMainAbout(
           mainRecord = await prisma.about.create({
             data: {
               documentId: uuid,
-              experienceYears
+              experienceYears, // ✅ İlk yaradılışda da əlavə et
+            },
+            select: {
+              id: true,
+              documentId: true,
             },
           });
+        } else {
+          // ✅ Mövcud record-u update et
+          await prisma.about.update({
+            where: { id: mainRecord.id },
+            data: { experienceYears },
+          });
         }
-        // Yersiz update bloku əvvəlki versiyada silinib, çox yaxşı.
 
         // 2. Upsert translation
         const translation = await prisma.aboutTranslations.upsert({
@@ -150,6 +165,7 @@ export async function upsertMainAbout(
             purpose: JSON.stringify(purpose),
             statistics: JSON.stringify(statistics),
             locale: locale,
+            documentId: mainRecord.documentId, // ✅ ƏSAS: documentId əlaqəsi
           },
         });
 
@@ -160,8 +176,8 @@ export async function upsertMainAbout(
         };
       },
       {
-        maxWait: 5000, // 5 saniyə - queue-da gözləmə
-        timeout: 10000, // 10 saniyə - icra müddəti
+        maxWait: 5000,
+        timeout: 10000,
       }
     );
 
@@ -172,7 +188,7 @@ export async function upsertMainAbout(
       message: "Məlumat uğurla yadda saxlandı",
     };
   } catch (error) {
-    console.error("upsertAbout error:", error); // Error logging
+    console.error("upsertAbout error:", error);
 
     if (error instanceof ZodError) {
       const fieldErrors: Record<string, string[]> = {};

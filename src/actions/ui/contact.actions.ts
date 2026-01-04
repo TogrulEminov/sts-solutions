@@ -5,20 +5,18 @@ import { db } from "@/src/lib/admin/prismaClient";
 
 type GetProps = {
   locale: Locales;
-  slug: string;
 };
 
-export const fetchServicesSubCategory = async ({ locale, slug }: GetProps) => {
+export const fetchContact = async ({ locale }: GetProps) => {
   const validatedLocale = validateLocale(locale);
 
-  const [servicesDetailData, servicesData, contactData, sections] =
+  const [categoriesData, contactData, servicesData, socialsData, sections] =
     await Promise.all([
-      db.servicesSubCategory.findFirst({
+      db.categories.findFirst({
         where: {
-          isDeleted: false,
+          slug: "contact",
           translations: {
             some: {
-              slug: slug,
               locale: validatedLocale,
             },
           },
@@ -31,47 +29,12 @@ export const fetchServicesSubCategory = async ({ locale, slug }: GetProps) => {
               fileKey: true,
             },
           },
-          gallery: {
-            select: {
-              id: true,
-              publicUrl: true,
-              fileKey: true,
-            },
-          },
           translations: {
-            include: {
-              seo: true,
-            },
-          },
-        },
-      }),
-      db.servicesCategory.findMany({
-        where: {
-          isDeleted: false,
-          translations: {
-            some: {
+            where: {
               locale: validatedLocale,
             },
           },
         },
-        include: {
-          gallery: {
-            select: {
-              id: true,
-              publicUrl: true,
-              fileKey: true,
-            },
-          },
-          imageUrl: {
-            select: {
-              id: true,
-              publicUrl: true,
-              fileKey: true,
-            },
-          },
-          translations: true,
-        },
-        take: 12,
       }),
       db.contactInformation.findFirst({
         where: {
@@ -86,38 +49,79 @@ export const fetchServicesSubCategory = async ({ locale, slug }: GetProps) => {
           translations: true,
         },
       }),
+      db.servicesCategory.findMany({
+        where: {
+          isDeleted: false,
+          translations: { some: { locale: validatedLocale } },
+        },
+        include: {
+          imageUrl: {
+            select: {
+              id: true,
+              fileKey: true,
+              publicUrl: true,
+            },
+          },
+          translations: {
+            where: {
+              locale: validatedLocale,
+            },
+            select: {
+              title: true,
+              slug: true,
+            },
+          },
+        },
+      }),
+      db.social.findMany({
+        where: {
+          status: "published",
+        },
+        orderBy: { createdAt: "asc" },
+      }),
+      // Section Contents
       db.sectionContent.findMany({
         where: {
           isDeleted: false,
           key: {
-            in: ["servicesCategoriesMain", "consulting"],
+            in: ["servicesMain"],
           },
+          translations: { some: { locale: validatedLocale } }, // ✅
+        },
+        select: {
+          key: true,
+          id: true,
+          documentId: true,
           translations: {
-            some: {
-              locale: validatedLocale,
+            where: { locale: validatedLocale }, // ✅
+            select: {
+              id: true,
+              title: true,
+              slug: true,
+              subTitle: true,
+              description: true,
+              highlightWord: true,
             },
           },
-        },
-        include: {
-          translations: true,
         },
       }),
     ]);
 
-  const sectionsMap = sections?.reduce((acc, section) => {
+  // Sections organize
+  const sectionsMap = sections.reduce((acc, section) => {
     acc[`${section?.key}Section`] = section;
     return acc;
   }, {} as Record<string, any>);
 
   return {
     data: {
-      servicesDetailData,
+      categoriesData,
       contactData,
       servicesData,
+      socialsData,
     },
     sections: {
-      servicesSection: sectionsMap.servicesCategoriesMainSection,
-      consultingSection: sectionsMap.consultingSection,
+      servicesMainSection: sectionsMap.servicesMainSection,
     },
   };
 };
