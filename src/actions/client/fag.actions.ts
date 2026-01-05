@@ -228,7 +228,7 @@ export async function createFag(input: CreateFagInput): Promise<ActionResult> {
         },
       },
     });
-    await revalidateAll(CACHE_TAG_GROUPS.HOME);
+    await revalidateAll([CACHE_TAG_GROUPS.ABOUT, CACHE_TAG_GROUPS.HOME]);
     return {
       success: true,
       data: newData,
@@ -358,8 +358,7 @@ export async function uptadeFag(
         timeout: 10000, // 10 saniyə timeout əlavə edildi
       }
     );
-
-    await revalidateAll(CACHE_TAG_GROUPS.HOME);
+    await revalidateAll([CACHE_TAG_GROUPS.ABOUT, CACHE_TAG_GROUPS.HOME]);
     return {
       success: true,
       data: uptadeData,

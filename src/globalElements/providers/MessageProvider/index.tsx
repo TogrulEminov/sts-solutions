@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, ReactNode } from "react";
+import { useEffect, ReactNode, Suspense } from "react";
 import { message } from "antd";
 import { useMessageStore } from "@/src/hooks/useMessageStore";
 
@@ -35,7 +35,7 @@ export function MessageProvider({
   return (
     <>
       {contextHolder}
-      {children}
+      <Suspense>{children}</Suspense>
     </>
   );
 }

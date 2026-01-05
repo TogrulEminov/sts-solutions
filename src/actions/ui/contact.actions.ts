@@ -1,13 +1,18 @@
 "use server";
+import { CACHE_TAG_GROUPS } from "@/src/config/cacheTags";
 import { Locales } from "@/src/generated/prisma/enums";
 import { validateLocale } from "@/src/helper/validateLocale";
 import { db } from "@/src/lib/admin/prismaClient";
+import { cacheLife, cacheTag } from "next/cache";
 
 type GetProps = {
   locale: Locales;
 };
 
 export const fetchContact = async ({ locale }: GetProps) => {
+  "use cache";
+  cacheTag(CACHE_TAG_GROUPS.CONTACT);
+  cacheLife("minutes");
   const validatedLocale = validateLocale(locale);
 
   const [categoriesData, contactData, servicesData, socialsData, sections] =
@@ -46,7 +51,11 @@ export const fetchContact = async ({ locale }: GetProps) => {
           },
         },
         include: {
-          translations: true,
+          translations: {
+            where: {
+              locale: validatedLocale,
+            },
+          },
         },
       }),
       db.servicesCategory.findMany({

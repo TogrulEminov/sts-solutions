@@ -13,7 +13,6 @@ interface Props {
 export default async function Content({ contentData }: Props) {
   const t = await getTranslations("home");
   const { translations } = contentData;
-
   return (
     <article className="flex flex-col space-y-6">
       <strong className="font-extrabold font-inter text-[28px] leading-9 lg:text-[60px] lg:leading-[76px] text-ui-7">

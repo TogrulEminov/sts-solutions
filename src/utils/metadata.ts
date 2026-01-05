@@ -5,13 +5,13 @@ import { cache } from "react";
 import { getPageUrl } from "./checkSlug";
 import { getForCards } from "./getFullimageUrl";
 import { CustomLocales, FileType } from "../services/interface";
-import { getCategoriesById } from "../actions/client/category.actions";
 import { TIMEOUTS, withMetadataTimeout } from "./timeout-utils";
 import { getServicesCategoryMetaById } from "../actions/meta/services-category.actions";
 import { getServicesSubMetaById } from "../actions/meta/services-sub-category.actions";
 import { getBlogMetaById } from "../actions/meta/blog.actions";
 import { getSolutionsMetaById } from "../actions/meta/solutions.actions";
 import { getProjectsMetaById } from "../actions/meta/projects.actions";
+import { getCategoriesMetaById } from "../actions/meta/categories.actions";
 
 type Locales = "az" | "en" | "ru";
 
@@ -168,10 +168,10 @@ const getCachedMetadata = cache(
         switch (dataType) {
           case "category":
             if (!slug) {
-              result = await getCategoriesById({ locale, id: "" });
+              result = await getCategoriesMetaById({ locale, id: "" });
               return result?.data;
             }
-            result = await getCategoriesById({ locale, id: slug });
+            result = await getCategoriesMetaById({ locale, id: slug });
             return result?.data;
           default:
             return null;

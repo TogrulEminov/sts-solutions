@@ -1,7 +1,9 @@
 "use server";
+import { CACHE_TAG_GROUPS } from "@/src/config/cacheTags";
 import { Locales } from "@/src/generated/prisma/enums";
 import { validateLocale } from "@/src/helper/validateLocale";
 import { db } from "@/src/lib/admin/prismaClient";
+import { cacheLife, cacheTag } from "next/cache";
 
 type GetProps = {
   locale: Locales;
@@ -9,6 +11,9 @@ type GetProps = {
 };
 
 export const fetchBlogDetail = async ({ locale, slug }: GetProps) => {
+  "use cache";
+  cacheTag(CACHE_TAG_GROUPS.BLOG_DETAIL);
+  cacheLife("minutes");
   const validatedLocale = validateLocale(locale);
 
   const [blogDetailData, relatedData] = await Promise.all([
@@ -31,6 +36,9 @@ export const fetchBlogDetail = async ({ locale, slug }: GetProps) => {
           },
         },
         translations: {
+          where: {
+            locale: validatedLocale,
+          },
           include: {
             seo: true,
           },
@@ -47,7 +55,11 @@ export const fetchBlogDetail = async ({ locale, slug }: GetProps) => {
         },
       },
       include: {
-        translations: true,
+        translations: {
+          where: {
+            locale: validatedLocale,
+          },
+        },
         imageUrl: {
           select: {
             id: true,

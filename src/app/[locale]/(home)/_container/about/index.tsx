@@ -5,6 +5,7 @@ interface Props {
   exisingData: IAboutHome;
 }
 export default async function AboutSection({ exisingData }: Props) {
+  if (!exisingData?.translations?.length) return null;
   return (
     <section className="lg:py-25 py-10">
       <div className="container">

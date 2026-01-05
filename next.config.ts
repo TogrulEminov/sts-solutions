@@ -17,7 +17,8 @@ const allowImage = [
 const nextConfig: NextConfig = {
   output: "standalone",
   reactStrictMode: true,
-
+  cacheComponents: true,
+  productionBrowserSourceMaps: false,
   // ========================================
   // 🖼️ IMAGE OPTIMIZATION
   // ========================================
@@ -35,7 +36,7 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384, 1024, 1920],
-    minimumCacheTTL: isDev ? 0 : 3600,
+    minimumCacheTTL: isDev ? 0 : 60,
     dangerouslyAllowSVG: true,
     contentDispositionType: "attachment",
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",

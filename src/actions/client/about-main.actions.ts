@@ -11,6 +11,8 @@ import {
   UpsertAboutMainInput,
   upsertAboutMainSchema,
 } from "@/src/schema/about-main.schema";
+import { revalidateAll } from "@/src/utils/revalidate";
+import { CACHE_TAG_GROUPS } from "@/src/config/cacheTags";
 
 type ActionResult<T = unknown> = {
   success: boolean;
@@ -180,7 +182,7 @@ export async function upsertMainAbout(
         timeout: 10000,
       }
     );
-
+    await revalidateAll([CACHE_TAG_GROUPS.ABOUT]);
     return {
       success: true,
       data: result,

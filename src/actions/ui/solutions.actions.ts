@@ -1,7 +1,9 @@
 "use server";
+import { CACHE_TAG_GROUPS } from "@/src/config/cacheTags";
 import { Locales } from "@/src/generated/prisma/enums";
 import { validateLocale } from "@/src/helper/validateLocale";
 import { db } from "@/src/lib/admin/prismaClient";
+import { cacheLife, cacheTag } from "next/cache";
 
 type GetProps = {
   locale: Locales;
@@ -11,6 +13,10 @@ type GetProps = {
 };
 
 export const fetchSolutions = async ({ locale, page, pageSize }: GetProps) => {
+  "use cache";
+  cacheTag(CACHE_TAG_GROUPS.SOLUTIONS);
+  cacheLife("minutes");
+
   const validatedLocale = validateLocale(locale);
   const customPageSize = Number(pageSize) || 12;
   const skip = 0;
@@ -43,6 +49,14 @@ export const fetchSolutions = async ({ locale, page, pageSize }: GetProps) => {
           },
         },
         translations: {
+          select: {
+            title: true,
+            description: true,
+            subTitle: true,
+            features: true,
+            highlight: true,
+            locale: true,
+          },
           where: {
             locale: validatedLocale,
           },
@@ -66,7 +80,11 @@ export const fetchSolutions = async ({ locale, page, pageSize }: GetProps) => {
             fileKey: true,
           },
         },
-        translations: true,
+        translations: {
+          where: {
+            locale: validatedLocale,
+          },
+        },
       },
       orderBy: { createdAt: "desc" },
       skip: skip,
@@ -83,6 +101,9 @@ export const fetchSolutions = async ({ locale, page, pageSize }: GetProps) => {
       },
       include: {
         translations: {
+          where: {
+            locale: validatedLocale,
+          },
           select: {
             title: true,
             slug: true,
@@ -125,6 +146,9 @@ export const fetchSolutions = async ({ locale, page, pageSize }: GetProps) => {
           },
         },
         translations: {
+          where: {
+            locale: validatedLocale,
+          },
           select: {
             title: true,
           },
@@ -188,7 +212,8 @@ export const fetchSolutions = async ({ locale, page, pageSize }: GetProps) => {
       categoriesData,
       solutionsData,
       partnersData,
-      servicesData,contactData
+      servicesData,
+      contactData,
     },
     sections: {
       servicesSection: sectionsMap.servicesMainSection,

@@ -12,6 +12,7 @@ interface PageProps {
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
+  await connection();
   const { locale } = await params;
   return generatePageMetadata({
     locale: locale,
@@ -42,5 +43,5 @@ export default async function SolutionsPage({
   if (!existingData?.data?.categoriesData?.translations) {
     notFound();
   }
-  return <SolutionsMainPageContainer existingData={existingData}/>;
+  return <SolutionsMainPageContainer existingData={existingData} />;
 }

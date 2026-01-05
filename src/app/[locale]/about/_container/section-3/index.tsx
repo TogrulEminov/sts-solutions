@@ -2,6 +2,7 @@ import { IAbout } from "@/src/services/interface";
 import Statistics from "./statistics";
 import CustomImage from "@/src/globalElements/ImageTag";
 import { sanitizeHtml } from "@/src/lib/domburify";
+import employeImg from "@/public/assets/employee.svg";
 interface Props {
   existingData: IAbout;
 }
@@ -26,10 +27,8 @@ export default async function TeamContent({ existingData }: Props) {
             <CustomImage
               width={357}
               height={565}
-              title=""
-              src={
-                "https://res.cloudinary.com/da403zlyf/image/upload/v1766317331/Group_1321314574_nfknny.svg"
-              }
+              title={translations?.subTitle}
+              src={employeImg}
               className="w-full h-auto max-h-140"
             />
           </figure>

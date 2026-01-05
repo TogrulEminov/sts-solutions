@@ -1,7 +1,9 @@
 "use server";
+import { CACHE_TAG_GROUPS } from "@/src/config/cacheTags";
 import { Locales } from "@/src/generated/prisma/enums";
 import { validateLocale } from "@/src/helper/validateLocale";
 import { db } from "@/src/lib/admin/prismaClient";
+import { cacheLife, cacheTag } from "next/cache";
 
 type GetProps = {
   locale: Locales;
@@ -11,6 +13,9 @@ type GetProps = {
 };
 
 export const fetchBlogs = async ({ locale, page, pageSize }: GetProps) => {
+  "use cache";
+  cacheTag(CACHE_TAG_GROUPS.BLOG);
+  cacheLife("minutes");
   const validatedLocale = validateLocale(locale);
   const customPageSize = Number(pageSize) || 12;
   const skip = 0;
@@ -58,7 +63,11 @@ export const fetchBlogs = async ({ locale, page, pageSize }: GetProps) => {
             fileKey: true,
           },
         },
-        translations: true,
+        translations: {
+          where: {
+            locale: validatedLocale,
+          },
+        },
       },
       orderBy: { createdAt: "desc" },
       skip: skip,

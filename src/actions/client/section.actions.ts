@@ -14,6 +14,8 @@ import { Role } from "@/src/generated/prisma/enums";
 import { formatZodErrors } from "@/src/utils/format-zod-errors";
 import { Prisma } from "@/src/generated/prisma/browser";
 import { CustomLocales } from "@/src/services/interface";
+import { revalidateAll } from "@/src/utils/revalidate";
+import { CACHE_TAG_GROUPS } from "@/src/config/cacheTags";
 
 type ActionResult<T = unknown> = {
   success: boolean;
@@ -202,6 +204,16 @@ export async function createSectionContent(
         },
       },
     });
+
+    await revalidateAll([
+      CACHE_TAG_GROUPS.PROJECTS,
+      CACHE_TAG_GROUPS.HOME,
+      CACHE_TAG_GROUPS.BLOG,
+      CACHE_TAG_GROUPS.SOLUTIONS,
+      CACHE_TAG_GROUPS.SERVICE,
+      CACHE_TAG_GROUPS.SERVICE_CATEGORY,
+      CACHE_TAG_GROUPS.ABOUT,
+    ]);
     return {
       success: true,
       data: newData,
@@ -312,6 +324,15 @@ export async function uptadeSectionContent(
 
       return updatedData;
     });
+    await revalidateAll([
+      CACHE_TAG_GROUPS.PROJECTS,
+      CACHE_TAG_GROUPS.HOME,
+      CACHE_TAG_GROUPS.BLOG,
+      CACHE_TAG_GROUPS.SOLUTIONS,
+      CACHE_TAG_GROUPS.SERVICE,
+      CACHE_TAG_GROUPS.SERVICE_CATEGORY,
+      CACHE_TAG_GROUPS.ABOUT,
+    ]);
     return { success: true, data: uptadeData, code: "Success" };
   } catch (error) {
     const errorMessage = (error as Error).message;

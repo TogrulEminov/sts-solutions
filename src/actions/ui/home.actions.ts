@@ -1,13 +1,18 @@
 "use server";
+import { CACHE_TAG_GROUPS } from "@/src/config/cacheTags";
 import { Locales } from "@/src/generated/prisma/enums";
 import { validateLocale } from "@/src/helper/validateLocale";
 import { db } from "@/src/lib/admin/prismaClient";
+import { cacheLife, cacheTag } from "next/cache";
 
 type GetProps = {
   locale: Locales;
 };
 
 export const fetchHome = async ({ locale }: GetProps) => {
+  "use cache";
+  cacheTag(CACHE_TAG_GROUPS.HOME);
+  cacheLife("minutes");
   const validatedLocale = validateLocale(locale);
 
   const [
@@ -40,7 +45,11 @@ export const fetchHome = async ({ locale }: GetProps) => {
             fileKey: true,
           },
         },
-        translations: true,
+        translations: {
+          where: {
+            locale: validatedLocale,
+          },
+        },
       },
       take: 6,
     }),
@@ -61,7 +70,11 @@ export const fetchHome = async ({ locale }: GetProps) => {
             fileKey: true,
           },
         },
-        translations: true,
+        translations: {
+          where: {
+            locale: validatedLocale,
+          },
+        },
       },
     }),
     db.servicesCategory.findMany({
@@ -82,7 +95,11 @@ export const fetchHome = async ({ locale }: GetProps) => {
             fileKey: true,
           },
         },
-        translations: true,
+        translations: {
+          where: {
+            locale: validatedLocale,
+          },
+        },
       },
       take: 12,
     }),
@@ -104,6 +121,9 @@ export const fetchHome = async ({ locale }: GetProps) => {
           },
         },
         translations: {
+          where: {
+            locale: validatedLocale,
+          },
           select: {
             title: true,
             documentId: true,
@@ -131,6 +151,9 @@ export const fetchHome = async ({ locale }: GetProps) => {
           },
         },
         translations: {
+          where: {
+            locale: validatedLocale,
+          },
           select: {
             title: true,
           },
@@ -156,6 +179,9 @@ export const fetchHome = async ({ locale }: GetProps) => {
           },
         },
         translations: {
+          where: {
+            locale: validatedLocale,
+          },
           select: {
             title: true,
             slug: true,
@@ -184,6 +210,9 @@ export const fetchHome = async ({ locale }: GetProps) => {
           },
         },
         translations: {
+          where: {
+            locale: validatedLocale,
+          },
           select: {
             title: true,
             slug: true,
@@ -205,6 +234,9 @@ export const fetchHome = async ({ locale }: GetProps) => {
       },
       include: {
         translations: {
+          where: {
+            locale: validatedLocale,
+          },
           select: {
             title: true,
             description: true,
@@ -241,7 +273,11 @@ export const fetchHome = async ({ locale }: GetProps) => {
                 fileKey: true,
               },
             },
-            translations: true,
+            translations: {
+              where: {
+                locale: validatedLocale,
+              },
+            },
           },
         },
         imageUrl: {
@@ -251,7 +287,11 @@ export const fetchHome = async ({ locale }: GetProps) => {
             fileKey: true,
           },
         },
-        translations: true,
+        translations: {
+          where: {
+            locale: validatedLocale,
+          },
+        },
       },
       take: 12,
     }),
@@ -265,7 +305,11 @@ export const fetchHome = async ({ locale }: GetProps) => {
         },
       },
       include: {
-        translations: true,
+        translations: {
+          where: {
+            locale: validatedLocale,
+          },
+        },
       },
     }),
     // Section Contents

@@ -1,10 +1,10 @@
-import { connection } from "next/server";
 import BlogPageContainer from "./_container/main";
 import { Metadata } from "next";
 import { generatePageMetadata } from "@/src/utils/metadata";
 import { validateLocale } from "@/src/helper/validateLocale";
 import { fetchBlogs } from "@/src/actions/ui/blog.actions";
 import { notFound } from "next/navigation";
+import { connection } from "next/server";
 interface PageProps {
   params: Promise<{ locale: string }>;
   searchParams: Promise<{ [key: string]: string | number | boolean }>;
@@ -12,6 +12,7 @@ interface PageProps {
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
+  await connection();
   const { locale } = await params;
   return generatePageMetadata({
     locale: locale,
@@ -40,5 +41,5 @@ export default async function BlogPage({ params, searchParams }: PageProps) {
   if (!existingData?.data?.categoriesData?.translations) {
     notFound();
   }
-  return <BlogPageContainer  existingData={existingData}/>;
+  return <BlogPageContainer existingData={existingData} />;
 }

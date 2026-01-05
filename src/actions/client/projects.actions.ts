@@ -19,6 +19,8 @@ import {
 } from "@/src/schema/projects.schema";
 import { createSlug } from "@/src/lib/slugifyHelper";
 import { checkAuthServerAction } from "@/src/middleware/checkAuthorization";
+import { revalidateAll } from "@/src/utils/revalidate";
+import { CACHE_TAG_GROUPS } from "@/src/config/cacheTags";
 
 type ActionResult<T = unknown> = {
   success: boolean;
@@ -273,6 +275,12 @@ export async function createProjects(
         },
       },
     });
+    await revalidateAll([
+      CACHE_TAG_GROUPS.PROJECTS,
+      CACHE_TAG_GROUPS.PROJECTS_DETAIL,
+      CACHE_TAG_GROUPS.HOME,
+      CACHE_TAG_GROUPS.ABOUT,
+    ]);
     return {
       success: true,
       data: newData,
@@ -409,7 +417,12 @@ export async function uptadeProjects(
         timeout: 10000, // 10 saniyə timeout əlavə edildi
       }
     );
-
+    await revalidateAll([
+      CACHE_TAG_GROUPS.PROJECTS,
+      CACHE_TAG_GROUPS.PROJECTS_DETAIL,
+      CACHE_TAG_GROUPS.HOME,
+      CACHE_TAG_GROUPS.ABOUT,
+    ]);
     return {
       success: true,
       data: uptadeData,

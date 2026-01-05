@@ -15,6 +15,8 @@ import { calculateReadTime } from "@/src/utils/calcualateReadTime";
 import { checkAuthServerAction } from "@/src/middleware/checkAuthorization";
 import { Locales, Role } from "@/src/generated/prisma/enums";
 import { Prisma } from "@/src/generated/prisma/client";
+import { CACHE_TAG_GROUPS } from "@/src/config/cacheTags";
+import { revalidateAll } from "@/src/utils/revalidate";
 
 type ActionResult<T = unknown> = {
   success: boolean;
@@ -307,7 +309,11 @@ export async function createBlog(
 
       return blog;
     });
-
+    await revalidateAll([
+      CACHE_TAG_GROUPS.HOME,
+      CACHE_TAG_GROUPS.BLOG,
+      CACHE_TAG_GROUPS.BLOG_DETAIL,
+    ]);
     return {
       success: true,
       data: newData,
@@ -505,7 +511,11 @@ export async function updateBlog(
         },
       });
     });
-
+    await revalidateAll([
+      CACHE_TAG_GROUPS.HOME,
+      CACHE_TAG_GROUPS.BLOG,
+      CACHE_TAG_GROUPS.BLOG_DETAIL,
+    ]);
     return {
       success: true,
       data: updatedData,

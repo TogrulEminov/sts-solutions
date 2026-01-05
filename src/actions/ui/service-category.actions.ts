@@ -1,7 +1,9 @@
 "use server";
+import { CACHE_TAG_GROUPS } from "@/src/config/cacheTags";
 import { Locales } from "@/src/generated/prisma/enums";
 import { validateLocale } from "@/src/helper/validateLocale";
 import { db } from "@/src/lib/admin/prismaClient";
+import { cacheLife, cacheTag } from "next/cache";
 
 type GetProps = {
   locale: Locales;
@@ -9,6 +11,9 @@ type GetProps = {
 };
 
 export const fetchServicesCategory = async ({ locale, category }: GetProps) => {
+  "use cache";
+  cacheTag(CACHE_TAG_GROUPS.SERVICE_CATEGORY);
+  cacheLife("minutes");
   const validatedLocale = validateLocale(locale);
 
   const [servicesDetailData, servicesData, sectionData] = await Promise.all([
@@ -47,10 +52,17 @@ export const fetchServicesCategory = async ({ locale, category }: GetProps) => {
             },
           },
           include: {
-            translations: true,
+            translations: {
+              where: {
+                locale: validatedLocale,
+              },
+            },
           },
         },
         translations: {
+          where: {
+            locale: validatedLocale,
+          },
           include: {
             seo: true,
           },
@@ -84,7 +96,11 @@ export const fetchServicesCategory = async ({ locale, category }: GetProps) => {
             },
           },
           include: {
-            translations: true,
+            translations: {
+              where: {
+                locale: validatedLocale,
+              },
+            },
           },
         },
         imageUrl: {
@@ -94,7 +110,11 @@ export const fetchServicesCategory = async ({ locale, category }: GetProps) => {
             fileKey: true,
           },
         },
-        translations: true,
+        translations: {
+          where: {
+            locale: validatedLocale,
+          },
+        },
       },
       take: 12,
     }),
@@ -109,7 +129,11 @@ export const fetchServicesCategory = async ({ locale, category }: GetProps) => {
         },
       },
       include: {
-        translations: true,
+        translations: {
+          where: {
+            locale: validatedLocale,
+          },
+        },
       },
     }),
   ]);

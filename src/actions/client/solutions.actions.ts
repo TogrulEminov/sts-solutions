@@ -20,6 +20,8 @@ import {
   UpdateSolutionsInput,
   uptadeSolutionsSchema,
 } from "@/src/schema/solutions.schema";
+import { revalidateAll } from "@/src/utils/revalidate";
+import { CACHE_TAG_GROUPS } from "@/src/config/cacheTags";
 
 type ActionResult<T = unknown> = {
   success: boolean;
@@ -286,6 +288,12 @@ export async function createSolutions(
         },
       },
     });
+    await revalidateAll([
+      CACHE_TAG_GROUPS.HOME,
+      CACHE_TAG_GROUPS.SOLUTIONS,
+      CACHE_TAG_GROUPS.SERVICE,
+      CACHE_TAG_GROUPS.SOLUTIONS_DETAIL,
+    ]);
     return {
       success: true,
       data: newData,
@@ -428,7 +436,12 @@ export async function uptadeSolutions(
         timeout: 10000, // 10 saniyə timeout əlavə edildi
       }
     );
-
+    await revalidateAll([
+      CACHE_TAG_GROUPS.HOME,
+      CACHE_TAG_GROUPS.SOLUTIONS,
+      CACHE_TAG_GROUPS.SERVICE,
+      CACHE_TAG_GROUPS.SOLUTIONS_DETAIL,
+    ]);
     return {
       success: true,
       data: uptadeData,

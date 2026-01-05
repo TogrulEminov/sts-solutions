@@ -1,10 +1,18 @@
+import { CACHE_TAG_GROUPS } from "@/src/config/cacheTags";
 import { Locales } from "@/src/generated/prisma/enums";
 import { db } from "@/src/lib/admin/prismaClient";
+import { cacheLife, cacheTag } from "next/cache";
 type GetByIDProps = {
   id: string;
   locale: Locales;
 };
-export async function getServicesCategoryMetaById({ locale, id }: GetByIDProps) {
+export async function getServicesCategoryMetaById({
+  locale,
+  id,
+}: GetByIDProps) {
+  "use cache";
+  cacheTag(CACHE_TAG_GROUPS.SERVICE_CATEGORY);
+  cacheLife("minutes");
   try {
     const category = await db.servicesCategory.findFirst({
       where: {
