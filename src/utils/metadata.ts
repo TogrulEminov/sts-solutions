@@ -51,39 +51,39 @@ interface GeneratePageMetadataParams {
  */
 const DEFAULT_TITLES: Record<CustomPath, Record<Locales, string>> = {
   home: {
-    az: "Ana Səhifə - Sts Solutions",
-    en: "Home - Sts Solutions",
-    ru: "Главная - Sts Solutions",
+    az: "Ana Səhifə - STS Solutions | Texniki Həllər və Xidmətlər",
+    en: "Home - STS Solutions | Technical Solutions and Services",
+    ru: "Главная - STS Solutions | Технические решения и услуги",
   },
   services: {
-    az: "Xidmətlər - Sts Solutions",
-    en: "Services - Sts Solutions",
-    ru: "Услуги - Sts Solutions",
+    az: "Xidmətlər - STS Solutions | Texniki və Mühəndislik Xidmətləri",
+    en: "Services - STS Solutions | Technical and Engineering Services",
+    ru: "Услуги - STS Solutions | Технические и инженерные услуги",
   },
   solutions: {
-    az: "Həllər - Sts Solutions",
-    en: "Solutions - Sts Solutions",
-    ru: "Решения - Sts Solutions",
+    az: "Həllər - STS Solutions | Biznesiniz üçün İnnovativ Həllər",
+    en: "Solutions - STS Solutions | Innovative Solutions for Your Business",
+    ru: "Решения - STS Solutions | Инновационные решения для вашего бизнеса",
   },
   blog: {
-    az: "Bloq - Sts Solutions",
-    en: "Blog - Sts Solutions",
-    ru: "Блог - Sts Solutions",
+    az: "Bloq - STS Solutions | Texnologiya və Yeniliklər",
+    en: "Blog - STS Solutions | Technology and Innovations",
+    ru: "Блог - STS Solutions | Технологии и инновации",
   },
   projects: {
-    az: "Layihələr - Sts Solutions",
-    en: "Projects - Sts Solutions",
-    ru: "Проекты - Sts Solutions",
+    az: "Layihələr - STS Solutions | Uğurla Tamamlanmış Layihələr",
+    en: "Projects - STS Solutions | Successfully Completed Projects",
+    ru: "Проекты - STS Solutions | Успешно завершенные проекты",
   },
   contact: {
-    az: "Əlaqə - Sts Solutions",
-    en: "Contact - Sts Solutions",
-    ru: "Контакт - Sts Solutions",
+    az: "Əlaqə - STS Solutions | Bizimlə Əlaqə Qurun",
+    en: "Contact - STS Solutions | Get in Touch with Us",
+    ru: "Контакт - STS Solutions | Свяжитесь с нами",
   },
   about: {
-    az: "Haqqımızda - Sts Solutions",
-    en: "About Us - Sts Solutions",
-    ru: "О нас - Sts Solutions",
+    az: "Haqqımızda - STS Solutions | Şirkət Tarixi və Fəaliyyət Sahələri",
+    en: "About Us - STS Solutions | Company History and Areas of Activity",
+    ru: "О нас - STS Solutions | История компании и области деятельности",
   },
 };
 /**
@@ -91,39 +91,39 @@ const DEFAULT_TITLES: Record<CustomPath, Record<Locales, string>> = {
  */
 const DEFAULT_DESCRIPTIONS: Record<CustomPath, Record<Locales, string>> = {
   home: {
-    az: "Sts Solutions-un rəsmi ana səhifəsi",
-    en: "Official homepage of Sts Solutions",
-    ru: "Официальная главная страница Sts Solutions",
+    az: "STS Solutions-un rəsmi ana səhifəsi, texniki həllər və xidmətlər haqqında məlumat",
+    en: "Official homepage of STS Solutions, providing information on technical solutions and services",
+    ru: "Официальная главная страница STS Solutions, предоставляющая информацию о технических решениях и услугах",
   },
   services: {
-    az: "Sts Solutions-un təqdim etdiyi xidmətlər haqqında məlumat",
-    en: "Information about the services provided by Sts Solutions",
-    ru: "Информация о услугах, предоставляемых Sts Solutions",
+    az: "STS Solutions-un təqdim etdiyi texniki xidmətlər və həllər haqqında məlumat",
+    en: "Information about the technical services and solutions provided by STS Solutions",
+    ru: "Информация о технических услугах и решениях, предоставляемых STS Solutions",
   },
   solutions: {
-    az: "Biznesiniz üçün innovativ texnoloji həllər",
-    en: "Innovative technological solutions for your business",
-    ru: "Инновационные технологические решения для вашего бизнеса",
+    az: "Biznesiniz üçün innovativ texnoloji və mühəndislik həlləri",
+    en: "Innovative technological and engineering solutions for your business",
+    ru: "Инновационные технологические и инженерные решения для вашего бизнеса",
   },
   blog: {
-    az: "Texnologiya və yeniliklər haqqında son məqalələr",
-    en: "Latest articles about technology and innovation",
-    ru: "Последние статьи о технологиях и инновациях",
+    az: "Texnologiya, mühəndislik və sənaye sahələrindəki son yeniliklər və məqalələr",
+    en: "Latest articles about technology, engineering, and industry innovations",
+    ru: "Последние статьи о технологиях, инженерии и инновациях в промышленности",
   },
   projects: {
-    az: "Uğurla tamamladığımız layihələrlə tanış olun",
-    en: "Get to know the projects we have successfully completed",
-    ru: "Познакомьтесь с проектами, которые мы успешно завершили",
+    az: "Uğurla tamamladığımız və icra etdiyimiz müxtəlif layihələr",
+    en: "Explore the various projects we have successfully completed and implemented",
+    ru: "Познакомьтесь с различными проектами, которые мы успешно завершили и реализовали",
   },
   contact: {
-    az: "Sts Solutions ilə əlaqə yaratmaq üçün məlumat",
-    en: "Information on how to contact Sts Solutions",
-    ru: "Информация о том, как связаться с Sts Solutions",
+    az: "STS Solutions ilə əlaqə qurmaq üçün bütün məlumatlar",
+    en: "All the information you need to contact STS Solutions",
+    ru: "Вся информация для связи с STS Solutions",
   },
   about: {
-    az: "Sts Solutions-un tarixçəsi və fəaliyyət sahələri",
-    en: "The history and areas of activity of Sts Solutions",
-    ru: "История и сферы деятельности Sts Solutions",
+    az: "STS Solutions-un tarixçəsi, fəaliyyət sahələri və xidmət sahələrindəki təcrübəsi",
+    en: "The history, areas of activity, and expertise in various service fields of STS Solutions",
+    ru: "История, сферы деятельности и опыт STS Solutions в различных областях услуг",
   },
 };
 
@@ -178,7 +178,9 @@ const getCachedMetadata = cache(
 
           case "servicesCategory":
             if (!category) {
-              console.warn("⚠️ Service Category dataType requires category parameter");
+              console.warn(
+                "⚠️ Service Category dataType requires category parameter"
+              );
               return null;
             }
             result = await getServicesCategoryMetaById({
@@ -188,7 +190,9 @@ const getCachedMetadata = cache(
             return result?.data;
           case "servicesSubCategory":
             if (!slug) {
-              console.warn("⚠️ Service  SubCategory dataType requires category parameter");
+              console.warn(
+                "⚠️ Service  SubCategory dataType requires category parameter"
+              );
               return null;
             }
             result = await getServicesSubMetaById({
