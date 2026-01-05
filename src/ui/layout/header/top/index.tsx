@@ -7,7 +7,8 @@ import { useTranslations } from "next-intl";
 import CustomLink from "next/link";
 interface Props {
   className?: string;
-  isSticky?: boolean;socialData?: Social[] | undefined;
+  isSticky?: boolean;
+  socialData?: Social[] | undefined;
 }
 
 export default function HeaderTop({ className, isSticky, socialData }: Props) {
@@ -15,7 +16,7 @@ export default function HeaderTop({ className, isSticky, socialData }: Props) {
   return (
     <div
       className={`bg-ui-1 hidden lg:flex justify-end items-center w-full  transition-all duration-500 ease-in-out relative ${
-        isSticky ? "max-h-0 opacity-0 py-0" : "max-h-16 opacity-100 py-2"
+        isSticky ? "max-h-0 opacity-0 py-0" : "max-h-14 opacity-100 py-2"
       } ${className}`}
       role="banner"
     >
@@ -45,6 +46,7 @@ export default function HeaderTop({ className, isSticky, socialData }: Props) {
 
             <Link
               href="/services"
+              aria-label={t("header.learnMore")}
               className="flex items-center gap-1 text-white text-sm font-inter transition-all duration-300 group-hover:gap-2"
             >
               <span className="transition-all duration-300 group-hover:-translate-x-0.5">
@@ -59,63 +61,68 @@ export default function HeaderTop({ className, isSticky, socialData }: Props) {
 
         <div className="flex items-center gap-5">
           <LanguageBtn isSticky={isSticky} />
-          <div className="h-5 w-px bg-white/20"></div>
-          <nav aria-label="Sosial media linklər">
-            <div className="flex items-center gap-4">
-              <span
-                className="text-white/60 text-xs font-inter uppercase tracking-wider"
-                style={{
-                  animation: isSticky
-                    ? "none"
-                    : "fadeIn 0.6s ease-out 0.3s both",
-                }}
-              >
-                {t("header.follow_us")}
-              </span>
+          {socialData && socialData?.length > 0 && (
+            <>
+              <div className="h-5 w-px bg-white/20"></div>
 
-              <ul className="flex items-center gap-3">
-                {socialData?.map((social, index) => {
-                  return (
-                    <li
-                      key={social.iconName}
-                      className="relative"
-                      style={{
-                        animation: isSticky
-                          ? "none"
-                          : `fadeInDown 0.5s ease-out ${
-                              0.4 + index * 0.1
-                            }s both`,
-                      }}
-                    >
-                      <CustomLink
-                        href={social.socialLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={social.iconName}
-                        className="group relative inline-flex items-center justify-center w-9 h-9 isolate"
-                      >
-                        <span className="absolute inset-0 rounded-full bg-white/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></span>
-                        <span className="absolute inset-0 rounded-full bg-white/10 blur-xl scale-150 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></span>
-                        <span className="absolute inset-0 overflow-hidden rounded-full pointer-events-none">
-                          <span className="absolute inset-0 rounded-full border border-white/40 scale-100 group-hover:scale-150 opacity-100 group-hover:opacity-0 transition-all duration-700"></span>
-                          <span className="absolute inset-0 rounded-full border border-white/30 scale-100 group-hover:scale-[1.8] opacity-100 group-hover:opacity-0 transition-all duration-900 delay-75"></span>
-                          <span className="absolute inset-0 rounded-full border border-white/20 scale-100 group-hover:scale-[2.2] opacity-100 group-hover:opacity-0 transition-all duration-1000 delay-150"></span>
-                        </span>
+              <nav aria-label={t("sidebar.navLabel")}>
+                <div className="flex items-center gap-4">
+                  <span
+                    className="text-white/60 text-xs font-inter uppercase tracking-wider"
+                    style={{
+                      animation: isSticky
+                        ? "none"
+                        : "fadeIn 0.6s ease-out 0.3s both",
+                    }}
+                  >
+                    {t("header.follow_us")}
+                  </span>
 
-                        <span className="absolute inset-0 rounded-full bg-white/0 group-hover:bg-white/20 transition-all duration-300 scale-0 group-hover:scale-100 pointer-events-none"></span>
-                        {renderSocialIcon({
-                          iconName: social?.iconName,
-                          fill: "white",
-                          className:
-                            "relative z-10 w-4 h-4 transition-all duration-500 group-hover:scale-110 group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]",
-                        })}
-                      </CustomLink>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          </nav>
+                  <ul className="flex items-center gap-3">
+                    {socialData?.map((social, index) => {
+                      return (
+                        <li
+                          key={social.iconName}
+                          className="relative"
+                          style={{
+                            animation: isSticky
+                              ? "none"
+                              : `fadeInDown 0.5s ease-out ${
+                                  0.4 + index * 0.1
+                                }s both`,
+                          }}
+                        >
+                          <CustomLink
+                            href={social.socialLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`Follow us ${social.iconName} page`}
+                            className="group relative inline-flex items-center justify-center w-9 h-9 isolate"
+                          >
+                            <span className="absolute inset-0 rounded-full bg-white/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></span>
+                            <span className="absolute inset-0 rounded-full bg-white/10 blur-xl scale-150 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></span>
+                            <span className="absolute inset-0 overflow-hidden rounded-full pointer-events-none">
+                              <span className="absolute inset-0 rounded-full border border-white/40 scale-100 group-hover:scale-150 opacity-100 group-hover:opacity-0 transition-all duration-700"></span>
+                              <span className="absolute inset-0 rounded-full border border-white/30 scale-100 group-hover:scale-[1.8] opacity-100 group-hover:opacity-0 transition-all duration-900 delay-75"></span>
+                              <span className="absolute inset-0 rounded-full border border-white/20 scale-100 group-hover:scale-[2.2] opacity-100 group-hover:opacity-0 transition-all duration-1000 delay-150"></span>
+                            </span>
+
+                            <span className="absolute inset-0 rounded-full bg-white/0 group-hover:bg-white/20 transition-all duration-300 scale-0 group-hover:scale-100 pointer-events-none"></span>
+                            {renderSocialIcon({
+                              iconName: social?.iconName,
+                              fill: "white",
+                              className:
+                                "relative z-10 w-4 h-4 transition-all duration-500 group-hover:scale-110 group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]",
+                            })}
+                          </CustomLink>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              </nav>
+            </>
+          )}
         </div>
       </div>
 

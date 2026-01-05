@@ -256,7 +256,7 @@ export async function createPartners(
       },
     });
 
-    await revalidateAll(CACHE_TAG_GROUPS.HOME);
+    await revalidateAll([CACHE_TAG_GROUPS.ABOUT, CACHE_TAG_GROUPS.HOME]);
     return {
       success: true,
       data: newData,
@@ -365,7 +365,7 @@ export async function updatePartners( // ✅ Funksiya adı Düzəlişi
       return result;
     });
 
-    await revalidateAll(CACHE_TAG_GROUPS.HOME);
+    await revalidateAll([CACHE_TAG_GROUPS.ABOUT, CACHE_TAG_GROUPS.HOME]);
     return {
       success: true,
       data: updatedData,

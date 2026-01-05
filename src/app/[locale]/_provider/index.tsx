@@ -1,4 +1,4 @@
-import { getLayoutServer } from "@/src/actions/ui/layout.actions";
+import { fetchLayout } from "@/src/actions/ui/layout.actions";
 import { CustomLocales } from "@/src/services/interface";
 import CallAction from "@/src/ui/layout/call-action";
 import ContactModal from "@/src/ui/layout/contact-modal";
@@ -15,7 +15,7 @@ export default async function ProviderComponent({
   children,
   locale,
 }: LocalLayoutProps) {
-  const layoutData = await getLayoutServer({
+  const layoutData = await fetchLayout({
     locale: locale as CustomLocales,
   });
   return (
@@ -29,7 +29,7 @@ export default async function ProviderComponent({
         socialData={layoutData?.data?.socialData as any}
         contactData={layoutData?.data?.contactData as any}
       />
-      <main className="pt-25 lg:pt-[167px] bg-ui-28 overflow-hidden">
+      <main className="pt-19 lg:pt-[167px] bg-ui-28 overflow-hidden">
         {children}
       </main>
       <CallAction sectionData={layoutData?.sections?.contactCta} />

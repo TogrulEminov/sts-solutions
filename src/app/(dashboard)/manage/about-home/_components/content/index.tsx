@@ -98,7 +98,11 @@ export default function Content({ existingData, refetch }: Props) {
         <div className="flex flex-col space-y-4">
           <FieldBlock>
             <FormInput label="Başlıq" placeholder="Başlıq" fieldName="title" />
-            <FormInput label="Alt başlıq" placeholder="Alt başlıq" fieldName="subtitle" />
+            <FormInput
+              label="Alt başlıq"
+              placeholder="Alt başlıq"
+              fieldName="subtitle"
+            />
             <CustomAdminEditor
               title="Qısa məlumat"
               value={getValues("description")}
@@ -119,18 +123,21 @@ export default function Content({ existingData, refetch }: Props) {
             <div className="space-y-3 max-w-sm">
               {statisticsFieldArray.fields.map((field, index) => (
                 <div key={field.id} className="flex items-start gap-2">
+                  <span className="w-10 h-10 flex items-center justify-center bg-blue-400 text-white font-inter">
+                    {index + 1}
+                  </span>
                   <div className="flex-1">
                     <FormInput
                       fieldName={`statistics.${index}.title` as const}
-                      placeholder={`Statistics ${index + 1}`}
+                      placeholder={`Statistik başlıq`}
                     />
                     <FormInput
                       fieldName={`statistics.${index}.suffix` as const}
-                      placeholder={`Statistics ${index + 1}`}
+                      placeholder={`Statistik suffix`}
                     />
                     <FormInput
                       fieldName={`statistics.${index}.count` as const}
-                      placeholder={`Statistics ${index + 1}`}
+                      placeholder={`Statistik  say`}
                     />
                   </div>
                   <button

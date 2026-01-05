@@ -66,7 +66,7 @@ export default function Footer({
         </motion.div>
 
         <motion.div
-          className="grid  grid-cols-1  lg:grid-cols-4 gap-10"
+          className="grid  grid-cols-1  lg:grid-cols-4 gap-5 lg:gap-10"
           variants={containerVariants}
         >
           <motion.div

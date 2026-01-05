@@ -3,10 +3,10 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   const manifest = {
-    short_name: "Profi Transport",
-    name: "Profi Transport | Logistika və Yük Daşınması Xidmətləri",
+    short_name: "STS Solutions",
+    name: "STS Solutions | Texniki Həllər və Xidmətlər",
     description:
-      "Profi Transport, qruppaj yüklərin daşınması, ağır texnikaların daşınması, quru yol və dəmir yol daşınması xidmətləri ilə peşəkar logistika təmin edir.",
+      "STS Solutions, qida sənayesi, lojistika, enerji və alternativ enerji, su təsərrüfatı, kənd təsərrüfatı sektorlarında texniki həllərin təqdim edilməsi və icrası sahələrində uzun illər təcrübəyə malik professional mühəndis komandası ilə yüksək keyfiyyətli xidmətlər və həllər təklif edir.",
     start_url: "/",
     icons: [
       {
@@ -15,8 +15,8 @@ export async function GET() {
         type: "image/x-icon",
       },
     ],
-    background_color: "#1a1a1a",
-    theme_color: "#0066cc",
+    background_color: "#004A52",
+    theme_color: "#1BAFBF",
     display: "standalone",
     orientation: "portrait",
     scope: "/",

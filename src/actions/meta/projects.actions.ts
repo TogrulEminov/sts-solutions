@@ -1,10 +1,15 @@
+import { CACHE_TAG_GROUPS } from "@/src/config/cacheTags";
 import { Locales } from "@/src/generated/prisma/enums";
 import { db } from "@/src/lib/admin/prismaClient";
+import { cacheLife, cacheTag } from "next/cache";
 type GetByIDProps = {
   id: string;
   locale: Locales;
 };
 export async function getProjectsMetaById({ locale, id }: GetByIDProps) {
+  "use cache";
+  cacheTag(CACHE_TAG_GROUPS.PROJECTS);
+  cacheLife("minutes");
   try {
     const category = await db.projects.findFirst({
       where: {

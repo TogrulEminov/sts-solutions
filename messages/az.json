@@ -1,5 +1,4 @@
 {
-  "home": "Ana səhifə",
   "notfound": {
     "title": "Axtardığınız Səhifə Tapılmadı",
     "description": "Axtardığınız səhifə mövcud deyil və ya silinib. Zəhmət olmasa səhifəni yenidən yoxlayın və ya ana səhifəyə qayıdın.",
@@ -17,7 +16,8 @@
   "sidebar": {
     "contact_information": "Əlaqə məlumatları",
     "follow_us": "Bizi izləyin",
-    "changeLang": "Dil dəyişmə"
+    "changeLang": "Dil dəyişmə",
+    "navLabel": "Sosial media linklər"
   },
   "header": {
     "newServices": "Yeni xidmətimiz",
@@ -54,12 +54,70 @@
     "apply_form": "Müraciət forması",
     "completed": "Tamamlanma",
     "area": "sahə",
-    "name":"Ad",
-    "email":"E-mail",
-    "phone":"Mobil nömrə",
-    "selectService":"Xidmət seçin",
-    "note":"Mesajınız",
-    "sending":"Göndərilir",
-    "send":"Göndər"
+    "name": "Ad",
+    "email": "E-mail",
+    "phone": "Mobil nömrə",
+    "selectService": "Xidmət seçin",
+    "note": "Mesajınız",
+    "sending": "Göndərilir",
+    "send": "Göndər",
+    "contactFormHome": "Əlaqə forması",
+    "contactFormDescHome": "Formu doldurun, sizinlə əlaqə saxlayaq",
+    "comment": "Rəy və təklifləriniz",
+    "commentDesc": "Bizimlə əlaqə saxlamaq üçün formanı doldurun və biz sizinlə tezliklə  əlaqə saxlayacağıq.",
+    "successTitle": "Müraciətiniz göndərildi!",
+    "successMessage": "Qısa müddət ərzində sizinlə əlaqə saxlayacağıq.",
+    "sendAnother": "Yeni müraciət göndər",
+    "close": "Bağla"
+  },
+  "home": {
+    "main": "Ana səhifə",
+    "services": "Bütün xidmətlərimiz",
+    "readMore": "Daha ətraflı",
+    "applyBtn": "Bizə müraciət et",
+    "sectors": "Xidmət sektorlarımız",
+    "moreInfo": "Daha çox məlumat al",
+    "projectsLink": "Layihələrimizlə tanış ol",
+    "send": "Göndər",
+    "sending": "Göndərilir",
+    "all": "Hamısı",
+    "seeMore": "Ətraflı bax"
+  },
+  "services": {
+    "subTitle": "Xidmətlərimizə aiddir",
+    "subTitleTwo": "Xidmətlərimizin tərkibinə daxildir"
+  },
+  "projects": {
+    "subtitle": "Layihə haqqında məlumat"
+  },
+  "blog": {
+    "relatedBlog": "Digər bloqlar",
+    "readTime": "Oxuma müddəti",
+    "date": "Tarix"
+  },
+  "solutions": {
+    "relatedSolutions": "Digər həllərimiz",
+    "problemSolutions": "Hansı problemləri həll edir?",
+    "solutions": "Həllərimiz"
+  },
+  "about": {
+    "services": "Xidmətlərimiz",
+    "solutions": "Həllərimiz",
+    "projects": "Layihələrimiz",
+    "purpose": "Bizim Missiyamız və Vizyonumuz"
+  },
+  "contact": {
+    "phone": "Mobil nömrə",
+    "email": "E-mail",
+    "whatsapp": "WhatsApp",
+    "online": "Online",
+    "responseTime": "Dərhal cavab - ən sürətli ünsiyyət yolu",
+    "sendMessage": "Mesaj göndər",
+    "adress": "Ünvanımız",
+    "socialNetworks": "Sosial şəbəkələrimiz",
+    "follow_us": "Bizi sosial şəbəkələrdə izləyin",
+    "roadmap": "Yol tarifi",
+    "viewMap": "Yandex Maps-də aç",
+    "workHours": "İş saatları"
   }
 }

@@ -14,14 +14,16 @@ interface Props {
 
 export default function HeaderCenter({ isSticky, contactData }: Props) {
   const t = useTranslations();
+  console.log(contactData);
+  
   return (
     <>
       <div className="relative">
         <div
           className={`bg-ui-2 flex items-center transition-all duration-500 ${
             isSticky
-              ? "py-4 min-h-20 pb-3 lg:pb-5 pt-3"
-              : "py-4 min-h-25 lg:pb-8 lg:pt-5"
+              ? "py-4 min-h-14 lg:min-h-20 pb-3 lg:pb-5 pt-3"
+              : "py-4 min-h-20 lg:min-h-28.5 lg:pb-8 lg:pt-5"
           }`}
         >
           <div className="container flex  items-center justify-between">
@@ -45,7 +47,7 @@ export default function HeaderCenter({ isSticky, contactData }: Props) {
                       href={`tel:${clearPhoneRegex(contactData?.phone)}`}
                       className="font-normal font-inter text-xs text-white transition-all duration-300 hover:text-white/80 hover:translate-x-1"
                     >
-                      {clearPhoneRegex(contactData?.phone)}
+                      {contactData?.phone}
                     </Link>
                   </article>
                 </li>

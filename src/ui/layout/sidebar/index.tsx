@@ -455,15 +455,13 @@ export default function Sidebar({ socialData, contactData }: Props) {
                           className="group relative flex items-center justify-center w-11 h-11 rounded-xl bg-white/10 hover:bg-ui-1 border border-white/20 hover:border-ui-1 transition-all duration-300 overflow-hidden"
                           aria-label={social.socialName}
                         >
-                          <span className="absolute inset-0 bg-ui-1/0 group-hover:bg-ui-1/20 blur-xl transition-all duration-300" />
+                          <span className="absolute inset-0  z-1 bg-ui-1/0 group-hover:bg-ui-1/20 blur-xl transition-all duration-300" />
 
                           {renderSocialIcon({
-                            iconName: "",
-                            fill: "white",
-                            width: 18,
-                            height: 18,
+                            iconName: social?.iconName,
+                            fill: "curretnColor",
                             className:
-                              "relative z-10 transition-transform duration-300 group-hover:scale-110",
+                              "relative z-10 transition-transform duration-300 fill-white  group-hover:scale-110",
                           })}
                         </CustomLink>
                       </motion.div>

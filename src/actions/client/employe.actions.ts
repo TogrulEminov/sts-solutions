@@ -14,6 +14,8 @@ import {
 } from "@/src/schema/employee.schema";
 import { createSlug } from "@/src/lib/slugifyHelper";
 import { checkAuthServerAction } from "@/src/middleware/checkAuthorization";
+import { revalidateAll } from "@/src/utils/revalidate";
+import { CACHE_TAG_GROUPS } from "@/src/config/cacheTags";
 
 type ActionResult<T = unknown> = {
   success: boolean;
@@ -144,7 +146,7 @@ export async function getEmployeeById({ locale, id }: GetByIDProps) {
         id: true,
         documentId: true,
         status: true,
-        phone:true,
+        phone: true,
         email: true,
         orderNumber: true,
         createdAt: true,
@@ -284,6 +286,7 @@ export async function createEmployee(
         },
       },
     });
+    await revalidateAll([CACHE_TAG_GROUPS.ABOUT]);
     return {
       success: true,
       data: newData,
@@ -354,8 +357,15 @@ export async function uptadeEmployee(
         errors: formatZodErrors(parsedInput.error),
       };
     }
-    const { title, description, locale, orderNumber, positionId, email ,phone} =
-      parsedInput.data;
+    const {
+      title,
+      description,
+      locale,
+      orderNumber,
+      positionId,
+      email,
+      phone,
+    } = parsedInput.data;
 
     const customSlug = createSlug(title);
 
@@ -412,7 +422,7 @@ export async function uptadeEmployee(
         timeout: 10000, // 10 saniyə timeout əlavə edildi
       }
     );
-
+    await revalidateAll([CACHE_TAG_GROUPS.ABOUT]);
     return {
       success: true,
       data: uptadeData,

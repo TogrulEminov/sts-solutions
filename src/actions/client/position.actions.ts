@@ -13,6 +13,8 @@ import {
   uptadePositionSchema,
 } from "@/src/schema/position.schema";
 import { checkAuthServerAction } from "@/src/middleware/checkAuthorization";
+import { revalidateAll } from "@/src/utils/revalidate";
+import { CACHE_TAG_GROUPS } from "@/src/config/cacheTags";
 
 type ActionResult<T = unknown> = {
   success: boolean;
@@ -237,7 +239,7 @@ export async function createPosition(
         },
       },
     });
-
+    await revalidateAll([CACHE_TAG_GROUPS.ABOUT]);
     return {
       success: true,
       data: newData,
@@ -348,7 +350,7 @@ export async function updatePosition( // ✅ Funksiya adı DÜZƏLİŞİ
 
       return result;
     });
-
+    await revalidateAll([CACHE_TAG_GROUPS.ABOUT]);
     return {
       success: true,
       data: updatedData,

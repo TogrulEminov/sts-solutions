@@ -4,7 +4,12 @@ import { SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import GalleryCard from "@/src/globalElements/cards/gallery";
 import ReactFancyBox from "@/src/lib/fancybox";
-export default function SliderArea() {
+import { FileType } from "@/src/services/interface";
+import { getForCards } from "@/src/utils/getFullimageUrl";
+interface Props {
+  gallery: FileType[];
+}
+export default function SliderArea({ gallery }: Props) {
   const breakpoints = {
     0: { slidesPerView: 2, spaceBetween: 10 },
     768: { slidesPerView: 3 },
@@ -19,7 +24,7 @@ export default function SliderArea() {
     enabled: true,
     onlyInViewport: false,
   };
-
+  if (!gallery?.length) return;
   return (
     <ReactFancyBox>
       <MySwiper
@@ -36,10 +41,10 @@ export default function SliderArea() {
         className="w-full lg:min-w-screen"
         loop={true}
       >
-        {Array.from({ length: 10 }).map((_, index) => {
+        {gallery?.map((img, index) => {
           return (
             <SwiperSlide className="h-40! lg:h-full!" key={index}>
-              <GalleryCard />
+              <GalleryCard img={getForCards(img as FileType)} index={index} />
             </SwiperSlide>
           );
         })}

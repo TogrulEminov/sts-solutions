@@ -1,13 +1,14 @@
 "use client";
+import { CountGenericType } from "@/src/services/interface";
+import { parseJSON } from "@/src/utils/checkSlug";
 import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
 
-const stats = [
-  { id: 1, end: 10, label: "Təcrübə" },
-  { id: 2, end: 30, label: "Partnyor şirkət" },
-];
+interface Props {
+  existingData: CountGenericType[];
+}
 
-export default function Statistics() {
+export default function Statistics({ existingData }: Props) {
   const { ref, inView } = useInView({
     threshold: 0.3,
     triggerOnce: false,
@@ -16,21 +17,21 @@ export default function Statistics() {
   return (
     <div className="relative w-full lg:max-w-sm" ref={ref}>
       <div className="flex justify-start  gap-x-5 lg:gap-x-10 h-20.5 lg:h-29 rounded-tl-md lg:rounded-tl-xl rounded-bl-md lg:rounded-bl-xl border-[0.5px] p-3 lg:p-6 border-white bg-ui-23/10 border-r-transparent items-center relative overflow-visible">
-        {stats?.map((stat, index) => {
+        {parseJSON<CountGenericType>(existingData)?.map((stat, index) => {
           return (
             <div
               className="flex flex-col space-y-1 lg:space-y-3 relative z-10"
               key={index}
             >
               <span className="font-inter font-semibold  text-sm lg:text-base text-white">
-                {stat?.label}
+                {stat?.title}
               </span>
               <div className="font-inter text-2xl lg:text-4xl text-white font-extrabold">
                 {inView ? (
                   <>
                     <CountUp
                       start={0}
-                      end={stat.end}
+                      end={Number(stat.count)}
                       duration={2.5}
                       separator=","
                       suffix="+"

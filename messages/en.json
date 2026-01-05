@@ -1,16 +1,123 @@
 {
   "notfound": {
     "title": "Page Not Found",
-    "description": "The page you are looking for does not exist or has been deleted. Please check the page again or return to the homepage.",
+    "description": "The page you are looking for doesn't exist or has been removed. Please check the URL or go back to the homepage.",
     "button": "Go Back"
   },
   "noResult": {
     "title": "No Results Found",
-    "description": "No information was found. Please try a different query!"
+    "description": "No information was found for your search. Try again with a different query!"
   },
   "noResultComponent": {
     "title": "No Information Found",
-    "description": "There is no information available yet. It will be updated soon!",
-    "btn": "Return to Homepage"
+    "description": "No information is available here yet. It will be updated soon!",
+    "btn": "Go to Homepage"
+  },
+  "sidebar": {
+    "contact_information": "Contact Information",
+    "follow_us": "Follow Us",
+    "changeLang": "Change Language",
+    "navLabel": "Social Media Links"
+  },
+  "header": {
+    "newServices": "New Service",
+    "learnMore": "Learn More",
+    "follow_us": "Follow Us",
+    "contact_us": "Contact Us",
+    "email_address": "Email Address",
+    "address": "Our Address",
+    "apply": "Apply",
+    "applyLabel": "Contact us and apply"
+  },
+  "cta": {
+    "first": "Repair and Service",
+    "second": "Available 24/7",
+    "partnersBtn": "Collaborate with Us"
+  },
+  "footer": {
+    "services": "Our Services",
+    "mainLinks": "Main Links",
+    "contact": "Contact",
+    "phone": "Phone",
+    "email": "Email",
+    "address": "Our Address",
+    "rightsReserved": "All Rights Reserved"
+  },
+  "pages": {
+    "about": "About Us",
+    "services": "Our Services",
+    "projects": "Projects",
+    "solutions": "Our Solutions",
+    "blogs": "Blogs"
+  },
+  "contactForm": {
+    "apply_form": "Application Form",
+    "completed": "Completed",
+    "area": "Area",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Mobile Number",
+    "selectService": "Select Service",
+    "note": "Your Message",
+    "sending": "Sending",
+    "send": "Send",
+    "contactFormHome": "Contact Form",
+    "contactFormDescHome": "Fill out the form, and we will get in touch with you",
+    "comment": "Your Comments and Suggestions",
+    "commentDesc": "Fill out the form to contact us, and we will reach out to you soon.",
+    "successTitle": "Your Request Has Been Sent!",
+    "successMessage": "We will contact you shortly.",
+    "sendAnother": "Send Another Request",
+    "close": "Close"
+  },
+  "home": {
+    "main": "Home",
+    "services": "All Our Services",
+    "readMore": "Read More",
+    "applyBtn": "Apply to Us",
+    "sectors": "Our Service Sectors",
+    "moreInfo": "Get More Information",
+    "projectsLink": "Explore Our Projects",
+    "send": "Send",
+    "sending": "Sending",
+    "all": "All",
+    "seeMore": "See More"
+  },
+  "services": {
+    "subTitle": "Related to Our Services",
+    "subTitleTwo": "Included in Our Services"
+  },
+  "projects": {
+    "subtitle": "Project Information"
+  },
+  "blog": {
+    "relatedBlog": "Other Blogs",
+    "readTime": "Reading Time",
+    "date": "Date"
+  },
+  "solutions": {
+    "relatedSolutions": "Other Solutions",
+    "problemSolutions": "What Problems Do We Solve?",
+    "solutions": "Our Solutions"
+  },
+  "about": {
+    "services": "Our Services",
+    "solutions": "Our Solutions",
+    "projects": "Our Projects",
+    "purpose": "Our Mission and Vision"
+  },
+  "contact": {
+    "phone": "Mobile Number",
+    "email": "Email",
+    "whatsapp": "WhatsApp",
+    "online": "Online",
+    "responseTime": "Instant Response - Fastest Communication",
+    "sendMessage": "Send Message",
+    "adress": "Our Address",
+    "socialNetworks": "Our Social Networks",
+    "follow_us": "Follow Us on Social Media",
+    "roadmap": "Route Description",
+    "viewMap": "Open in Yandex Maps",
+    "workHours": "Working Hours"
   }
 }

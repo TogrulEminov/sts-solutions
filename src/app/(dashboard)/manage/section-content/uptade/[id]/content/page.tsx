@@ -1,5 +1,5 @@
 "use client";
-import { useParams, useSearchParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useTransition } from "react";
 import FieldBlock from "@/src/app/(dashboard)/manage/_components/contentBlock";
 import NavigateBtn from "@/src/app/(dashboard)/manage/_components/navigateBtn";
@@ -9,7 +9,10 @@ import { useServerQueryById } from "@/src/hooks/useServerActions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import pageData from "@/src/json/main/page.json";
-import { getSectionContentById } from "@/src/actions/client/section.actions";
+import {
+  getSectionContentById,
+  uptadeSectionContent,
+} from "@/src/actions/client/section.actions";
 import {
   UpdateSectionContentInput,
   uptadeSectionContentSchema,
@@ -19,6 +22,7 @@ import FormInput from "@/src/ui/FormBuilder/components/FormInput/FormInput";
 import FormSelect from "@/src/ui/FormBuilder/components/FormSelect/FormSelect";
 import FormTextArea from "@/src/ui/FormBuilder/components/FormTextArea/FormTextArea";
 import FormWrapper from "@/src/ui/FormBuilder/FormWrapper/FormWrapper";
+import { useMessageStore } from "@/src/hooks/useMessageStore";
 
 type OptionTypes = {
   value: string;
@@ -29,6 +33,8 @@ export default function SectionUptadeContent() {
   const id = Array.isArray(params?.id) ? params.id[0] : params?.id;
   const [isPending, startTransition] = useTransition();
   const searchParams = useSearchParams();
+  const router = useRouter();
+  const { success, error } = useMessageStore();
   const locale = searchParams?.get("locale") ?? "az";
   const getDataWrapper = async () => {
     const result = await getSectionContentById({
@@ -66,7 +72,16 @@ export default function SectionUptadeContent() {
 
   const onSubmit = async (data: UpdateSectionContentInput) => {
     startTransition(async () => {
-      console.log(data);
+      const result = await uptadeSectionContent(id as string, data);
+
+      if (result.success) {
+        success("Məlumat uğurla yadda saxlandı!");
+        sectionContentForm.reset();
+        router.back();
+        router.refresh();
+      } else {
+        error(result.error || "Məlumat göndərilərkən xəta baş verdi.");
+      }
     });
   };
   const pageOptions: OptionTypes[] =

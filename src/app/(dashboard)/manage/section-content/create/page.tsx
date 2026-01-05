@@ -44,9 +44,7 @@ export default function CreateSectionContent() {
 
   const onSubmit = async (data: CreateSectionContentInput) => {
     startTransition(async () => {
-      const result = await createSectionContent({
-        ...data,
-      });
+      const result = await createSectionContent(data);
 
       if (result.success) {
         success("Məlumat uğurla yadda saxlandı!");

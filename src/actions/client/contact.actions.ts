@@ -9,6 +9,8 @@ import {
   upsertContactSchema,
 } from "@/src/schema/contact.schema";
 import { checkAuthServerAction } from "@/src/middleware/checkAuthorization";
+import { revalidateAll } from "@/src/utils/revalidate";
+import { CACHE_TAG_GROUPS } from "@/src/config/cacheTags";
 
 type ActionResult<T = unknown> = {
   success: boolean;
@@ -47,7 +49,7 @@ export async function getContact({ locale }: GetProps) {
           description: true,
           adress: true,
           workHours: true,
-          hightlightWord:true,
+          hightlightWord: true,
           tag: true,
           locale: true,
         },
@@ -243,7 +245,10 @@ export async function upsertContact(
         timeout: 10000, // 10 saniyə timeout əlavə edildi
       }
     );
-
+    await revalidateAll([
+      CACHE_TAG_GROUPS.HOME,
+      CACHE_TAG_GROUPS.LAYOUT,
+    ]);
     return {
       success: true,
       data: result,

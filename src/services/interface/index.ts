@@ -144,7 +144,7 @@ interface CategoryTranslation {
   description: string;
   id: number;
   documentId: string;
-  features?: InfoGenericType[];
+  features?: any[];
   locale: string;
   seo: Seo;
 }
@@ -157,6 +157,7 @@ export interface CategoryItem {
   imageUrl: FileType | null;
   createdAt: string;
   updatedAt: string;
+  features: any[];
   translations: CategoryTranslation[];
 }
 
@@ -209,6 +210,7 @@ export interface SliderItem {
   status: Status;
   imageUrl: FileType | null;
   createdAt: string;
+  link?: string;
   updatedAt: string;
   translations: SliderTranslation[];
 }
@@ -440,7 +442,8 @@ export interface ServicesCategoryItem {
   imageUrl: FileType | null;
   gallery: FileType[] | null;
   createdAt: string;
-  isMain:boolean,
+  isMain: boolean;
+  subCategory: ServicesSubCategoryItem[];
   updatedAt: string;
   translations: ServicesCategoryItemTr[];
 }

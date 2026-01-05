@@ -1,9 +1,13 @@
+import { SliderItem } from "@/src/services/interface";
 import SliderArea from "./slider";
-
-export default async function HeroSection() {
+interface Props {
+  sliderData: SliderItem[];
+}
+export default async function HeroSection({ sliderData }: Props) {
+  if (!sliderData?.length) return null;
   return (
     <section className="h-[70vh] lg:h-svh relative">
-      <SliderArea />
+      <SliderArea sliderData={sliderData} />
     </section>
   );
 }

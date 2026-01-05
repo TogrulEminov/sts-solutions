@@ -13,6 +13,8 @@ import {
   UpdateStrategicGoalsInput,
   uptadeStrategicGoalsSchema,
 } from "@/src/schema/strategic-goals.schema";
+import { revalidateAll } from "@/src/utils/revalidate";
+import { CACHE_TAG_GROUPS } from "@/src/config/cacheTags";
 
 type ActionResult<T = unknown> = {
   success: boolean;
@@ -214,7 +216,7 @@ export async function createStrategicGoals(
         },
       },
     });
-
+    await revalidateAll([CACHE_TAG_GROUPS.ABOUT]);
     return {
       success: true,
       data: newData,

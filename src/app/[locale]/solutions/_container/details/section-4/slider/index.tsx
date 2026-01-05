@@ -3,8 +3,11 @@ import MySwiper from "@/src/lib/swiper";
 import { SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import SolutionsCard from "@/src/globalElements/cards/solutions";
-
-export default function SliderArea() {
+import { SolutionsItem } from "@/src/services/interface";
+interface Props {
+  existingData: SolutionsItem[];
+}
+export default function SliderArea({ existingData }: Props) {
   const breakpoints = {
     0: { slidesPerView: 1.5, spaceBetween: 10 },
     768: { slidesPerView: 2, spaceBetween: 15 },
@@ -33,10 +36,10 @@ export default function SliderArea() {
       className="w-full lg:min-w-screen"
       loop={true}
     >
-      {Array.from({ length: 10 }).map((_, index) => {
+      {existingData.map((item, index) => {
         return (
           <SwiperSlide className="h-full" key={index}>
-            <SolutionsCard />
+            <SolutionsCard solution={item} key={index} />
           </SwiperSlide>
         );
       })}

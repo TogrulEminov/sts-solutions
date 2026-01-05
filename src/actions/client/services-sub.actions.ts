@@ -19,6 +19,8 @@ import {
   UpdateServiceSubCategoryInput,
   uptadeServiceSubCategorySchema,
 } from "@/src/schema/service-sub.schema";
+import { revalidateAll } from "@/src/utils/revalidate";
+import { CACHE_TAG_GROUPS } from "@/src/config/cacheTags";
 
 type ActionResult<T = unknown> = {
   success: boolean;
@@ -283,6 +285,16 @@ export async function createServicesSubCategory(
         },
       },
     });
+    await revalidateAll([
+      CACHE_TAG_GROUPS.PROJECTS,
+      CACHE_TAG_GROUPS.HOME,
+      CACHE_TAG_GROUPS.HOME,
+      CACHE_TAG_GROUPS.CONTACT,
+      CACHE_TAG_GROUPS.SOLUTIONS,
+      CACHE_TAG_GROUPS.SERVICE,
+      CACHE_TAG_GROUPS.SERVICE_CATEGORY,
+      CACHE_TAG_GROUPS.ABOUT,
+    ]);
     return {
       success: true,
       data: newData,
@@ -422,7 +434,16 @@ export async function uptadeServicesSubCategory(
         timeout: 10000,
       }
     );
-
+    await revalidateAll([
+      CACHE_TAG_GROUPS.PROJECTS,
+      CACHE_TAG_GROUPS.HOME,
+      CACHE_TAG_GROUPS.HOME,
+      CACHE_TAG_GROUPS.CONTACT,
+      CACHE_TAG_GROUPS.SOLUTIONS,
+      CACHE_TAG_GROUPS.SERVICE,
+      CACHE_TAG_GROUPS.SERVICE_CATEGORY,
+      CACHE_TAG_GROUPS.ABOUT,
+    ]);
     return {
       success: true,
       data: uptadeData,

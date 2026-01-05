@@ -1,7 +1,15 @@
 import { highlightActiveWord } from "@/src/utils/highlight";
 import SliderArea from "./slider";
+import { SectionContent, SolutionsItem } from "@/src/services/interface";
+interface Props {
+  sectionData: SectionContent;
+  existingData: SolutionsItem[];
+}
+export default async function  SolutionsSection({ sectionData, existingData }: Props) {
+  if (!existingData.length || !sectionData) {
+    return null;
+  }
 
-export default function SolutionsSection() {
   return (
     <section className="py-10 lg:py-25 overflow-hidden">
       <div className="container flex flex-col space-y-4">
@@ -9,19 +17,17 @@ export default function SolutionsSection() {
           <div className="flex flex-col space-y-4">
             <strong className="font-inter font-extrabold text-2xl lg:text-[36px] lg:leading-11 text-ui-7">
               {highlightActiveWord(
-                "Çətinliklərə Ağıllı Yanaşma —Həllərimiz",
-                "—Həllərimiz",
-                "text-ui-1 block"
+                sectionData?.translations?.[0]?.title,
+                sectionData?.translations?.[0]?.highlightWord,
+                "text-ui-1 lg:block"
               )}
             </strong>
           </div>
           <p className="font-inter text-start lg:text-right font-normal text-base text-black">
-            Sənayenin müxtəlif sahələri üçün avtomatlaşdırma, proqramlaşdırma və
-            kompleks texniki sistemlər üzrə tam inteqrasiya olunmuş mühəndislik
-            xidmətləri təqdim edirik.
+            {sectionData?.translations?.[0]?.description}
           </p>
         </div>
-        <SliderArea />
+        <SliderArea existingData={existingData} />
       </div>
     </section>
   );

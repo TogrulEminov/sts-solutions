@@ -14,6 +14,8 @@ import { Role } from "@/src/generated/prisma/enums";
 import { formatZodErrors } from "@/src/utils/format-zod-errors";
 import { Prisma } from "@/src/generated/prisma/browser";
 import { CustomLocales } from "@/src/services/interface";
+import { revalidateAll } from "@/src/utils/revalidate";
+import { CACHE_TAG_GROUPS } from "@/src/config/cacheTags";
 
 type ActionResult<T = unknown> = {
   success: boolean;
@@ -167,7 +169,8 @@ export async function createSectionContent(
         errors: formatZodErrors(validateData.error),
       };
     }
-    const { title, description, locale, key } = validateData.data;
+    const { title, description, locale, key, highlightWord } =
+      validateData.data;
 
     const customSlug = createSlug(title);
     const existingData = await db.sectionContent.findFirst({
@@ -196,10 +199,21 @@ export async function createSectionContent(
             slug: customSlug,
             description: description ?? "",
             locale: locale,
+            highlightWord,
           },
         },
       },
     });
+
+    await revalidateAll([
+      CACHE_TAG_GROUPS.PROJECTS,
+      CACHE_TAG_GROUPS.HOME,
+      CACHE_TAG_GROUPS.BLOG,
+      CACHE_TAG_GROUPS.SOLUTIONS,
+      CACHE_TAG_GROUPS.SERVICE,
+      CACHE_TAG_GROUPS.SERVICE_CATEGORY,
+      CACHE_TAG_GROUPS.ABOUT,
+    ]);
     return {
       success: true,
       data: newData,
@@ -272,7 +286,7 @@ export async function uptadeSectionContent(
         errors: formatZodErrors(parsedInput.error),
       };
     }
-    const { title, description, key, locale } = parsedInput.data;
+    const { title, description, key, locale, highlightWord } = parsedInput.data;
     const customSlug = createSlug(title);
     const uptadeData = await db.$transaction(async (prisma: any) => {
       const updatedData = await prisma.sectionContent.update({
@@ -292,11 +306,13 @@ export async function uptadeSectionContent(
                 description: description ?? "",
                 locale,
                 slug: customSlug || existingData.translations?.[0]?.slug,
+                highlightWord,
               },
               update: {
                 title,
                 description,
                 slug: customSlug || existingData.translations?.[0]?.slug,
+                highlightWord,
               },
             },
           },
@@ -308,6 +324,15 @@ export async function uptadeSectionContent(
 
       return updatedData;
     });
+    await revalidateAll([
+      CACHE_TAG_GROUPS.PROJECTS,
+      CACHE_TAG_GROUPS.HOME,
+      CACHE_TAG_GROUPS.BLOG,
+      CACHE_TAG_GROUPS.SOLUTIONS,
+      CACHE_TAG_GROUPS.SERVICE,
+      CACHE_TAG_GROUPS.SERVICE_CATEGORY,
+      CACHE_TAG_GROUPS.ABOUT,
+    ]);
     return { success: true, data: uptadeData, code: "Success" };
   } catch (error) {
     const errorMessage = (error as Error).message;

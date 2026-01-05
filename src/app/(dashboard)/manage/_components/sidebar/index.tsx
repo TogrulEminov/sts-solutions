@@ -48,6 +48,7 @@ const Sidebar = () => {
           icon: Boxes,
         },
         { href: "/manage/contact", label: "Əlaqə", icon: Contact },
+        { href: "/manage/about-main", label: "Haqqımızda", icon: Info },
         { href: "/manage/blog", label: "Bloqlar", icon: FileText },
         { href: "/manage/solutions", label: "Həllərimiz", icon: Key },
       ],

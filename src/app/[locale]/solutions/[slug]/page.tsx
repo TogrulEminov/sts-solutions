@@ -4,6 +4,9 @@ import { Metadata } from "next";
 import { generatePageMetadata } from "@/src/utils/metadata";
 import { getSolutionsStaticById } from "@/src/actions/static/solutions.actions";
 import { routing } from "@/src/i18n/routing";
+import { validateLocale } from "@/src/helper/validateLocale";
+import { fetchSolutionsDetail } from "@/src/actions/ui/solutions-detail.actions";
+import { notFound } from "next/navigation";
 interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
 }
@@ -21,21 +24,37 @@ export async function generateMetadata({
 export async function generateStaticParams() {
   try {
     const result = await getSolutionsStaticById();
-    const params = result?.data?.flatMap((blog) =>
-      routing.locales.flatMap((locale) =>
-        blog.translations
-          .filter((t) => t.locale === locale && t.slug) // ✅ Filter by locale
-          .map((translation) => ({
-            locale: locale.toLowerCase(),
-            slug: translation.slug,
-          }))
-      )
-    );
+
+    // 1. Map the data and provide a fallback empty array if data is missing
+    const params =
+      result?.data?.flatMap((solution) =>
+        routing.locales.flatMap((locale) =>
+          solution.translations
+            .filter((t) => t.locale === locale && t.slug)
+            .map((translation) => ({
+              locale: locale.toLowerCase(),
+              slug: translation.slug,
+            }))
+        )
+      ) ?? []; // Fallback for null/undefined result.data
+
     return params;
   } catch (error) {
     console.error("generateStaticParams error:", error);
+    // 2. CRITICAL: Return an empty array so the build worker doesn't exit with an error
+    return [];
   }
 }
-export default async function SoluitionDetailPage() {
-  return <SolutionsDetailContainer />;
+export default async function SoluitionDetailPage({ params }: PageProps) {
+  const { slug, locale } = await params;
+  const validatedLocale = validateLocale(locale);
+
+  const existingData = await fetchSolutionsDetail({
+    locale: validatedLocale,
+    slug: slug,
+  });
+  if (!existingData?.data?.solutionsDetailData?.translations?.length) {
+    notFound();
+  }
+  return <SolutionsDetailContainer existingData={existingData} />;
 }

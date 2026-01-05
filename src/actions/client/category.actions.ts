@@ -13,6 +13,8 @@ import { ImgInput, imgSchema } from "@/src/schema/img.schema";
 import { Locales, Role } from "@/src/generated/prisma/enums";
 import { Prisma } from "@/src/generated/prisma/client";
 import { formatZodErrors } from "@/src/utils/format-zod-errors";
+import { revalidateAll } from "@/src/utils/revalidate";
+import { CACHE_TAG_GROUPS } from "@/src/config/cacheTags";
 
 type ActionResult<T = unknown> = {
   success: boolean;
@@ -193,6 +195,7 @@ export async function createCategory(
       locale,
       imageId,
       subTitle,
+      features,
     } = validateData.data;
 
     const existingData = await db.categories.findFirst({
@@ -223,6 +226,7 @@ export async function createCategory(
             highlight: highlight,
             locale: locale,
             subTitle,
+            features: JSON.stringify(features),
             seo: {
               create: {
                 metaTitle: metaTitle || "",
@@ -237,6 +241,14 @@ export async function createCategory(
       },
     });
 
+    await revalidateAll([
+      CACHE_TAG_GROUPS.HOME,
+      CACHE_TAG_GROUPS.BLOG,
+      CACHE_TAG_GROUPS.SERVICE,
+      CACHE_TAG_GROUPS.SOLUTIONS,
+      CACHE_TAG_GROUPS.PROJECTS,
+      CACHE_TAG_GROUPS.ABOUT,
+    ]);
     return {
       success: true,
       data: newData,
@@ -319,6 +331,7 @@ export async function uptadeCategory(
       locale,
       highlight,
       subTitle,
+      features,
     } = parsedInput.data;
     const uptadeData = await db.$transaction(async (prisma: any) => {
       const updatedData = await prisma.categories.update({
@@ -336,6 +349,7 @@ export async function uptadeCategory(
                 highlight,
                 locale,
                 subTitle,
+                features: JSON.stringify(features),
                 seo: {
                   create: {
                     metaTitle: metaTitle ?? "",
@@ -350,6 +364,7 @@ export async function uptadeCategory(
                 description,
                 highlight,
                 subTitle,
+                features: JSON.stringify(features),
                 seo: {
                   upsert: {
                     create: {
@@ -372,7 +387,14 @@ export async function uptadeCategory(
 
       return updatedData;
     });
-
+    await revalidateAll([
+      CACHE_TAG_GROUPS.HOME,
+      CACHE_TAG_GROUPS.BLOG,
+      CACHE_TAG_GROUPS.SERVICE,
+      CACHE_TAG_GROUPS.SOLUTIONS,
+      CACHE_TAG_GROUPS.PROJECTS,
+      CACHE_TAG_GROUPS.ABOUT,
+    ]);
     return { success: true, data: uptadeData, code: "Success" };
   } catch (error) {
     const errorMessage = (error as Error).message;

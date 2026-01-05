@@ -1,26 +1,26 @@
 "use client";
+import { CountGenericType } from "@/src/services/interface";
+import { parseJSON } from "@/src/utils/checkSlug";
 import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
 
-const stats = [
-  { id: 1, end: 120, label: "Layihə" },
-  { id: 2, end: 30, label: "Partnyor şirkət" },
-  { id: 3, end: 15, label: "Uğurlu tədbir" },
-  { id: 4, end: 6, label: "Əsas sektor" },
-];
+interface Props {
+  existingData: CountGenericType[];
+}
 
-export default function Statistics() {
+export default function Statistics({ existingData }: Props) {
   const { ref, inView } = useInView({
     threshold: 0.3,
     triggerOnce: false,
   });
+  if (!parseJSON<CountGenericType>(existingData)?.length) return null;
 
   return (
     <div
       className="grid grid-cols-2 max-w-lg  items-start lg:items-center"
       ref={ref}
     >
-      {stats?.map((stat, index) => {
+      {parseJSON<CountGenericType>(existingData)?.map((stat, index) => {
         return (
           <div
             className="flex flex-col nth-[3]:border-b-0 nth-[4]:border-b-0 border-ui-22 even:border-r-0 p-5 lg:p-10 space-y-3 border-r border-b"
@@ -31,7 +31,7 @@ export default function Statistics() {
                 <>
                   <CountUp
                     start={0}
-                    end={stat.end}
+                    end={Number(stat.count)}
                     duration={2.5}
                     separator=","
                   />
@@ -42,7 +42,7 @@ export default function Statistics() {
             </div>
 
             <span className="font-inter font-semibold min-h-10 lg:min-h-fit md:text-xl lg:text-2xl lg:leading-7 text-ui-2">
-              {stat?.label}
+              {stat?.title}
             </span>
           </div>
         );

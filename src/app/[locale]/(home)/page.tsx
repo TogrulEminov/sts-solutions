@@ -1,6 +1,8 @@
 import { generatePageMetadata } from "@/src/utils/metadata";
 import { Metadata } from "next";
 import HomePageContainer from "./_container";
+import { fetchHome } from "@/src/actions/ui/home.actions";
+import { validateLocale } from "@/src/helper/validateLocale";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -19,6 +21,9 @@ export async function generateMetadata({
 }
 export default async function HomePage({ params }: PageProps) {
   const { locale } = await params;
-
-  return <HomePageContainer/>;
+  const validatedLocale = validateLocale(locale);
+  const homeData = await fetchHome({
+    locale: validatedLocale,
+  });
+  return <HomePageContainer homeData={homeData as any}/>;
 }

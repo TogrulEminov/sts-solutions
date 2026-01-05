@@ -1,65 +1,35 @@
-import Icons from "@/public/icons";
+import { Social } from "@/src/services/interface";
+import { renderSocialIcon } from "@/src/utils/renderSocials";
 import Link from "next/link";
-import React from "react";
+interface Props {
+  socialLinks: Social[];
+}
 
-const socialLinks = [
-  {
-    icon: Icons.Facebook,
-    href: "",
-    label: "Facebook",
-    gradient: "from-[#1877F2] to-[#0C63D4]",
-  },
-  {
-    icon: Icons.Instagram,
-    href: "",
-    label: "Instagram",
-    gradient: "from-[#405DE6] via-[#C135B4] to-[#E1306C]",
-  },
-  {
-    icon: Icons.Telegram,
-    href: "",
-    label: "Telegram",
-    gradient: "from-[#0088cc] to-[#229ED9]",
-  },
-  {
-    icon: Icons.Linkedin,
-    href: "",
-    label: "Linkedin",
-    gradient: "from-[#0A66C2] to-[#004182]",
-  },
-  {
-    icon: Icons.Youtube,
-    href: "",
-    label: "Youtube",
-    gradient: "from-[#FF0000] to-[#CC0000]",
-  },
-];
-
-export default function Social() {
+export default function SocialComponent({ socialLinks }: Props) {
   return (
     <div className="flex items-center flex-wrap gap-2">
       {socialLinks.map((social, index) => {
-        const Icon = social.icon;
         return (
           <div key={index} className="relative group">
             <Link
-              href={social.href}
+              href={social.socialLink}
               className="relative w-8 h-8 lg:w-10 lg:h-10 rounded-md lg:rounded-lg bg-ui-23 items-center justify-center overflow-hidden transition-all duration-300 hover:shadow-lg flex border border-ui-24"
-              aria-label={social.label}
+              aria-label={social.socialName}
             >
-              {/* Animated Background Gradient */}
               <div
-                className={`absolute bottom-0 left-0 w-full h-0 bg-linear-to-tr ${social.gradient} transition-all duration-300 ease-in-out group-hover:h-full`}
+                className={`absolute bottom-0 left-0 w-full h-0 transition-all duration-300 ease-in-out group-hover:h-full`}
               />
 
               {/* Icon */}
-              <div className="relative z-10 w-[18px] h-[18px] text-2 group-hover:text-white transition-colors duration-300">
-                <Icon
-                  fill="currentColor"
-                  width={18}
-                  height={18}
-                  className="transition-all duration-300 group-hover:scale-110 w-4 h-4 lg:w-6 lg:h-6"
-                />
+              <div className="relative z-10 w-[18px] h-[18px] text-ui-2 flex items-center justify-center group-hover:text-ui-1 transition-colors duration-300">
+                {renderSocialIcon({
+                  iconName: social?.iconName,
+                  fill: "currentColor",
+                  width: 16,
+                  height: 16,
+                  className:
+                    "transition-all duration-300  w-4 h-4 lg:w-6 lg:h-6",
+                })}
               </div>
             </Link>
           </div>

@@ -13,12 +13,12 @@ import MultiUploadImage from "@/src/app/(dashboard)/manage/_components/upload/mu
 import CustomAdminEditor from "@/src/app/(dashboard)/manage/_components/CreateEditor";
 import FormWrapper from "@/src/ui/FormBuilder/FormWrapper/FormWrapper";
 import FormInput from "@/src/ui/FormBuilder/components/FormInput/FormInput";
-import { createProjects } from "@/src/actions/client/projects.actions";
 import {
   CreateSolutionsInput,
   createSolutionsSchema,
 } from "@/src/schema/solutions.schema";
 import FormTextArea from "@/src/ui/FormBuilder/components/FormTextArea/FormTextArea";
+import { createSolutions } from "@/src/actions/client/solutions.actions";
 
 export default function CreateContent() {
   const searchParams = useSearchParams();
@@ -58,7 +58,7 @@ export default function CreateContent() {
   });
   const onSubmit = async (data: CreateSolutionsInput) => {
     startTransition(async () => {
-      const result = await createProjects({
+      const result = await createSolutions({
         ...data,
         galleryIds: galleryFiles.map((file) => file?.fileId?.toString() || ""),
         imageId: uploadedFile?.fileId?.toString() || "",
