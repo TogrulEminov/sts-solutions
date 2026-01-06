@@ -229,7 +229,7 @@ export default function Footer({
               className="order-1 md:order-2"
             >
               <CustomLink
-                href={"https://togruleminov.vercel.app"}
+                href={"https://wa.me/+994553183569"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-inter font-medium text-white/40 text-sm hover:text-white/60 transition-colors duration-300 flex items-center gap-1.5 group"
