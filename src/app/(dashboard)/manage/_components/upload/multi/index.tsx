@@ -1,9 +1,8 @@
 "use client";
 import React, { useState, useCallback, useRef, useEffect } from "react";
-import { Upload, X, Image as ImageIcon, File, AlertCircle } from "lucide-react";
+import { Upload, X, File, AlertCircle } from "lucide-react";
 import { usePostData, useDeleteData } from "@/src/hooks/useApi";
 import { FileType, UploadedFileMeta } from "@/src/services/interface";
-import ReactFancyBox from "@/src/lib/fancybox";
 import { usePathname } from "next/navigation";
 
 interface CustomUploadFile {
@@ -50,22 +49,29 @@ const MultiUploadImage: React.FC<MultiUploadProps> = ({
   const SESSION_KEY = `tempFiles_multi_${currentPathname}`;
   const UPLOADED_PATH_KEY = "latest_uploaded_multi_path";
 
-  const { mutate: uploadFile, isPending: uploadLoading } = usePostData<{ data: FileType }, FormData>();
-  const { mutate: deleteFile, isPending: deleteLoading } = useDeleteData<FileType>();
+  const { mutate: uploadFile, isPending: uploadLoading } = usePostData<
+    { data: FileType },
+    FormData
+  >();
+  const { mutate: deleteFile, isPending: deleteLoading } =
+    useDeleteData<FileType>();
 
   // --- Yardımçı Funksiyalar ---
-  
-  const updateSessionIds = useCallback((newIds: number[]) => {
-    if (typeof window !== "undefined") {
-      if (newIds.length === 0) {
-        sessionStorage.removeItem(SESSION_KEY);
-        sessionStorage.removeItem(UPLOADED_PATH_KEY);
-      } else {
-        sessionStorage.setItem(SESSION_KEY, JSON.stringify(newIds));
-        sessionStorage.setItem(UPLOADED_PATH_KEY, currentPathname);
+
+  const updateSessionIds = useCallback(
+    (newIds: number[]) => {
+      if (typeof window !== "undefined") {
+        if (newIds.length === 0) {
+          sessionStorage.removeItem(SESSION_KEY);
+          sessionStorage.removeItem(UPLOADED_PATH_KEY);
+        } else {
+          sessionStorage.setItem(SESSION_KEY, JSON.stringify(newIds));
+          sessionStorage.setItem(UPLOADED_PATH_KEY, currentPathname);
+        }
       }
-    }
-  }, [SESSION_KEY, UPLOADED_PATH_KEY, currentPathname]);
+    },
+    [SESSION_KEY, UPLOADED_PATH_KEY, currentPathname]
+  );
 
   const startErrorTimer = useCallback((fileUid: string) => {
     if (timerRefs.current[fileUid]) return;
@@ -75,7 +81,7 @@ const MultiUploadImage: React.FC<MultiUploadProps> = ({
     timerRefs.current[fileUid] = setInterval(() => {
       setErrorTimers((prev) => {
         const currentTime = prev[fileUid];
-        
+
         if (currentTime === undefined || currentTime <= 1) {
           if (timerRefs.current[fileUid]) {
             clearInterval(timerRefs.current[fileUid]);
@@ -97,7 +103,9 @@ const MultiUploadImage: React.FC<MultiUploadProps> = ({
     if (!fileToUpload) return;
 
     isUploadingRef.current = true;
-    const tempUid = `upload-${Date.now()}-${Math.random()}-${fileToUpload.name}`;
+    const tempUid = `upload-${Date.now()}-${Math.random()}-${
+      fileToUpload.name
+    }`;
 
     const tempFile: CustomUploadFile = {
       uid: tempUid,
@@ -120,7 +128,13 @@ const MultiUploadImage: React.FC<MultiUploadProps> = ({
           setFileList((prev) =>
             prev.map((f) =>
               f.uid === tempUid
-                ? { ...f, status: "done", url: fileData.relativePath, fileId: fileData.fileId, fileKey: fileData.fileKey }
+                ? {
+                    ...f,
+                    status: "done",
+                    url: fileData.relativePath,
+                    fileId: fileData.fileId,
+                    fileKey: fileData.fileKey,
+                  }
                 : f
             )
           );
@@ -135,7 +149,9 @@ const MultiUploadImage: React.FC<MultiUploadProps> = ({
               fullUrl: fileData.fullUrl || "",
             };
             const updated = [...prev, newFile];
-            updateSessionIds(updated.map(f => f?.fileId).filter(Boolean) as number[]);
+            updateSessionIds(
+              updated.map((f) => f?.fileId).filter(Boolean) as number[]
+            );
             return updated;
           });
 
@@ -159,10 +175,13 @@ const MultiUploadImage: React.FC<MultiUploadProps> = ({
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
     if (selectedFiles) {
-      const filesArray = Array.from(selectedFiles).filter(f => f.size / 1024 / 1024 < maxSize);
-      const availableSlot = maxCount - fileList.filter(f => f.status !== "error").length;
+      const filesArray = Array.from(selectedFiles).filter(
+        (f) => f.size / 1024 / 1024 < maxSize
+      );
+      const availableSlot =
+        maxCount - fileList.filter((f) => f.status !== "error").length;
       const finalFiles = filesArray.slice(0, availableSlot);
-      
+
       if (finalFiles.length > 0) {
         uploadQueueRef.current.push(...finalFiles);
         processNextUpload();
@@ -178,7 +197,7 @@ const MultiUploadImage: React.FC<MultiUploadProps> = ({
     }
 
     if (!uploadFile.fileId) {
-      setFileList(prev => prev.filter(f => f.uid !== uploadFile.uid));
+      setFileList((prev) => prev.filter((f) => f.uid !== uploadFile.uid));
       return;
     }
 
@@ -186,10 +205,12 @@ const MultiUploadImage: React.FC<MultiUploadProps> = ({
       { endpoint: `files/delete-file/${uploadFile.fileId}` },
       {
         onSuccess: () => {
-          setFileList(prev => prev.filter(f => f.uid !== uploadFile.uid));
-          setFiles(prev => {
-            const updated = prev.filter(f => f?.fileId !== uploadFile.fileId);
-            updateSessionIds(updated.map(f => f?.fileId).filter(Boolean) as number[]);
+          setFileList((prev) => prev.filter((f) => f.uid !== uploadFile.uid));
+          setFiles((prev) => {
+            const updated = prev.filter((f) => f?.fileId !== uploadFile.fileId);
+            updateSessionIds(
+              updated.map((f) => f?.fileId).filter(Boolean) as number[]
+            );
             return updated;
           });
         },
@@ -219,47 +240,108 @@ const MultiUploadImage: React.FC<MultiUploadProps> = ({
   const getFullImageUrl = (currentFile: CustomUploadFile) => {
     if (!currentFile.url) return "";
     if (currentFile.url.startsWith("blob:")) return currentFile.url;
-    return `${CF_PUBLIC_URL}${currentFile.url.startsWith("/") ? currentFile.url.slice(1) : currentFile.url}`;
+    return `${CF_PUBLIC_URL}${
+      currentFile.url.startsWith("/")
+        ? currentFile.url.slice(1)
+        : currentFile.url
+    }`;
   };
 
   return (
     <div className="w-full">
-      <input ref={fileInputRef} type="file" onChange={handleFileSelect} accept={acceptType} multiple className="hidden" />
+      <input
+        ref={fileInputRef}
+        type="file"
+        onChange={handleFileSelect}
+        accept={acceptType}
+        multiple
+        className="hidden"
+      />
 
       <div
-        onClick={() => !uploadLoading && !deleteLoading && fileInputRef.current?.click()}
-        onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
+        onClick={() =>
+          !uploadLoading && !deleteLoading && fileInputRef.current?.click()
+        }
+        onDragOver={(e) => {
+          e.preventDefault();
+          setIsDragging(true);
+        }}
         onDragLeave={() => setIsDragging(false)}
-        onDrop={(e) => { e.preventDefault(); setIsDragging(false); if(e.dataTransfer.files) handleFileSelect({ target: { files: e.dataTransfer.files } } as any); }}
-        className={`relative border-[2px] border-dashed rounded-lg p-8 text-center cursor-pointer transition-all ${isDragging ? "border-blue-500 bg-blue-50" : "border-gray-300"} ${uploadLoading || deleteLoading ? "opacity-50 cursor-not-allowed" : ""}`}
+        onDrop={(e) => {
+          e.preventDefault();
+          setIsDragging(false);
+          if (e.dataTransfer.files)
+            handleFileSelect({
+              target: { files: e.dataTransfer.files },
+            } as any);
+        }}
+        className={`relative border-[2px] border-dashed rounded-lg p-8 text-center cursor-pointer transition-all ${
+          isDragging ? "border-blue-500 bg-blue-50" : "border-gray-300"
+        } ${
+          uploadLoading || deleteLoading ? "opacity-50 cursor-not-allowed" : ""
+        }`}
       >
         <Upload className="mx-auto mb-4 text-blue-500" size={48} />
         <p className="text-gray-700 font-medium">{label}</p>
-        <p className="text-xs text-gray-400 mt-2">Maksimum {maxCount} fayl, hər biri {maxSize}MB</p>
+        <p className="text-xs text-gray-400 mt-2">
+          Maksimum {maxCount} fayl, hər biri {maxSize}MB
+        </p>
       </div>
 
       <div className="mt-5 flex flex-col gap-2.5">
         {fileList.map((file) => (
-          <div key={file.uid} className={`p-3 border rounded-lg flex items-center justify-between gap-3 ${file.status === "error" ? "border-red-300 bg-red-50" : "border-gray-200 bg-gray-50"}`}>
+          <div
+            key={file.uid}
+            className={`p-3 border rounded-lg flex items-center justify-between gap-3 ${
+              file.status === "error"
+                ? "border-red-300 bg-red-50"
+                : "border-gray-200 bg-gray-50"
+            }`}
+          >
             <div className="flex items-center gap-3 flex-1 min-w-0">
-              {file.status === "error" ? <AlertCircle className="text-red-500" size={24} /> : 
-               file.type?.startsWith("image/") && file.url ? <img src={getFullImageUrl(file)} className="w-12 h-12 object-cover rounded" /> : 
-               <File className="text-blue-500" size={24} />}
-              
+              {file.status === "error" ? (
+                <AlertCircle className="text-red-500" size={24} />
+              ) : file.type?.startsWith("image/") && file.url ? (
+                <img
+                  src={getFullImageUrl(file)}
+                  className="w-12 h-12 object-cover rounded"
+                />
+              ) : (
+                <File className="text-blue-500" size={24} />
+              )}
+
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium truncate">{file.name}</p>
                 <p className="text-xs text-gray-500">
-                  {file.status === "uploading" ? "Yüklənir..." : file.status === "error" ? <span className="text-red-500">Xəta ({errorTimers[file.uid]}s)</span> : "Tamamlandı"}
+                  {file.status === "uploading" ? (
+                    "Yüklənir..."
+                  ) : file.status === "error" ? (
+                    <span className="text-red-500">
+                      Xəta ({errorTimers[file.uid]}s)
+                    </span>
+                  ) : (
+                    "Tamamlandı"
+                  )}
                 </p>
               </div>
             </div>
 
             <div className="flex gap-2">
               {file.status === "done" && (
-                <button onClick={() => handleRemove(file)} className="text-xs text-red-600 border border-red-300 px-3 py-1.5 rounded hover:bg-red-50">Sil</button>
+                <button
+                  onClick={() => handleRemove(file)}
+                  className="text-xs text-red-600 border border-red-300 px-3 py-1.5 rounded hover:bg-red-50"
+                >
+                  Sil
+                </button>
               )}
               {file.status === "error" && (
-                <button onClick={() => handleRemove(file)} className="p-1 hover:bg-red-100 rounded-full"><X className="text-red-500" size={20} /></button>
+                <button
+                  onClick={() => handleRemove(file)}
+                  className="p-1 hover:bg-red-100 rounded-full"
+                >
+                  <X className="text-red-500" size={20} />
+                </button>
               )}
             </div>
           </div>

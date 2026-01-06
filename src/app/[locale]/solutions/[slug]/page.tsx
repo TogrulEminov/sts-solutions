@@ -41,7 +41,6 @@ export async function generateStaticParams() {
     return params;
   } catch (error) {
     console.error("generateStaticParams error:", error);
-    // 2. CRITICAL: Return an empty array so the build worker doesn't exit with an error
     return [];
   }
 }

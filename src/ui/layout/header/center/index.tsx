@@ -14,8 +14,6 @@ interface Props {
 
 export default function HeaderCenter({ isSticky, contactData }: Props) {
   const t = useTranslations();
-  console.log(contactData);
-  
   return (
     <>
       <div className="relative">

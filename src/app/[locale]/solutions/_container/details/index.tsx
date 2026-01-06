@@ -1,3 +1,4 @@
+import { SolutionsJsonLdScript } from "@/src/ui/json-ld/solutions";
 import SolutionsDetailHeroSection from "./section-1";
 import SectionTwo from "./section-2";
 import SectionThree from "./section-3";
@@ -8,13 +9,13 @@ interface Props {
 export default async function SolutionsDetailContainer({
   existingData,
 }: Props) {
+  const solutionsData = existingData?.data?.solutionsDetailData;
   return (
     <>
-      <SolutionsDetailHeroSection
-        existingData={existingData?.data?.solutionsDetailData}
-      />
-      <SectionTwo existingData={existingData?.data?.solutionsDetailData} />
-      <SectionThree existingData={existingData?.data?.solutionsDetailData} />
+      <SolutionsJsonLdScript solutionsData={solutionsData} />
+      <SolutionsDetailHeroSection existingData={solutionsData} />
+      <SectionTwo existingData={solutionsData} />
+      <SectionThree existingData={solutionsData} />
       <SectionFour existingData={existingData?.data?.relatedData || []} />
     </>
   );

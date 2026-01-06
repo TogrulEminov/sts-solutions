@@ -544,7 +544,7 @@ const SingleUploadImage: React.FC<ImageUploadProps> = ({
 
       {isModalOpen && cropSrc && (
         <div className="fixed inset-0 bg-black/75 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl max-w-[95vw] overflow-x-auto w-full max-h-[90vh] overflow-y-auto p-6 flex flex-col gap-4">
+          <div className="bg-white rounded-xl max-w-[95vw] overflow-x-auto w-full  overflow-y-auto p-6 flex flex-col gap-4">
             <div className="flex items-center justify-center bg-gray-100 rounded-lg p-4 overflow-auto max-h-[65vh]">
               <ReactCrop
                 crop={crop}
