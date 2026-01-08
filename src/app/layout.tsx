@@ -13,9 +13,14 @@ export const metadata: Metadata = {
     default: "Sts Solutions- Smart Technology Solutions",
   },
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/favicon.ico",
+    icon: [
+      { url: "/favicon.ico?v=2" },
+      { url: "/favicon.png?v=2", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico?v=2",
   },
   manifest: `${process.env.NEXT_PUBLIC_BASE_URL}/manifest.json`,
   alternates: {
