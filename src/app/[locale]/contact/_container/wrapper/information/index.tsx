@@ -106,6 +106,9 @@ export default async function InformationArea({
               </div>
             </div>
             <Link
+              target="_blank"
+              aria-label="Whatsapp"
+              rel="nofollow noopener noreferrer"
               href={`https://wa.me/${clearPhoneRegex(existingData?.whatsapp)}`}
               className="px-4 lg:px-6 w-full text-center md:w-fit py-1.5 lg:py-2.5 bg-[#25D366] hover:bg-[#128C7E] text-white text-sm font-semibold rounded-lg transition-colors duration-300 whitespace-nowrap shadow-sm"
             >
@@ -160,7 +163,7 @@ export default async function InformationArea({
                 {t("contact.socialNetworks")}
               </h3>
               <p className="text-xs text-12 mb-3">{t("contact.follow_us")}</p>
-              <SocialComponent socialLinks={socialsData}/>
+              <SocialComponent socialLinks={socialsData} />
             </div>
           </div>
         </div>

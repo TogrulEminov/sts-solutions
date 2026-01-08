@@ -11,7 +11,7 @@ export default async function HeroAbout({ existingData }: Props) {
   const t = await getTranslations("about");
   return (
     <section className="py-12 lg:py-20 h-[55vh] lg:h-lvh flex items-center relative overflow-hidden">
-      <HeroImage />
+      <HeroImage  existingData={existingData?.imageUrl}/>
       <div className="absolute inset-0 w-full h-full z-2 bg-black/45"></div>
       <div className="container relative z-4">
         <article className="flex flex-col space-y-5 lg:space-y-10 max-w-4xl animate-fadeInUp">

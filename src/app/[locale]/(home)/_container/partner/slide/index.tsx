@@ -1,13 +1,13 @@
 "use client";
 import PartnerCard from "@/src/globalElements/cards/partners";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { SwiperSlide } from "swiper/react";
 import { Autoplay, FreeMode } from "swiper/modules";
 import { motion } from "framer-motion";
+import "swiper/css/autoplay";
 import "swiper/css";
-import "swiper/css/free-mode";
 import { ConnectionItem, FileType } from "@/src/services/interface";
 import { getForCards } from "@/src/utils/getFullimageUrl";
-
+import MySwiper from "@/src/lib/swiper";
 interface Props {
   existingData?: ConnectionItem[];
 }
@@ -20,27 +20,30 @@ export default function SlideArea({ existingData }: Props) {
       viewport={{ once: true }}
       transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
     >
-      <Swiper
+      <MySwiper
         modules={[Autoplay, FreeMode]}
+        slidesPerView="auto" 
         spaceBetween={8}
-        slidesPerView="auto"
-        loop={true}
+        loop={existingData && existingData.length > 5} 
+        speed={2000}
         grabCursor={true}
-        allowTouchMove={true}
-        freeMode={{
-          enabled: true,
-          momentum: true,
-          momentumRatio: 0.5,
-          momentumVelocityRatio: 0.5,
-        }}
-        speed={3000}
+        freeMode={true}
         autoplay={{
           delay: 0,
           disableOnInteraction: false,
           pauseOnMouseEnter: true,
-          waitForTransition: false,
         }}
-        className="w-full lg:min-w-screen"
+        breakpoints={{
+          640: {
+            slidesPerView: "auto",
+            spaceBetween: 20,
+          },
+          1024: {
+            slidesPerView: "auto",
+            spaceBetween: 30,
+          },
+        }}
+        className="w-full"
       >
         {existingData?.map((partner, index) => (
           <SwiperSlide key={partner.id} className="w-auto!">
@@ -61,7 +64,7 @@ export default function SlideArea({ existingData }: Props) {
             </motion.div>
           </SwiperSlide>
         ))}
-      </Swiper>
+      </MySwiper>
     </motion.div>
   );
 }
